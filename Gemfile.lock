@@ -289,7 +289,7 @@ DEPENDENCIES
   mysql2
   puma (~> 3.11)
   rails (~> 6.1.2)
-  sass-rails (~> 5)
+  sass-rails
   selenium-webdriver
   spina
   spring
