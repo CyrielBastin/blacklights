@@ -1,5 +1,5 @@
 # This migration comes from spina (originally 10)
-class CreateSpinaImageCollections < ActiveRecord::Migration[5.2]
+class CreateSpinaImageCollections < ActiveRecord::Migration[6.0]
   def change
     create_table :spina_image_collections do |t|
       t.timestamps

@@ -1,5 +1,5 @@
 # This migration comes from spina (originally 3)
-class CreateSpinaNavigations < ActiveRecord::Migration[4.2]
+class CreateSpinaNavigations < ActiveRecord::Migration[6.0]
   def change
     create_table "spina_navigations", force: :cascade do |t|
       t.string "name", null: false

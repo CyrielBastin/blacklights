@@ -1,5 +1,5 @@
 # This migration comes from spina (originally 2)
-class CreateSpinaTranslationTables < ActiveRecord::Migration[4.2]
+class CreateSpinaTranslationTables < ActiveRecord::Migration[6.0]
   def up
     create_table "spina_page_translations", force: :cascade do |t|
       t.integer "spina_page_id", null: false
