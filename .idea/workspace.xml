@@ -11,170 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61fa2e89-4d1e-441f-920f-e1e2003c6d39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/FontAwesome.otf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/Linearicons.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/Linearicons.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/Linearicons.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/Linearicons.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/fontawesome-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/fontawesome-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/fontawesome-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/fontawesome-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/fontawesome-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/lg.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/lg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/lg.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/lg.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/materialdesignicons-webfont.eot" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/materialdesignicons-webfont.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/materialdesignicons-webfont.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/materialdesignicons-webfont.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/fonts/materialdesignicons-webfont.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/_blank.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/ajax-loader.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-breadcrumbs.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-image-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-image-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-image-3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-image-4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-image-5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-image-6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-pattern-127x75.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/bg-pattern-boxed.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/decor-1-1254x801.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-1-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-1-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-10-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-10-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-11-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-11-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-12-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-12-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-13-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-13-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-14-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-14-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-15-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-15-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-2-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-2-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-27-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-27-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-28-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-28-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-29-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-29-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-3-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-3-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-30-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-30-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-31-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-31-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-32-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-32-380x240.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-4-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-4-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-5-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-5-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-6-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-6-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-7-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-7-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-8-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-8-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-9-1200x800-original.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gallery-9-475x354.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gmap_marker.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gmap_marker_active.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/ie8-panel/warning_bar_0000_us.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/image-1-333x262.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/image-14-175x57.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/image-9-1002x552.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/loading.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/logo-default-250x108.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/logo-inverse-250x108.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/map-0-182x381.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/map-1-534x724.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/parallax-7.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-1-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-10-370x366.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-11-370x366.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-12-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-13-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-14-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-15-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-2-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-24-570x360.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-25-570x360.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-3-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-4-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-5-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-6-570x367.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-7-106x104.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-8-106x104.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/post-9-106x104.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/preloader.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/preloader.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scroll-arrow-down.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scroll-arrow-up.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scroll-line.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scroll-thumb.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/service-15-370x346.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/service-16-370x346.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/service-17-370x346.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/service-18-370x346.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/service-19-500x300.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/service-20-500x300.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/single-post-1-770x403.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/single-post-2-770x403.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/swiper-5-slide-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/swiper-5-slide-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-1-370x314.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-10-290x339.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-11-500x537.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-2-370x314.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-3-370x314.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-4-370x314.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-5-370x314.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-6-370x314.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-7-290x339.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-8-290x339.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/team-9-290x339.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-1-57x57.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-1-69x69.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-10-450x541.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-13-89x89.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-14-89x89.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-15-80x80.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-16-80x80.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-17-80x80.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-18-80x80.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-2-57x57.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-2-69x69.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-3-119x119.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-3-57x57.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-3-69x69.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-4-57x57.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-4-69x69.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-4-89x89.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-5-69x69.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-5-89x89.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-6-66x66.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-7-66x66.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-8-66x66.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/user-9-66x66.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/video-1-549x384.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/video-5-421x465.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/video-play.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/vimeo-play.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/youtube-play.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/javascript/public.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/javascript/public/core.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/javascript/public/script.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/public/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/public/fonts.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/application.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -310,8 +149,16 @@
       <workItem from="1603377405679" duration="26101000" />
       <workItem from="1611671269558" duration="734000" />
       <workItem from="1613084844087" duration="4131000" />
-      <workItem from="1613120044616" duration="17885000" />
+      <workItem from="1613120044616" duration="19506000" />
     </task>
+    <task id="LOCAL-00001" summary="initial commit">
+      <created>1613418439238</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1613418439238</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -328,5 +175,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit" />
+    <MESSAGE value="add mysql gem" />
+    <option name="LAST_COMMIT_MESSAGE" value="add mysql gem" />
   </component>
 </project>
