@@ -1,0 +1,36 @@
+!!!
+%html
+  %head
+    %title= current_account.name
+    = stylesheet_link_tag    'public', media: 'all'
+    = csrf_meta_tags
+  %body
+    .preloader
+      .cssload-container
+        .load-circle-item
+          .load-circle
+        .load-circle-item
+          .load-circle
+        .load-circle-item
+          .load-circle
+        .load-circle-item
+          .load-circle
+        .load-circle-item
+          .load-circle
+        .load-circle-item
+          .load-circle
+        .load-circle-item
+          .load-circle
+        .load-circle-item
+          .load-circle
+        .load-circle-item
+          .load-circle
+    .page
+      %header.section.page-header
+        = render 'default/shared/navigation'
+
+      = yield
+
+    = javascript_include_tag 'public', 'data-turbolinks-track': 'reload'
+
+
