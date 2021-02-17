@@ -1,8 +1,9 @@
 !!!
 %html
   %head
-    %title= current_account.name
-    = stylesheet_link_tag    'public', media: 'all'
+    %title
+      Blacklights
+    = stylesheet_link_tag    'application', media: 'all'
     = csrf_meta_tags
   %body
     .preloader
@@ -27,10 +28,10 @@
           .load-circle
     .page
       %header.section.page-header
-        = render 'default/shared/navigation'
+        = render 'shared/navigation'
 
       = yield
 
-    = javascript_include_tag 'public', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
 

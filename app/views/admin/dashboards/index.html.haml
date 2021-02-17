@@ -1,0 +1,91 @@
+.wrapper.wrapper-content
+  .row
+    .col-lg-3
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Utilisateurs actifs
+        .ibox-content
+          %h1.no-margins
+            = #User.confirmed.size
+    .col-lg-3
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Opportunités publiées
+        .ibox-content
+          %h1.no-margins
+            = #Opportunity.published.size
+    .col-lg-3
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Abonnements
+        .ibox-content
+          %h1.no-margins
+            = #Subscription.all.size
+    .col-lg-3
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Commandes
+        .ibox-content
+          %h1.no-margins
+            = #Order.all.size
+
+  -#.row
+  -#  .col-lg-12
+  -#    .ibox.float-e-margins
+  -#      .ibox-title
+  -#        %h5 Dernières
+  -#        .ibox-tools
+  -#          %a.collapse-link
+  -#            %i.fa.fa-chevron-up
+  -#          %a.close-link
+  -#            %i.fa.fa-times
+  -#      .ibox-content
+  -#        .row
+  -#          .col-lg-12
+  -#            %table.table.table-hover.margin.bottom
+  -#              %thead
+  -#                %tr
+  -#                  %th.text-center{:style => "width: 1%"} No.
+  -#                  %th Transaction
+  -#                  %th.text-center Date
+  -#                  %th.text-center Amount
+  -#              %tbody
+  -#                %tr
+  -#                  %td.text-center 1
+  -#                  %td
+  -#                    Security doors
+  -#                  %td.text-center.small 16 Jun 2014
+  -#                  %td.text-center
+  -#                    %span.label.label-primary $483.00
+  -#                %tr
+  -#                  %td.text-center 2
+  -#                  %td
+  -#                    Wardrobes
+  -#                  %td.text-center.small 10 Jun 2014
+  -#                  %td.text-center
+  -#                    %span.label.label-primary $327.00
+  -#                %tr
+  -#                  %td.text-center 3
+  -#                  %td
+  -#                    Set of tools
+  -#                  %td.text-center.small 12 Jun 2014
+  -#                  %td.text-center
+  -#                    %span.label.label-warning $125.00
+  -#                %tr
+  -#                  %td.text-center 4
+  -#                  %td Panoramic pictures
+  -#                  %td.text-center.small 22 Jun 2013
+  -#                  %td.text-center
+  -#                    %span.label.label-primary $344.00
+  -#                %tr
+  -#                  %td.text-center 5
+  -#                  %td Phones
+  -#                  %td.text-center.small 24 Jun 2013
+  -#                  %td.text-center
+  -#                    %span.label.label-primary $235.00
+  -#                %tr
+  -#                  %td.text-center 6
+  -#                  %td Monitors
+  -#                  %td.text-center.small 26 Jun 2013
+  -#                  %td.text-center
+  -#                    %span.label.label-primary $100.00

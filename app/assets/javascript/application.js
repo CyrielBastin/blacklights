@@ -6,5 +6,5 @@
 //
 //
 
-//= require public/core.min
-//= require public/script
+//= require application/core.min
+//= require application/script

@@ -1,0 +1,38 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %title Blacklights - Admin
+    / Include style per-controller - vendor plugins
+    = stylesheet_link_tag params[:controller] if ::Rails.application.assets.find_asset("#{params[:controller]}.css")
+    / Main css styles
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    %link{href: "https://use.fontawesome.com/releases/v5.6.1/css/all.css", rel:"stylesheet", integrity: "sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP", crossorigin: "anonymous"}
+    / Main javascript files
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+
+    = csrf_meta_tags
+  %body
+    / Skin configuration box
+    / <haml_loud> render &#39;layouts/skinconfig&#39; </haml_loud>
+    / Wrapper
+    #wrapper{:class => "#{params[:controller]}.#{params[:action]}"}
+      / Navigation
+      = #render 'layouts/admin/navigation'
+      / Page wraper
+      #page-wrapper{:class => "gray-bg #{@extra_class}"}
+        / Page wrapper
+        = #render 'layouts/admin/topnavbar'
+        / Main view
+        = yield
+        / Footer
+        = #render 'layouts/admin/footer'
+      / End page wrapper
+    / End wrapper
+    / Include javascript per-controller - vendor plugins
+    / Include javascript per-view
+    / For demo purpose we include javascript in view but you can easily start SeedProject and organize it with Rails asset pipeline as you want
+    = yield :javascript

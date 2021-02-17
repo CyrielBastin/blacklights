@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
-  mount Spina::Engine => '/'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  namespace :admin do
+    root to: 'dashboards#index'
+  end
+
+  root to: 'public#index'
 end

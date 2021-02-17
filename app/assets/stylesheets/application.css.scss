@@ -11,8 +11,8 @@
  * It is generally better to create a new file per style scope.
  *
  *= require_self
- *= require "public/bootstrap"
- *= require "public/fonts"
- *= require "public/style"
+ *= require "application/bootstrap"
+ *= require "application/fonts"
+ *= require "application/style"
  */
 

@@ -11,10 +11,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61fa2e89-4d1e-441f-920f-e1e2003c6d39" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin/dashboards_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/public_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/admin/dashboards/index.html.haml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/layouts/admin.html.haml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/environments/production.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/environments/production.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/javascript/public.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascript/application.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/javascript/public/core.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascript/application/core.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/javascript/public/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascript/application/script.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/public.css.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/application.css.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/public/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/application/bootstrap.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/public/fonts.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/application/fonts.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/public/style.css.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/application/style.css.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/default/pages/homepage.html.haml" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/public/index.html.haml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/default/pages/show.html.haml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/default/shared/_navigation.html.haml" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/shared/_navigation.html.haml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/default/application.html.haml" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.haml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/mailer.html.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/mailer.text.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/initializers/assets.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/initializers/assets.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/initializers/mobility.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/initializers/spina.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/initializers/themes/default.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +80,7 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="database.data.extractors.current.export.id" value="SQL Inserts" />
     <property name="database.data.extractors.current.id" value="SQL Inserts" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/assets/javascript/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/admin" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -75,16 +98,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/views/admin" />
+      <recent name="$PROJECT_DIR$/app/controllers/admin" />
+      <recent name="$PROJECT_DIR$/app/views/layouts" />
+      <recent name="$PROJECT_DIR$/app/controllers" />
       <recent name="$PROJECT_DIR$/app/assets/javascript/public" />
-      <recent name="$PROJECT_DIR$/app/assets/javascript" />
-      <recent name="$PROJECT_DIR$/app/assets" />
-      <recent name="$PROJECT_DIR$/app/assets/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/views" />
+      <recent name="$PROJECT_DIR$/app/views/public" />
+      <recent name="$PROJECT_DIR$/app/views/layouts" />
       <recent name="$PROJECT_DIR$/app/assets/images" />
       <recent name="$PROJECT_DIR$/app/javascript/images" />
-      <recent name="$PROJECT_DIR$/app/javascript/default" />
-      <recent name="$PROJECT_DIR$/app/assets/stylesheets/default" />
     </key>
   </component>
   <component name="RunManager">
@@ -100,15 +125,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -153,7 +176,8 @@
       <workItem from="1603377405679" duration="26101000" />
       <workItem from="1611671269558" duration="734000" />
       <workItem from="1613084844087" duration="4131000" />
-      <workItem from="1613120044616" duration="27017000" />
+      <workItem from="1613120044616" duration="28726000" />
+      <workItem from="1613472959549" duration="7374000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1613418439238</created>
@@ -218,7 +242,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613427110117</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="add spina cms">
+      <created>1613428897672</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1613428897672</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
