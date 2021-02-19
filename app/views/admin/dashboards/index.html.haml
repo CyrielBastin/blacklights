@@ -6,28 +6,29 @@
           %h5 Utilisateurs actifs
         .ibox-content
           %h1.no-margins
-            = #User.confirmed.size
+            = User.all.size
+
     .col-lg-3
       .ibox.float-e-margins
         .ibox-title
-          %h5 Opportunités publiées
+          %h5 Lieux
         .ibox-content
           %h1.no-margins
-            = #Opportunity.published.size
+            = Location.all.size
     .col-lg-3
       .ibox.float-e-margins
         .ibox-title
-          %h5 Abonnements
+          %h5 Evènements publiés
         .ibox-content
           %h1.no-margins
-            = #Subscription.all.size
+            = Event.all.size
     .col-lg-3
       .ibox.float-e-margins
         .ibox-title
-          %h5 Commandes
+          %h5 Réservations
         .ibox-content
           %h1.no-margins
-            = #Order.all.size
+            = Registration.all.size
 
   -#.row
   -#  .col-lg-12

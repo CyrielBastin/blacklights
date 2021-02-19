@@ -1,0 +1,51 @@
+%nav.navbar-default.navbar-static-side{:role => "navigation"}
+  .sidebar-collapse
+    %ul#side-menu.nav.metismenu
+      %li.nav-header
+        .dropdown.profile-element
+          %span
+          %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+            %span.clear
+              %span.block.m-t-xs
+                %strong.font-bold
+                  = "Admin"
+                %b.caret
+          %ul.dropdown-menu.animated.fadeInRight.m-t-xs
+            %li
+              = link_to 'Déconnexion', "#", :method => :delete
+        .logo-element
+          -#%img{:alt => "logo", :src => asset_path("admin/logo.png"), width: "50px"}/
+
+      %li{:class => "#{is_active_controller('users')}"}
+        %a{:href => admin_users_path}
+          %i.fa.fa-users.fa-lg
+          %span.nav-label Utilisateurs
+      %li{:class => "#{is_active_controller('activities')}"}
+        %a{:href => admin_activities_path}
+          %i.fa.fa-running.fa-lg
+          %span.nav-label Activités
+
+      %li{:class => "#{is_active_controller('locations')}"}
+        %a{:href => admin_locations_path}
+          %i.fas.fa-location-arrow.fa-lg
+          %span.nav-label Lieux
+
+      %li{:class => "#{is_active_controller('events')}"}
+        %a{:href => admin_events_path}
+          %i.fas.fa-calendar-week.fa-lg
+          %span.nav-label Evènements
+
+      %li{:class => "#{is_active_controller('registrations')}"}
+        %a{:href => admin_registrations_path}
+          %i.fas.fa-file-invoice.fa-lg
+          %span.nav-label Réservations
+
+      %li{:class => "#{is_active_controller('suppliers')}"}
+        %a{:href => admin_suppliers_path}
+          %i.fa.fa-dolly.fa-lg
+          %span.nav-label Fournisseurs
+
+      %li{:class => "#{is_active_controller('equipments')}"}
+        %a{:href => admin_equipments_path}
+          %i.fa.fa-tape.fa-lg
+          %span.nav-label Matériel

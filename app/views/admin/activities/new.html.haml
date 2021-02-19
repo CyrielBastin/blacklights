@@ -1,0 +1,12 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Activités
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li
+        %a{:href => admin_activities_path} Activités
+      %li.active
+        %strong Ajouter une activité
+
+= render"form"

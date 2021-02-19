@@ -11,9 +11,56 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61fa2e89-4d1e-441f-920f-e1e2003c6d39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/config/initializers/devise.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/locales/devise.en.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/javascript/admin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/javascript/admin/inspinia.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin.css.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/badges_labels.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/base.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/buttons.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/chat.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/custom.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/elements.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/landing.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/md-skin.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/media.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/metismenu.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/mixins.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/navigation.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/pages.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/rtl.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/sidebar.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/skins.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/spinners.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/theme-config.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/top_navigation.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/typography.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/base/variables.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/admin/style.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin/activities_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin/equipments_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin/events_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin/locations_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin/registrations_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin/suppliers_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/admin/users_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/admin/activities/_form.html.haml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/admin/activities/edit.html.haml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/admin/activities/index.html.haml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/admin/activities/new.html.haml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/admin/users/index.html.haml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/layouts/admin/_footer.html.haml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/layouts/admin/_navigation.html.haml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/layouts/admin/_topnavbar.html.haml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/blacklights.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/blacklights.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/javascript/application.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascript/application.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/dashboards/index.html.haml" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/dashboards/index.html.haml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/admin.html.haml" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/admin.html.haml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/initializers/assets.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/initializers/assets.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +85,9 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1jEm0i0k0KVS1SA4IQ7YCIL879F" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -56,7 +106,7 @@
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="database.data.extractors.current.export.id" value="SQL Inserts" />
     <property name="database.data.extractors.current.id" value="SQL Inserts" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/models" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/admin/activities" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -74,11 +124,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/models" />
-      <recent name="$PROJECT_DIR$/app/views/admin" />
+      <recent name="$PROJECT_DIR$/app/views/admin/activities" />
+      <recent name="$PROJECT_DIR$/app/views/admin/users" />
       <recent name="$PROJECT_DIR$/app/controllers/admin" />
-      <recent name="$PROJECT_DIR$/app/views/layouts" />
-      <recent name="$PROJECT_DIR$/app/controllers" />
+      <recent name="$PROJECT_DIR$/app/assets/javascript/admin" />
+      <recent name="$PROJECT_DIR$/app/assets/javascript" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/views" />
@@ -156,7 +206,7 @@
       <workItem from="1613084844087" duration="4131000" />
       <workItem from="1613120044616" duration="28726000" />
       <workItem from="1613472959549" duration="9549000" />
-      <workItem from="1613728368529" duration="11939000" />
+      <workItem from="1613728368529" duration="18977000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1613418439238</created>
@@ -256,7 +306,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613741292659</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="create model">
+      <created>1613742577627</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1613742577627</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -5,6 +5,9 @@ ruby '2.7.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.2'
+gem 'bootstrap-sass', '~> 3.3.7'
+gem "jquery-rails"
+gem "jquery-ui-rails"
 # Use sqlite3 as the database for Active Record
 gem 'mysql2'
 # Use Puma as the app server
@@ -36,6 +39,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'better_errors'
+  gem 'binding_of_caller'
   gem 'rails-erd'
 end
 

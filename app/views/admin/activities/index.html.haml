@@ -1,0 +1,49 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Activités
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Activités
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble des activités définies
+          .ibox-tools
+            = link_to "Nouvelle activité", new_admin_activity_path, class: "btn btn-primary"
+        .ibox-content
+          - if @activities.size > 0
+            .project-list
+              %table.table.table-hover.table-striped.dataTables
+                %thead
+                  %th Nom
+                  %th Description
+                  %th Actions
+                %tbody
+                  - @activities.each do |activity|
+                    %tr
+                      %td.project-title
+                        %b
+                          = activity.name
+                      %td
+                        = activity.description.present? ? activity.description.truncate(40) : "-"
+
+                      %td.project-actions
+                        .btn-group
+                          %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
+                            Actions
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a.btn.btn-white.btn-sm{:href => edit_admin_activity_path(activity.id)}
+                                %i.fa.fa-pen
+                                Modifier
+                              = link_to admin_activity_path(activity.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cette activité ?" }, class: "btn btn-white btn-sm" do
+                                %i.fa.fa-trash
+                                Supprimer
+
+          - else
+            Aucune activité enregistée actuellement

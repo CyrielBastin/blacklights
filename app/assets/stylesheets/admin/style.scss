@@ -1,0 +1,389 @@
+/*
+ *
+ *   INSPINIA - Responsive Admin Theme
+ *   version 2.7.1
+ *
+*/
+
+// Google Fonts
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,900');
+
+// Bootstra
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+// Variables, Mixins
+@import "admin/base/variables";
+@import "admin/base/mixins";
+
+// INSPINIA Theme Elements
+@import "admin/base/typography";
+@import "admin/base/navigation";
+@import "admin/base/top_navigation";
+@import "admin/base/buttons";
+@import "admin/base/badges_labels";
+@import "admin/base/elements";
+@import "admin/base/sidebar";
+@import "admin/base/base";
+@import "admin/base/pages";
+@import "admin/base/chat";
+@import "admin/base/metismenu";
+@import "admin/base/spinners";
+
+// Landing page
+@import "admin/base/landing";
+
+// RTL Support
+@import "admin/base/rtl";
+
+// For demo only - config box style
+@import "admin/base/theme-config";
+
+// INSPINIA Skins
+@import "admin/base/skins";
+@import "admin/base/md-skin";
+
+// Media query style
+@import "admin/base/media";
+
+// Custom style
+// Your custom style to override base style
+@import "admin/base/custom";
+
+// Clear layout on print mode
+@media print {
+  nav.navbar-static-side {
+    display: none;
+  }
+
+  body { overflow: visible !important; }
+
+  #page-wrapper {
+    margin: 0;
+  }
+}
+
+.background {
+  /* The image used */
+  //background-image: url("background.jpg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.ibox-selected {
+  border: 2px solid $navy;
+}
+
+.ibox-content {
+  border: none !important;
+}
+
+.wizard > .steps > ul > li {
+  width: 50% !important;
+}
+
+#rental_form > .steps > ul > li {
+  width: 33% !important;
+}
+
+#rental_form .content {
+  min-height: 575px !important;
+}
+
+.tab-pane .ibox-title {
+  border: none;
+}
+
+.profile-element img {
+  width: 48px;
+  height: auto;
+}
+
+textarea {
+  border:1px solid #e5e6e7;
+  width:100%;
+  margin:5px 0;
+  padding:3px;
+}
+
+#realty_form > .steps > ul > li {
+  width: 33% !important;
+}
+
+#realty_form .content {
+  min-height: 575px !important;
+}
+
+#tenants > div:nth-child(1) > a {
+  display: none;
+}
+
+.img-h100 {
+  height: 100px;
+  width: auto;
+}
+
+.more-btn {
+  position: relative;
+  z-index: 1;
+  min-width: 160px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 0 20px;
+  text-align: center;
+  text-transform: uppercase;
+  background-size: 200% auto;
+  color: #fff;
+  box-shadow: 0 3px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 100px;
+  background-image: linear-gradient(to right, #21d397 0%, #7450fe 50%, #21d397 100%);
+  background-image: -webkit-linear-gradient(to right, #21d397 0%, #7450fe 50%, #21d397 100%);
+  border: 1px solid #fff;
+  -webkit-transition: all 500ms;
+  transition: all 500ms;
+  text-decoration: none;
+}
+.more-btn:hover {
+  background-position: right center;
+  color: #fff;
+}
+.more-btn.orange{
+  background-image: -webkit-linear-gradient(to right,#FF4137 0,#FDC800 51%,#FF4137 100%);
+  background-image: linear-gradient(to right,#FF4137 0,#fca336 51%,#FF4137 100%)
+}
+.more-btn.pink{
+  background: #F69;
+  border: 0;
+  box-shadow: 0 20px 43px 0 rgba(216,58,131,.32);
+}
+
+.fc-day-header{
+  font-size: 10px !important;
+}
+
+img.welcome {
+  width: auto;
+  height: 200px;
+}
+
+.mt-20{
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px !important;
+}
+
+.h-80 {
+  height: 80px!important;
+  width: auto;
+}
+
+.h-30 {
+  height: 30px!important;
+  width: auto;
+}
+
+.single_price_table_content {
+  padding: 50px 50px 20px;
+  position: relative;
+  z-index: 2;
+  border-radius: 6px;
+}
+
+.single_price_table_content.active {
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.15);
+}
+
+.price_table_text {
+  margin-bottom: 45px;
+}
+
+.price_table_text > h4 {
+  font-size: 18px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+
+}
+
+.price_table_text a h6{
+  color: rgb(253, 138, 54);
+}
+
+.price_table_text a h4{
+  color: rgb(253, 138, 54);
+}
+
+.price_table_text > h6 {
+  text-transform: uppercase;
+
+}
+
+.price_table_text > h1 {
+  font-size: 48px;
+  margin-bottom: 15px;
+  line-height: 1;
+  color: #007bff;
+
+}
+
+.price_table_text > p,
+.table_text_details > p {
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 0;
+  line-height: 1;
+}
+.table_text_details > p {
+  margin-bottom: 20px;
+}
+
+.table_text_details {
+  min-height: 130px;
+}
+
+.opportunities-caroussel-cell {
+  width: 70%;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+
+.mt-40 {
+  margin-top: 40px;
+}
+
+.mt-50 {
+  margin-top: 50px;
+}
+
+.display-inline{
+  margin-right: 30px;
+  display: inline-block;
+}
+
+.btn {
+  text-decoration: none;
+}
+
+.float-left {
+  float: left!important
+}
+
+.float-right {
+  float: right!important
+}
+
+.table-responsive-stack tr {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+
+.table-responsive-stack td,
+.table-responsive-stack th {
+  display:block;
+  /*
+     flex-grow | flex-shrink | flex-basis   */
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+}
+
+.table-responsive-stack .table-responsive-stack-thead {
+  font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+  .table-responsive-stack tr {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    border-bottom: 3px solid #ccc;
+    display:block;
+
+  }
+  /*  IE9 FIX   */
+  .table-responsive-stack td {
+    float: left\9;
+    width:100%;
+  }
+}
+
+.h-120 {
+  height: 120px!important;
+  width: auto;
+}
+
+.ribbon {
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  position: absolute;
+}
+
+.ribbon::before,
+.ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 5px solid #446beb;
+}
+.ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 15px 0;
+  background-color: #446beb;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+  color: #fff;
+  font: 700 14px/1 'Lato', sans-serif;
+  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.ribbon-bottom-right {
+  bottom: -30px;
+  right: -5px;
+}
+.ribbon-bottom-right::before,
+.ribbon-bottom-right::after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+.ribbon-bottom-right::before {
+  bottom: 0;
+  left: 0;
+}
+.ribbon-bottom-right::after {
+  top: 0;
+  right: 0;
+}
+.ribbon-bottom-right span {
+  left: -30px;
+  bottom: 40px;
+  transform: rotate(45deg);
+}

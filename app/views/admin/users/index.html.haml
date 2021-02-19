@@ -1,0 +1,127 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Utilisateurs
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Utilisateurs
+  .col-lg-2
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-sm-8
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble des utilisateurs enregistrés
+          .ibox-tools
+            = link_to "Créer un utilisateur", new_admin_user_path, class: "btn btn-primary"
+        .ibox-content
+          -#.input-group
+          -#  %input.input.form-control{:placeholder => "Recherche ", :type => "text"}/
+          -#  %span.input-group-btn
+          -#    %button.btn.btn.btn-primary{:type => "button"}
+          -#      %i.fa.fa-search
+          -#      Chercher
+          .clients-list
+            .full-height-scroll
+              .table-responsive
+                %table.table.table-striped.table-hover
+                  %tbody
+                    - @users.each do |user|
+                      %tr
+                        %td.client-avatar
+                          - if user.profile.present?
+                            %img.img-circle{:alt => user.profile.full_name, :src => url_for(user.profile.decorate.avatar_path(size: :mini))}/
+                        %td
+                          %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
+                            = user.full_name
+                        %td
+                          = user.admin? ? "Admin" : "Utilisateur"
+                        %td.contact-type
+                          %i.fa.fa-envelope
+                        %td
+                          = user.email
+                        %td.client-status
+                          - if user.confirmed?
+                            %span.label.label-primary Actif
+                          -elsif user.invited?
+                            %span.label.label-warning Invité
+                          -else
+                            %span.label.label-default Non invité
+
+    .col-sm-4
+      .ibox
+        .ibox-content
+          .tab-content
+            - @users.each_with_index do |user, i|
+              .tab-pane{id: "user-#{user.id}", class: i == 0 ? "active" : ""}
+                .row.m-b-lg
+                  .col-lg-12.text-center
+                    %h2
+                      = user.full_name
+
+                .full-height-scroll
+                  %strong Informations
+                  %table.table
+                    %tr
+                      %td Date de création
+                      %td
+                        = l user.created_at
+
+                .full-height-scroll
+                  %strong Abonnements
+                  - sub = Stripe::Subscription.list({customer: current_user.stripe_customer_id, limit: 1, plan: ENV["STRIPE_SUBSCRIPTION_PLAN"]}).data.first
+                  - if sub.present?
+                    %table.table
+                      %thead
+                        %th Type
+                        %th Status
+                      %tbody
+                        %tr
+                          %td
+                            = "Opportunité"
+                          %td
+                            = sub.status
+
+                  - else
+                    = "Aucun"
+
+                %br
+                .full-height-scroll
+                  %strong Projet
+                  %table.table
+                    %tbody
+                      %tr
+                        %td Phase 1
+                        %td
+                          = "#{user.opportunities.size} opportunité(s)"
+                      %tr
+                        %td Phase 2
+                        %td -
+
+                      %tr
+                        %td Phase 3
+                        %td -
+
+                      %tr
+                        %td Phase 4
+                        %td -
+
+
+                %br
+                .full-height-scroll
+                  %strong Actions
+                  %br
+                  %br
+                  .col-lg-12.text-center
+                    - if !user.confirmed?
+                      %a.btn.btn-white.btn-sm{:href => admin_user_invite_path(user.id)}
+                        %i.fa.fa-user-plus
+                        -if user.invited?
+                          Renvoyer l'invitation
+                        - else
+                          Inviter
+                    %a.btn.btn-white.btn-sm{:href => edit_admin_user_path(user.id)}
+                      %i.fa.fa-pen
+                      Modifier
+                    = link_to "Connexion", "/switch_user?scope_identifier=user_#{user.id}", class: "btn btn-primary btn-sm"
