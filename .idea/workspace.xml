@@ -11,30 +11,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="61fa2e89-4d1e-441f-920f-e1e2003c6d39" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/models/activity.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/activity_equipment.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/category.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/contact.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/coordinate.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/dimension.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/equipment.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/event.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/event_activity.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/event_activity_equipment.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/location.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/location_activity.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/registration.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/supplier.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/models/user.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20210219100453_devise_create_users.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/db/migrate/20210219105415_create_models.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/initializers/devise.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/locales/devise.en.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/shared/_footer.html.haml" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/shared/_footer.html.haml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/environments/development.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/environments/development.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -177,7 +156,7 @@
       <workItem from="1613084844087" duration="4131000" />
       <workItem from="1613120044616" duration="28726000" />
       <workItem from="1613472959549" duration="9549000" />
-      <workItem from="1613728368529" duration="10716000" />
+      <workItem from="1613728368529" duration="11939000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1613418439238</created>
@@ -270,7 +249,14 @@
       <option name="project" value="LOCAL" />
       <updated>1613602212779</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="create model">
+      <created>1613741292659</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1613741292659</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,6 +279,7 @@
     <MESSAGE value="add mysql gem" />
     <MESSAGE value="add spina cms" />
     <MESSAGE value="remove spina" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove spina" />
+    <MESSAGE value="create model" />
+    <option name="LAST_COMMIT_MESSAGE" value="create model" />
   </component>
 </project>
