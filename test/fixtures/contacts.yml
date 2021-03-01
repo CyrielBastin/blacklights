@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  lastname: Edengarden
+  firstname: Cain
+  phone_number: 0499999999
+  email: cain@betrayal.com
+  coordinates_id: cain
+
+two:
+  lastname: Edengarden
+  firstname: Abel
+  phone_number: 0488/88.88.88
+  email: abel@lamb.com
+  coordinates_id: abel

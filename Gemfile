@@ -10,6 +10,7 @@ gem "jquery-rails"
 gem "jquery-ui-rails"
 # Use sqlite3 as the database for Active Record
 gem 'mysql2'
+gem "email_validator"
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
