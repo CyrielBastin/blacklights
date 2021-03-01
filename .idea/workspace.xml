@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4224cb6c-30b6-4fb8-96bf-b6bf52a4c1c4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/activity.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/activity.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/coordinate.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/coordinate.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/models/activity_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/models/activity_test.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/dimension.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/dimension.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +48,7 @@
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
-  <component name="RunManager" selected="Test::Unit/Shoulda/Minitest.test_Badminton's_name_shoul...">
+  <component name="RunManager" selected="Rails.Development: blacklights">
     <configuration name="Development: blacklights" type="RailsRunConfigurationType" factoryName="Rails">
       <module name="blacklights" />
       <predefined_log_file enabled="true" id="RUBY_RAILS_SERVER" />
@@ -200,7 +198,7 @@
       <updated>1614606395578</updated>
       <workItem from="1614606414670" duration="1764000" />
       <workItem from="1614609312935" duration="5236000" />
-      <workItem from="1614618448220" duration="1080000" />
+      <workItem from="1614618448220" duration="3971000" />
     </task>
     <servers />
   </component>
@@ -208,7 +206,7 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/blacklights@test_Badminton_s_name_shoul___.rcov" NAME="test_Badminton's_name_shoul... Coverage Results" MODIFIED="1614609370958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="blacklights" />
-    <SUITE FILE_PATH="coverage/blacklights@Development__blacklights.rcov" NAME="Development: blacklights Coverage Results" MODIFIED="1614606645532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="blacklights" />
+    <SUITE FILE_PATH="coverage/blacklights@test_Badminton_s_name_shoul___.rcov" NAME="test_Badminton's_name_shoul... Coverage Results" MODIFIED="1614619775076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="blacklights" />
+    <SUITE FILE_PATH="coverage/blacklights@Development__blacklights.rcov" NAME="Development: blacklights Coverage Results" MODIFIED="1614619787815" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="blacklights" />
   </component>
 </project>
