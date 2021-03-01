@@ -18,12 +18,15 @@ development:
   username: blacklights
   password: B8b4HHSBhYsUBQqb
   host: 127.0.0.1
-  port: 3307
+  port: 3306
 
 
 test:
   <<: *default
   url: <%= ENV['DATABASE_URL'] %>
+  database: blacklights_test
+  username: blacklights
+  password: B8b4HHSBhYsUBQqb
 
 production:
   <<: *default
