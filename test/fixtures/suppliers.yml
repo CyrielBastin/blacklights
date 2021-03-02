@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: ABC_Agency
+  contact: one
+
+two:
+  name: ZZZ_sleep
+  contact: two
