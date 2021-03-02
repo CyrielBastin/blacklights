@@ -85,4 +85,14 @@ class ContactTest < ActiveSupport::TestCase
     assert contact.delete
   end
 
+  test 'Should get one\'s city' do
+    contact = contacts(:one)
+    assert_equal 'Brussels', contact.coordinate[:city]
+  end
+
+  test 'Should get two\'s street' do
+    contact = contacts(:two)
+    assert_equal 'Lamb\'s street, 2', contact.coordinate[:street]
+  end
+
 end

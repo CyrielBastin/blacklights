@@ -13,7 +13,7 @@ class CreateModels < ActiveRecord::Migration[6.1]
       t.string :firstname
       t.string :phone_number
       t.string :email
-      t.references :coordinates
+      t.references :coordinate
     end
 
     create_table :dimensions do |t|

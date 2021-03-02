@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4224cb6c-30b6-4fb8-96bf-b6bf52a4c1c4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/blacklights.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/blacklights.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/contact.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/contact.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fixtures/coordinates.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/fixtures/coordinates.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/migrate/20210219105415_create_models.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/migrate/20210219105415_create_models.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/fixtures/contacts.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/fixtures/contacts.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/models/contact_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/models/contact_test.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +14,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="20210301_1" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -203,12 +207,24 @@
       <workItem from="1614606414670" duration="1764000" />
       <workItem from="1614609312935" duration="5236000" />
       <workItem from="1614618448220" duration="6665000" />
-      <workItem from="1614631634148" duration="2891000" />
+      <workItem from="1614631634148" duration="3544000" />
+      <workItem from="1614679472253" duration="3661000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/blacklights@test_Badminton_s_name_shoul___.rcov" NAME="test_Badminton's_name_shoul... Coverage Results" MODIFIED="1614619775076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="blacklights" />
