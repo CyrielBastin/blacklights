@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+badminton:
+  name: Badminton
+  description: Le badminton, ça étonne!
+
+basketball:
+  name: Basketball
+  description: Le basketball, ça étonne!
