@@ -5,6 +5,5 @@ class Coordinate < ApplicationRecord
 
   validates :street, presence: true, length: { minimum: 8 }
   validates :zip_code, presence: true, numericality: true, length: { minimum: 4, maximum: 5 }
-  validates :city, presence: true, length: { minimum: 3 }
-  validates :country, presence: true, length: { minimum: 4 }
+  validates :city, :country, presence: true, length: { minimum: 3 }
 end

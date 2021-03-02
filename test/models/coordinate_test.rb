@@ -65,12 +65,12 @@ class CoordinateTest < ActiveSupport::TestCase
     assert_not coordinate.save
   end
 
-  test 'Country should have at least 4 characters' do
+  test 'Country should have at least 3 characters' do
     coordinate = Coordinate.new
     coordinate[:street] = 'Grand Rue'
     coordinate[:zip_code] = 3_333
     coordinate[:city] = 'Brussels'
-    coordinate[:country] = 'Bel'
+    coordinate[:country] = 'Be'
     assert_not coordinate.save
   end
 
