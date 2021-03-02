@@ -387,3 +387,8 @@ img.welcome {
   bottom: 40px;
   transform: rotate(45deg);
 }
+
+/* This is used for displaying errors from client-side-validations gem */
+.field_with_errors label {
+  color: #FF0000;
+}

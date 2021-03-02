@@ -9,7 +9,7 @@ class Admin::ActivitiesController < AdminController
   end
 
   def create
-    @activity  = Activity.new(activity_params)
+    @activity = Activity.new(activity_params)
     if @activity.save
       flash[:success] = "Votre activité a été créée avec succès !"
       redirect_to admin_activities_path
