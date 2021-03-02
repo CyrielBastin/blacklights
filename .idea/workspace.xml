@@ -2,11 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4224cb6c-30b6-4fb8-96bf-b6bf52a4c1c4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/migrate/20210219105415_create_models.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/migrate/20210219105415_create_models.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/fixtures/contacts.yml" beforeDir="false" afterPath="$PROJECT_DIR$/test/fixtures/contacts.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/models/contact_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/models/contact_test.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/activities_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/activities_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/controllers/activities_controller_test.rb" beforeDir="false" afterPath="$PROJECT_DIR$/test/controllers/activities_controller_test.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +36,9 @@
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ProjectId" id="1p9rvfzgIH6Qu8BKfOEZaMZWeGy" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -208,7 +209,9 @@
       <workItem from="1614609312935" duration="5236000" />
       <workItem from="1614618448220" duration="6665000" />
       <workItem from="1614631634148" duration="3544000" />
-      <workItem from="1614679472253" duration="3661000" />
+      <workItem from="1614679472253" duration="6514000" />
+      <workItem from="1614687803277" duration="2108000" />
+      <workItem from="1614696552029" duration="3361000" />
     </task>
     <servers />
   </component>
@@ -225,9 +228,10 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/blacklights@test_Badminton_s_name_shoul___.rcov" NAME="test_Badminton's_name_shoul... Coverage Results" MODIFIED="1614619775076" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="blacklights" />
-    <SUITE FILE_PATH="coverage/blacklights@Development__blacklights.rcov" NAME="Development: blacklights Coverage Results" MODIFIED="1614619787815" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="blacklights" />
+    <SUITE FILE_PATH="coverage/blacklights@Development__blacklights.rcov" NAME="Development: blacklights Coverage Results" MODIFIED="1614697267513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="blacklights" />
   </component>
 </project>

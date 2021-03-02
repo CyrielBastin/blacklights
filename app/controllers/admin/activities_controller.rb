@@ -18,9 +18,9 @@ class Admin::ActivitiesController < AdminController
     end
   end
 
-  def show
-    @activity = Activity.find(params[:id])
-  end
+  # def show
+  #   @activity = Activity.find(params[:id])
+  # end
 
   def edit
     @activity = Activity.find(params[:id])
