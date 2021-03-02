@@ -1,0 +1,4 @@
+%div{ :style => "margin-top: 20px" }
+  - flash.each do |type, message|
+    %div{ :class => "alert alert-#{type}", :role => "alert" }
+      = message
