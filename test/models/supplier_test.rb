@@ -25,4 +25,6 @@ class SupplierTest < ActiveSupport::TestCase
     assert_equal 'Namur', supplier.contact.coordinate[:city]
   end
 
+  # Add update and remove test
+
 end
