@@ -7,5 +7,5 @@ class Contact < ApplicationRecord
 
   validates :lastname, :firstname, presence: true, length: { minimum: 3 }
   validates :phone_number, presence: true, length: { minimum: 10 }
-  validates :email, presence: true
+  validates :email, presence: true, email: true
 end

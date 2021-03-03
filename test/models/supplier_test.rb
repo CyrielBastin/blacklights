@@ -25,6 +25,15 @@ class SupplierTest < ActiveSupport::TestCase
     assert_equal 'Namur', supplier.contact.coordinate[:city]
   end
 
-  # Add update and remove test
+  test 'Should update one\'s name to "Hello"' do
+    supplier = suppliers(:one)
+    assert supplier.update({ name: 'Hello' })
+    assert_equal 'Hello', supplier[:name]
+  end
+
+  test 'Should delete two' do
+    supplier = suppliers(:two)
+    assert supplier.delete
+  end
 
 end

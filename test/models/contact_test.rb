@@ -49,24 +49,25 @@ class ContactTest < ActiveSupport::TestCase
     assert_not contact.save
   end
 
-  # test 'Email should be valid' do
-  #   contact = Contact.new
-  #   contact[:lastname] = 'Smith'
-  #   contact[:firstname] = 'John'
-  #   contact[:phone_number] = '0123456789'
-  #   #
-  #   contact[:email] = 'blah'
-  #   assert_not contact.save
-  #   #
-  #   contact[:email] = 123
-  #   assert_not contact.save
-  #   #
-  #   contact[:email] = '@hello.world'
-  #   assert_not contact.save
-  #   #
-  #   contact[:email] = 'hello@world.com'
-  #   assert contact.save
-  # end
+  test 'Email should be valid' do
+    contact = Contact.new
+    contact[:lastname] = 'Smith'
+    contact[:firstname] = 'John'
+    contact[:phone_number] = '0123456789'
+    contact.coordinate_id = coordinates(:cain).id
+    #
+    contact[:email] = 'blah'
+    assert_not contact.save
+    #
+    contact[:email] = 123
+    assert_not contact.save
+    #
+    contact[:email] = '@hello.world'
+    assert_not contact.save
+    #
+    contact[:email] = 'hello@world.com'
+    assert contact.save
+  end
 
   test 'One\'s lastname' do
     contact = contacts(:one)
@@ -75,9 +76,8 @@ class ContactTest < ActiveSupport::TestCase
 
   test 'Should update two\'s firstname' do
     contact = contacts(:two)
-    assert_not contact.update({ firstname: 'Ab' })
-    contact = contacts(:two)
-    assert_not_equal 'Abel', contact[:firstname]
+    assert contact.update({ firstname: 'Jacky' })
+    assert_equal 'Jacky', contact[:firstname]
   end
 
   test 'Should delete two' do
@@ -93,6 +93,11 @@ class ContactTest < ActiveSupport::TestCase
   test 'Should get two\'s street' do
     contact = contacts(:two)
     assert_equal 'Lamb\'s street, 2', contact.coordinate[:street]
+  end
+
+  test 'Should get supplier\'s name from one' do
+    contact = contacts(:one)
+    assert_equal 'ABC_Agency', contact.supplier[:name]
   end
 
 end
