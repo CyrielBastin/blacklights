@@ -26,6 +26,7 @@
       #page-wrapper{:class => "gray-bg #{@extra_class}"}
         / Page wrapper
         = render 'layouts/admin/topnavbar'
+        = render 'shared/flash_messages'
         / Main view
         = yield
         / Footer

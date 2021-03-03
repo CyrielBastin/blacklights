@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_19_105415) do
+ActiveRecord::Schema.define(version: 2021_03_03_110200) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 2021_02_19_105415) do
     t.string "firstname"
     t.string "phone_number"
     t.string "email"
-    t.bigint "coordinates_id"
-    t.index ["coordinates_id"], name: "index_contacts_on_coordinates_id"
+    t.bigint "coordinate_id"
+    t.index ["coordinate_id"], name: "index_contacts_on_coordinate_id"
   end
 
   create_table "coordinates", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

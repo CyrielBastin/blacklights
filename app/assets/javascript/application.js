@@ -8,3 +8,6 @@
 
 //= require application/core.min
 //= require application/script
+//= require bootstrap
+//= require jquery
+//= require rails.validations
