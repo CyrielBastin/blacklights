@@ -36,4 +36,17 @@ class SupplierTest < ActiveSupport::TestCase
     assert supplier.delete
   end
 
+  test 'Should delete contact then supplier' do
+    supplier = suppliers(:two)
+    assert supplier.contact.delete
+    assert supplier.delete
+  end
+
+  test 'Should save supplier' do
+    supplier = Supplier.new
+    supplier[:name] = 'Consulting'
+    supplier[:contact_id] = contacts(:one).id
+    assert supplier.save
+  end
+
 end
