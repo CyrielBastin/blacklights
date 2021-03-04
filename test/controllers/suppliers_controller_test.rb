@@ -15,15 +15,25 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  # test 'Should create supplier' do
-  #   assert_difference('Supplier.count') do
-  #     post admin_suppliers_url, params: { supplier: { name: 'Hello', contact_id: contacts(:one).id } }
-  #   end
-  #
-  #   assert_equal 'Votre fournisseur a été crée avec succès !', flash[:success]
-  #   assert_redirected_to admin_suppliers_url
-  # end
-  #
+  test 'Should create supplier' do
+    coordinate = Coordinate.new(street: 'This is my street',
+                                zip_code: 1111,
+                                city: 'My city',
+                                country: 'Welcome to the country')
+    contact = Contact.new(lastname: 'Lastname',
+                          firstname: 'Firstname',
+                          phone_number: '0111/11.11.11',
+                          email: 'hello@world.net')
+    supplier = Supplier.new(name: 'New_supplier')
+
+    assert_difference('Supplier.count') do
+      post admin_suppliers_url, params: { supplier: supplier, contact: contact, coordinate: coordinate }
+    end
+
+    assert_equal 'Votre fournisseur a été crée avec succès !', flash[:success]
+    assert_redirected_to admin_suppliers_url
+  end
+
   test 'Should show supplier' do
     get admin_supplier_url(@supplier)
     assert_response :success
@@ -39,13 +49,13 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
   #   assert_redirected_to supplier_url(@supplier)
   # end
 
-  test 'Should destroy supplier' do
-    assert_difference('Supplier.count', -1) do
-      delete admin_supplier_url(@supplier)
-    end
-
-    assert_equal 'Votre fournisseur a été supprimé avec succès !', flash[:success]
-    assert_redirected_to admin_suppliers_url
-  end
+  # test 'Should destroy supplier' do
+  #   assert_difference('Supplier.count', -1) do
+  #     delete admin_supplier_url(@supplier)
+  #   end
+  #
+  #   assert_equal 'Votre fournisseur a été supprimé avec succès !', flash[:success]
+  #   assert_redirected_to admin_suppliers_url
+  # end
 
 end

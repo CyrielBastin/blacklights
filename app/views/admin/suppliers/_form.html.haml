@@ -1,0 +1,57 @@
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Veuillez remplir toutes les informations concernant votre fournisseur
+        .ibox-content
+          = form_for [:admin, @supplier], validate: true, html: {class: 'form-horizontal'} do |supplier_form|
+            .form-group
+              %label.col-sm-2.control-label Nom
+              .col-sm-10
+                = supplier_form.text_field :name, class: 'form-control'
+
+            .hr-line-dashed
+            .col-sm-12 Personne de contact
+            = fields_for :contact, @supplier.contact do |contact_form|
+              .form-group
+                %label.col-sm-2.control-label Nom de famille
+                .col-sm-10
+                  = contact_form.text_field :lastname, class: 'form-control', validate: true
+              .form-group
+                %label.col-sm-2.control-label Prénom
+                .col-sm-10
+                  = contact_form.text_field :firstname, class: 'form-control'
+              .form-group
+                %label.col-sm-2.control-label Numéro de téléphone
+                .col-sm-10
+                  = contact_form.telephone_field :phone_number, class: 'form-control'
+              .form-group
+                %label.col-sm-2.control-label Email
+                .col-sm-10
+                  = contact_form.email_field :email, class: 'form-control'
+
+            .hr-line-dashed
+            .col-sm-12 Adresse de la personne de contact
+            = fields_for :coordinate, @supplier.contact.coordinate do |coordinate_form|
+              .form-group
+                %label.col-sm-2.control-label Rue et numéro
+                .col-sm-10
+                  = coordinate_form.text_field :street, class: 'form-control'
+              .form-group
+                %label.col-sm-2.control-label Code postal
+                .col-sm-10
+                  = coordinate_form.text_field :zip_code, class: 'form-control'
+              .form-group
+                %label.col-sm-2.control-label Ville
+                .col-sm-10
+                  = coordinate_form.text_field :city, class: 'form-control'
+              .form-group
+                %label.col-sm-2.control-label Pays
+                .col-sm-10
+                  = coordinate_form.text_field :country, class: 'form-control'
+
+            .form-group
+              .col-sm-4
+                %button.btn.btn-primary{:type => 'submit'} Sauver le fournisseur

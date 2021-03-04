@@ -7,6 +7,7 @@ class Supplier < ApplicationRecord
   err_msg = { name_not_blank: 'Le nom ne peut pas être vide',
               name_too_short: "Le nom doit contenir au moins #{min_char_name} caractères" }
   validates :name, presence: { message: err_msg[:name_not_blank] },
-                   length: { minimum: 4, message: err_msg[:name_too_short] }
+                   length: { minimum: 4, message: err_msg[:name_too_short] },
+                   uniqueness: true
 
 end
