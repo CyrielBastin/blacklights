@@ -20,9 +20,10 @@
             .project-list
               %table.table.table-hover.table-striped.dataTables
                 %thead
-                  %th Nom
-                  %th Détails
-                  %th Actions
+                  %th{width: '20%'} Nom
+                  %th{width: '30%'} Contact
+                  %th{width: '25%'} Coordonnées
+                  %th{width: '25%'} Actions
                 %tbody
                   - @suppliers.each do |supplier|
                     %tr
@@ -30,8 +31,13 @@
                         %b
                           = supplier.name
                       %td
-                        %b
-                          = link_to 'Voir détails', admin_supplier_path(supplier.id)
+                        = "#{supplier.contact.lastname} #{supplier.contact.firstname}"
+                        %br
+                        = "#{supplier.contact.email} - #{supplier.contact.phone_number}"
+                      %td
+                        = "#{supplier.contact.coordinate.street}"
+                        %br
+                        = "#{supplier.contact.coordinate.zip_code} - #{supplier.contact.coordinate.city}"
                       %td.project-actions
                         .btn-group
                           %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
@@ -39,6 +45,9 @@
                             %span.caret
                           %ul.dropdown-menu
                             %li
+                              %a.btn.btn-white.btn-sm{:href => admin_supplier_path(supplier.id)}
+                                %i.fa.fa-eye
+                                Détails
                               %a.btn.btn-white.btn-sm{:href => edit_admin_supplier_path(supplier.id)}
                                 %i.fa.fa-pen
                                 Modifier

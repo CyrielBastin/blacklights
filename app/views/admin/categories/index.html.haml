@@ -1,0 +1,50 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Catégories
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Catégories
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble des catégories définies
+          .ibox-tools
+            = link_to "Nouvelle catégorie", new_admin_category_path, class: "btn btn-primary"
+        .ibox-content
+          - if @categories.size > 0
+            .project-list
+              %table.table.table-hover.table-striped.dataTables
+                %thead
+                  %th Nom
+                  %th Catégorie parente
+                  %th Actions
+                %tbody
+                  - @categories.each do |category|
+                    %tr
+                      %td.project-title
+                        %b
+                          = category.name
+                      %td
+                        = category.parent_id.present? ? category.parent.name : ''
+
+                      %td.project-actions
+                        .btn-group
+                          %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
+                            Actions
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a.btn.btn-white.btn-sm{:href => edit_admin_category_path(category.id)}
+                                %i.fa.fa-pen
+                                Modifier
+                              = link_to admin_category_path(category.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cette catégorie ?" }, class: "btn btn-white btn-sm" do
+                                %i.fa.fa-trash
+                                Supprimer
+
+          - else
+            Aucune catégorie enregistée actuellement

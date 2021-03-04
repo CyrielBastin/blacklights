@@ -11,8 +11,6 @@ class Admin::SuppliersController < AdminController
 
   def create
     @supplier = Supplier.new(supplier_params)
-    @supplier.contact = Contact.new(contact_params)
-    @supplier.contact.coordinate = Coordinate.new(coordinate_params)
     if @supplier.save
       flash[:success] = 'Votre fournisseur a été crée avec succès !'
       redirect_to admin_suppliers_path
@@ -51,15 +49,7 @@ class Admin::SuppliersController < AdminController
   private
 
   def supplier_params
-    params.require(:supplier).permit(:id, :name)
-  end
-
-  def contact_params
-    params.require(:contact).permit(:id, :lastname, :firstname, :phone_number, :email)
-  end
-
-  def coordinate_params
-    params.require(:coordinate).permit(:id, :street, :zip_code, :city, :country)
+    params.require(:supplier).permit(:id, :name, contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]])
   end
 
 end

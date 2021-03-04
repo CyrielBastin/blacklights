@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :suppliers
     resources :registrations
     resources :activities
+    resources :categories
   end
 
   root to: 'public#index'
