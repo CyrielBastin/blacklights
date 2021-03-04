@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: Raquette de badminton
+  description: Magnifique raquette de badminton
+  unit_price: 24.99
+
+two:
+  name: Volants de badminton
+  description: Volants nécessaires à la pratique du badmiton
+  unit_price: 5.00
