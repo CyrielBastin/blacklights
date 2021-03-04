@@ -31,7 +31,7 @@
                           = supplier.name
                       %td
                         %b
-                          - link_to 'Voir détails', admin_supplier_path(supplier.id)
+                          = link_to 'Voir détails', admin_supplier_path(supplier.id)
                       %td.project-actions
                         .btn-group
                           %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
