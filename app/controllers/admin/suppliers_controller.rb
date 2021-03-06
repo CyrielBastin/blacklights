@@ -42,7 +42,7 @@ class Admin::SuppliersController < AdminController
     supplier.contact.coordinate.destroy
     supplier.contact.destroy
     supplier.destroy
-    flash[:success] = 'Votre fournisseur a été supprimé avec succès.'
+    flash[:success] = 'Votre fournisseur a été supprimé avec succès !'
     redirect_to admin_suppliers_path
   end
 

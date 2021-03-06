@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+raquettes:
+  name: Raquettes pour jouer
+
+raquette_bad:
+  name: Raquette de badminton
+  parent: raquettes
+
+raquette_ten:
+  name: Raquette de tennis
+  parent: raquettes
+
+balles:
+  name: Balles pour jouer
+
+balle_ten:
+  name: Balle de tennis
+  parent: balles
