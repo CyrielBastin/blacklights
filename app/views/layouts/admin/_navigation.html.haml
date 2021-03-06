@@ -45,6 +45,11 @@
           %i.fa.fa-dolly.fa-lg
           %span.nav-label Fournisseurs
 
+      %li{:class => "#{is_active_controller('categories')}"}
+        %a{:href => admin_categories_path}
+          %i.fa.fa-tape.fa-lg
+          %span.nav-label Catégories
+
       %li{:class => "#{is_active_controller('equipments')}"}
         %a{:href => admin_equipments_path}
           %i.fa.fa-tape.fa-lg

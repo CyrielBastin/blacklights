@@ -1,0 +1,59 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Fournisseurs
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Fournisseurs
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble des fournisseurs définis
+          .ibox-tools
+            = link_to "Nouveau fournisseur", new_admin_supplier_path, class: "btn btn-primary"
+        .ibox-content
+          - if @suppliers.size > 0
+            .project-list
+              %table.table.table-hover.table-striped.dataTables
+                %thead
+                  %th{width: '20%'} Nom
+                  %th{width: '30%'} Contact
+                  %th{width: '25%'} Coordonnées
+                  %th{width: '25%'} Actions
+                %tbody
+                  - @suppliers.each do |supplier|
+                    %tr
+                      %td.project-title
+                        %b
+                          = supplier.name
+                      %td
+                        = "#{supplier.contact.lastname} #{supplier.contact.firstname}"
+                        %br
+                        = "#{supplier.contact.email} - #{supplier.contact.phone_number}"
+                      %td
+                        = "#{supplier.contact.coordinate.street}"
+                        %br
+                        = "#{supplier.contact.coordinate.zip_code} - #{supplier.contact.coordinate.city}"
+                      %td.project-actions
+                        .btn-group
+                          %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
+                            Actions
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a.btn.btn-white.btn-sm{:href => admin_supplier_path(supplier.id)}
+                                %i.fa.fa-eye
+                                Détails
+                              %a.btn.btn-white.btn-sm{:href => edit_admin_supplier_path(supplier.id)}
+                                %i.fa.fa-pen
+                                Modifier
+                              = link_to admin_supplier_path(supplier.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer ce fournisseur ?" }, class: "btn btn-white btn-sm" do
+                                %i.fa.fa-trash
+                                Supprimer
+
+          - else
+            Aucun fournisseur enregisté actuellement
