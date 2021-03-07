@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+raquette_de_badminton:
+  name: Raquette de badminton
+  description: Magnifique raquette de badminton
+  unit_price: 24.99
+  category: raquette_bad
+  supplier: one
+  dimension: one
+
+balles_de_tennis:
+  name: Balles de tennis
+  description: Balles nécessaires à la pratique du tennis
+  unit_price: 5.00
+  category: balle_ten
+  supplier: two
+  dimension: two

@@ -1,0 +1,12 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Matériel
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li
+        %a{:href => admin_equipment_index_path} Matériel
+      %li.active
+        %strong Modifier un matériel
+
+= render 'form'

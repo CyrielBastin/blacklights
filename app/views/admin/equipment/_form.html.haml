@@ -1,0 +1,63 @@
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Veuillez remplir toutes les informations concernant votre matériel
+        .ibox-content
+          = form_for [:admin, @equipment], validate: true, html: {class: 'form-horizontal'} do |equipment_form|
+            .form-group
+              %label.col-sm-2.control-label Nom
+              .col-sm-10
+                = equipment_form.text_field :name, class: 'form-control'
+            .hr-line-dashed
+            .form-group
+              %label.col-sm-2.control-label Description
+              .col-sm-10
+                = equipment_form.text_area :description, class: 'form-control'
+            .hr-line-dashed
+            .form-group
+              %label.col-sm-2.control-label Prix/unité (en €)
+              .col-sm-10
+                = equipment_form.text_field :unit_price, class: 'form-control'
+            .hr-line-dashed
+
+            .form-group
+              %label.col-sm-2.control-label Catégorie
+              .col-sm-10
+                = equipment_form.select :category_id, options_for_select(Category.order(:name).map{|c|[c.name, c.id]}, @equipment.category_id),
+                                                                         {:class => "form-control select"}
+
+            .hr-line-dashed
+            .form-group
+              %label.col-sm-2.control-label Fournisseur
+              .col-sm-10
+                = equipment_form.select :supplier_id, options_for_select(Supplier.order(:name).map{|s|[s.name, s.id]}, @equipment.supplier_id),
+                                                                         {:class => "form-control select"}
+
+            %br
+            %fieldset
+              %legend Dimensions du matériel
+              = equipment_form.fields_for :dimension, @equipment.dimension.present? ? @equipment.dimension : @equipment.build_dimension  do |dimension_form|
+                .form-group
+                  %label.col-sm-2.control-label Largeur (en cm)
+                  .col-sm-10
+                    = dimension_form.text_field :width, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Longeur (en cm)
+                  .col-sm-10
+                    = dimension_form.text_field :length, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Hauteur (en cm)
+                  .col-sm-10
+                    = dimension_form.text_field :height, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Poids (en g)
+                  .col-sm-10
+                    = dimension_form.text_field :weight, class: 'form-control'
+
+            %br
+            .form-group
+              .col-sm-4
+                %button.btn.btn-primary{:type => 'submit'} Sauver le matériel

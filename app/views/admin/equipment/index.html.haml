@@ -1,0 +1,67 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Matériel
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Matériel
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble du matériel défini
+          .ibox-tools
+            = link_to 'Nouveau matériel', new_admin_equipment_path, class: 'btn btn-primary'
+        .ibox-content
+          - if @equipments.size > 0
+            .project-list
+              %table.table.table-hover.table-striped.dataTables
+                %thead
+                  %th{width: '15%'} Nom
+                  %th{style: "max-width: 25%"} Description
+                  %th{width: '25%'} Détails
+                  %th{width: '15%'} prix/unité
+                  %th{width: '20%'} Actions
+                %tbody
+                  - @equipments.each do |equipment|
+                    %tr
+                      %td.project-title{:style => 'word-wrap: break-word'}
+                        %b
+                          = equipment[:name]
+
+                      %td{:style => 'word-wrap: break-word'}
+                        = equipment[:description].truncate(200)
+
+                      %td
+                        = "Fournisseur : #{equipment.supplier[:name]}"
+                        %br
+                        = "Largeur : #{equipment.dimension[:width]} cm"
+                        %br
+                        = "Longueur : #{equipment.dimension[:length]} cm"
+                        %br
+                        = "Hauteur : #{equipment.dimension[:height]} cm"
+                        %br
+                        = "Poids : #{equipment.dimension[:weight]} g"
+
+                      %td
+                        = "#{equipment[:unit_price]} €"
+
+                      %td.project-actions
+                        .btn-group
+                          %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
+                            Actions
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a.btn.btn-white.btn-sm{:href => edit_admin_equipment_path(equipment[:id])}
+                                %i.fa.fa-pen
+                                Modifier
+                              = link_to admin_equipment_path(equipment[:id]), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer ce matériel ?" }, class: "btn btn-white btn-sm" do
+                                %i.fa.fa-trash
+                                Supprimer
+
+          - else
+            Aucun matériel enregisté actuellement.
