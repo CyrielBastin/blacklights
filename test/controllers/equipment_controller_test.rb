@@ -6,7 +6,7 @@ class EquipmentControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Should get index' do
-    get admin_equipments_url
+    get admin_equipment_index_url
 
     assert_response :success
   end
@@ -19,18 +19,23 @@ class EquipmentControllerTest < ActionDispatch::IntegrationTest
 
   test 'Should create equipment' do
     assert_difference('Equipment.count') do
-      post admin_equipments_url, params: { equipment: {
+      post admin_equipment_index_url, params: { equipment: {
         name: 'Jacky la louche',
         description: 'This description should be more than 20 characters',
         unit_price: 13.07,
-        category_id: 3,
-        supplier_id: 3,
-        dimension_id: 3
+        category_id: categories(:raquette_bad).id,
+        supplier_id: suppliers(:two).id,
+        dimension_attributes: {
+          width: 1.11,
+          length: 2.22,
+          height: 3.33,
+          weight: 4.44
+        }
       } }
     end
 
-    assert_equal 'Votre équipement a été crée avec succès !', flash[:success]
-    assert_redirected_to admin_equipments_url
+    assert_equal 'Votre matériel a été crée avec succès !', flash[:success]
+    assert_redirected_to admin_equipment_index_url
   end
 
   # test 'Should show equipment' do
@@ -48,8 +53,8 @@ class EquipmentControllerTest < ActionDispatch::IntegrationTest
   test 'Should update equipment' do
     patch admin_equipment_url(@equipment), params: { equipment: { name: 'Jacky' } }
 
-    assert_equal 'Votre équipement a été modifié avec succès !', flash[:success]
-    assert_redirected_to admin_equipments_url
+    assert_equal 'Votre matériel a été modifié avec succès !', flash[:success]
+    assert_redirected_to admin_equipment_index_url
   end
 
   test 'Should destroy equipment' do
@@ -57,8 +62,8 @@ class EquipmentControllerTest < ActionDispatch::IntegrationTest
       delete admin_equipment_url(@equipment)
     end
 
-    assert_equal 'Votre équipement a été supprimé avec succès !', flash[:success]
-    assert_redirected_to admin_equipments_url
+    assert_equal 'Votre matériel a été supprimé avec succès !', flash[:success]
+    assert_redirected_to admin_equipment_index_url
   end
 
 end
