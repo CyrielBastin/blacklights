@@ -7,10 +7,11 @@ Rails.application.routes.draw do
     resources :users
     resources :locations
     resources :events
-    resources :equipments
+    resources :equipment
     resources :suppliers
     resources :registrations
     resources :activities
+    resources :categories
   end
 
   root to: 'public#index'

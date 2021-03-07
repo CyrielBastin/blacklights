@@ -10,6 +10,7 @@ gem "jquery-rails"
 gem "jquery-ui-rails"
 # Use sqlite3 as the database for Active Record
 gem 'mysql2'
+gem "email_validator"
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -24,6 +25,7 @@ gem 'jbuilder', '~> 2.7'
 gem 'uglifier'
 gem 'sprockets'
 gem 'devise'
+gem 'client_side_validations'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
