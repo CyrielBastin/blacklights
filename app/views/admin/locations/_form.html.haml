@@ -1,0 +1,80 @@
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Veuillez remplir toutes les informations concernant votre lieux
+        .ibox-content
+          = form_for [:admin, @location], validate: true, html: {class: 'form-horizontal'} do |location_form|
+            .form-group
+              %label.col-sm-2.control-label Nom
+              .col-sm-10
+                = location_form.text_field :name, class: 'form-control'
+            %br
+
+            .form-group
+              %label.col-sm-2.control-label Type
+              .col-sm-10
+                = location_form.text_field :type, class: 'form-control'
+            %br
+
+            %fieldset
+              %legend Activités disponibles
+              = location_form.fields_for :location_activities, @location.location_activities.build do |activity_form|
+                - Activity.order(:name).each do |activity|
+                  .form-group
+                    = activity_form.check_box :activity_id, class: 'form-control'
+                    = activity_form.label :activity_id, activity.name
+                  -#.form-group
+                  -#  %label.col-sm-2.control-label
+                  -#    = activity.name
+                  -#  .col-sm-10
+                  -#    = activity_form.check_box activity.name.to_sym, class: 'form-control'
+                  -#%br
+
+            %br
+            %fieldset
+              %legend Personne de contact
+              = location_form.fields_for :contact, @location.contact.present? ? @location.contact : @location.build_contact  do |contact_form|
+                .form-group
+                  %label.col-sm-2.control-label Nom de famille
+                  .col-sm-10
+                    = contact_form.text_field :lastname, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Prénom
+                  .col-sm-10
+                    = contact_form.text_field :firstname, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Numéro de téléphone
+                  .col-sm-10
+                    = contact_form.telephone_field :phone_number, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Email
+                  .col-sm-10
+                    = contact_form.email_field :email, class: 'form-control'
+
+                %br
+                %fieldset
+                  %legend Coordonnées de la personne de contact
+                  = contact_form.fields_for :coordinate, @location.contact.coordinate.present? ? @location.contact.coordinate : @location.contact.build_coordinate  do |coordinate_form|
+                    .form-group
+                      %label.col-sm-2.control-label Rue et numéro
+                      .col-sm-10
+                        = coordinate_form.text_field :street, class: 'form-control'
+                    .form-group
+                      %label.col-sm-2.control-label Code postal
+                      .col-sm-10
+                        = coordinate_form.text_field :zip_code, class: 'form-control'
+                    .form-group
+                      %label.col-sm-2.control-label Ville
+                      .col-sm-10
+                        = coordinate_form.text_field :city, class: 'form-control'
+                    .form-group
+                      %label.col-sm-2.control-label Pays
+                      .col-sm-10
+                        = coordinate_form.text_field :country, class: 'form-control'
+
+            .form-group
+              .col-sm-4
+                %button.btn.btn-primary{:type => 'submit'} Sauver le fournisseur

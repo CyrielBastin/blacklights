@@ -20,13 +20,14 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
   #     post admin_locations_url, params: { location: {  } }
   #   end
   #
+  #   assert_equal 'Votre lieu a été crée avec succès !', flash[:success]
   #   assert_redirected_to location_url(Location.last)
   # end
 
-  test 'Should show location' do
-    get admin_location_url(@location)
-    assert_response :success
-  end
+  # test 'Should show location' do
+  #   get admin_location_url(@location)
+  #   assert_response :success
+  # end
 
   test 'Should get edit' do
     get edit_admin_location_url(@location)
@@ -35,7 +36,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'Should update location' do
     patch admin_location_url(@location), params: { location: { name: 'Has been patched' } }
-    assert_equal 'Votre location a été modifiée avec succès !', flash[:success]
+    assert_equal 'Votre lieu a été modifié avec succès !', flash[:success]
     assert_redirected_to admin_locations_url
   end
 
@@ -44,6 +45,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
       delete admin_location_url(@location)
     end
 
+    assert_equal 'Votre lieu a été supprimé avec succès !', flash[:success]
     assert_redirected_to admin_locations_url
   end
 
