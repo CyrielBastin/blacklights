@@ -22,6 +22,7 @@
                 %thead
                   %th Nom
                   %th Description
+                  %th Lieux disp.
                   %th Actions
                 %tbody
                   - @activities.each do |activity|
@@ -29,8 +30,14 @@
                       %td.project-title
                         %b
                           = activity.name
+
                       %td
                         = activity.description.present? ? activity.description.truncate(40) : "-"
+
+                      %td
+                        - activity.location_activities.each do |loc_ac|
+                          = "- #{loc_ac.location.name}"
+                          %br
 
                       %td.project-actions
                         .btn-group

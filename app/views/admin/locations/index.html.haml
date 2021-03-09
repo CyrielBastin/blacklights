@@ -20,9 +20,9 @@
             .project-list
               %table.table.table-hover.table-striped.dataTables
                 %thead
-                  %th{width: '15%'} Nom
+                  %th{width: '20%'} Nom
                   %th{width: '15%'} Type
-                  %th{width: '25%'} Activités
+                  %th{width: '15%'} Activités
                   %th{width: '20%'} Dimensions
                   %th{width: '25%'} Contact
                 %tbody
@@ -37,15 +37,15 @@
 
                       %td
                         - location.location_activities.each do |loc_ac|
-                          = loc_ac.activity.name
+                          = "- #{loc_ac.activity.name}"
                           %br
 
                       %td
-                        = "Largeur : #{location.dimension[:width]} cm"
+                        = "Largeur : #{location.dimension[:width]} m"
                         %br
-                        = "Longueur : #{location.dimension[:length]} cm"
+                        = "Longueur : #{location.dimension[:length]} m"
                         %br
-                        = "Hauteur : #{location.dimension[:height]} cm"
+                        = "Hauteur : #{location.dimension[:height]} m"
 
                       %td
                         = "Nom : #{location.contact.lastname}"

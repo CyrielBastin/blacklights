@@ -26,22 +26,22 @@
               .form-group
                 %label.col-sm-2.control-label
                 .col-sm-10
-                  = location_form.collection_select :location_activity_ids, Activity.all, :id, :name, {selected: @location.location_activities.pluck(:activity_id)}, { :multiple => true, class: "multiple_select" }
+                  = location_form.collection_select :location_activity_ids, Activity.order(:name), :id, :name, {selected: @location.location_activities.pluck(:activity_id)}, { :multiple => true, class: "multiple_select" }
 
             %br
             %fieldset
               %legend Dimensions
               = location_form.fields_for :dimension, @location.dimension.present? ? @location.dimension : @location.build_dimension  do |dimension_form|
                 .form-group
-                  %label.col-sm-2.control-label Largeur
+                  %label.col-sm-2.control-label Largeur (en m)
                   .col-sm-10
                     = dimension_form.text_field :width, class: 'form-control'
                 .form-group
-                  %label.col-sm-2.control-label Longueur
+                  %label.col-sm-2.control-label Longueur (en m)
                   .col-sm-10
                     = dimension_form.text_field :length, class: 'form-control'
                 .form-group
-                  %label.col-sm-2.control-label Hauteur
+                  %label.col-sm-2.control-label Hauteur (en m)
                   .col-sm-10
                     = dimension_form.text_field :height, class: 'form-control'
                 .form-group

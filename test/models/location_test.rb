@@ -65,9 +65,6 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'Should delete heaven' do
     location = locations(:heaven)
-    assert location.contact.coordinate.destroy
-    assert location.contact.destroy
-    assert location.dimension.destroy
     assert location.destroy
   end
 

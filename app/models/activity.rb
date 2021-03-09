@@ -1,7 +1,7 @@
 class Activity < ApplicationRecord
 
   has_many :event_activities
-  has_many :location_activities
+  has_many :location_activities, dependent: :destroy
   has_many :event_activity_equipments
 
   min_char_name = 4
