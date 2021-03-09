@@ -1,6 +1,6 @@
 class Supplier < ApplicationRecord
 
-  belongs_to :contact
+  belongs_to :contact, dependent: :destroy
   has_many :equipments
 
   accepts_nested_attributes_for :contact

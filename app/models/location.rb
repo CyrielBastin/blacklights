@@ -1,7 +1,7 @@
 class Location < ApplicationRecord
 
-  belongs_to :contact
-  belongs_to :dimension
+  belongs_to :contact, dependent: :destroy
+  belongs_to :dimension, dependent: :destroy
   has_many :location_activities
   has_many :events
 

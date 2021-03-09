@@ -37,12 +37,8 @@ class Admin::LocationsController < AdminController
   end
 
   def destroy
-    location = Location.find(params[:id])
-    location.contact.coordinate.destroy
-    location.contact.destroy
-    location.dimension.destroy
-    # location.location_activities.destroy
-    location.destroy
+    Location.find(params[:id]).destroy
+
     flash[:success] = 'Votre lieu a été supprimé avec succès !'
     redirect_to admin_locations_path
   end

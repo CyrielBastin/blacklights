@@ -38,10 +38,7 @@ class Admin::SuppliersController < AdminController
   end
 
   def destroy
-    supplier = Supplier.find(params[:id])
-    supplier.contact.coordinate.destroy
-    supplier.contact.destroy
-    supplier.destroy
+    Supplier.find(params[:id]).destroy
     flash[:success] = 'Votre fournisseur a été supprimé avec succès !'
     redirect_to admin_suppliers_path
   end
