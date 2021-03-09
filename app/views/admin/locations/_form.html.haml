@@ -49,46 +49,7 @@
                     = dimension_form.text_field :weight, class: 'form-control', style: 'display: none', value: 0.01
 
             %br
-            %fieldset
-              %legend Personne de contact
-              = location_form.fields_for :contact, @location.contact.present? ? @location.contact : @location.build_contact  do |contact_form|
-                .form-group
-                  %label.col-sm-2.control-label Nom de famille
-                  .col-sm-10
-                    = contact_form.text_field :lastname, class: 'form-control'
-                .form-group
-                  %label.col-sm-2.control-label Prénom
-                  .col-sm-10
-                    = contact_form.text_field :firstname, class: 'form-control'
-                .form-group
-                  %label.col-sm-2.control-label Numéro de téléphone
-                  .col-sm-10
-                    = contact_form.telephone_field :phone_number, class: 'form-control'
-                .form-group
-                  %label.col-sm-2.control-label Email
-                  .col-sm-10
-                    = contact_form.email_field :email, class: 'form-control'
-
-                %br
-                %fieldset
-                  %legend Coordonnées de la personne de contact
-                  = contact_form.fields_for :coordinate, @location.contact.coordinate.present? ? @location.contact.coordinate : @location.contact.build_coordinate  do |coordinate_form|
-                    .form-group
-                      %label.col-sm-2.control-label Rue et numéro
-                      .col-sm-10
-                        = coordinate_form.text_field :street, class: 'form-control'
-                    .form-group
-                      %label.col-sm-2.control-label Code postal
-                      .col-sm-10
-                        = coordinate_form.text_field :zip_code, class: 'form-control'
-                    .form-group
-                      %label.col-sm-2.control-label Ville
-                      .col-sm-10
-                        = coordinate_form.text_field :city, class: 'form-control'
-                    .form-group
-                      %label.col-sm-2.control-label Pays
-                      .col-sm-10
-                        = coordinate_form.text_field :country, class: 'form-control'
+            = render partial: 'shared/contact_form', locals: { form: location_form, object: @location }
 
             .form-group
               .col-sm-4

@@ -1,6 +1,6 @@
 class Contact < ApplicationRecord
 
-  belongs_to :coordinate
+  belongs_to :coordinate, dependent: :destroy
   has_one :supplier
   has_one :location
   has_one :event
