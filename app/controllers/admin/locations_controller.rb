@@ -10,6 +10,7 @@ class Admin::LocationsController < AdminController
 
   def create
     @location = Location.new(location_params)
+    add_activities
     if @location.save
       flash[:success] = 'Votre lieu a été crée avec succès !'
       redirect_to admin_locations_path
@@ -28,6 +29,7 @@ class Admin::LocationsController < AdminController
 
   def update
     @location = Location.find(params[:id])
+    add_activities
     if @location.update(location_params)
       flash[:success] = 'Votre lieu a été modifié avec succès !'
       redirect_to admin_locations_path
@@ -38,10 +40,6 @@ class Admin::LocationsController < AdminController
 
   def destroy
     location = Location.find(params[:id])
-    location.contact.coordinate.destroy
-    location.contact.destroy
-    location.dimension.destroy
-    # location.location_activities.destroy
     location.destroy
     flash[:success] = 'Votre lieu a été supprimé avec succès !'
     redirect_to admin_locations_path
@@ -50,7 +48,16 @@ class Admin::LocationsController < AdminController
   private
 
   def location_params
-    params.require(:location).permit(:id, :name, :type)
+    params.require(:location).permit(:id, :location_activity_ids, :name, :type, contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]], dimension_attributes: [:id, :width, :length, :height, :weight])
+  end
+
+  def add_activities
+    @location.location_activities = []
+    params[:location][:location_activity_ids].each do |activity_id|
+      unless activity_id.empty?
+        @location.location_activities << LocationActivity.new(activity_id: activity_id, location_id: @location)
+      end
+    end
   end
 
 end

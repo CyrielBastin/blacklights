@@ -7,31 +7,26 @@
             Veuillez remplir toutes les informations concernant votre lieu
         .ibox-content
           = form_for [:admin, @location], validate: true, html: {class: 'form-horizontal'} do |location_form|
-            .form-group
-              %label.col-sm-2.control-label Nom
-              .col-sm-10
-                = location_form.text_field :name, class: 'form-control'
-            %br
+            %fieldset
+              %legend Informations
+              .form-group
+                %label.col-sm-2.control-label Nom
+                .col-sm-10
+                  = location_form.text_field :name, class: 'form-control'
+                %br
 
-            .form-group
-              %label.col-sm-2.control-label Type
-              .col-sm-10
-                = location_form.text_field :type, class: 'form-control'
-            %br
+              .form-group
+                %label.col-sm-2.control-label Type
+                .col-sm-10
+                  = location_form.text_field :type, class: 'form-control'
+                %br
 
             %fieldset
               %legend Activités disponibles
-              = location_form.fields_for :location_activities, @location.location_activities.build do |activity_form|
-                - Activity.order(:name).each do |activity|
-                  .form-group
-                    = activity_form.check_box :activity_id, class: 'form-control'
-                    = activity_form.label :activity_id, activity.name
-                  -#.form-group
-                  -#  %label.col-sm-2.control-label
-                  -#    = activity.name
-                  -#  .col-sm-10
-                  -#    = activity_form.check_box activity.name.to_sym, class: 'form-control'
-                  -#%br
+              .form-group
+                %label.col-sm-2.control-label
+                .col-sm-10
+                  = location_form.collection_select :location_activity_ids, Activity.all, :id, :name, {selected: @location.location_activities.pluck(:activity_id)}, { :multiple => true, class: "multiple_select" }
 
             %br
             %fieldset

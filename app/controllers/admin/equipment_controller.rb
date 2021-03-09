@@ -45,8 +45,7 @@ class Admin::EquipmentController < AdminController
   private
 
   def equipment_params
-    params.require(:equipment).permit(:name, :description, :unit_price, :category_id, :supplier_id,
-                                      dimension_attributes: [:id, :width, :length, :height, :weight])
+    params.require(:equipment).permit(:name, :description, :unit_price, :category_id, :supplier_id, dimension_attributes: [:id, :width, :length, :height, :weight])
   end
 
 end
