@@ -4,7 +4,7 @@
       .ibox.float-e-margins
         .ibox-title
           %h5
-            Veuillez remplir toutes les informations concernant votre lieux
+            Veuillez remplir toutes les informations concernant votre lieu
         .ibox-content
           = form_for [:admin, @location], validate: true, html: {class: 'form-horizontal'} do |location_form|
             .form-group
@@ -32,6 +32,26 @@
                   -#  .col-sm-10
                   -#    = activity_form.check_box activity.name.to_sym, class: 'form-control'
                   -#%br
+
+            %br
+            %fieldset
+              %legend Dimensions
+              = location_form.fields_for :dimension, @location.dimension.present? ? @location.dimension : @location.build_dimension  do |dimension_form|
+                .form-group
+                  %label.col-sm-2.control-label Largeur
+                  .col-sm-10
+                    = dimension_form.text_field :width, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Longueur
+                  .col-sm-10
+                    = dimension_form.text_field :length, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Hauteur
+                  .col-sm-10
+                    = dimension_form.text_field :height, class: 'form-control'
+                .form-group
+                  .col-sm-10
+                    = dimension_form.text_field :weight, class: 'form-control', style: 'display: none', value: 0.01
 
             %br
             %fieldset
@@ -77,4 +97,4 @@
 
             .form-group
               .col-sm-4
-                %button.btn.btn-primary{:type => 'submit'} Sauver le fournisseur
+                %button.btn.btn-primary{:type => 'submit'} Sauver le lieu

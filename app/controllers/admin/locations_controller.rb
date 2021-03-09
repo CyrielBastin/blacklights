@@ -50,7 +50,7 @@ class Admin::LocationsController < AdminController
   private
 
   def location_params
-    params.require(:location).permit(:id, :name, contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]])
+    params.require(:location).permit(:id, :name, :type)
   end
 
 end
