@@ -26,7 +26,7 @@
               .form-group
                 %label.col-sm-2.control-label
                 .col-sm-10
-                  = location_form.collection_select :location_activity_ids, Activity.order(:name), :id, :name, {selected: @location.location_activities.pluck(:activity_id)}, { :multiple => true, class: "multiple_select" }
+                  = location_form.collection_select :location_activity_ids, Activity.all, :id, :name, {selected: @location.location_activities.pluck(:activity_id)}, { :multiple => true, class: "multiple_select" }
 
             %br
             %fieldset

@@ -1,7 +1,7 @@
 class Admin::ActivitiesController < AdminController
 
   def index
-    @activities = Activity.order(:name)
+    @activities = Activity.all
   end
 
   def new
