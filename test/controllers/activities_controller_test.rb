@@ -17,7 +17,13 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
 
   test 'should create activity' do
     assert_difference('Activity.count') do
-      post admin_activities_url, params: { activity: { name: 'Climbing', description: 'Climbing is wholesome!' } }
+      post admin_activities_url, params:
+        { activity:
+            { name: 'Climbing',
+              description: 'Climbing is wholesome!',
+              location_activity_ids:
+                [ locations(:heaven)[:id],
+                  locations(:hell)[:id] ] } }
     end
 
     assert_equal 'Votre activité a été créée avec succès !', flash[:success]
@@ -35,7 +41,11 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update activity' do
-    patch admin_activity_url(@activity), params: { activity: { name: 'Climbing' } }
+    patch admin_activity_url(@activity), params:
+      { activity:
+          { name: 'Climbing',
+            location_activity_ids:
+              [ locations(:heaven).id ] } }
     assert_equal 'Votre activité a été modifiée avec succès !', flash[:success]
     assert_redirected_to admin_activities_url
   end

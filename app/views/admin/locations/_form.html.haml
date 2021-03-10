@@ -1,0 +1,56 @@
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Veuillez remplir toutes les informations concernant votre lieu
+        .ibox-content
+          = form_for [:admin, @location], validate: true, html: {class: 'form-horizontal'} do |location_form|
+            %fieldset
+              %legend Informations
+              .form-group
+                %label.col-sm-2.control-label Nom
+                .col-sm-10
+                  = location_form.text_field :name, class: 'form-control'
+                %br
+
+              .form-group
+                %label.col-sm-2.control-label Type
+                .col-sm-10
+                  = location_form.text_field :type, class: 'form-control'
+                %br
+
+            %fieldset
+              %legend Activités disponibles
+              .form-group
+                %label.col-sm-2.control-label
+                .col-sm-10
+                  = location_form.collection_select :location_activity_ids, Activity.all, :id, :name, {selected: @location.location_activities.pluck(:activity_id)}, { :multiple => true, class: "multiple_select" }
+
+            %br
+            %fieldset
+              %legend Dimensions
+              = location_form.fields_for :dimension, @location.dimension.present? ? @location.dimension : @location.build_dimension  do |dimension_form|
+                .form-group
+                  %label.col-sm-2.control-label Largeur (en m)
+                  .col-sm-10
+                    = dimension_form.text_field :width, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Longueur (en m)
+                  .col-sm-10
+                    = dimension_form.text_field :length, class: 'form-control'
+                .form-group
+                  %label.col-sm-2.control-label Hauteur (en m)
+                  .col-sm-10
+                    = dimension_form.text_field :height, class: 'form-control'
+                .form-group
+                  .col-sm-10
+                    = dimension_form.text_field :weight, class: 'form-control', style: 'display: none', value: 0.01
+
+            %br
+            = render partial: 'shared/contact_form', locals: { form: location_form, object: @location }
+
+            .form-group
+              .col-sm-4
+                %button.btn.btn-primary{:type => 'submit'} Sauver le lieu

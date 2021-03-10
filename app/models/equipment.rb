@@ -2,7 +2,7 @@ class Equipment < ApplicationRecord
 
   belongs_to :category
   belongs_to :supplier
-  belongs_to :dimension
+  belongs_to :dimension, dependent: :destroy
   has_many :activity_equipments
   has_many :event_activity_equipments
 

@@ -1,0 +1,74 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Lieux
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Lieux
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble des lieux définis
+          .ibox-tools
+            = link_to 'Nouveau lieu', new_admin_location_path, class: 'btn btn-primary'
+        .ibox-content
+          - if @locations.size > 0
+            .project-list
+              %table.table.table-hover.table-striped.dataTables
+                %thead
+                  %th{width: '20%'} Nom
+                  %th{width: '15%'} Type
+                  %th{width: '15%'} Activités
+                  %th{width: '20%'} Dimensions
+                  %th{width: '25%'} Contact
+                %tbody
+                  - @locations.each do |location|
+                    %tr
+                      %td.project-title{:style => 'word-wrap: break-word'}
+                        %b
+                          = location[:name]
+
+                      %td{:style => 'word-wrap: break-word'}
+                        = location[:type]
+
+                      %td
+                        - location.location_activities.each do |loc_ac|
+                          = "- #{loc_ac.activity.name}"
+                          %br
+
+                      %td
+                        = "Largeur : #{location.dimension[:width]} m"
+                        %br
+                        = "Longueur : #{location.dimension[:length]} m"
+                        %br
+                        = "Hauteur : #{location.dimension[:height]} m"
+
+                      %td
+                        = "Nom : #{location.contact.lastname}"
+                        %br
+                        = "Prénom : #{location.contact.firstname}"
+                        %br
+                        = "Tél. : #{location.contact.phone_number}"
+                        %br
+                        = "Email : #{location.contact.email}"
+
+                      %td.project-actions
+                        .btn-group
+                          %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
+                            Actions
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a.btn.btn-white.btn-sm{:href => edit_admin_location_path(location[:id])}
+                                %i.fa.fa-pen
+                                Modifier
+                              = link_to admin_location_path(location[:id]), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer ce lieu ?" }, class: "btn btn-white btn-sm" do
+                                %i.fa.fa-trash
+                                Supprimer
+
+          - else
+            Aucun lieu enregisté actuellement.
