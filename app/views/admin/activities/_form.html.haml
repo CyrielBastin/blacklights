@@ -26,6 +26,21 @@
                 .col-sm-10
                   = f.collection_select :location_activity_ids, Location.order(:name), :id, :name, {selected: @activity.location_activities.pluck(:location_id)}, { :multiple => true, class: "multiple_select" }
 
+            %fieldset
+              %legend Matériel nécessaire
+              = f.fields_for :activity_equipment, @activity.activity_equipment.present? ? @activity.activity_equipment : @activity.activity_equipment.build, dynamic: true do |ac_eq_form|
+                .form-group
+                  %label.col-sm-2.control-label Matériel
+                  .col-sm-1
+                    = ac_eq_form.select :equipment_id, options_for_select(Equipment.order(:name).map{|e|[e.name, e.id]}), {:class => "form-control select"}
+                  %label.col-sm-2.control-label Quantité
+                  .col-sm-2
+                    = ac_eq_form.text_field :quantity, {style: 'max-width: 220px'}
+                  .col-sm-1
+                    = ac_eq_form.remove_fields_link 'Supprimer'
+
+              = f.add_fields_link :activity_equipment, 'Ajouter du matériel'
+
             .form-group
               .col-sm-4
-                %button.btn.btn-primary{:type => "submit"} Sauver l'activité
+                %button.btn.btn-primary{:type => "submit", style: 'margin-top: 60px'} Sauver l'activité

@@ -47,6 +47,9 @@ GEM
     activerecord (6.1.2.1)
       activemodel (= 6.1.2.1)
       activesupport (= 6.1.2.1)
+    activerecord-devkit (1.1.0)
+      activerecord (>= 3.2.13)
+      ruby-features (>= 1.1.1)
     activestorage (6.1.2.1)
       actionpack (= 6.1.2.1)
       activejob (= 6.1.2.1)
@@ -104,6 +107,11 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dynamic-fields-for (1.2.1)
+      activerecord-devkit
+      jquery-rails
+      rails (>= 5.0.0)
+      ruby-features (>= 1.2.1)
     email_validator (2.2.2)
       activemodel
     erubi (1.10.0)
@@ -201,6 +209,7 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.4)
+    ruby-features (1.2.1)
     ruby-graphviz (1.2.5)
       rexml
     ruby_dep (1.5.0)
@@ -274,6 +283,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   client_side_validations
   devise
+  dynamic-fields-for
   email_validator
   haml
   jbuilder (~> 2.7)

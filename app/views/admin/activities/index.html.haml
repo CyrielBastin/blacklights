@@ -22,6 +22,7 @@
                 %thead
                   %th Nom
                   %th Description
+                  %th Matériel
                   %th Lieux disp.
                   %th Actions
                 %tbody
@@ -33,6 +34,11 @@
 
                       %td
                         = activity.description.present? ? activity.description.truncate(40) : "-"
+
+                      %td
+                        - activity.activity_equipment.each do |ac_eq|
+                          = "#{ac_eq.quantity}x #{ac_eq.equipment.name}"
+                          %br
 
                       %td
                         - activity.location_activities.each do |loc_ac|

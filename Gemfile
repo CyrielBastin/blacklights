@@ -27,6 +27,7 @@ gem 'sprockets'
 gem 'devise'
 gem 'client_side_validations'
 gem 'multi-select-rails'
+gem 'dynamic-fields-for'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password

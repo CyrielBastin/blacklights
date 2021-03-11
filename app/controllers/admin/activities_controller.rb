@@ -47,7 +47,9 @@ class Admin::ActivitiesController < AdminController
   private
 
   def activity_params
-    params.require(:activity).permit(:id, :name, :description, :location_activity_ids)
+    params.require(:activity).permit(:id, :name, :description,
+                                     :location_activity_ids,
+                                     activity_equipment_attributes: [:id, :equipment_id, :quantity, :_destroy])
   end
 
   def add_locations
