@@ -31,9 +31,9 @@
               = f.fields_for :activity_equipment, @activity.activity_equipment.present? ? @activity.activity_equipment : @activity.activity_equipment.build, dynamic: true do |ac_eq_form|
                 .form-group
                   %label.col-sm-2.control-label Matériel
-                  .col-sm-1
+                  .col-sm-2
                     = ac_eq_form.select :equipment_id, options_for_select(Equipment.order(:name).map{|e|[e.name, e.id]}), {:class => "form-control select"}
-                  %label.col-sm-2.control-label Quantité
+                  %label.col-sm-1.control-label Quantité
                   .col-sm-2
                     = ac_eq_form.text_field :quantity, {style: 'max-width: 220px'}
                   .col-sm-1

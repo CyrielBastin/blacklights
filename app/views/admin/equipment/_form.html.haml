@@ -26,15 +26,13 @@
             .form-group
               %label.col-sm-2.control-label Catégorie
               .col-sm-10
-                = equipment_form.select :category_id, options_for_select(Category.order(:name).map{|c|[c.name, c.id]}, @equipment.category_id),
-                                                                         {:class => "form-control select"}
+                = equipment_form.select :category_id, options_for_select(Category.order(:name).map{|c|[c.name, c.id]}, @equipment.category_id), {:class => "form-control select"}
 
             .hr-line-dashed
             .form-group
               %label.col-sm-2.control-label Fournisseur
               .col-sm-10
-                = equipment_form.select :supplier_id, options_for_select(Supplier.order(:name).map{|s|[s.name, s.id]}, @equipment.supplier_id),
-                                                                         {:class => "form-control select"}
+                = equipment_form.select :supplier_id, options_for_select(Supplier.order(:name).map{|s|[s.name, s.id]}, @equipment.supplier_id), {:class => "form-control select"}
 
             %br
             %fieldset
