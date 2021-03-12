@@ -11,6 +11,7 @@
 //= require bootstrap-sprockets
 //= require admin/inspinia.js
 //= require multi-select
+//= require dynamic-fields-for
 
 
 $(function() {

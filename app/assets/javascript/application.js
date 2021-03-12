@@ -11,4 +11,3 @@
 //= require bootstrap
 //= require jquery
 //= require rails.validations
-//= require dynamic-fields-for
