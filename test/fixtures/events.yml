@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+dark_badminton:
+  start_date: 2021-03-12 02:35:07
+  end_date: 2021-03-12 02:35:07
+  price: 9.99
+  registration_deadline: 2021-03-12 02:35:07
+  min_participant: 1
+  max_participant: 11
+
+dark_volley_ball:
+  start_date: 2021-03-12 02:35:07
+  end_date: 2021-03-12 02:35:07
+  price: 4.99
+  registration_deadline: 2021-03-12 02:35:07
+  min_participant: 2
+  max_participant: 22
