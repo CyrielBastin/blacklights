@@ -36,14 +36,16 @@
                         = activity.description.present? ? activity.description.truncate(40) : "-"
 
                       %td
-                        - activity.activity_equipment.each do |ac_eq|
-                          = "#{ac_eq.quantity}x #{ac_eq.equipment.name}"
-                          %br
+                        - activity.activity_equipment.each_with_index do |ac_eq, i|
+                          - unless i == 0
+                            %br
+                          = "#{ac_eq.equipment.name} (#{ac_eq.quantity})"
 
                       %td
-                        - activity.location_activities.each do |loc_ac|
-                          = "- #{loc_ac.location.name}"
-                          %br
+                        - activity.location_activities.each_with_index do |loc_ac, i|
+                          - unless i == 0
+                            %br
+                          = "#{loc_ac.location.name}"
 
                       %td.project-actions
                         .btn-group
