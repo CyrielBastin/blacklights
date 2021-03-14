@@ -141,4 +141,29 @@ class EventTest < ActiveSupport::TestCase
     assert event[:max_participant] > event[:min_participant]
   end
 
+  test 'contact\'s firstname for event "dark_badminton" should be "Cain"' do
+    event = events(:dark_badminton)
+
+    assert_equal 'Cain', event.contact[:firstname]
+  end
+
+  test 'location\'s name for event "dark_volley_ball" should be "Hell"' do
+    event = events(:dark_volley_ball)
+
+    assert_equal 'Hell', event.location[:name]
+  end
+
+  test 'should update min_participant to "5"' do
+    event = events(:dark_badminton)
+    assert event.update({ min_participant: 5 })
+
+    assert_equal 5, event[:min_participant]
+  end
+
+  test 'should delete event "dark_badminton"' do
+    event = events(:dark_badminton)
+
+    assert event.destroy
+  end
+
 end

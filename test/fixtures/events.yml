@@ -7,6 +7,8 @@ dark_badminton:
   registration_deadline: 2021-03-12 02:35:07
   min_participant: 1
   max_participant: 11
+  location: heaven
+  contact: one
 
 dark_volley_ball:
   start_date: 2021-03-12 02:35:07
@@ -15,3 +17,5 @@ dark_volley_ball:
   registration_deadline: 2021-03-12 02:35:07
   min_participant: 2
   max_participant: 22
+  location: hell
+  contact: two

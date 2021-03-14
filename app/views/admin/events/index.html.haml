@@ -1,0 +1,95 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Evènements
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Evènements
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble des Evènements définis
+          .ibox-tools
+            = link_to "Nouvel évènement", new_admin_event_path, class: "btn btn-primary"
+        .ibox-content
+          - if @events.size > 0
+            .project-list
+              %table.table.table-hover.table-striped.dataTables
+                %thead
+                  %th Date de début
+                  %th Date de fin
+                  %th Activités
+                  %th Matériel
+                  %th Min. participant
+                  %th Max participant
+                  %th Clôture inscriptions
+                  %th Prix
+                  %th Lieu
+                  %th Contact
+                  %th Actions
+                %tbody
+                  - @events.each do |event|
+                    %tr
+                      %td
+                        = event[:start_date]
+
+                      %td
+                        = event[:end_date]
+
+                      %td
+                        - event.event_activities.each do |ev_ac|
+                          = "- #{ev_ac.activity.name}"
+                          %br
+
+                      %td
+                        - event.event_activity_equipment.each do |ev_ac_eq|
+                          = "#{ev_ac_eq.quantity}x #{ev_ac_eq.equipment.name}"
+                          %br
+
+                      %td
+                        = event[:end_date]
+
+                      %td
+                        = event[:min_participant]
+
+                      %td
+                        = event[:max_participant]
+
+                      %td
+                        = event[:registration_deadline]
+
+                      %td
+                        = event[:price]
+
+                      %td
+                        = event.location[:name]
+
+                      %td
+                        = "Nom : #{location.contact.lastname}"
+                        %br
+                        = "Prénom : #{location.contact.firstname}"
+                        %br
+                        = "Tél. : #{location.contact.phone_number}"
+                        %br
+                        = "Email : #{location.contact.email}"
+
+                      %td.project-actions
+                        .btn-group
+                          %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
+                            Actions
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a.btn.btn-white.btn-sm{:href => edit_admin_activity_path(activity.id)}
+                                %i.fa.fa-pen
+                                Modifier
+                              = link_to admin_activity_path(activity.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cette activité ?" }, class: "btn btn-white btn-sm" do
+                                %i.fa.fa-trash
+                                Supprimer
+
+          - else
+            Aucun évènement enregistré actuellement
