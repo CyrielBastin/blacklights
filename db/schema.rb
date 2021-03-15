@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_03_110200) do
+ActiveRecord::Schema.define(version: 2021_03_15_134328) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -73,18 +73,17 @@ ActiveRecord::Schema.define(version: 2021_03_03_110200) do
   create_table "event_activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "activity_id"
+    t.integer "simultaneous_activities"
     t.index ["activity_id"], name: "index_event_activities_on_activity_id"
     t.index ["event_id"], name: "index_event_activities_on_event_id"
   end
 
-  create_table "event_activity_equipments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "event_equipments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "event_id"
-    t.bigint "activity_id"
     t.bigint "equipment_id"
     t.decimal "quantity", precision: 10, scale: 3
-    t.index ["activity_id"], name: "index_event_activity_equipments_on_activity_id"
-    t.index ["equipment_id"], name: "index_event_activity_equipments_on_equipment_id"
-    t.index ["event_id"], name: "index_event_activity_equipments_on_event_id"
+    t.index ["equipment_id"], name: "index_event_equipments_on_equipment_id"
+    t.index ["event_id"], name: "index_event_equipments_on_event_id"
   end
 
   create_table "events", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
