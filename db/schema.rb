@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_134328) do
+ActiveRecord::Schema.define(version: 2021_03_15_195745) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -19,14 +19,14 @@ ActiveRecord::Schema.define(version: 2021_03_15_134328) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "activity_equipments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "activity_equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "activity_id"
     t.bigint "equipment_id"
     t.decimal "quantity", precision: 10, scale: 3
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["activity_id"], name: "index_activity_equipments_on_activity_id"
-    t.index ["equipment_id"], name: "index_activity_equipments_on_equipment_id"
+    t.index ["activity_id"], name: "index_activity_equipment_on_activity_id"
+    t.index ["equipment_id"], name: "index_activity_equipment_on_equipment_id"
   end
 
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -78,12 +78,12 @@ ActiveRecord::Schema.define(version: 2021_03_15_134328) do
     t.index ["event_id"], name: "index_event_activities_on_event_id"
   end
 
-  create_table "event_equipments", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "event_equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "equipment_id"
     t.decimal "quantity", precision: 10, scale: 3
-    t.index ["equipment_id"], name: "index_event_equipments_on_equipment_id"
-    t.index ["event_id"], name: "index_event_equipments_on_event_id"
+    t.index ["equipment_id"], name: "index_event_equipment_on_equipment_id"
+    t.index ["event_id"], name: "index_event_equipment_on_event_id"
   end
 
   create_table "events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
