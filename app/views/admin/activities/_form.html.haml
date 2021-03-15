@@ -24,7 +24,7 @@
               .form-group
                 %label.col-sm-2.control-label
                 .col-sm-10
-                  = f.collection_select :location_activity_ids, Location.order(:name), :id, :name, {selected: @activity.location_activities.pluck(:location_id)}, { :multiple => true, class: "multiple_select" }
+                  = f.collection_select :location_activity_ids, Location.all, :id, :name, {selected: @activity.location_activities.pluck(:location_id)}, { :multiple => true, class: "multiple_select" }
 
             %fieldset
               %legend Matériel nécessaire
@@ -32,7 +32,7 @@
                 .form-group
                   %label.col-sm-2.control-label Matériel
                   .col-sm-2
-                    = ac_eq_form.select :equipment_id, options_for_select(Equipment.order(:name).map{|e|[e.name, e.id]}, ac_eq_form.object.equipment_id), {}, {:class => "form-control select"}
+                    = ac_eq_form.select :equipment_id, options_for_select(Equipment.all.map{|e|[e.name, e.id]}, ac_eq_form.object.equipment_id), {}, {:class => "form-control select"}
                   %label.col-sm-1.control-label Quantité
                   .col-sm-2
                     = ac_eq_form.number_field :quantity, class: "form-control"

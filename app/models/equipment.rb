@@ -1,5 +1,7 @@
 class Equipment < ApplicationRecord
 
+  default_scope -> { order(:name) }
+
   belongs_to :category
   belongs_to :supplier
   belongs_to :dimension, dependent: :destroy

@@ -1,5 +1,7 @@
 class Location < ApplicationRecord
 
+  default_scope -> { order(:name) }
+
   belongs_to :contact, dependent: :destroy
   belongs_to :dimension, dependent: :destroy
   has_many :location_activities, dependent: :destroy

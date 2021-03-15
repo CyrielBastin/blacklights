@@ -1,5 +1,7 @@
 class Supplier < ApplicationRecord
 
+  default_scope -> { order(:name) }
+
   belongs_to :contact, dependent: :destroy
   has_many :equipments
 
