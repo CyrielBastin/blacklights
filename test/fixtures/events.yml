@@ -1,6 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 dark_badminton:
+  name: Dark Badminton
   start_date: 2021-03-12 02:35:07
   end_date: 2021-03-12 02:35:07
   price: 9.99
@@ -11,6 +12,7 @@ dark_badminton:
   contact: one
 
 dark_volley_ball:
+  name: Dark Volleyball
   start_date: 2021-03-12 02:35:07
   end_date: 2021-03-12 02:35:07
   price: 4.99

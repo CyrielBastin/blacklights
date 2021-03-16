@@ -2,10 +2,26 @@ require "test_helper"
 
 class EventTest < ActiveSupport::TestCase
 
+  test 'should not save an event without a name' do
+    event = Event.new
+    event.location = locations(:heaven)
+    event.contact = contacts(:two)
+    assert_not event.save
+  end
+
+  test 'name should contain at least 8 characters' do
+    event = Event.new
+    event.location = locations(:heaven)
+    event.contact = contacts(:two)
+    event[:name] = '1234567'
+    assert_not event.save
+  end
+
   test 'should not save an event without a start date' do
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     assert_not event.save
   end
 
@@ -13,6 +29,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     assert_not event.save
   end
@@ -21,6 +38,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     assert_not event.save
@@ -30,6 +48,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 0
@@ -41,6 +60,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 3
@@ -52,6 +72,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 3
@@ -64,6 +85,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 3
@@ -77,6 +99,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 3
@@ -90,6 +113,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 3
@@ -103,6 +127,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 3
@@ -117,6 +142,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 3
@@ -131,6 +157,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
+    event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2021-04-21 08:41:21'
     event[:end_date] = '2021-05-21 08:41:21'
     event[:price] = 3

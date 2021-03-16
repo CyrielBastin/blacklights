@@ -20,62 +20,39 @@
             .project-list
               %table.table.table-hover.table-striped.dataTables
                 %thead
+                  %th Nom
                   %th Date de début
                   %th Date de fin
-                  %th Activités
-                  %th Matériel
-                  %th Min. participant
-                  %th Max participant
                   %th Clôture inscriptions
-                  %th Prix
+                  %th Activités
                   %th Lieu
-                  %th Contact
+                  %th Prix
                   %th Actions
                 %tbody
                   - @events.each do |event|
                     %tr
                       %td
-                        = event[:start_date]
+                        = event[:name]
 
                       %td
-                        = event[:end_date]
+                        = event.datetime_to_french_format(event[:start_date])
+
+                      %td
+                        = event.datetime_to_french_format(event[:end_date])
+
+                      %td
+                        = event.datetime_to_french_format(event[:registration_deadline])
 
                       %td
                         - event.event_activities.each do |ev_ac|
-                          = "- #{ev_ac.activity.name}"
+                          = "- #{ev_ac.activity.name} (#{ev_ac.simultaneous_activities})"
                           %br
-
-                      %td
-                        - event.event_activity_equipment.each do |ev_ac_eq|
-                          = "#{ev_ac_eq.quantity}x #{ev_ac_eq.equipment.name}"
-                          %br
-
-                      %td
-                        = event[:end_date]
-
-                      %td
-                        = event[:min_participant]
-
-                      %td
-                        = event[:max_participant]
-
-                      %td
-                        = event[:registration_deadline]
-
-                      %td
-                        = event[:price]
 
                       %td
                         = event.location[:name]
 
                       %td
-                        = "Nom : #{location.contact.lastname}"
-                        %br
-                        = "Prénom : #{location.contact.firstname}"
-                        %br
-                        = "Tél. : #{location.contact.phone_number}"
-                        %br
-                        = "Email : #{location.contact.email}"
+                        = "#{event[:price]}€"
 
                       %td.project-actions
                         .btn-group
@@ -84,10 +61,10 @@
                             %span.caret
                           %ul.dropdown-menu
                             %li
-                              %a.btn.btn-white.btn-sm{:href => edit_admin_activity_path(activity.id)}
+                              %a.btn.btn-white.btn-sm{:href => edit_admin_event_path(event.id)}
                                 %i.fa.fa-pen
                                 Modifier
-                              = link_to admin_activity_path(activity.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cette activité ?" }, class: "btn btn-white btn-sm" do
+                              = link_to admin_event_path(event.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cet évènement ?" }, class: "btn btn-white btn-sm" do
                                 %i.fa.fa-trash
                                 Supprimer
 

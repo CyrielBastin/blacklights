@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_195745) do
+ActiveRecord::Schema.define(version: 2021_03_15_230656) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_195745) do
     t.bigint "contact_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.index ["contact_id"], name: "index_events_on_contact_id"
     t.index ["location_id"], name: "index_events_on_location_id"
   end

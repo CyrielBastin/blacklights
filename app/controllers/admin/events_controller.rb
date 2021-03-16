@@ -1,7 +1,7 @@
 class Admin::EventsController < AdminController
 
   def index
-    @events = Event.order(:name)
+    @events = Event.order(:start_date)
   end
 
   def new
@@ -45,9 +45,10 @@ class Admin::EventsController < AdminController
   private
 
   def event_params
-    params.require(:event).permit(:start_date, :end_date, :registration_deadline, :min_participant, :max_participant, :price, :location_id,
+    params.require(:event).permit(:name, :start_date, :end_date, :registration_deadline, :min_participant, :max_participant, :price, :location_id,
                                   contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
-                                  event_activity_equipment_attributes: [:id, :activity_id, :quantity, :_destroy])
+                                  event_activities_attributes: [:id, :activity_id, :simultaneous_activities, :_destroy],
+                                  event_equipment_attributes: [:id, :equipment_id, :quantity, :_destroy])
   end
 
 end
