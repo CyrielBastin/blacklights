@@ -21,8 +21,7 @@
               %table.table.table-hover.table-striped.dataTables
                 %thead
                   %th Nom
-                  %th Date de début
-                  %th Date de fin
+                  %th Date
                   %th Clôture inscriptions
                   %th Activités
                   %th Lieu
@@ -36,8 +35,7 @@
 
                       %td
                         = event.datetime_to_french_format(event[:start_date])
-
-                      %td
+                        %br au
                         = event.datetime_to_french_format(event[:end_date])
 
                       %td
@@ -61,6 +59,9 @@
                             %span.caret
                           %ul.dropdown-menu
                             %li
+                              %a.btn.btn-white.btn-sm{:href => admin_event_path(event.id)}
+                                %i.fa.fa-eye
+                                Détails
                               %a.btn.btn-white.btn-sm{:href => edit_admin_event_path(event.id)}
                                 %i.fa.fa-pen
                                 Modifier

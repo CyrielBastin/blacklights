@@ -1,0 +1,48 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Evènements
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li
+        %a{:href => admin_events_path} Evènements
+      %li.active
+        %strong
+          = @event.name
+
+
+%table.table.table-borderless{style: 'margin-top: 50px; max-width: 500px'}
+  %tbody
+    %tr
+      %th Nom :
+      %td
+        = @event[:name]
+    %tr
+      %th Date de début :
+      %td
+        = @event.datetime_to_french_format(@event[:start_date])
+    %tr
+      %th Date de fin :
+      %td
+        = @event.datetime_to_french_format(@event[:end_date])
+    %tr
+      %th Clôture des inscriptions :
+      %td
+        = @event.datetime_to_french_format(@event[:registration_deadline])
+    %tr
+      %th Min. participant :
+      %td
+        = @event[:min_participant]
+    %tr
+      %th Max. participant :
+      %td
+        = @event[:max_participant]
+    %tr
+      %th Activités :
+      - if @event.event_activities.present?
+        %td
+          - @event.event_activities.each do |ev_ac|
+            = "#{ev_ac.activity.name} (#{ev_ac.simultaneous_activities})"
+            %br
+    %tr
+      %th Matériel :
