@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :equipment
     resources :suppliers
     resources :registrations
+    get '/json/location_activities/:loc_id', to: 'activities#location_activities_json'
     resources :activities
     resources :categories
   end

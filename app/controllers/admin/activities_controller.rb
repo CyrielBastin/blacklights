@@ -46,6 +46,10 @@ class Admin::ActivitiesController < AdminController
     redirect_to admin_activities_path
   end
 
+  def location_activities_json
+    render json: Activity.get_activities_by_location_id(params[:loc_id])
+  end
+
   private
 
   def activity_params
