@@ -22,6 +22,9 @@ class Admin::EventsController < AdminController
 
   def show
     @event = Event.find(params[:id])
+    event_equipment = helpers.add_up_duplicates(assemble_all_equipment_together, { id: :equipment_name, quantity: :quantity })
+
+    render 'show', locals: { :@event => @event, :event_equipment => event_equipment }
   end
 
   def edit
@@ -75,6 +78,34 @@ class Admin::EventsController < AdminController
       @event.event_equipment << EventEquipment.new(event_id: @event, equipment_id: key, quantity: value)
     end
     params[:event].delete(:event_equipment_attributes)
+  end
+
+  # This function gets all the equipment for an event together inside an hash of hashes
+  # example: { "1": { "equipment_name": "aa", "quantity": 1" }, "2": { "equipment_name": "bb", "quantity": "2" } }
+  # That is in order to handle the duplicates afterward
+  def assemble_all_equipment_together
+    equipment_assembled = {}
+    index = 1
+    if @event.event_activities.present?
+      @event.event_activities.each do |ev_ac|
+        if ev_ac.activity.activity_equipment.present?
+          ev_ac.activity.activity_equipment.each do |ac_eq|
+            equipment_assembled[index] = { equipment_name: ac_eq.equipment.name,
+                                           quantity: ac_eq.quantity * ev_ac.simultaneous_activities }
+            index += 1
+          end
+        end
+      end
+    end
+    if @event.event_equipment.present?
+      @event.event_equipment.each do |ev_eq|
+        equipment_assembled[index] = { equipment_name: ev_eq.equipment.name,
+                                       quantity: ev_eq.quantity }
+        index += 1
+      end
+    end
+
+    equipment_assembled
   end
 
 end

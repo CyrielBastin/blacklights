@@ -9,6 +9,7 @@
           = form_for [:admin, @event], validate: true, html: {class: 'form-horizontal'} do |event_form|
             %fieldset
               %legend Informations
+              = event_form.text_field :id, id: 'event_id', style: 'display: none', value: @event.id.present? ? @event.id : 0
               .form-group
                 %label.col-sm-2.control-label Nom
                 .col-sm-10

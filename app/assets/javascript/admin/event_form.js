@@ -5,7 +5,12 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     const select_location = document.getElementById('event_location_id')
     let location_id = select_location.value
-    set_available_activities(location_id, 'all')
+    const event_id = document.getElementById('event_id').value
+    if (event_id == 0) {
+        set_available_activities(location_id, 'all')
+    }
+    const sim_ac = document.getElementById('event_event_activities_attributes_0_simultaneous_activities').value
+    if (sim_ac == '') set_available_activities(location_id, 'all')
     select_location.addEventListener('change', (e) => {
         location_id = e.target.value
         set_available_activities(location_id, 'all')
