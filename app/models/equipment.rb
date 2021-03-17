@@ -5,8 +5,8 @@ class Equipment < ApplicationRecord
   belongs_to :category
   belongs_to :supplier
   belongs_to :dimension, dependent: :destroy
-  has_many :activity_equipments
-  has_many :event_activities
+  has_many :activity_equipment, dependent: :destroy
+  has_many :event_equipment, dependent: :destroy
 
   accepts_nested_attributes_for :dimension
 

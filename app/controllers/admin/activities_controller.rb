@@ -11,12 +11,12 @@ class Admin::ActivitiesController < AdminController
   def create
     @activity = Activity.new(activity_params)
     add_locations
-    add_equipment
+    add_up_duplicate_equipment
     if @activity.save
-      flash[:success] = "Votre activité a été créée avec succès !"
+      flash[:success] = 'Votre activité a été créée avec succès !'
       redirect_to admin_activities_path
     else
-      render "new"
+      render 'new'
     end
   end
 
@@ -31,18 +31,18 @@ class Admin::ActivitiesController < AdminController
   def update
     @activity = Activity.find(params[:id])
     add_locations
-    add_equipment
+    add_up_duplicate_equipment
     if @activity.update(activity_params)
-      flash[:success] = "Votre activité a été modifiée avec succès !"
+      flash[:success] = 'Votre activité a été modifiée avec succès !'
       redirect_to admin_activities_path
     else
-      render "edit"
+      render 'edit'
     end
   end
 
   def destroy
     Activity.find(params[:id]).destroy
-    flash[:success] = "Votre activité a été supprimée avec succès."
+    flash[:success] = 'Votre activité a été supprimée avec succès.'
     redirect_to admin_activities_path
   end
 
@@ -63,37 +63,15 @@ class Admin::ActivitiesController < AdminController
     end
   end
 
-  # This method and add_up_duplicate_equipment are used to deal with duplicated equipment when submitting activity form
-  def add_equipment
-    @activity.activity_equipment = []
+  def add_up_duplicate_equipment
     return unless params[:activity][:activity_equipment_attributes].present?
 
-    params[:activity][:activity_equipment_attributes].each do |_key, value|
-      next if value[:_destroy].present?
-
-      @activity.activity_equipment << ActivityEquipment.new(activity_id: @activity, equipment_id: value[:equipment_id], quantity: value[:quantity])
-    end
-    add_up_duplicate_equipment
-    params[:activity].delete(:activity_equipment_attributes)
-  end
-
-  def add_up_duplicate_equipment
-    no_duplicate_entry = {}
-    @activity.activity_equipment.each do |element|
-      found = false
-      no_duplicate_entry.each do |key, value|
-        if element.equipment_id == key
-          no_duplicate_entry[key] = value + element.quantity
-          found = true
-        end
-      end
-      no_duplicate_entry[element.equipment_id] = element.quantity unless found
-    end
     @activity.activity_equipment = []
-    no_duplicate_entry.each do |key, value|
+    helpers.add_up_duplicates(params[:activity][:activity_equipment_attributes],
+                              { id: :equipment_id, quantity: :quantity }).each do |key, value|
       @activity.activity_equipment << ActivityEquipment.new(activity_id: @activity, equipment_id: key, quantity: value)
     end
+    params[:activity].delete(:activity_equipment_attributes)
   end
-
 
 end
