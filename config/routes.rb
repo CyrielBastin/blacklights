@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
     resources :users
     resources :locations
+    get '/events/all/previous', to: 'events#previous_events'
     resources :events
     resources :equipment
     resources :suppliers

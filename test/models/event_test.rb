@@ -13,7 +13,7 @@ class EventTest < ActiveSupport::TestCase
     event = Event.new
     event.location = locations(:heaven)
     event.contact = contacts(:two)
-    event[:name] = '1234567'
+    event[:name] = 'Hithere'
     assert_not event.save
   end
 
@@ -30,7 +30,7 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
     assert_not event.save
   end
 
@@ -39,8 +39,8 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     assert_not event.save
   end
 
@@ -49,8 +49,8 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     event[:price] = 0
 
     assert_not event.save
@@ -61,8 +61,8 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     event[:price] = 3
 
     assert_not event.save
@@ -73,10 +73,10 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
+    event[:registration_deadline] = '2051-04-14 12:00:00'
     event[:price] = 3
-    event[:registration_deadline] = '2021-05-14 12:00:00'
 
     assert_not event.save
   end
@@ -86,10 +86,10 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     event[:price] = 3
-    event[:registration_deadline] = '2021-05-14 12:00:00'
+    event[:registration_deadline] = '2051-04-14 12:00:00'
     event[:min_participant] = true
 
     assert_not event.save
@@ -100,10 +100,10 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     event[:price] = 3
-    event[:registration_deadline] = '2021-05-14 12:00:00'
+    event[:registration_deadline] = '2051-04-14 12:00:00'
     event[:min_participant] = 0
 
     assert_not event.save
@@ -114,10 +114,10 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     event[:price] = 3
-    event[:registration_deadline] = '2021-05-14 12:00:00'
+    event[:registration_deadline] = '2051-04-14 12:00:00'
     event[:min_participant] = 3
 
     assert_not event.save
@@ -128,10 +128,10 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     event[:price] = 3
-    event[:registration_deadline] = '2021-05-14 12:00:00'
+    event[:registration_deadline] = '2051-04-14 12:00:00'
     event[:min_participant] = 3
     event[:max_participant] = 'hello'
 
@@ -143,10 +143,10 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     event[:price] = 3
-    event[:registration_deadline] = '2021-05-14 12:00:00'
+    event[:registration_deadline] = '2051-04-14 12:00:00'
     event[:min_participant] = 3
     event[:max_participant] = 0
 
@@ -158,10 +158,10 @@ class EventTest < ActiveSupport::TestCase
     event.location = locations(:heaven)
     event.contact = contacts(:two)
     event[:name] = events(:dark_badminton)[:name]
-    event[:start_date] = '2021-04-21 08:41:21'
-    event[:end_date] = '2021-05-21 08:41:21'
+    event[:start_date] = '2051-04-21 08:41:21'
+    event[:end_date] = '2051-05-21 18:41:21'
     event[:price] = 3
-    event[:registration_deadline] = '2021-05-14 12:00:00'
+    event[:registration_deadline] = '2051-04-14 12:00:00'
     event[:min_participant] = 3
     event[:max_participant] = 5
 

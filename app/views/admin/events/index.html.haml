@@ -14,7 +14,12 @@
         .ibox-title
           %h5 L'ensemble des Evènements définis
           .ibox-tools
-            = link_to "Nouvel évènement", new_admin_event_path, class: "btn btn-primary"
+            .row
+              .col-sm-2
+                = link_to 'Evènements à venir', admin_events_path, class: "btn btn-primary" unless event_to_come
+              .col-sm-2
+                = link_to 'Anciens évènements', '/admin/events/all/previous', class: 'btn btn-primary' if event_to_come
+              = link_to 'Nouvel évènement', new_admin_event_path, class: 'btn btn-primary', style: 'margin-right: 50px'
         .ibox-content
           - if @events.size > 0
             .project-list
@@ -70,4 +75,7 @@
                                 Supprimer
 
           - else
-            Aucun évènement enregistré actuellement
+            - if event_to_come
+              Aucun évènement prévu enregistré
+            - else
+              Aucun évènement passé à afficher

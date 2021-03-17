@@ -1,5 +1,7 @@
 class Event < ApplicationRecord
 
+  default_scope -> { order(:start_date) }
+
   belongs_to :location
   belongs_to :contact, dependent: :destroy
   accepts_nested_attributes_for :contact
@@ -42,6 +44,14 @@ class Event < ApplicationRecord
 
   def datetime_to_french_format(date_time)
     date_time.strftime('%d/%m/%Y, à %H:%M')
+  end
+
+  def Event.to_come
+    Event.where(['start_date > ?', DateTime.now])
+  end
+
+  def Event.previous
+    Event.where(['start_date < ?', DateTime.now])
   end
 
   ####################################################################################################

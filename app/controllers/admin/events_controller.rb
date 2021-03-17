@@ -1,7 +1,15 @@
 class Admin::EventsController < AdminController
 
   def index
-    @events = Event.order(:start_date)
+    @events = Event.to_come
+
+    render 'index', locals: { :@events => @events, :event_to_come => true }
+  end
+
+  def previous_events
+    @events = Event.previous
+
+    render 'index', locals: { :@events => @events, :event_to_come => false }
   end
 
   def new
@@ -24,7 +32,9 @@ class Admin::EventsController < AdminController
     @event = Event.find(params[:id])
     event_equipment = helpers.add_up_duplicates(assemble_all_equipment_together, { id: :equipment_name, quantity: :quantity })
 
-    render 'show', locals: { :@event => @event, :event_equipment => event_equipment }
+    render 'show', locals: { :@event => @event,
+                             :event_equipment => event_equipment,
+                             :event_to_come => @event[:start_date] > DateTime.now }
   end
 
   def edit

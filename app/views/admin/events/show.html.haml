@@ -5,7 +5,10 @@
       %li
         %a{:href => admin_root_path} Accueil
       %li
-        %a{:href => admin_events_path} Evènements
+        - if event_to_come
+          %a{:href => admin_events_path} Evènements
+        - else
+          %a{:href => '/admin/events/all/previous'} Evènements
       %li.active
         %strong
           = @event.name
