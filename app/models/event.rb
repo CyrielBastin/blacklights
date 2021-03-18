@@ -15,8 +15,7 @@ class Event < ApplicationRecord
   min_price = 0.00
   min_participant = 0
   ERR_MSG = { start_date_in_the_past: 'La date de début ne peut pas être dans le passé',
-              end_date_is_before_start_date: 'La date de fin ne peut pas être avant la date de début',
-              registration_deadline_in_the_future: 'La date de clôture des inscriptions ne peut pas être dans le passé',
+              end_date_is_before_start_date: 'La date de fin doit avoir lieu après la date de début',
               registration_deadline_after_start_date: 'La date de clôture des inscriptions doit être avant la date de début',
               end_date_too_low: 'La date de fin doit être avant la date de début',
               name_is_blank: 'Le nom ne peut pas être vide',
@@ -32,7 +31,7 @@ class Event < ApplicationRecord
   validates :name, presence: { message: ERR_MSG[:name_is_blank] },
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
   validates :start_date, :end_date, :registration_deadline, presence: true
-  validate :start_date_is_in_the_future, :end_date_is_higher_than_start_date, :registration_deadline_is_in_the_future, :registration_deadline_is_before_start_date
+  validate :start_date_is_in_the_future, :end_date_is_higher_than_start_date, :registration_deadline_is_before_start_date
   validates :price, presence: { message: ERR_MSG[:price_is_blank] },
                     numericality: { greater_than: min_price, message: ERR_MSG[:price_is_lesser_than_one] }
   validates :min_participant, presence: { message: ERR_MSG[:min_participant_is_blank] },
@@ -58,30 +57,32 @@ class Event < ApplicationRecord
   # Custom Validators for an event. They are put here as we need to compare those datas together
   ####################################################################################################
   def start_date_is_in_the_future
+    return if start_date.nil?
+
     unless start_date > DateTime.now
       errors.add(:start_date, ERR_MSG[:start_date_in_the_past])
     end
   end
 
   def end_date_is_higher_than_start_date
+    return if end_date.nil? || start_date.nil?
+
     unless end_date > start_date
       errors.add(:end_date, ERR_MSG[:end_date_is_before_start_date])
     end
   end
 
-  def registration_deadline_is_in_the_future
-    unless registration_deadline > DateTime.now
-      errors.add(:registration_deadline, ERR_MSG[:registration_deadline_in_the_future])
-    end
-  end
-
   def registration_deadline_is_before_start_date
+    return if registration_deadline.nil? || start_date.nil?
+
     unless registration_deadline < start_date
       errors.add(:registration_deadline, ERR_MSG[:registration_deadline_after_start_date])
     end
   end
 
   def max_participant_is_higher_than_min_participant
+    return if max_participant.nil? || min_participant.nil?
+
     unless max_participant > min_participant
       errors.add(:max_participant, ERR_MSG[:max_participant_is_lesser_than_min_participant])
     end

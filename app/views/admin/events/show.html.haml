@@ -52,7 +52,7 @@
       - unless event_equipment.empty?
         %td
           - event_equipment.each do |name, qty|
-            = "#{name} (#{qty})"
+            = "#{name} (#{qty.to_i})"
             %br
     %tr
       %th Lieu :
