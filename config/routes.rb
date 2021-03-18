@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
     resources :users, concerns: :paginatable
     resources :locations, concerns: :paginatable
-    get '/events/all/previous', to: 'events#previous_events'
+    get 'previous_events', to: 'events#previous_events'
     resources :events, concerns: :paginatable
     resources :equipment, concerns: :paginatable
     resources :suppliers, concerns: :paginatable
