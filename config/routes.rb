@@ -4,16 +4,20 @@ Rails.application.routes.draw do
   namespace :admin do
     root to: 'dashboards#index'
 
-    resources :users
-    resources :locations
+    concern :paginatable do
+      get '(page/:page)', action: :index, on: :collection, as: ''
+    end
+
+    resources :users, concerns: :paginatable
+    resources :locations, concerns: :paginatable
     get '/events/all/previous', to: 'events#previous_events'
-    resources :events
-    resources :equipment
-    resources :suppliers
-    resources :registrations
+    resources :events, concerns: :paginatable
+    resources :equipment, concerns: :paginatable
+    resources :suppliers, concerns: :paginatable
+    resources :registrations, concerns: :paginatable
     get '/json/location_activities/:loc_id', to: 'activities#location_activities_json'
-    resources :activities
-    resources :categories
+    resources :activities, concerns: :paginatable
+    resources :categories, concerns: :paginatable
   end
 
   root to: 'public#index'

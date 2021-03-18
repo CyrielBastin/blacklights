@@ -1,13 +1,13 @@
 class Admin::EventsController < AdminController
 
   def index
-    @events = Event.to_come
+    @events = Event.to_come.page(params[:page]).per(10)
 
     render 'index', locals: { :@events => @events, :event_to_come => true }
   end
 
   def previous_events
-    @events = Event.previous
+    @events = Event.previous.page(params[:page]).per(10)
 
     render 'index', locals: { :@events => @events, :event_to_come => false }
   end

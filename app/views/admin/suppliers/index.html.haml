@@ -55,5 +55,8 @@
                                 %i.fa.fa-trash
                                 Supprimer
 
+            .pagination-custom
+              = paginate @suppliers, views_prefix: 'admin'
+
           - else
             Aucun fournisseur enregisté actuellement

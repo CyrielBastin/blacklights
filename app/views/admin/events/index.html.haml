@@ -74,6 +74,9 @@
                                 %i.fa.fa-trash
                                 Supprimer
 
+            .pagination-custom
+              = paginate @events, views_prefix: 'admin'
+
           - else
             - if event_to_come
               Aucun évènement prévu enregistré

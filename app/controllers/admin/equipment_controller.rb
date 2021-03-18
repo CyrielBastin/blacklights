@@ -1,7 +1,7 @@
 class Admin::EquipmentController < AdminController
 
   def index
-    @equipments = Equipment.order(:name)
+    @equipments = Equipment.all.page(params[:page]).per(10)
   end
 
   def new

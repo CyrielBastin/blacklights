@@ -1,7 +1,7 @@
 class Admin::SuppliersController < AdminController
 
   def index
-    @suppliers = Supplier.order(:name)
+    @suppliers = Supplier.all.page(params[:page]).per(10)
   end
 
   def new

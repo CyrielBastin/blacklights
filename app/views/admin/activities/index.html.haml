@@ -61,5 +61,8 @@
                                 %i.fa.fa-trash
                                 Supprimer
 
+            .pagination-custom
+              = paginate @activities, views_prefix: 'admin'
+
           - else
             Aucune activité enregistée actuellement

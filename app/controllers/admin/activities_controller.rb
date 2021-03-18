@@ -1,7 +1,7 @@
 class Admin::ActivitiesController < AdminController
 
   def index
-    @activities = Activity.all
+    @activities = Activity.all.page(params[:page]).per(10)
   end
 
   def new
