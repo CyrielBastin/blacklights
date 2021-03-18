@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       get '(page/:page)', action: :index, on: :collection, as: ''
     end
 
-    resources :users, concerns: :paginatable
+    resources :users, concerns: :paginatable do
+      get "invite"
+    end
     resources :locations, concerns: :paginatable
     get 'previous_events', to: 'events#previous_events'
     resources :events, concerns: :paginatable
