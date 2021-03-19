@@ -12,14 +12,14 @@
 
 ActiveRecord::Schema.define(version: 2021_03_18_222421) do
 
-  create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "activity_equipment", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "activity_equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "activity_id"
     t.bigint "equipment_id"
     t.decimal "quantity", precision: 10, scale: 3
@@ -29,13 +29,13 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["equipment_id"], name: "index_activity_equipment_on_equipment_id"
   end
 
-  create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "parent_id"
     t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
-  create_table "contacts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "contacts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "lastname"
     t.string "firstname"
     t.string "phone_number"
@@ -44,21 +44,21 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["coordinate_id"], name: "index_contacts_on_coordinate_id"
   end
 
-  create_table "coordinates", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "coordinates", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "street"
     t.integer "zip_code"
     t.string "city"
     t.string "country"
   end
 
-  create_table "dimensions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "dimensions", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.decimal "width", precision: 10, scale: 3
     t.decimal "length", precision: 10, scale: 3
     t.decimal "height", precision: 10, scale: 3
     t.decimal "weight", precision: 10, scale: 3
   end
 
-  create_table "equipment", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.bigint "category_id"
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["supplier_id"], name: "index_equipment_on_supplier_id"
   end
 
-  create_table "event_activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "event_activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "activity_id"
     t.integer "simultaneous_activities"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["event_id"], name: "index_event_activities_on_event_id"
   end
 
-  create_table "event_equipment", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "event_equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "equipment_id"
     t.decimal "quantity", precision: 10, scale: 3
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["event_id"], name: "index_event_equipment_on_event_id"
   end
 
-  create_table "events", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
     t.bigint "location_id"
@@ -102,14 +102,14 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["location_id"], name: "index_events_on_location_id"
   end
 
-  create_table "location_activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "location_activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "location_id"
     t.bigint "activity_id"
     t.index ["activity_id"], name: "index_location_activities_on_activity_id"
     t.index ["location_id"], name: "index_location_activities_on_location_id"
   end
 
-  create_table "locations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "locations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "type"
     t.bigint "contact_id"
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["dimension_id"], name: "index_locations_on_dimension_id"
   end
 
-  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.string "firstname"
     t.string "lastname"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
-  create_table "registrations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "registrations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "user_id"
     t.decimal "price", precision: 10, scale: 3
@@ -150,13 +150,13 @@ ActiveRecord::Schema.define(version: 2021_03_18_222421) do
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
-  create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "contact_id"
     t.index ["contact_id"], name: "index_suppliers_on_contact_id"
   end
 
-  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
