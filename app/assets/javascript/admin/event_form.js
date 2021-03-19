@@ -1,5 +1,10 @@
 /*
  * This file is meant for the form in the section CRUD event
+ *
+ * !!!
+ * The script has been moved to the view 'admin/events/_form.html.haml' under a script tag
+ * and is no longer injected in admin.js
+ * !!!
  */
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -38,7 +43,6 @@ function set_available_activities (location_id, which_select) {
         case 'all': select_to_change = all_selects; break
         case 'last': select_to_change = []; select_to_change.push(all_selects[all_selects.length - 1]); break
     }
-    console.log(select_to_change)
     fetch(`/admin/json/location_activities/${location_id}`)
         .then(result => result.json())
         .then(activities => {
