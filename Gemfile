@@ -29,6 +29,10 @@ gem 'devise'
 gem 'client_side_validations'
 gem 'multi-select-rails'
 gem 'dynamic-fields-for'
+gem 'enumerize'
+gem 'country_select'
+gem 'rails-i18n'
+gem 'devise_invitable'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
@@ -56,6 +60,7 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'erb2haml'
+  gem 'letter_opener'
 end
 
 group :test do
