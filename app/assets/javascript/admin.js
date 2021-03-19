@@ -12,10 +12,43 @@
 //= require admin/inspinia.js
 //= require multi-select
 //= require dynamic-fields-for
+//= require flatpickr
+//= require flatpickr/l10n/fr
 
 
 $(function() {
 
+    /*
+     * Allows multiple selection of a field in forms
+     */
     $('.multiple_select').multiSelect()
+
+    /*
+     * Used in forms for having a calendar with datetime datas
+     */
+    $('#event_start_date').flatpickr({
+        altInput: true,
+        dateFormat: 'Y-m-d H:i',
+        altFormat: 'd/m/Y, à H:i',
+        enableTime: true,
+        time_24hr: true,
+        locale: Flatpickr.l10ns.fr
+    });
+    $('#event_end_date').flatpickr({
+        altInput: true,
+        dateFormat: 'Y-m-d H:i',
+        altFormat: 'd/m/Y, à H:i',
+        enableTime: true,
+        time_24hr: true,
+        locale: Flatpickr.l10ns.fr
+    });
+    $('#event_registration_deadline').flatpickr({
+        altInput: true,
+        dateFormat: 'Y-m-d H:i',
+        altFormat: 'd/m/Y, à H:i',
+        enableTime: true,
+        time_24hr: true,
+        locale: Flatpickr.l10ns.fr
+    });
 
 });

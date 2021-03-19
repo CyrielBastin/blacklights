@@ -17,19 +17,19 @@
               .form-group
                 %label.col-sm-2.control-label Date de début
                 .col-sm-10
-                  = event_form.datetime_select :start_date, { :order => [:day, :month, :year], :use_month_numbers => true }
+                  = event_form.text_field :start_date
                 %br
 
               .form-group
                 %label.col-sm-2.control-label Date de fin
                 .col-sm-10
-                  = event_form.datetime_select :end_date, { :order => [:day, :month, :year], :use_month_numbers => true }
+                  = event_form.text_field :end_date
                 %br
 
               .form-group
                 %label.col-sm-2.control-label Clôture des inscriptions
                 .col-sm-10
-                  = event_form.datetime_select :registration_deadline, { :order => [:day, :month, :year] , :use_month_numbers => true }
+                  = event_form.text_field :registration_deadline
                 %br
 
               .form-group
