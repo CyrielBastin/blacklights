@@ -1,34 +1,32 @@
 module DuplicateHelper
 
-  # This method is meant to add up duplicated fields coming from forms
-  # Parameters -
-  #   field_with_duplicates => Represents an Hash were each values are an hash (expl: { "1" => { "2", "3" }, ... })
-  #                            The keys are meaningless. As for the values, it contains the quantities to add up and the ids
-  #   field_attributes => Can take two keys. :id, :quantity
-  #                       :id is the id of the duplicated field.
-  #                       :quantity is the value to add up.
-  # Return -
-  #   Returns an hash where the key is the id of the field we added up and the value is the quantity
-  #   Return is under the form { id: quantity, id_2: quantity_2, ... }
-  # Exemple : add_up_duplicates(params[:activity][:activity_equipment_attributes],
-  #                             { id: equipment_id, quantity: quantity })
-  # => { "2": "1", "4": "7", ... }
-  def add_up_duplicates(field_with_duplicates, field_attributes = {})
-    no_duplicate_entry = {}
-    field_with_duplicates.each do |_f_key, f_value|
-      next if f_value[:_destroy].present?
+  # This method takes an array of object and returns a new array in which the duplicated fields have been added up
+  # - Params :
+  #     array_with_duplicates => Array of objects that contains fields you which add up the duplicates
+  #     field_attributes => 2 different keys (:id, :quantity)
+  #        :id => Represents the field that is duplicated
+  #        :quantity => Represents the numbers to add up together
+  # Example : add_up_duplicates(activity_equipment, id: equipment_id, quantity: quantity)
+  # Here activity_equipment is an array of objects 'activity_equipment'
+  # Each object has a field 'equipment_id' and 'quantity'
+  # We iterate over the array and we add up the 'quantity' for each objects that have the same 'equipment_id'
+  # Finally, we return a new array without the duplicates
+  def add_up_duplicates(array_with_duplicates, field_attributes = {})
+    return if array_with_duplicates.empty?
 
+    no_duplicated_entries = []
+    array_with_duplicates.each do |object|
       found = false
-      no_duplicate_entry.each do |key, value|
-        if f_value[field_attributes[:id]] == key
-          no_duplicate_entry[key] = value.to_i + f_value[field_attributes[:quantity]].to_i
+      no_duplicated_entries.each do |no_dup_obj|
+        if no_dup_obj[field_attributes[:id]] == object[field_attributes[:id]]
+          no_dup_obj[field_attributes[:quantity]] += object[field_attributes[:quantity]]
           found = true
         end
       end
-      no_duplicate_entry[f_value[field_attributes[:id]]] = f_value[field_attributes[:quantity]] unless found
+      no_duplicated_entries << object unless found
     end
 
-    no_duplicate_entry
+    no_duplicated_entries
   end
 
 end

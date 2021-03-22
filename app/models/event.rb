@@ -88,4 +88,13 @@ class Event < ApplicationRecord
     end
   end
 
+  ####################################################################################################
+  # Life cycle events
+  ####################################################################################################
+
+  before_save do
+    self.event_activities = ApplicationController.helpers.add_up_duplicates(event_activities, id: :activity_id, quantity: :simultaneous_activities)
+    self.event_equipment = ApplicationController.helpers.add_up_duplicates(event_equipment, id: :equipment_id, quantity: :quantity)
+  end
+
 end

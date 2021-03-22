@@ -1,10 +1,5 @@
 /*
  * This file is meant for the form in the section CRUD event
- *
- * !!!
- * The script has been moved to the view 'admin/events/_form.html.haml' under a script tag
- * and is no longer injected in admin.js
- * !!!
  */
 
 document.addEventListener('DOMContentLoaded', (event) => {

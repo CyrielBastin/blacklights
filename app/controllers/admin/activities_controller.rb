@@ -11,7 +11,6 @@ class Admin::ActivitiesController < AdminController
   def create
     @activity = Activity.new(activity_params)
     add_locations
-    add_up_duplicate_equipment
     if @activity.save
       flash[:success] = 'Votre activité a été créée avec succès !'
       redirect_to admin_activities_path
@@ -31,7 +30,6 @@ class Admin::ActivitiesController < AdminController
   def update
     @activity = Activity.find(params[:id])
     add_locations
-    add_up_duplicate_equipment
     if @activity.update(activity_params)
       flash[:success] = 'Votre activité a été modifiée avec succès !'
       redirect_to admin_activities_path
@@ -65,17 +63,6 @@ class Admin::ActivitiesController < AdminController
         @activity.location_activities << LocationActivity.new(activity_id: @activity, location_id: location_id)
       end
     end
-  end
-
-  def add_up_duplicate_equipment
-    return unless params[:activity][:activity_equipment_attributes].present?
-
-    @activity.activity_equipment = []
-    helpers.add_up_duplicates(params[:activity][:activity_equipment_attributes],
-                              { id: :equipment_id, quantity: :quantity }).each do |key, value|
-      @activity.activity_equipment << ActivityEquipment.new(activity_id: @activity, equipment_id: key, quantity: value)
-    end
-    params[:activity].delete(:activity_equipment_attributes)
   end
 
 end

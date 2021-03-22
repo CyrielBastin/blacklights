@@ -51,8 +51,8 @@
       %th Matériel :
       - unless event_equipment.empty?
         %td
-          - event_equipment.each do |name, qty|
-            = "#{name} (#{qty.to_i})"
+          - event_equipment.each do |equipment|
+            = "#{equipment[:equipment_name]} (#{equipment[:quantity].to_i})"
             %br
     %tr
       %th Lieu :
