@@ -8,7 +8,7 @@
         - if event_to_come
           %a{:href => admin_events_path} Evènements
         - else
-          %a{:href => '/admin/events/all/previous'} Evènements
+          %a{:href => admin_events_path(events: 'previous')} Evènements
       %li.active
         %strong
           = @event.name
@@ -49,7 +49,7 @@
             %br
     %tr
       %th Matériel :
-      - unless event_equipment.empty?
+      - if event_equipment.present?
         %td
           - event_equipment.each do |equipment|
             = "#{equipment[:equipment_name]} (#{equipment[:quantity].to_i})"

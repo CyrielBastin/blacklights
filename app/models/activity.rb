@@ -34,7 +34,11 @@ class Activity < ApplicationRecord
   ####################################################################################################
 
   before_save do
-    self.activity_equipment = ApplicationController.helpers.add_up_duplicates(activity_equipment, id: :equipment_id, quantity: :quantity)
+    unless activity_equipment.empty?
+      self.activity_equipment = ApplicationController.helpers.add_up_duplicates(activity_equipment,
+                                                                                id: :equipment_id,
+                                                                                quantity: :quantity)
+    end
   end
 
 end

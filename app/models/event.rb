@@ -93,8 +93,16 @@ class Event < ApplicationRecord
   ####################################################################################################
 
   before_save do
-    self.event_activities = ApplicationController.helpers.add_up_duplicates(event_activities, id: :activity_id, quantity: :simultaneous_activities)
-    self.event_equipment = ApplicationController.helpers.add_up_duplicates(event_equipment, id: :equipment_id, quantity: :quantity)
+    unless event_activities.empty?
+      self.event_activities = ApplicationController.helpers.add_up_duplicates(event_activities,
+                                                                              id: :activity_id,
+                                                                              quantity: :simultaneous_activities)
+    end
+    unless event_equipment.empty?
+      self.event_equipment = ApplicationController.helpers.add_up_duplicates(event_equipment,
+                                                                             id: :equipment_id,
+                                                                             quantity: :quantity)
+    end
   end
 
 end

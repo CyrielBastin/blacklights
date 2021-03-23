@@ -180,6 +180,32 @@ class EventTest < ActiveSupport::TestCase
     assert_equal 'Hell', event.location[:name]
   end
 
+  test 'Should add up duplicated activities' do
+    event = events(:dark_volley_ball)
+    event.event_activities << EventActivity.new(event_id: event.id,
+                                                activity_id: activities(:basketball).id,
+                                                simultaneous_activities: 3)
+    event.event_activities << EventActivity.new(event_id: event.id,
+                                                activity_id: activities(:basketball).id,
+                                                simultaneous_activities: 7)
+
+    assert event.save
+    assert_equal 10, event.event_activities[0][:simultaneous_activities]
+  end
+
+  test 'Should add up duplicated equipment' do
+    event = events(:dark_volley_ball)
+    event.event_equipment << EventEquipment.new(event_id: event.id,
+                                                equipment_id: equipment(:balles_de_tennis).id,
+                                                quantity: 3)
+    event.event_equipment << EventEquipment.new(event_id: event.id,
+                                                equipment_id: equipment(:balles_de_tennis).id,
+                                                quantity: 3)
+
+    assert event.save
+    assert_equal 6, event.event_equipment[0][:quantity]
+  end
+
   test 'should update min_participant to "5"' do
     event = events(:dark_badminton)
     assert event.update({ min_participant: 5 })
