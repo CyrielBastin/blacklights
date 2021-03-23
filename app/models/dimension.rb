@@ -11,7 +11,7 @@ class Dimension < ApplicationRecord
               height_is_blank: 'La hauteur ne peut pas être vide',
               height_is_too_short: "La hauteur doit être au moins de #{min_height} cm",
               weight_is_blank: 'Le poids ne peut pas être vide',
-              weight_is_too_short: "Le poids doit être au moins de #{min_weight} g" }
+              weight_is_too_short: "Le poids doit être au moins de #{min_weight} g" }.freeze
 
   validates :width, presence: { message: ERR_MSG[:width_is_blank] },
                     numericality: { greater_than_or_equal_to: min_width, message: ERR_MSG[:width_is_too_short] }
