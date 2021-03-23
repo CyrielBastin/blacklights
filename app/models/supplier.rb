@@ -1,6 +1,8 @@
 class Supplier < ApplicationRecord
 
-  belongs_to :contact
+  default_scope -> { order(:name) }
+
+  belongs_to :contact, dependent: :destroy
   has_many :equipments
 
   accepts_nested_attributes_for :contact

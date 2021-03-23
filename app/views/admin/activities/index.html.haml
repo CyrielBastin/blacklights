@@ -22,6 +22,8 @@
                 %thead
                   %th Nom
                   %th Description
+                  %th Matériel
+                  %th Lieux disp.
                   %th Actions
                 %tbody
                   - @activities.each do |activity|
@@ -29,8 +31,21 @@
                       %td.project-title
                         %b
                           = activity.name
+
                       %td
                         = activity.description.present? ? activity.description.truncate(40) : "-"
+
+                      %td
+                        - activity.activity_equipment.each_with_index do |ac_eq, i|
+                          - unless i == 0
+                            %br
+                          = "#{ac_eq.equipment.name} (#{ac_eq.quantity})"
+
+                      %td
+                        - activity.location_activities.each_with_index do |loc_ac, i|
+                          - unless i == 0
+                            %br
+                          = "#{loc_ac.location.name}"
 
                       %td.project-actions
                         .btn-group

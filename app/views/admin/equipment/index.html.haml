@@ -21,9 +21,10 @@
               %table.table.table-hover.table-striped.dataTables
                 %thead
                   %th{width: '15%'} Nom
-                  %th{style: "max-width: 25%"} Description
+                  %th{style: "max-width: 20%"} Description
+                  %th{width: '10%'} Catégorie
                   %th{width: '25%'} Détails
-                  %th{width: '15%'} prix/unité
+                  %th{width: '10%'} prix/unité
                   %th{width: '20%'} Actions
                 %tbody
                   - @equipments.each do |equipment|
@@ -34,6 +35,9 @@
 
                       %td{:style => 'word-wrap: break-word'}
                         = equipment[:description].truncate(200)
+
+                      %td
+                        = equipment.category.name
 
                       %td
                         = "Fournisseur : #{equipment.supplier[:name]}"
