@@ -23,7 +23,7 @@ class Activity < ApplicationRecord
                           length: { minimum: min_char_desc, message: ERR_MSG[:description_too_short] }
 
   def self.get_activities_by_location_id(id)
-    ActiveRecord::Base.connection.exec_query("select activities.id, activities.name from activities
+    ActiveRecord::Base.connection.exec_query("select activities.name, activities.id from activities
                                               inner join location_activities on activity_id = activities.id
                                               where location_id = #{id}
                                               order by activities.name;")

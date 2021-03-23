@@ -1,5 +1,5 @@
 /*
- * This file is meant for the form in the section CRUD event
+ * This file is meant for the form in the section 'CRUD event'
  */
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
  *   location_id => determines which activities to fetch based on the id of the location
  *   which_select => determines which select field from the form to update  !! EITHER 'all' or 'last' !!
  * exemple: get_available_activities(1, 'last') => will update only the last select field with the activities
- *          available for the location with id 1
+ *          available for the location with id = 1
  */
 function set_available_activities (location_id, which_select) {
     const all_selects = document.querySelectorAll('.change_with_location')

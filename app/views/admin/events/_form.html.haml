@@ -63,7 +63,7 @@
                 .form-group
                   %label.col-sm-2.control-label Activité
                   .col-sm-2
-                    = ev_ac_form.select :activity_id, options_for_select(Activity.all.map{|a|[a.name, a.id]}, ev_ac_form.object.activity_id), {}, {:class => "form-control select change_with_location"}
+                    = ev_ac_form.select :activity_id, options_for_select(@event.id.nil? ? Activity.all.map{|a|[a.name, a.id]} : Activity.get_activities_by_location_id(@event.location_id).rows, ev_ac_form.object.activity_id), {}, {:class => "form-control select change_with_location"}
                   %label.col-sm-2.control-label En simultané
                   .col-sm-2
                     = ev_ac_form.number_field :simultaneous_activities, {style: 'max-width: 220px'}
