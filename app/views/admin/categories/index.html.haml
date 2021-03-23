@@ -46,5 +46,8 @@
                                 %i.fa.fa-trash
                                 Supprimer
 
+            .pagination-custom
+              = paginate @categories, views_prefix: 'admin'
+
           - else
             Aucune catégorie enregistée actuellement

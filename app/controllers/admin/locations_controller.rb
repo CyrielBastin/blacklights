@@ -1,7 +1,7 @@
 class Admin::LocationsController < AdminController
 
   def index
-    @locations = Location.order(:name)
+    @locations = Location.all.page(params[:page]).per(10)
   end
 
   def new

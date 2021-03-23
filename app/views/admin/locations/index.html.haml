@@ -70,5 +70,8 @@
                                 %i.fa.fa-trash
                                 Supprimer
 
+            .pagination-custom
+              = paginate @locations, views_prefix: 'admin'
+
           - else
             Aucun lieu enregisté actuellement.

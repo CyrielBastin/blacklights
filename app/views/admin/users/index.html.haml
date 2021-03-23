@@ -29,14 +29,11 @@
                   %tbody
                     - @users.each do |user|
                       %tr
-                        %td.client-avatar
-                          - if user.profile.present?
-                            %img.img-circle{:alt => user.profile.full_name, :src => url_for(user.profile.decorate.avatar_path(size: :mini))}/
                         %td
                           %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
-                            = user.full_name
+                            = user.profile.full_name
                         %td
-                          = user.admin? ? "Admin" : "Utilisateur"
+                          = #user.admin? ? "Admin" : "Utilisateur"
                         %td.contact-type
                           %i.fa.fa-envelope
                         %td
@@ -58,7 +55,7 @@
                 .row.m-b-lg
                   .col-lg-12.text-center
                     %h2
-                      = user.full_name
+                      = user.profile.full_name
 
                 .full-height-scroll
                   %strong Informations
@@ -69,44 +66,7 @@
                         = l user.created_at
 
                 .full-height-scroll
-                  %strong Abonnements
-                  - sub = Stripe::Subscription.list({customer: current_user.stripe_customer_id, limit: 1, plan: ENV["STRIPE_SUBSCRIPTION_PLAN"]}).data.first
-                  - if sub.present?
-                    %table.table
-                      %thead
-                        %th Type
-                        %th Status
-                      %tbody
-                        %tr
-                          %td
-                            = "Opportunité"
-                          %td
-                            = sub.status
-
-                  - else
-                    = "Aucun"
-
-                %br
-                .full-height-scroll
-                  %strong Projet
-                  %table.table
-                    %tbody
-                      %tr
-                        %td Phase 1
-                        %td
-                          = "#{user.opportunities.size} opportunité(s)"
-                      %tr
-                        %td Phase 2
-                        %td -
-
-                      %tr
-                        %td Phase 3
-                        %td -
-
-                      %tr
-                        %td Phase 4
-                        %td -
-
+                  %strong Inscriptions
 
                 %br
                 .full-height-scroll

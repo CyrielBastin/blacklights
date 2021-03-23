@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+dark_badminton:
+  name: Dark Badminton
+  start_date: 2051-03-12 02:35:07
+  end_date: 2051-03-12 22:35:07
+  price: 9.99
+  registration_deadline: 2051-03-11 02:35:07
+  min_participant: 1
+  max_participant: 11
+  location: heaven
+  contact: one
+
+dark_volley_ball:
+  name: Dark Volleyball
+  start_date: 2052-03-12 02:35:07
+  end_date: 2052-03-22 02:35:07
+  price: 4.99
+  registration_deadline: 2052-03-10 02:35:07
+  min_participant: 2
+  max_participant: 22
+  location: hell
+  contact: two

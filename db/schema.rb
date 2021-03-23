@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_15_195745) do
+ActiveRecord::Schema.define(version: 2021_03_18_222421) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_03_15_195745) do
     t.bigint "contact_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.index ["contact_id"], name: "index_events_on_contact_id"
     t.index ["location_id"], name: "index_events_on_location_id"
   end
@@ -119,6 +120,22 @@ ActiveRecord::Schema.define(version: 2021_03_15_195745) do
     t.index ["contact_id"], name: "index_locations_on_contact_id"
     t.index ["coordinate_id"], name: "index_locations_on_coordinate_id"
     t.index ["dimension_id"], name: "index_locations_on_dimension_id"
+  end
+
+  create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "firstname"
+    t.string "lastname"
+    t.string "gender"
+    t.date "birthdate"
+    t.string "street"
+    t.integer "zipcode"
+    t.string "city"
+    t.string "country"
+    t.string "phone_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "registrations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -156,8 +173,19 @@ ActiveRecord::Schema.define(version: 2021_03_15_195745) do
     t.string "unconfirmed_email"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.bigint "invited_by_id"
+    t.integer "invitations_count", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

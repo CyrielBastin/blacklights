@@ -1,0 +1,94 @@
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Veuillez remplir toutes les informations concernant votre évènement
+        .ibox-content
+          = form_for [:admin, @event], validate: true, html: {class: 'form-horizontal'} do |event_form|
+            %fieldset
+              %legend Informations
+              = event_form.text_field :id, id: 'event_id', style: 'display: none', value: @event.id.present? ? @event.id : 0
+              .form-group
+                %label.col-sm-2.control-label Nom
+                .col-sm-10
+                  = event_form.text_field :name, class: 'form-control'
+              .form-group
+                %label.col-sm-2.control-label Date de début
+                .col-sm-10
+                  = event_form.text_field :start_date
+                %br
+
+              .form-group
+                %label.col-sm-2.control-label Date de fin
+                .col-sm-10
+                  = event_form.text_field :end_date
+                %br
+
+              .form-group
+                %label.col-sm-2.control-label Clôture des inscriptions
+                .col-sm-10
+                  = event_form.text_field :registration_deadline
+                %br
+
+              .form-group
+                %label.col-sm-2.control-label Minimum participants
+                .col-sm-10
+                  = event_form.text_field :min_participant, class: 'form-control'
+                %br
+
+              .form-group
+                %label.col-sm-2.control-label Maximum participants
+                .col-sm-10
+                  = event_form.text_field :max_participant, class: 'form-control'
+                %br
+
+              .form-group
+                %label.col-sm-2.control-label Prix (en €)
+                .col-sm-10
+                  = event_form.text_field :price, class: 'form-control'
+                %br
+
+            %fieldset
+              %legend Lieu
+              .form-group
+                %label.col-sm-2.control-label Lieu
+                .col-sm-10
+                  = event_form.select :location_id, options_for_select(Location.all.map{|l|[l.name, l.id]}, @event.location_id), {}, {:class => "form-control select"}
+
+            %fieldset
+              %legend Activités
+              = event_form.fields_for :event_activities, @event.event_activities.present? ? @event.event_activities : @event.event_activities.build, dynamic: true do |ev_ac_form|
+                .form-group
+                  %label.col-sm-2.control-label Activité
+                  .col-sm-2
+                    = ev_ac_form.select :activity_id, options_for_select(@event.id.nil? ? Activity.all.map{|a|[a.name, a.id]} : Activity.get_activities_by_location_id(@event.location_id).rows, ev_ac_form.object.activity_id), {}, {:class => "form-control select change_with_location"}
+                  %label.col-sm-2.control-label En simultané
+                  .col-sm-2
+                    = ev_ac_form.number_field :simultaneous_activities, {style: 'max-width: 220px'}
+                  .col-sm-1
+                    = ev_ac_form.remove_fields_link 'Supprimer'
+              = event_form.add_fields_link :event_activities, 'Ajouter une activité', { class: 'link_add_activity' }
+
+            %fieldset{style: 'margin-top: 40px'}
+              %legend Matériel supplémentaire
+              = event_form.fields_for :event_equipment, @event.event_equipment.present? ? @event.event_equipment : @event.event_equipment.build, dynamic: true do |ev_eq_form|
+                .form-group
+                  %label.col-sm-2.control-label Matériel
+                  .col-sm-2
+                    = ev_eq_form.select :equipment_id, options_for_select(Equipment.all.map{|e|[e.name, e.id]}, ev_eq_form.object.equipment_id), {}, {:class => "form-control select"}
+                  %label.col-sm-2.control-label Quantité
+                  .col-sm-2
+                    = ev_eq_form.number_field :quantity, {style: 'max-width: 220px'}
+                  .col-sm-1
+                    = ev_eq_form.remove_fields_link 'Supprimer'
+              = event_form.add_fields_link :event_equipment, 'Ajouter du matériel'
+
+            %br
+            = render partial: 'shared/contact_form', locals: { form: event_form, object: @event }
+
+
+            .form-group
+              .col-sm-4
+                %button.btn.btn-primary{:type => 'submit'} Sauver l'évènement

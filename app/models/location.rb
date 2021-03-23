@@ -11,17 +11,17 @@ class Location < ApplicationRecord
 
   min_char_name = 3
   min_char_type = 7
-  err_msg = { name_is_blank: 'Le nom ne peut pas être vide',
+  ERR_MSG = { name_is_blank: 'Le nom ne peut pas être vide',
               name_is_too_short: "Le nom doit contenir au moins #{min_char_name} caractères",
               name_already_exists: 'Ce nom existe déjà dans la base de données',
               type_is_blank: 'Le type ne peut pas être vide',
-              type_is_too_short: "Le type doit contenir au moins #{min_char_type} caractères" }
+              type_is_too_short: "Le type doit contenir au moins #{min_char_type} caractères" }.freeze
 
-  validates :name, presence: { message: err_msg[:name_is_blank] },
-                   length: { minimum: min_char_name, message: err_msg[:name_is_too_short] },
-                   uniqueness: { message: err_msg[:name_already_exists] }
-  validates :type, presence: { message: err_msg[:type_is_blank] },
-                   length: { minimum: min_char_type, message: err_msg[:type_is_too_short] }
+  validates :name, presence: { message: ERR_MSG[:name_is_blank] },
+                   length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] },
+                   uniqueness: { message: ERR_MSG[:name_already_exists] }
+  validates :type, presence: { message: ERR_MSG[:type_is_blank] },
+                   length: { minimum: min_char_type, message: ERR_MSG[:type_is_too_short] }
 
   def self.inheritance_column
     nil

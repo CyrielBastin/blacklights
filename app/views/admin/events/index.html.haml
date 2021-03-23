@@ -1,0 +1,82 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Evènements
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Evènements
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble des Evènements définis
+          .ibox-tools
+            .row
+              .col-sm-2
+                = link_to 'Evènements à venir', admin_events_path, class: "btn btn-primary" unless events_to_come
+              .col-sm-2
+                = link_to 'Anciens évènements', admin_events_path(events: 'previous'), class: 'btn btn-primary' if events_to_come
+              = link_to 'Nouvel évènement', new_admin_event_path, class: 'btn btn-primary', style: 'margin-right: 50px'
+
+        .ibox-content
+          - if @events.size > 0
+            .project-list
+              %table.table.table-hover.table-striped.dataTables
+                %thead
+                  %th Nom
+                  %th Date
+                  %th Clôture inscriptions
+                  %th Activités
+                  %th Lieu
+                  %th Prix
+                  %th Actions
+                %tbody
+                  - @events.each do |event|
+                    %tr
+                      %td
+                        = event[:name]
+
+                      %td
+                        = event.datetime_to_french_format(event[:start_date])
+                        %br au
+                        = event.datetime_to_french_format(event[:end_date])
+
+                      %td
+                        = event.datetime_to_french_format(event[:registration_deadline])
+
+                      %td
+                        - event.event_activities.each do |ev_ac|
+                          = "#{ev_ac.activity.name} (#{ev_ac.simultaneous_activities})"
+                          %br
+
+                      %td
+                        = event.location[:name]
+
+                      %td
+                        = "#{event[:price]}€"
+
+                      %td.project-actions
+                        .btn-group
+                          %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}
+                            Actions
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a.btn.btn-white.btn-sm{:href => admin_event_path(event.id)}
+                                %i.fa.fa-eye
+                                Détails
+                              %a.btn.btn-white.btn-sm{:href => edit_admin_event_path(event.id)}
+                                %i.fa.fa-pen
+                                Modifier
+                              = link_to admin_event_path(event.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cet évènement ?" }, class: "btn btn-white btn-sm" do
+                                %i.fa.fa-trash
+                                Supprimer
+
+            .pagination-custom
+              = paginate @events, views_prefix: 'admin'
+
+          - else
+            Aucun évènement enregistré.

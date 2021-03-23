@@ -67,5 +67,8 @@
                                 %i.fa.fa-trash
                                 Supprimer
 
+            .pagination-custom
+              = paginate @equipments, views_prefix: 'admin'
+
           - else
             Aucun matériel enregisté actuellement.

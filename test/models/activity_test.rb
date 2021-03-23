@@ -51,6 +51,15 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal 'Le basketball, ça étonne!', activity[:description]
   end
 
+  test 'Should add up duplicated equipment' do
+    activity = activities(:basketball)
+    activity.activity_equipment << ActivityEquipment.new(activity_id: activity.id, equipment_id: equipment(:balles_de_tennis).id, quantity: 2)
+    activity.activity_equipment << ActivityEquipment.new(activity_id: activity.id, equipment_id: equipment(:balles_de_tennis).id, quantity: 3)
+
+    assert activity.save
+    assert_equal 5, activity.activity_equipment[0][:quantity]
+  end
+
   test 'Should update Badminton\'s name' do
     activity = activities(:badminton)
     activity.update({ name: 'Climbing' })
