@@ -12,7 +12,6 @@ Rails.application.routes.draw do
       get "invite"
     end
     resources :locations, concerns: :paginatable
-    get 'previous_events', to: 'events#previous_events'
     resources :events, concerns: :paginatable
     resources :equipment, concerns: :paginatable
     resources :suppliers, concerns: :paginatable
