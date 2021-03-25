@@ -1,6 +1,5 @@
-require_relative '../../lib/assets/duplicate_helper'
-
 class Activity < ApplicationRecord
+  include DuplicateHelper
 
   default_scope -> { order(:name) }
 
@@ -41,9 +40,9 @@ class Activity < ApplicationRecord
 
   def add_up_equipment_duplicates
     unless activity_equipment.empty?
-      self.activity_equipment = DuplicateHelper.add_up_duplicates(activity_equipment,
-                                                                  id: :equipment_id,
-                                                                  quantity: :quantity)
+      self.activity_equipment = add_up_duplicates(activity_equipment,
+                                                  id: :equipment_id,
+                                                  quantity: :quantity)
     end
   end
 

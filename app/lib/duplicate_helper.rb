@@ -11,7 +11,7 @@ module DuplicateHelper
   # Each object has a field 'equipment_id' and 'quantity'
   # We iterate over the array and we add up the 'quantity' for each objects that have the same 'equipment_id'
   # Finally, we return a new array without the duplicates
-  def self.add_up_duplicates(array_with_duplicates, field_attributes = {})
+  def add_up_duplicates(array_with_duplicates, field_attributes = {})
     return if array_with_duplicates.empty?
 
     no_duplicated_entries = []

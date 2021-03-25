@@ -1,6 +1,5 @@
-require_relative '../../../lib/assets/duplicate_helper'
-
 class Admin::EventsController < AdminController
+  include DuplicateHelper
 
   def index
     if params[:events] == 'previous'
@@ -30,9 +29,9 @@ class Admin::EventsController < AdminController
 
   def show
     @event = Event.find(params[:id])
-    event_equipment = DuplicateHelper.add_up_duplicates(assemble_all_equipment_together,
-                                                        id: :equipment_name,
-                                                        quantity: :quantity)
+    event_equipment = add_up_duplicates(assemble_all_equipment_together,
+                                        id: :equipment_name,
+                                        quantity: :quantity)
     render 'show', locals: { :@event => @event,
                              :event_equipment => event_equipment,
                              :event_to_come => @event[:start_date] > DateTime.now }
