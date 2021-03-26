@@ -40,12 +40,12 @@
                         = event[:name]
 
                       %td
-                        = event.datetime_to_french_format(event[:start_date])
+                        = Event.datetime_to_french_format(event[:start_date])
                         %br au
-                        = event.datetime_to_french_format(event[:end_date])
+                        = Event.datetime_to_french_format(event[:end_date])
 
                       %td
-                        = event.datetime_to_french_format(event[:registration_deadline])
+                        = Event.datetime_to_french_format(event[:registration_deadline])
 
                       %td
                         - event.event_activities.each do |ev_ac|
@@ -77,6 +77,8 @@
 
             .pagination-custom
               = paginate @events, views_prefix: 'admin'
+
+            = link_to 'Exporter le modèle', admin_events_path(format: :xlsx), class: 'btn btn-info btn-export-model'
 
           - else
             Aucun évènement enregistré.

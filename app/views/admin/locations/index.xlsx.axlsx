@@ -2,9 +2,10 @@ require_relative '../../../helpers/import_export_helper'
 
 locations = Location.all
 activities = assemble_pieces_together(locations,
-                                      obj_to_assemble: 'location_activities',
+                                      obj_to_assemble: :location_activities,
                                       obj_name: :activity,
                                       name: :name)
+
 wb = xlsx_package.workbook
 style = wb.styles
 center = style.add_style alignment: { horizontal: :center }

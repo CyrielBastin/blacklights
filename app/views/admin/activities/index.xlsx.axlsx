@@ -1,26 +1,15 @@
+require_relative '../../../helpers/import_export_helper'
+
 activities = Activity.all
-equipment = []
-locations = []
-activities.each do |activity|
-  if activity.activity_equipment.present?
-    list_equipment = ''
-    activity.activity_equipment.each do |equipment|
-      list_equipment += "#{equipment.equipment[:name]} (#{equipment[:quantity]}), "
-    end
-    equipment << list_equipment
-  else
-    equipment << ''
-  end
-  if activity.location_activities.present?
-    list_locations = ''
-    activity.location_activities.each do |location|
-      list_locations += "#{location.location[:name]}, "
-    end
-    locations << list_locations
-  else
-    locations << ''
-  end
-end
+equipment = assemble_pieces_together(activities,
+                                     obj_to_assemble: :activity_equipment,
+                                     obj_name: :equipment,
+                                     name: :name,
+                                     quantity: :quantity)
+locations = assemble_pieces_together(activities,
+                                     obj_to_assemble: :location_activities,
+                                     obj_name: :location,
+                                     name: :name)
 
 wb = xlsx_package.workbook
 style = wb.styles
