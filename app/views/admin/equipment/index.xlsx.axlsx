@@ -3,16 +3,3 @@ style = wb.styles
 center = style.add_style alignment: { horizontal: :center }
 
 render partial: 'shared/export/equipment', locals: { wb: wb, center: center }
-
-# wb.add_worksheet(name: 'Matériel') do |sheet|
-#   sheet.add_row ['Id', 'Nom', 'Description', 'Prix (€)',
-#                  'Categorie',
-#                  'Forunisseur',
-#                  'Largeur (cm)', 'Longueur (cm)', 'Hauteur (cm)', 'Poids (g)'], style: center
-#   Equipment.all.each do |equipment|
-#     sheet.add_row [equipment[:id], equipment[:name], equipment[:description], equipment[:unit_price],
-#                    equipment.category[:name],
-#                    equipment.supplier[:name],
-#                    equipment.dimension[:width], equipment.dimension[:length], equipment.dimension[:height], equipment.dimension[:weight]], style: center
-#   end
-# end

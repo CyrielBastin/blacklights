@@ -5,24 +5,3 @@ style = wb.styles
 center = style.add_style alignment: { horizontal: :center }
 
 render partial: 'shared/export/location', locals: { wb: wb, center: center }
-
-# locations = Location.all
-# activities = assemble_pieces_together(locations,
-#                                       obj_to_assemble: :location_activities,
-#                                       obj_name: :activity,
-#                                       name: :name)
-#
-# wb.add_worksheet(name: 'Lieux') do |sheet|
-#   sheet.add_row ['Id', 'Nom', 'Type',
-#                  'Activités disponibles',
-#                  'Largeur (cm)', 'Longueur (cm)', 'Hauteur (cm)',
-#                  'Contact =>', 'Nom de famille', 'Prénom', 'Téléphone', 'Email',
-#                  'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
-#   locations.each_with_index do |location, i|
-#     sheet.add_row [location[:id], location[:name], location[:type],
-#                    activities[i],
-#                    location.dimension[:width], location.dimension[:length], location.dimension[:height],
-#                    '', location.contact[:lastname], location.contact[:firstname], location.contact[:phone_number], location.contact[:email],
-#                    location.contact.coordinate[:street], location.contact.coordinate[:zip_code], location.contact.coordinate[:city], location.contact.coordinate[:country]], style: center
-#   end
-# end
