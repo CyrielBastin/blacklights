@@ -1,4 +1,5 @@
 class Event < ApplicationRecord
+  include DuplicateHelper
 
   default_scope -> { order(:start_date) }
 
@@ -92,16 +93,20 @@ class Event < ApplicationRecord
   # Life cycle events
   ####################################################################################################
 
-  before_save do
+  before_save :add_up_all_duplicates
+
+  private
+
+  def add_up_all_duplicates
     unless event_activities.empty?
-      self.event_activities = ApplicationController.helpers.add_up_duplicates(event_activities,
-                                                                              id: :activity_id,
-                                                                              quantity: :simultaneous_activities)
+      self.event_activities = add_up_duplicates(event_activities,
+                                                id: :activity_id,
+                                                quantity: :simultaneous_activities)
     end
     unless event_equipment.empty?
-      self.event_equipment = ApplicationController.helpers.add_up_duplicates(event_equipment,
-                                                                             id: :equipment_id,
-                                                                             quantity: :quantity)
+      self.event_equipment = add_up_duplicates(event_equipment,
+                                               id: :equipment_id,
+                                               quantity: :quantity)
     end
   end
 
