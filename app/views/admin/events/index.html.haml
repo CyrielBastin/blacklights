@@ -40,12 +40,12 @@
                         = event[:name]
 
                       %td
-                        = Event.datetime_to_french_format(event[:start_date])
+                        = date_time_to_french_format(event[:start_date])
                         %br au
-                        = Event.datetime_to_french_format(event[:end_date])
+                        = date_time_to_french_format(event[:end_date])
 
                       %td
-                        = Event.datetime_to_french_format(event[:registration_deadline])
+                        = date_time_to_french_format(event[:registration_deadline])
 
                       %td
                         - event.event_activities.each do |ev_ac|

@@ -23,7 +23,7 @@ wb.add_worksheet(name: 'Evènements') do |sheet|
                  'Contact =>', 'Nom de famille', 'Prénom', 'Téléphone', 'Email',
                  'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
   events.each_with_index do |event, i|
-    sheet.add_row [event[:id], event[:name], Event.datetime_to_french_format(event[:start_date]), Event.datetime_to_french_format(event[:end_date]), Event.datetime_to_french_format(event[:registration_deadline]), event[:min_participant], event[:max_participant], event[:price],
+    sheet.add_row [event[:id], event[:name], date_time_to_french_format(event[:start_date]), date_time_to_french_format(event[:end_date]), date_time_to_french_format(event[:registration_deadline]), event[:min_participant], event[:max_participant], event[:price],
                    event.location[:name],
                    activities[i],
                    equipment[i],

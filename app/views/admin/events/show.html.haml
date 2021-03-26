@@ -23,15 +23,15 @@
     %tr
       %th Date de début :
       %td
-        = Event.datetime_to_french_format(@event[:start_date])
+        = date_time_to_french_format(@event[:start_date])
     %tr
       %th Date de fin :
       %td
-        = Event.datetime_to_french_format(@event[:end_date])
+        = date_time_to_french_format(@event[:end_date])
     %tr
       %th Clôture des inscriptions :
       %td
-        = Event.datetime_to_french_format(@event[:registration_deadline])
+        = date_time_to_french_format(@event[:registration_deadline])
     %tr
       %th Min. participant :
       %td
