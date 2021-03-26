@@ -1,0 +1,12 @@
+require_relative '../../../helpers/import_export_helper'
+
+wb = xlsx_package.workbook
+style = wb.styles
+center = style.add_style alignment: { horizontal: :center }
+
+render partial: 'shared/export/activity', locals: { wb: wb, center: center }
+render partial: 'shared/export/category', locals: { wb: wb, center: center }
+render partial: 'shared/export/equipment', locals: { wb: wb, center: center }
+render partial: 'shared/export/event', locals: { wb: wb, center: center }
+render partial: 'shared/export/location', locals: { wb: wb, center: center }
+render partial: 'shared/export/supplier', locals: { wb: wb, center: center }

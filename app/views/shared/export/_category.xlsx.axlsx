@@ -1,0 +1,6 @@
+wb.add_worksheet(name: 'Categories') do |sheet|
+  sheet.add_row ['Id', 'Nom', 'Catégorie parente'], style: center
+  Category.all.each do |category|
+    sheet.add_row [category[:id], category[:name], category.parent.present? ? category.parent[:name] : ''], style: center
+  end
+end

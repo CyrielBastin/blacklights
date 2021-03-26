@@ -1,9 +1,12 @@
 wb = xlsx_package.workbook
 style = wb.styles
 center = style.add_style alignment: { horizontal: :center }
-wb.add_worksheet(name: 'Categories') do |sheet|
-  sheet.add_row ['Id', 'Nom', 'Catégorie parente'], style: center
-  Category.all.each do |category|
-    sheet.add_row [category[:id], category[:name], category.parent.present? ? category.parent[:name] : ''], style: center
-  end
-end
+
+render partial: 'shared/export/category', locals: { wb: wb, center: center }
+
+# wb.add_worksheet(name: 'Categories') do |sheet|
+#   sheet.add_row ['Id', 'Nom', 'Catégorie parente'], style: center
+#   Category.all.each do |category|
+#     sheet.add_row [category[:id], category[:name], category.parent.present? ? category.parent[:name] : ''], style: center
+#   end
+# end

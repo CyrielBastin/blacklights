@@ -1,0 +1,27 @@
+events = Event.all
+activities = assemble_pieces_together(events,
+                                      obj_to_assemble: :event_activities,
+                                      obj_name: :activity,
+                                      name: :name,
+                                      quantity: :simultaneous_activities)
+equipment = assemble_pieces_together(events,
+                                     obj_to_assemble: :event_equipment,
+                                     obj_name: :equipment,
+                                     name: :name,
+                                     quantity: :quantity)
+wb.add_worksheet(name: 'Evènements') do |sheet|
+  sheet.add_row ['Id', 'Nom', 'Date de début', 'Date de fin', 'Clôture des inscriptions', 'Min. participants', 'Max. participants', 'Prix (€)',
+                 'Lieu',
+                 'Activités + simultané',
+                 'Matériel supplémentaire + quantity',
+                 'Contact =>', 'Nom de famille', 'Prénom', 'Téléphone', 'Email',
+                 'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
+  events.each_with_index do |event, i|
+    sheet.add_row [event[:id], event[:name], date_time_to_french_format(event[:start_date]), date_time_to_french_format(event[:end_date]), date_time_to_french_format(event[:registration_deadline]), event[:min_participant], event[:max_participant], event[:price],
+                   event.location[:name],
+                   activities[i],
+                   equipment[i],
+                   '', event.contact[:lastname], event.contact[:firstname], event.contact[:phone_number], event.contact[:email],
+                   event.contact.coordinate[:street], event.contact.coordinate[:zip_code], event.contact.coordinate[:city], event.contact.coordinate[:country]], style: center
+  end
+end
