@@ -58,5 +58,7 @@
             .pagination-custom
               = paginate @suppliers, views_prefix: 'admin'
 
+            = link_to 'Exporter le modèle', admin_suppliers_path(format: :xlsx), class: 'btn btn-info btn-export-model'
+
           - else
             Aucun fournisseur enregisté actuellement

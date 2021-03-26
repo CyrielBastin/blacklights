@@ -1,7 +1,11 @@
 class Admin::ActivitiesController < AdminController
 
   def index
-    @activities = Activity.all.page(params[:page]).per(10)
+    @activities = Activity.all.page(params[:page]).per(6)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def new

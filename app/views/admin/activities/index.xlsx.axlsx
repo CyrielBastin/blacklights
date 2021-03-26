@@ -1,0 +1,37 @@
+activities = Activity.all
+equipment = []
+locations = []
+activities.each do |activity|
+  if activity.activity_equipment.present?
+    list_equipment = ''
+    activity.activity_equipment.each do |equipment|
+      list_equipment += "#{equipment.equipment[:name]} (#{equipment[:quantity]}), "
+    end
+    equipment << list_equipment
+  else
+    equipment << ''
+  end
+  if activity.location_activities.present?
+    list_locations = ''
+    activity.location_activities.each do |location|
+      list_locations += "#{location.location[:name]}, "
+    end
+    locations << list_locations
+  else
+    locations << ''
+  end
+end
+
+wb = xlsx_package.workbook
+style = wb.styles
+center = style.add_style alignment: { horizontal: :center }
+wb.add_worksheet(name: 'Activités') do |sheet|
+  sheet.add_row ['Id', 'Nom', 'Description',
+                 'Matériel + quantité',
+                 'Lieux disponibles'], style: center
+  activities.each_with_index do |activity, i|
+    sheet.add_row [activity[:id], activity[:name], activity[:description],
+                   equipment[i],
+                   locations[i]], style: center
+  end
+end

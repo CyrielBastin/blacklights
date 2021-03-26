@@ -2,6 +2,10 @@ class Admin::CategoriesController < AdminController
 
   def index
     @categories = Category.all.page(params[:page]).per(10)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def new

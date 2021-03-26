@@ -1,7 +1,11 @@
 class Admin::EquipmentController < AdminController
 
   def index
-    @equipments = Equipment.all.page(params[:page]).per(10)
+    @equipments = Equipment.all.page(params[:page]).per(6)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def new
