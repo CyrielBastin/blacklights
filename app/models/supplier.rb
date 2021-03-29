@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: suppliers
+#
+#  id         :bigint           not null, primary key
+#  name       :string(255)
+#  contact_id :bigint
+#
 class Supplier < ApplicationRecord
 
   default_scope -> { order(:name) }

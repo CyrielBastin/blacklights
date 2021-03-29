@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: event_activities
+#
+#  id                      :bigint           not null, primary key
+#  event_id                :bigint
+#  activity_id             :bigint
+#  simultaneous_activities :integer
+#
 class EventActivity < ApplicationRecord
 
   belongs_to :event

@@ -1,4 +1,16 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: locations
+#
+#  id            :bigint           not null, primary key
+#  name          :string(255)
+#  type          :string(255)
+#  contact_id    :bigint
+#  coordinate_id :bigint
+#  dimension_id  :bigint
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
 
 heaven:
   name: Heaven
