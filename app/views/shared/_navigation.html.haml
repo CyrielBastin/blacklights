@@ -1,130 +1,18 @@
 .rd-navbar-wrap
-  %nav.rd-navbar.rd-navbar-minimal.rd-navbar-minimal-1{"data-layout" => "rd-navbar-fixed", "data-lg-auto-height" => "false", "data-lg-device-layout" => "rd-navbar-fixed", "data-lg-layout" => "rd-navbar-static", "data-lg-stick-up" => "true", "data-lg-stick-up-offset" => "50px", "data-md-device-layout" => "rd-navbar-fixed", "data-md-layout" => "rd-navbar-fixed", "data-sm-layout" => "rd-navbar-fixed", "data-xl-auto-height" => "false", "data-xl-device-layout" => "rd-navbar-static", "data-xl-layout" => "rd-navbar-static", "data-xl-stick-up" => "true", "data-xl-stick-up-offset" => "50px", "data-xxl-auto-height" => "false", "data-xxl-device-layout" => "rd-navbar-static", "data-xxl-layout" => "rd-navbar-static", "data-xxl-stick-up" => "true", "data-xxl-stick-up-offset" => "50px"}
+  %nav.rd-navbar.rd-navbar-classic{"data-layout" => "rd-navbar-fixed", "data-lg-device-layout" => "rd-navbar-fixed", "data-lg-layout" => "rd-navbar-static", "data-lg-stick-up" => "true", "data-lg-stick-up-offset" => "50px", "data-md-device-layout" => "rd-navbar-fixed", "data-md-layout" => "rd-navbar-fixed", "data-sm-layout" => "rd-navbar-fixed", "data-xl-device-layout" => "rd-navbar-static", "data-xl-layout" => "rd-navbar-static", "data-xl-stick-up" => "true", "data-xl-stick-up-offset" => "1px", "data-xxl-device-layout" => "rd-navbar-static", "data-xxl-layout" => "rd-navbar-static", "data-xxl-stick-up" => "true", "data-xxl-stick-up-offset" => "1px"}
     .rd-navbar-main-outer
       .rd-navbar-main
-        .rd-navbar-main-left
-          / RD Navbar Panel
-          .rd-navbar-panel
-            / RD Navbar Toggle
-            %button.rd-navbar-toggle{"data-rd-navbar-toggle" => ".rd-navbar-nav-wrap"}
-              %span
-            / RD Navbar Brand
-            .rd-navbar-brand
-              / Brand
-              %a.brand{:href => root_path}
-                %img.brand-logo-dark{:alt => "", :height => "54", :src => asset_path("logo-default-250x108.png"), :width => "125"}/
-                %img.brand-logo-light{:alt => "", :height => "54", :src => asset_path("logo-inverse-250x108.png"), :width => "125"}/
-          %button.sidebar-toggle.rd-navbar-fixed-element-1{"data-rd-navbar-toggle" => ".sidebar-wrap"}
+        / RD Navbar Panel
+        .rd-navbar-panel
+          / RD Navbar Toggle
+          %button.rd-navbar-toggle{"data-rd-navbar-toggle" => ".rd-navbar-nav-wrap"}
             %span
-        .rd-navbar-main-right
-          .rd-navbar-nav-wrap
-            %ul.rd-navbar-nav
-              %li.rd-nav-item.active
-                %a.rd-nav-link{:href => root_path} Accueil
-              %li.rd-nav-item
-                %a.rd-nav-link{:href => "#"} About
-                %ul.rd-menu.rd-navbar-dropdown
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "about-us.html"} About Us
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "team.html"} Team
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "team-member.html"} Team Member
-              %li.rd-nav-item
-                %a.rd-nav-link{:href => "events.html"} Events
-                %ul.rd-menu.rd-navbar-dropdown
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "event-schedule.html"} Event Schedule
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "single-event.html"} Single Event
-              %li.rd-nav-item
-                %a.rd-nav-link{:href => "news.html"} News
-                %ul.rd-menu.rd-navbar-dropdown
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "news-post.html"} News post
-              %li.rd-nav-item
-                %a.rd-nav-link{:href => "#"} Pages
-                %ul.rd-menu.rd-navbar-megamenu
-                  %li.rd-megamenu-item
-                    %h6.rd-megamenu-title
-                      %a{:href => "#"} Pages 1
-                    %ul.rd-megamenu-list
-                      %li.rd-megamenu-list-item
-                        %a.rd-megamenu-list-link{:href => "faq.html"} FAQ
-                      %li.rd-megamenu-list-item
-                        %a.rd-megamenu-list-link{:href => "gallery.html"} Gallery
-                      %li.rd-megamenu-list-item
-                        %a.rd-megamenu-list-link{:href => "pricing.html"} Pricing
-                      %li.rd-megamenu-list-item
-                        %a.rd-megamenu-list-link{:href => "contact-us.html"} Contact Us
-                  %li.rd-megamenu-item
-                    %h6.rd-megamenu-title
-                      %a{:href => "#"} Pages 2
-                    %ul.rd-megamenu-list
-                      %li.rd-megamenu-list-item
-                        %a.rd-megamenu-list-link{:href => "404.html"} 404
-                      %li.rd-megamenu-list-item
-                        %a.rd-megamenu-list-link{:href => "coming-soon.html"} Coming soon
-                      %li.rd-megamenu-list-item
-                        %a.rd-megamenu-list-link{:href => "privacy-policy.html"} Privacy policy
-                  %li.rd-megamenu-image
-                    %a.rd-megamenu-link{:href => "contact-us.html"}
-              %li.rd-nav-item
-                %a.rd-nav-link{:href => "#"} Elements
-                %ul.rd-menu.rd-navbar-dropdown
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "typography.html"} Typography
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "buttons.html"} Buttons
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "forms.html"} Forms
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "tabs.html"} Tabs
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "progress-bars.html"} Progress bars
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "counters.html"} Counters
-                  %li.rd-dropdown-item
-                    %a.rd-dropdown-link{:href => "icon-lists.html"} Icon lists
-          %a.button.button-sm.button-primary.rd-navbar-fixed-element-2{:href => "#"}
-            %span.icon.mdi.mdi-calendar-check
-            %span.button-text book now
-    .sidebar-wrap
-      .sidebar
-        %h5.sidebar-title Get in Touch
-        %img{:alt => "", :height => "262", :src => asset_path("image-1-333x262.jpg"), :width => "333"}/
-        %ul.contacts-creative
-          %li
-            .unit.unit-spacing-md
-              .unit-left
-                %span.icon.linearicons-telephone
-              .unit-body
-                T.
-                %a{:href => "tel:#"} +61 3 8376 6284
-                = succeed "E." do
-                  %br/
-                %a{:href => "mailto:#"} info@demolink.org
-          %li
-            .unit.unit-spacing-md
-              .unit-left
-                %span.icon.linearicons-clock3
-              .unit-body
-                Opening Hours:
-                %br>/
-                07:00 am - 07:00 pm
-          %li
-            .unit.unit-spacing-md
-              .unit-left
-                %span.icon.linearicons-map2
-              .unit-body
-                %a{:href => "#"} 652 Main Road, Apt 12 New York, USA 10033
-      .sidebar-panel
-        %ul.list-social
-          %li
-            %a.icon.mdi.mdi-facebook{:href => "#"}
-          %li
-            %a.icon.mdi.mdi-google{:href => "#"}
-          %li
-            %a.icon.mdi.mdi-twitter{:href => "#"}
-          %li
-            %a.icon.mdi.mdi-pinterest{:href => "#"}
+          / RD Navbar Brand
+          .rd-navbar-brand
+            / Brand
+            %a.brand{:href => "index.html"}
+              %img.brand-logo-dark{:alt => "", :height => "54", :src => asset_path("logo-default-250x108.png"), :width => "125"}/
+              %img.brand-logo-light{:alt => "", :height => "54", :src => asset_path("logo-inverse-250x108.png"), :width => "125"}/
+        = render "shared/menu"
+        .rd-navbar-fixed-element-2
+          %a.button.button-primary-gradient{:href => "#"} Book Now
