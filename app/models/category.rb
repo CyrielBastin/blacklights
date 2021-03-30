@@ -7,10 +7,16 @@
 #  parent_id :bigint
 #
 class Category < ApplicationRecord
+  extend Enumerize
+
+  scope :for_event, -> { where('category_for = Evènement') }
+  scope :for_equipment, -> { where('category_for = Matériel') }
 
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :children, :class_name => 'Category', :foreign_key => 'parent_id'
-  has_many :equipments
+  enumerize :category_for, in: ['Evènement', 'Matériel']
+  has_many :equipment
+  has_many :events
 
   min_char_name = 5
   ERR_MSG = { name_is_blank: 'Le nom ne peut pas être vide',
@@ -20,5 +26,6 @@ class Category < ApplicationRecord
   validates :name, presence: { message: ERR_MSG[:name_is_blank] },
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] },
                    uniqueness: { message: ERR_MSG[:name_already_exists] }
+  validates :category_for, presence: true
 
 end

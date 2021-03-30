@@ -15,6 +15,7 @@ class Contact < ApplicationRecord
   has_one :supplier
   has_one :location
   has_one :event
+  has_one :profile
 
   accepts_nested_attributes_for :coordinate
 
