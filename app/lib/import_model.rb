@@ -88,8 +88,8 @@ module ImportModel
       list_activities.each do |activity_name|
         next if activity_name.empty?
 
-        activity_id = Activity.find_by(name: activity_name).id
-        location.location_activities << LocationActivity.new(location_id: location, activity_id: activity_id)
+        activity = Activity.find_by(name: activity_name)
+        location.location_activities << LocationActivity.new(location_id: location, activity_id: activity.id) if activity.present?
       end
       location.save
     end
