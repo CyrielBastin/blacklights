@@ -1,4 +1,13 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# == Schema Information
+#
+# Table name: dimensions
+#
+#  id     :bigint           not null, primary key
+#  width  :decimal(10, 3)
+#  length :decimal(10, 3)
+#  height :decimal(10, 3)
+#  weight :decimal(10, 3)
+#
 
 one:
   width: 9.99

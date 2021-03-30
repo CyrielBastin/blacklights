@@ -1,3 +1,12 @@
+# == Schema Information
+#
+# Table name: event_equipment
+#
+#  id           :bigint           not null, primary key
+#  event_id     :bigint
+#  equipment_id :bigint
+#  quantity     :decimal(10, 3)
+#
 class EventEquipment < ApplicationRecord
   self.table_name = 'event_equipment'
 

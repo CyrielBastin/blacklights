@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id                    :bigint           not null, primary key
+#  start_date            :datetime
+#  end_date              :datetime
+#  location_id           :bigint
+#  price                 :decimal(10, 3)
+#  registration_deadline :datetime
+#  min_participant       :integer
+#  max_participant       :integer
+#  contact_id            :bigint
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  name                  :string(255)
+#
 class Event < ApplicationRecord
   include DuplicateHelper
 

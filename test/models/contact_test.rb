@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: contacts
+#
+#  id            :bigint           not null, primary key
+#  lastname      :string(255)
+#  firstname     :string(255)
+#  phone_number  :string(255)
+#  email         :string(255)
+#  coordinate_id :bigint
+#
 require "test_helper"
 
 class ContactTest < ActiveSupport::TestCase

@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: dimensions
+#
+#  id     :bigint           not null, primary key
+#  width  :decimal(10, 3)
+#  length :decimal(10, 3)
+#  height :decimal(10, 3)
+#  weight :decimal(10, 3)
+#
 require "test_helper"
 
 class DimensionTest < ActiveSupport::TestCase

@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: locations
+#
+#  id            :bigint           not null, primary key
+#  name          :string(255)
+#  type          :string(255)
+#  contact_id    :bigint
+#  coordinate_id :bigint
+#  dimension_id  :bigint
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
 class Location < ApplicationRecord
 
   default_scope -> { order(:name) }

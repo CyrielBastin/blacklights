@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: coordinates
+#
+#  id       :bigint           not null, primary key
+#  street   :string(255)
+#  zip_code :integer
+#  city     :string(255)
+#  country  :string(255)
+#
 class Coordinate < ApplicationRecord
 
   has_one :contact

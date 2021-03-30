@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: equipment
+#
+#  id           :bigint           not null, primary key
+#  name         :string(255)
+#  description  :text(65535)
+#  category_id  :bigint
+#  supplier_id  :bigint
+#  dimension_id :bigint
+#  unit_price   :decimal(10, 3)
+#
 class Equipment < ApplicationRecord
 
   default_scope -> { order(:name) }

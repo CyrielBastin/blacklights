@@ -1,0 +1,12 @@
+.rd-navbar-nav-wrap
+  %ul.rd-navbar-nav
+    %li.rd-nav-item{:class => "#{is_active_action('index')}"}
+      %a.rd-nav-link{:href => root_path} Accueil
+    %li.rd-nav-item{:class => "#{is_active_action('activities')}"}
+      %a.rd-nav-link{:href => activities_path} Activities
+    %li.rd-nav-item{:class => "#{is_active_action('events')}"}
+      %a.rd-nav-link{:href => events_path} Events
+    %li.rd-nav-item{:class => "#{is_active_action('about')}"}
+      %a.rd-nav-link{:href => about_path} About
+    %li.rd-nav-item{:class => "#{is_active_action('contact')}"}
+      %a.rd-nav-link{:href => contact_path} Contact

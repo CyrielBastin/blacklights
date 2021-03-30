@@ -28,7 +28,10 @@
           .load-circle
     .page
       %header.section.page-header
-        = render 'shared/navigation'
+        - if current_page?(root_url)
+          = render 'shared/root_navigation'
+        -else
+          = render 'shared/navigation'
 
       = yield
       = render "shared/footer"

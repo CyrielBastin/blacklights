@@ -1,3 +1,11 @@
+# == Schema Information
+#
+# Table name: categories
+#
+#  id        :bigint           not null, primary key
+#  name      :string(255)
+#  parent_id :bigint
+#
 class Category < ApplicationRecord
 
   belongs_to :parent, class_name: 'Category', optional: true

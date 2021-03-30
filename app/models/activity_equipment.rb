@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: activity_equipment
+#
+#  id           :bigint           not null, primary key
+#  activity_id  :bigint
+#  equipment_id :bigint
+#  quantity     :decimal(10, 3)
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
 class ActivityEquipment < ApplicationRecord
   self.table_name = 'activity_equipment'
 
