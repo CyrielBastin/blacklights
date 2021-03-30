@@ -394,6 +394,19 @@ img.welcome {
 }
 
 /* Styles for buttons export and import model */
+.group-export-import-btn {
+  display: flex;
+  flex-direction: column;
+  max-width: 250px;
+  .btn-export-model {
+    margin-bottom: 50px;
+  }
+}
+
 .btn-export-model {
   margin-top: 40px;
+}
+
+.btn-import-model {
+  margin-bottom: 50px;
 }

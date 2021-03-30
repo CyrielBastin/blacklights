@@ -1,4 +1,4 @@
-require_relative '../../../helpers/import_export_helper'
+require_relative '../../../helpers/export_helper'
 
 wb = xlsx_package.workbook
 style = wb.styles

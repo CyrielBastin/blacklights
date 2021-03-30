@@ -1,4 +1,5 @@
 class Admin::SuppliersController < AdminController
+  include ImportModel
 
   def index
     @suppliers = Supplier.all.page(params[:page]).per(10)
@@ -44,6 +45,11 @@ class Admin::SuppliersController < AdminController
   def destroy
     Supplier.find(params[:id]).destroy
     flash[:success] = 'Votre fournisseur a été supprimé avec succès !'
+    redirect_to admin_suppliers_path
+  end
+
+  def import_model
+    import_suppliers
     redirect_to admin_suppliers_path
   end
 

@@ -1,4 +1,5 @@
 class Admin::CategoriesController < AdminController
+  include ImportModel
 
   def index
     @categories = Category.all.page(params[:page]).per(10)
@@ -46,10 +47,15 @@ class Admin::CategoriesController < AdminController
     redirect_to admin_categories_path
   end
 
+  def import_model
+    import_categories
+    redirect_to admin_categories_path
+  end
+
   private
 
   def category_params
-    params.require(:category).permit( :parent_id, :name)
+    params.require(:category).permit(:parent_id, :name)
   end
 
 end

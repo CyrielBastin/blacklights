@@ -1,4 +1,5 @@
 class Admin::LocationsController < AdminController
+  include ImportModel
 
   def index
     @locations = Location.all.page(params[:page]).per(10)
@@ -46,6 +47,11 @@ class Admin::LocationsController < AdminController
     location = Location.find(params[:id])
     location.destroy
     flash[:success] = 'Votre lieu a été supprimé avec succès !'
+    redirect_to admin_locations_path
+  end
+
+  def import_model
+    import_locations
     redirect_to admin_locations_path
   end
 

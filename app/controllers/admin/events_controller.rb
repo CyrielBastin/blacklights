@@ -1,5 +1,6 @@
 class Admin::EventsController < AdminController
   include DuplicateHelper
+  include ImportModel
 
   def index
     if params[:events] == 'previous'
@@ -54,6 +55,11 @@ class Admin::EventsController < AdminController
   def destroy
     Event.find(params[:id]).destroy
     flash[:success] = 'Votre évènement a été supprimé avec succès !'
+    redirect_to admin_events_path
+  end
+
+  def import_model
+    import_events
     redirect_to admin_events_path
   end
 

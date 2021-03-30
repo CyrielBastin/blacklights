@@ -5,6 +5,8 @@ ruby '2.7.2'
 
 # export models to excel(xlsx) format
 gem 'caxlsx'
+# import models from spreadsheet
+gem 'roo', '~> 2.8.0'
 gem 'caxlsx_rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.1.2'

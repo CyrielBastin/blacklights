@@ -1,4 +1,5 @@
 class Admin::ActivitiesController < AdminController
+  include ImportModel
 
   def index
     @activities = Activity.all.page(params[:page]).per(6)
@@ -50,6 +51,11 @@ class Admin::ActivitiesController < AdminController
 
   def location_activities_json
     render json: Activity.get_activities_by_location_id(params[:loc_id])
+  end
+
+  def import_model
+    import_activities
+    redirect_to admin_activities_path
   end
 
   private

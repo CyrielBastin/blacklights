@@ -1,5 +1,5 @@
 # This module contains the helpers to handle the import-export to Excel format
-module ImportExportHelper
+module ExportHelper
 
   # This method is here to assemble pieces together before inserting them in a cell of Excel document
   # If you have several locations available for an activity, it will combine them all in a single string.
