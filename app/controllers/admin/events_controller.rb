@@ -58,7 +58,7 @@ class Admin::EventsController < AdminController
     redirect_to admin_events_path
   end
 
-  def import_model
+  def import
     import_events
     redirect_to admin_events_path
   end

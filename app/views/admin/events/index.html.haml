@@ -19,6 +19,8 @@
                 = link_to 'Evènements à venir', admin_events_path, class: "btn btn-primary" unless events_to_come
               .col-sm-2
                 = link_to 'Anciens évènements', admin_events_path(events: 'previous'), class: 'btn btn-primary' if events_to_come
+              = link_to 'Exporter', admin_events_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @events.size > 0
+              = link_to 'Importer', admin_import_events_path, class: 'btn btn-info btn-import-model'
               = link_to 'Nouvel évènement', new_admin_event_path, class: 'btn btn-primary', style: 'margin-right: 50px'
 
         .ibox-content
@@ -78,10 +80,5 @@
             .pagination-custom
               = paginate @events, views_prefix: 'admin'
 
-            = link_to 'Exporter le modèle', admin_events_path(format: :xlsx), class: 'btn btn-info btn-export-model'
-
           - else
             Aucun évènement enregistré.
-
-
-= link_to 'Importer des évènements', admin_models_import_events_path, class: 'btn btn-success btn-import-model'

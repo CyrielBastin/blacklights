@@ -14,6 +14,8 @@
         .ibox-title
           %h5 L'ensemble des lieux définis
           .ibox-tools
+            = link_to 'Exporter', admin_locations_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @locations.size > 0
+            = link_to 'Importer', admin_import_locations_path, class: 'btn btn-info btn-import-model'
             = link_to 'Nouveau lieu', new_admin_location_path, class: 'btn btn-primary'
         .ibox-content
           - if @locations.size > 0
@@ -73,10 +75,5 @@
             .pagination-custom
               = paginate @locations, views_prefix: 'admin'
 
-            = link_to 'Exporter le modèle', admin_locations_path(format: :xlsx), class: 'btn btn-info btn-export-model'
-
           - else
             Aucun lieu enregisté actuellement.
-
-
-= link_to 'Importer des lieux', admin_models_import_locations_path, class: 'btn btn-success btn-import-model'

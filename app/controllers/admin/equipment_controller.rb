@@ -47,7 +47,7 @@ class Admin::EquipmentController < AdminController
     redirect_to admin_equipment_index_path
   end
 
-  def import_model
+  def import
     import_equipment
     redirect_to admin_equipment_index_path
   end

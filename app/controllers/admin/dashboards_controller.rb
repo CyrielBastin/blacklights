@@ -8,7 +8,7 @@ class Admin::DashboardsController < AdminController
     end
   end
 
-  def import_models
+  def import
     import_all
     redirect_to admin_root_path
   end

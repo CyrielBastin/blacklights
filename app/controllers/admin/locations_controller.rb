@@ -50,7 +50,7 @@ class Admin::LocationsController < AdminController
     redirect_to admin_locations_path
   end
 
-  def import_model
+  def import
     import_locations
     redirect_to admin_locations_path
   end

@@ -47,7 +47,7 @@ class Admin::CategoriesController < AdminController
     redirect_to admin_categories_path
   end
 
-  def import_model
+  def import
     import_categories
     redirect_to admin_categories_path
   end

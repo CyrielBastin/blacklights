@@ -48,7 +48,7 @@ class Admin::SuppliersController < AdminController
     redirect_to admin_suppliers_path
   end
 
-  def import_model
+  def import
     import_suppliers
     redirect_to admin_suppliers_path
   end

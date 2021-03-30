@@ -14,6 +14,8 @@
         .ibox-title
           %h5 L'ensemble des catégories définies
           .ibox-tools
+            = link_to 'Exporter', admin_categories_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @categories.size > 0
+            = link_to 'Importer', admin_import_categories_path, class: 'btn btn-info btn-import-model'
             = link_to "Nouvelle catégorie", new_admin_category_path, class: "btn btn-primary"
         .ibox-content
           - if @categories.size > 0
@@ -49,10 +51,5 @@
             .pagination-custom
               = paginate @categories, views_prefix: 'admin'
 
-            = link_to 'Exporter le modèle', admin_categories_path(format: :xlsx), class: 'btn btn-info btn-export-model'
-
           - else
             Aucune catégorie enregistée actuellement
-
-
-= link_to 'Importer des catégories', admin_models_import_categories_path, class: 'btn btn-success btn-import-model'

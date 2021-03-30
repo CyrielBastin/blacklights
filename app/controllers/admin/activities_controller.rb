@@ -53,7 +53,7 @@ class Admin::ActivitiesController < AdminController
     render json: Activity.get_activities_by_location_id(params[:loc_id])
   end
 
-  def import_model
+  def import
     import_activities
     redirect_to admin_activities_path
   end

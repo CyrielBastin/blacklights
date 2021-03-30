@@ -91,7 +91,5 @@
   -#                  %td.text-center
   -#                    %span.label.label-primary $100.00
 
-.group-export-import-btn
-  = link_to 'Exporter tous les modèles', admin_root_path(format: :xlsx), class: 'btn btn-info btn-export-model'
-
-  = link_to 'Importer tous les modèles', admin_models_import_all_path, class: 'btn btn-success btn-import-model'
+= link_to 'Exporter tous', admin_root_path(format: :xlsx), class: 'btn btn-info btn-export-model'
+= link_to 'Importer tous', admin_import_all_path, class: 'btn btn-info btn-import-model'

@@ -14,6 +14,8 @@
         .ibox-title
           %h5 L'ensemble des activités définies
           .ibox-tools
+            = link_to 'Exporter', admin_activities_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @activities.size > 0
+            = link_to 'Importer', admin_import_activities_path, class: 'btn btn-info btn-import-model'
             = link_to "Nouvelle activité", new_admin_activity_path, class: "btn btn-primary"
         .ibox-content
           - if @activities.size > 0
@@ -64,10 +66,5 @@
             .pagination-custom
               = paginate @activities, views_prefix: 'admin'
 
-            = link_to 'Exporter le modèle', admin_activities_path(format: :xlsx), class: 'btn btn-info btn-export-model'
-
           - else
             Aucune activité enregistée actuellement
-
-
-= link_to 'Importer des activités', admin_models_import_activities_path, class: 'btn btn-success btn-import-model'

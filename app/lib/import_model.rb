@@ -13,14 +13,14 @@ module ImportModel
 
   def import_categories
     category_sheet = open_import_sheet('Catégories')
-    category_sheet.each(name: 'Nom', parent_name: 'Catégorie parente') do |c_hash|
+    category_sheet.each(name: 'Nom', parent_name: 'Catégorie parente', category_for: 'Catégorie pour') do |c_hash|
       next if c_hash[:name] == 'Nom'
 
       if c_hash[:parent_name].nil?
-        Category.create(name: c_hash[:name])
+        Category.create(name: c_hash[:name], category_for: c_hash[:category_for])
       else
         parent_id = Category.find_by(name: c_hash[:parent_name]).id
-        Category.create(name: c_hash[:name], parent_id: parent_id)
+        Category.create(name: c_hash[:name], parent_id: parent_id, category_for: c_hash[:category_for])
       end
     end
   end
