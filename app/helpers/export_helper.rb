@@ -1,4 +1,4 @@
-# This module contains the helpers to handle the import-export to Excel format
+# This module contains the helpers to handle the export to Excel format
 module ExportHelper
 
   # This method is here to assemble pieces together before inserting them in a cell of Excel document
@@ -38,7 +38,7 @@ module ExportHelper
       end
     end
 
-    assembled_objects
+    assembled_objects.collect { |str| str[...-2] }
   end
 
 end

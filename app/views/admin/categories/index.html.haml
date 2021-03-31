@@ -24,6 +24,7 @@
                 %thead
                   %th Nom
                   %th Catégorie parente
+                  %th Catégorie pour
                   %th Actions
                 %tbody
                   - @categories.each do |category|
@@ -33,7 +34,8 @@
                           = category.name
                       %td
                         = category.parent_id.present? ? category.parent.name : ''
-
+                      %td
+                        = category[:category_for]
                       %td.project-actions
                         .btn-group
                           %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}

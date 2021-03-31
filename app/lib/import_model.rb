@@ -1,5 +1,8 @@
 require 'roo'
 
+# Module to import Spreadsheet to the database.
+# Each method import_* will return <true> if no errors occured during the import
+# If errors occured, they will return an array of strings each string containing informations about the error
 module ImportModel
 
   def import_all
@@ -12,17 +15,43 @@ module ImportModel
   end
 
   def import_categories
-    category_sheet = open_import_sheet('Catégories')
-    category_sheet.each(name: 'Nom', parent_name: 'Catégorie parente', category_for: 'Catégorie pour') do |c_hash|
-      next if c_hash[:name] == 'Nom'
-
-      if c_hash[:parent_name].nil?
-        Category.create(name: c_hash[:name], category_for: c_hash[:category_for])
-      else
-        parent_id = Category.find_by(name: c_hash[:parent_name]).id
-        Category.create(name: c_hash[:name], parent_id: parent_id, category_for: c_hash[:category_for])
-      end
+    potential_errors = { had_errors: false, errors: ['Erreur dans la Spreadsheet !', '--------------------------', ''] }
+    begin
+      category_sheet = open_import_sheet('Catégories')
+    rescue RangeError
+      potential_errors[:had_errors] = true
+      potential_errors[:errors] << 'Feuille "Catégories" non trouvée dans le fichier !'
+      return potential_errors
     end
+    row_number = 1
+    begin
+      category_sheet.each(name: 'Nom', parent_name: 'Catégorie parente', category_for: 'Catégorie pour') do |c_hash|
+        if row_number == 1
+          row_number += 1
+          next
+        end
+
+        if c_hash[:parent_name].nil?
+          category = Category.new(name: c_hash[:name], category_for: c_hash[:category_for])
+          add_to_errors(potential_errors, row_number, category) unless category.save
+        else
+          parent = Category.find_by(name: c_hash[:parent_name])
+          add_to_errors(potential_errors, row_number, parent, c_hash[:parent_name]) if parent.nil?
+          category = Category.new(name: c_hash[:name], category_for: c_hash[:category_for])
+          add_to_errors(potential_errors, row_number, category) unless category.save
+        end
+        row_number += 1
+      end
+
+      return potential_errors
+    rescue Roo::HeaderRowNotFoundError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:errors] << "Oups, on dirait que les colonnes suivantes n'ont pas été trouvées #{e.message}."
+      potential_errors[:errors] << 'La feuille "Catégories" dois posséder les colonnes "Nom", "Catégorie parente", "Catégorie pour".'
+      potential_errors[:errors] << 'Ces colonnes doives être présentes dans l\'ordre donné et sur la 1ère ligne de la feuille.'
+      return potential_errors
+    end
+
   end
 
   def import_suppliers
@@ -45,10 +74,10 @@ module ImportModel
                          width: 'Largeur (cm)', length: 'Longueur (cm)', height: 'Hauteur (cm)', weight: 'Poids (g)') do |e_hash|
       next if e_hash[:name] == 'Nom'
 
-      category_id = Category.find_by(name: e_hash[:category_name]).id
-      supplier_id = Supplier.find_by(name: e_hash[:supplier_name]).id
+      category = Category.find_by(name: e_hash[:category_name])
+      supplier = Supplier.find_by(name: e_hash[:supplier_name])
       equipment = Equipment.new(name: e_hash[:name], description: e_hash[:description], unit_price: e_hash[:unit_price],
-                                category_id: category_id, supplier_id: supplier_id)
+                                category_id: category.id, supplier_id: supplier.id)
       equipment.dimension = build_dimensions(e_hash)
       equipment.save
     end
@@ -182,6 +211,18 @@ module ImportModel
     time = "#{time_french}:00"
 
     "#{date} #{time}"
+  end
+
+  def add_to_errors(potential_errors, line_number, object, associated_name = '')
+    potential_errors[:had_errors] = true
+    if object.nil?
+      potential_errors[:errors] << "Erreur à la ligne #{line_number} -> #{associated_name} n'existe pas"
+    else
+      object.attributes.each do |attr_key, _attr_value|
+        arr_err = object.errors.full_messages_for(attr_key.to_s)
+        potential_errors[:errors] << "Erreur à la ligne #{line_number} -> #{arr_err.join(', ')}" unless arr_err.empty?
+      end
+    end
   end
 
 end

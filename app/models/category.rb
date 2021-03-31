@@ -21,11 +21,12 @@ class Category < ApplicationRecord
   min_char_name = 5
   ERR_MSG = { name_is_blank: 'Le nom ne peut pas être vide',
               name_is_too_short: "Le nom doit contenir au moins #{min_char_name} caractères",
-              name_already_exists: 'Ce nom existe déjà dans la base de données' }.freeze
+              name_already_exists: 'Ce nom existe déjà dans la base de données',
+              category_for_is_blank: 'Ce champ ne peut pas être vide' }.freeze
 
   validates :name, presence: { message: ERR_MSG[:name_is_blank] },
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] },
                    uniqueness: { message: ERR_MSG[:name_already_exists] }
-  validates :category_for, presence: true
+  validates :category_for, presence: { message: ERR_MSG[:category_for_is_blank] }
 
 end

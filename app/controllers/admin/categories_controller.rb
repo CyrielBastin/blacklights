@@ -48,7 +48,14 @@ class Admin::CategoriesController < AdminController
   end
 
   def import
-    import_categories
+    imported = import_categories
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:errors].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Toutes vos catégories ont été importés avec succès !'
+    end
     redirect_to admin_categories_path
   end
 
