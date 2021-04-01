@@ -17,11 +17,9 @@ class Supplier < ApplicationRecord
 
   min_char_name = 4
   ERR_MSG = { name_is_blank: 'Le nom ne peut pas être vide',
-              name_is_too_short: "Le nom doit contenir au moins #{min_char_name} caractères",
-              name_already_exists: 'Ce nom existe déjà dans la base de données' }.freeze
+              name_is_too_short: "Le nom doit contenir au moins #{min_char_name} caractères" }.freeze
 
   validates :name, presence: { message: ERR_MSG[:name_is_blank] },
-                   length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] },
-                   uniqueness: { message: ERR_MSG[:name_already_exists] }
+                   length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
 
 end

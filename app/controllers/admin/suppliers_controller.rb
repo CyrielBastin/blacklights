@@ -16,10 +16,16 @@ class Admin::SuppliersController < AdminController
 
   def create
     @supplier = Supplier.new(supplier_params)
-    if @supplier.save
-      flash[:success] = 'Votre fournisseur a été crée avec succès !'
-      redirect_to admin_suppliers_path
+    sup = Supplier.find_by(name: @supplier[:name])
+    if sup.nil?
+      if @supplier.save
+        flash[:success] = 'Votre fournisseur a été crée avec succès !'
+        redirect_to admin_suppliers_path
+      else
+        render 'new'
+      end
     else
+      @supplier.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
     end
   end
@@ -34,10 +40,16 @@ class Admin::SuppliersController < AdminController
 
   def update
     @supplier = Supplier.find(params[:id])
-    if @supplier.update(supplier_params)
-      flash[:success] = 'Votre fournisseur a été modifié avec succès !'
-      redirect_to admin_suppliers_path
+    sup = Supplier.find_by(name: params[:supplier][:name])
+    if sup.nil? || sup[:id] == @supplier[:id]
+      if @supplier.update(supplier_params)
+        flash[:success] = 'Votre fournisseur a été modifié avec succès !'
+        redirect_to admin_suppliers_path
+      else
+        render 'edit'
+      end
     else
+      @supplier.errors.add(:name, 'Ce nom existe déjà dans la base de données !')
       render 'edit'
     end
   end
@@ -49,7 +61,14 @@ class Admin::SuppliersController < AdminController
   end
 
   def import
-    import_suppliers
+    imported = import_suppliers
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:errors].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Tous vos fournisseurs ont été importés avec succès !'
+    end
     redirect_to admin_suppliers_path
   end
 

@@ -38,8 +38,9 @@
                 %tbody
                   - @events.each do |event|
                     %tr
-                      %td
-                        = event[:name]
+                      %td.project-title
+                        %b
+                          = event[:name]
 
                       %td
                         = date_time_to_french_format(event[:start_date])

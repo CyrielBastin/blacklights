@@ -15,11 +15,17 @@ class Admin::CategoriesController < AdminController
 
   def create
     @category = Category.new(category_params)
-    if @category.save
-      flash[:success] = "Votre catégorie a été créée avec succès !"
-      redirect_to admin_categories_path
+    cat = Category.find_by(name: @category[:name])
+    if cat.nil?
+      if @category.save
+        flash[:success] = 'Votre catégorie a été créée avec succès !'
+        redirect_to admin_categories_path
+      else
+        render 'new'
+      end
     else
-      render "new"
+      @category.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
+      render 'new'
     end
   end
 
@@ -33,11 +39,17 @@ class Admin::CategoriesController < AdminController
 
   def update
     @category = Category.find(params[:id])
-    if @category.update(category_params)
-      flash[:success] = "Votre catégorie a été modifiée avec succès !"
-      redirect_to admin_categories_path
+    cat = Category.find_by(name: params[:category][:name])
+    if cat.nil? || cat[:id] == @category[:id]
+      if @category.update(category_params)
+        flash[:success] = 'Votre catégorie a été modifiée avec succès !'
+        redirect_to admin_categories_path
+      else
+        render 'edit'
+      end
     else
-      render "edit"
+      @category.errors.add(:name, 'Ce nom existe déjà dans la base de données !')
+      render 'edit'
     end
   end
 

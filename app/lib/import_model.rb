@@ -1,155 +1,302 @@
 require 'roo'
 
-# Module to import Spreadsheet to the database.
-# Each method import_* will return <true> if no errors occured during the import
-# If errors occured, they will return an array of strings each string containing informations about the error
+# Module to import Spreadsheet into the database.
 module ImportModel
 
   def import_all
-    import_categories
-    import_suppliers
-    import_equipment
-    import_activities
-    import_locations
-    import_events
+    imported = import_categories
+    return imported if imported[:had_errors]
+    imported = import_suppliers
+    return imported if imported[:had_errors]
+    imported = import_equipment
+    return imported if imported[:had_errors]
+    imported = import_activities
+    return imported if imported[:had_errors]
+    imported = import_locations
+    return imported if imported[:had_errors]
+    imported = import_events
+    return imported if imported[:had_errors]
+
+    { had_errors: false }
   end
 
   def import_categories
-    potential_errors = { had_errors: false, errors: ['Erreur dans la Spreadsheet !', '--------------------------', ''] }
+    sheet_name = 'Catégories'
+    potential_errors = init_errors(sheet_name)
     begin
-      category_sheet = open_import_sheet('Catégories')
+      category_sheet = open_import_sheet(sheet_name)
     rescue RangeError
-      potential_errors[:had_errors] = true
-      potential_errors[:errors] << 'Feuille "Catégories" non trouvée dans le fichier !'
+      add_sheet_title_error(potential_errors, sheet_name)
       return potential_errors
     end
+    row_header = { name: 'Nom', parent_name: 'Catégorie parente', category_for: 'Catégorie pour' }
     row_number = 1
     begin
-      category_sheet.each(name: 'Nom', parent_name: 'Catégorie parente', category_for: 'Catégorie pour') do |c_hash|
+      category_sheet.each(row_header) do |row|
         if row_number == 1
           row_number += 1
           next
         end
-
-        if c_hash[:parent_name].nil?
-          category = Category.new(name: c_hash[:name], category_for: c_hash[:category_for])
-          add_to_errors(potential_errors, row_number, category) unless category.save
+        exists = Category.find_by(name: row[:name])
+        next unless exists.nil?
+        parent = Category.find_by(name: row[:parent_name])
+        category = Category.new(name: row[:name], category_for: row[:category_for],
+                                parent_id: parent.nil? ? nil : parent[:id])
+        if category.valid?
+          category.save
         else
-          parent = Category.find_by(name: c_hash[:parent_name])
-          add_to_errors(potential_errors, row_number, parent, c_hash[:parent_name]) if parent.nil?
-          category = Category.new(name: c_hash[:name], category_for: c_hash[:category_for])
-          add_to_errors(potential_errors, row_number, category) unless category.save
+          potential_errors[:had_errors] = true
         end
-        row_number += 1
       end
 
-      return potential_errors
+      add_data_error(potential_errors) if potential_errors[:had_errors] == true
+      potential_errors
     rescue Roo::HeaderRowNotFoundError => e
-      potential_errors[:had_errors] = true
-      potential_errors[:errors] << "Oups, on dirait que les colonnes suivantes n'ont pas été trouvées #{e.message}."
-      potential_errors[:errors] << 'La feuille "Catégories" dois posséder les colonnes "Nom", "Catégorie parente", "Catégorie pour".'
-      potential_errors[:errors] << 'Ces colonnes doives être présentes dans l\'ordre donné et sur la 1ère ligne de la feuille.'
-      return potential_errors
+      add_column_error(potential_errors, e.message, sheet_name, row_header)
+      potential_errors
     end
-
   end
 
   def import_suppliers
-    supplier_sheet = open_import_sheet('Fournisseurs')
-    supplier_sheet.each(name: 'Entreprise',
-                        lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone', email: 'Email',
-                        street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays') do |s_hash|
-      next if s_hash[:name] == 'Entreprise'
+    sheet_name = 'Fournisseurs'
+    potential_errors = init_errors(sheet_name)
+    begin
+      supplier_sheet = open_import_sheet(sheet_name)
+    rescue RangeError
+      add_sheet_title_error(potential_errors, sheet_name)
+      return potential_errors
+    end
+    row_header = { name: 'Entreprise', lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone',
+                   email: 'Email', street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays' }
+    row_number = 1
+    suppliers_to_push = []
+    begin
+      supplier_sheet.each(row_header) do |row|
+        if row_number == 1
+          row_number += 1
+          next
+        end
+        exists = Supplier.find_by(name: row[:name])
+        next unless exists.nil?
 
-      supplier = Supplier.new(name: s_hash[:name])
-      supplier.contact = build_contact(s_hash)
-      supplier.save
+        supplier = Supplier.new(name: row[:name])
+        supplier.contact = build_contact(row)
+        if supplier.valid?
+          suppliers_to_push << supplier
+        else
+          potential_errors[:had_errors] = true
+        end
+      end
+      suppliers_to_push.each(&:save)
+      add_data_error(potential_errors) if potential_errors[:had_errors] == true
+      potential_errors
+    rescue Roo::HeaderRowNotFoundError => e
+      add_column_error(potential_errors, e.message, sheet_name, row_header)
+      potential_errors
     end
   end
 
   def import_equipment
-    equipment_sheet = open_import_sheet('Matériel')
-    equipment_sheet.each(name: 'Nom', description: 'Description', unit_price: 'Prix (€)',
-                         category_name: 'Catégorie', supplier_name: 'Fournisseur',
-                         width: 'Largeur (cm)', length: 'Longueur (cm)', height: 'Hauteur (cm)', weight: 'Poids (g)') do |e_hash|
-      next if e_hash[:name] == 'Nom'
+    sheet_name = 'Matériel'
+    potential_errors = init_errors(sheet_name)
+    begin
+      equipment_sheet = open_import_sheet(sheet_name)
+    rescue RangeError
+      add_sheet_title_error(potential_errors, sheet_name)
+      return potential_errors
+    end
+    row_header = { name: 'Nom', description: 'Description', unit_price: 'Prix (€)',
+                   category_name: 'Catégorie', supplier_name: 'Fournisseur',
+                   width: 'Largeur (cm)', length: 'Longueur (cm)', height: 'Hauteur (cm)', weight: 'Poids (g)' }
+    row_number = 1
+    equipment_to_push = []
+    begin
+      equipment_sheet.each(row_header) do |row|
+        if row_number == 1
+          row_number += 1
+          next
+        end
+        exists = Equipment.find_by(name: row[:name])
+        next unless exists.nil?
+        category = Category.find_by(name: row[:category_name])
+        supplier = Supplier.find_by(name: row[:supplier_name])
+        equipment = Equipment.new(name: row[:name], description: row[:description], unit_price: row[:unit_price],
+                                  category_id: category.nil? ? nil : category[:id],
+                                  supplier_id: supplier.nil? ? nil : supplier[:id])
+        equipment.dimension = build_dimensions(row)
+        if equipment.valid?
+          equipment_to_push << equipment
+        else
+          potential_errors[:had_errors] = true
+        end
+      end
 
-      category = Category.find_by(name: e_hash[:category_name])
-      supplier = Supplier.find_by(name: e_hash[:supplier_name])
-      equipment = Equipment.new(name: e_hash[:name], description: e_hash[:description], unit_price: e_hash[:unit_price],
-                                category_id: category.id, supplier_id: supplier.id)
-      equipment.dimension = build_dimensions(e_hash)
-      equipment.save
+      equipment_to_push.each(&:save)
+      add_data_error(potential_errors) if potential_errors[:had_errors] == true
+      potential_errors
+    rescue Roo::HeaderRowNotFoundError => e
+      add_column_error(potential_errors, e.message, sheet_name, row_header)
+      potential_errors
     end
   end
 
   def import_activities
-    activity_sheet = open_import_sheet('Activités')
-    activity_sheet.each(name: 'Nom', description: 'Description', list_equipment: 'Matériel + quantité') do |a_hash|
-      next if a_hash[:name] == 'Nom'
+    sheet_name = 'Activités'
+    potential_errors = init_errors(sheet_name)
+    begin
+      activity_sheet = open_import_sheet(sheet_name)
+    rescue RangeError
+      add_sheet_title_error(potential_errors, sheet_name)
+      return potential_errors
+    end
+    row_header = { name: 'Nom', description: 'Description', list_equipment: 'Matériel + quantité' }
+    row_number = 1
+    activities_to_push = []
+    begin
+      activity_sheet.each(row_header) do |row|
+        if row_number == 1
+          row_number += 1
+          next
+        end
+        exists = Activity.find_by(name: row[:name])
+        next unless exists.nil?
 
-      equipment_quantity = convert_element_qty(a_hash[:list_equipment])
-      activity = Activity.new(name: a_hash[:name], description: a_hash[:description])
-      activity.activity_equipment = []
-      equipment_quantity.each do |hash|
-        equipment_id = Equipment.find_by(name: hash[:name]).id
-        activity.activity_equipment << ActivityEquipment.new(activity_id: activity, equipment_id: equipment_id,
-                                                             quantity: hash[:quantity])
+        equipment_quantity = convert_element_qty(row[:list_equipment])
+        activity = Activity.new(name: row[:name], description: row[:description])
+        activity.activity_equipment = []
+        equipment_quantity.each do |hash|
+          equipment = Equipment.find_by(name: hash[:name])
+          next if equipment.nil?
+          activity.activity_equipment << ActivityEquipment.new(activity_id: activity,
+                                                               equipment_id: equipment[:id],
+                                                               quantity: hash[:quantity])
+        end
+        if activity.valid?
+          activities_to_push << activity
+        else
+          potential_errors[:had_errors] = true
+        end
       end
-      activity.save
+
+      activities_to_push.each(&:save)
+      add_data_error(potential_errors) if potential_errors[:had_errors] == true
+      potential_errors
+    rescue Roo::HeaderRowNotFoundError => e
+      add_column_error(potential_errors, e.message, sheet_name, row_header)
+      potential_errors
     end
   end
 
   def import_locations
-    location_sheet = open_import_sheet('Lieux')
-    location_sheet.each(name: 'Nom', type: 'Type',
-                        list_activities: 'Activités disponibles',
-                        width: 'Largeur (m)', length: 'Longueur (m)', height: 'Hauteur (m)',
-                        lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone', email: 'Email',
-                        street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays') do |l_hash|
-      next if l_hash[:name] == 'Nom'
+    sheet_name = 'Lieux'
+    potential_errors = init_errors(sheet_name)
+    begin
+      location_sheet = open_import_sheet(sheet_name)
+    rescue RangeError
+      add_sheet_title_error(potential_errors, sheet_name)
+      return potential_errors
+    end
+    row_header = { name: 'Nom', type: 'Type', list_activities: 'Activités disponibles',
+                   width: 'Largeur (m)', length: 'Longueur (m)', height: 'Hauteur (m)',
+                   lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone', email: 'Email',
+                   street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays' }
+    row_number = 1
+    locations_to_push = []
+    begin
+      location_sheet.each(row_header) do |row|
+        if row_number == 1
+          row_number += 1
+          next
+        end
+        exists = Location.find_by(name: row[:name])
+        next unless exists.nil?
 
-      location = Location.new(name: l_hash[:name], type: l_hash[:type])
-      location.dimension = build_dimensions(l_hash)
-      location.contact = build_contact(l_hash)
-      list_activities = convert_activities(l_hash[:list_activities])
-      location.location_activities = []
-      list_activities.each do |activity_name|
-        next if activity_name.empty?
+        location = Location.new(name: row[:name], type: row[:type])
+        location.dimension = build_dimensions(row)
+        location.contact = build_contact(row)
+        list_activities = convert_activities(row[:list_activities])
+        location.location_activities = []
+        list_activities.each do |activity_name|
+          next if activity_name.empty?
 
-        activity = Activity.find_by(name: activity_name)
-        location.location_activities << LocationActivity.new(location_id: location, activity_id: activity.id) if activity.present?
+          activity = Activity.find_by(name: activity_name)
+          next if activity.nil?
+
+          location.location_activities << LocationActivity.new(location_id: location, activity_id: activity[:id])
+        end
+        if location.valid?
+          locations_to_push << location
+        else
+          potential_errors[:had_errors] = true
+        end
       end
-      location.save
+
+      locations_to_push.each(&:save)
+      add_data_error(potential_errors) if potential_errors[:had_errors] == true
+      potential_errors
+    rescue Roo::HeaderRowNotFoundError => e
+      add_column_error(potential_errors, e.message, sheet_name, row_header)
+      potential_errors
     end
   end
 
   def import_events
-    event_sheet = open_import_sheet('Evènements')
-    event_sheet.each(name: 'Nom', start_date: 'Date de début', end_date: 'Date de fin', registration_deadline: 'Clôture des inscriptions',
-                     min_participant: 'Min. participants', max_participant: 'Max. participants', price: 'Prix (€)',
-                     location_name: 'Lieu',
-                     list_activities: 'Activités + simultanée', list_equipment: 'Matériel supplémentaire + quantité',
-                     lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone', email: 'Email',
-                     street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays') do |e_hash|
-      next if e_hash[:name] == 'Nom'
+    sheet_name = 'Evènements'
+    potential_errors = init_errors(sheet_name)
+    begin
+      event_sheet = open_import_sheet(sheet_name)
+    rescue RangeError
+      add_sheet_title_error(potential_errors, sheet_name)
+      return potential_errors
+    end
+    row_header = { name: 'Nom', start_date: 'Date de début', end_date: 'Date de fin',
+                   registration_deadline: 'Clôture des inscriptions', min_participant: 'Min. participants',
+                   max_participant: 'Max. participants', price: 'Prix (€)', location_name: 'Lieu',
+                   list_activities: 'Activités + simultanée', list_equipment: 'Matériel supplémentaire + quantité',
+                   lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone', email: 'Email',
+                   street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays' }
+    row_number = 1
+    events_to_push = []
+    begin
+      event_sheet.each(row_header) do |row|
+        if row_number == 1
+          row_number += 1
+          next
+        end
+        exists = Event.find_by(name: row[:name], start_date: row[:start_date], end_date: row[:end_date])
+        next unless exists.nil?
 
-      event = Event.new(name: e_hash[:name], start_date: convert_to_date_time(e_hash[:start_date]),
-                        end_date: convert_to_date_time(e_hash[:end_date]), registration_deadline: convert_to_date_time(e_hash[:registration_deadline]),
-                        min_participant: e_hash[:min_participant], max_participant: e_hash[:max_participant], price: e_hash[:price])
-      event.contact = build_contact(e_hash)
-      event.location_id = Location.find_by(name: e_hash[:location_name]).id
-      list_activities = convert_element_qty(e_hash[:list_activities]); event.event_activities = []
-      list_activities.each do |hash|
-        activity_id = Activity.find_by(name: hash[:name]).id
-        event.event_activities << EventActivity.new(event_id: event, activity_id: activity_id, simultaneous_activities: hash[:quantity])
+        event = Event.new(name: row[:name], start_date: convert_to_date_time(row[:start_date]),
+                          end_date: convert_to_date_time(row[:end_date]), registration_deadline: convert_to_date_time(row[:registration_deadline]),
+                          min_participant: row[:min_participant], max_participant: row[:max_participant], price: row[:price])
+        event.contact = build_contact(row)
+        location = Location.find_by(name: row[:location_name])
+        event[:location_id] = location[:id] unless location.nil?
+        list_activities = convert_element_qty(row[:list_activities]); event.event_activities = []
+        list_activities.each do |hash|
+          activity = Activity.find_by(name: hash[:name])
+          next if activity.nil?
+          event.event_activities << EventActivity.new(event_id: event, activity_id: activity[:id], simultaneous_activities: hash[:quantity])
+        end
+        list_equipment = convert_element_qty(row[:list_equipment]); event.event_equipment = []
+        list_equipment.each do |hash|
+          equipment = Equipment.find_by(name: hash[:name])
+          next if equipment.nil?
+          event.event_equipment << EventEquipment.new(event_id: event, equipment_id: equipment[:id], quantity: hash[:quantity])
+        end
+        if event.valid?
+          events_to_push << event
+        else
+          potential_errors[:had_errors] = true
+        end
       end
-      list_equipment = convert_element_qty(e_hash[:list_equipment]); event.event_equipment = []
-      list_equipment.each do |hash|
-        equipment_id = Equipment.find_by(name: hash[:name]).id
-        event.event_equipment << EventEquipment.new(event_id: event, equipment_id: equipment_id, quantity: hash[:quantity])
-      end
-      event.save
+
+      events_to_push.each(&:save)
+      add_data_error(potential_errors) if potential_errors[:had_errors] == true
+      potential_errors
+    rescue Roo::HeaderRowNotFoundError => e
+      add_column_error(potential_errors, e.message, sheet_name, row_header)
+      potential_errors
     end
   end
 
@@ -203,6 +350,9 @@ module ImportModel
   end
 
   def convert_to_date_time(str)
+    return '' if str.nil?
+    return '' unless str.match %r{[0-9]{2}/[0-9]{2}/[0-9]{4},.{3}[0-9]{2}:[0-9]{2}}
+
     date_time_arr = str.split(',')
     date_french = date_time_arr[0]
     time_french = date_time_arr[1][3..]
@@ -213,16 +363,30 @@ module ImportModel
     "#{date} #{time}"
   end
 
-  def add_to_errors(potential_errors, line_number, object, associated_name = '')
-    potential_errors[:had_errors] = true
-    if object.nil?
-      potential_errors[:errors] << "Erreur à la ligne #{line_number} -> #{associated_name} n'existe pas"
-    else
-      object.attributes.each do |attr_key, _attr_value|
-        arr_err = object.errors.full_messages_for(attr_key.to_s)
-        potential_errors[:errors] << "Erreur à la ligne #{line_number} -> #{arr_err.join(', ')}" unless arr_err.empty?
-      end
+  def init_errors(sheet_name)
+    { had_errors: false, errors: ["Erreur dans la Spreadsheet ! -->  Feuille \"#{sheet_name}\"",
+                                  '--------------------------', ''] }
+  end
+
+  def add_sheet_title_error(err_hash, sheet_name)
+    err_hash[:had_errors] = true
+    err_hash[:errors] << "Feuille \"#{sheet_name}\" non trouvée dans le fichier !"
+  end
+
+  def add_column_error(err_hash, err_msg, page_name, col_hash)
+    err_hash[:had_errors] = true
+    err_hash[:errors] << "Oups, on dirait que les colonnes suivantes n'ont pas été trouvées #{err_msg}."
+    str = ''
+    col_hash.each do |_key, value|
+      str += "\"#{value}\", "
     end
+    err_hash[:errors] << "La feuille \"#{page_name}\" dois posséder les colonnes #{str[...-2]}."
+    err_hash[:errors] << 'Ces colonnes doives être présentes dans cet ordre la et sur la 1ère ligne de la feuille !'
+  end
+
+  def add_data_error(err_hash)
+    err_hash[:errors] << 'Il semblerait qu\'il y ait eue quelques erreurs par rapport aux données fournies !'
+    err_hash[:errors] << 'Toutes les données n\'ont pas pu être importées !'
   end
 
 end

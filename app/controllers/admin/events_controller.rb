@@ -59,7 +59,14 @@ class Admin::EventsController < AdminController
   end
 
   def import
-    import_events
+    imported = import_events
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:errors].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Tous vos évènements ont été importés avec succès !'
+    end
     redirect_to admin_events_path
   end
 

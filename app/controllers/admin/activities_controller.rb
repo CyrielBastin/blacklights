@@ -16,10 +16,16 @@ class Admin::ActivitiesController < AdminController
   def create
     @activity = Activity.new(activity_params)
     add_locations
-    if @activity.save
-      flash[:success] = 'Votre activité a été créée avec succès !'
-      redirect_to admin_activities_path
+    act = Activity.find_by(name: @activity[:name])
+    if act.nil?
+      if @activity.save
+        flash[:success] = 'Votre activité a été créée avec succès !'
+        redirect_to admin_activities_path
+      else
+        render 'new'
+      end
     else
+      @activity.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
     end
   end
@@ -35,10 +41,16 @@ class Admin::ActivitiesController < AdminController
   def update
     @activity = Activity.find(params[:id])
     add_locations
-    if @activity.update(activity_params)
-      flash[:success] = 'Votre activité a été modifiée avec succès !'
-      redirect_to admin_activities_path
+    act = Activity.find_by(name: params[:activity][:name])
+    if act.nil? || act[:id] == @activity[:id]
+      if @activity.update(activity_params)
+        flash[:success] = 'Votre activité a été modifiée avec succès !'
+        redirect_to admin_activities_path
+      else
+        render 'edit'
+      end
     else
+      @activity.errors.add(:name, 'Ce nom existe déjà dans la base de données !')
       render 'edit'
     end
   end
@@ -54,7 +66,14 @@ class Admin::ActivitiesController < AdminController
   end
 
   def import
-    import_activities
+    imported = import_activities
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:errors].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Toutes vos activités ont été importées avec succès !'
+    end
     redirect_to admin_activities_path
   end
 

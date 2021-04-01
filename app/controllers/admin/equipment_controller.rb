@@ -48,7 +48,14 @@ class Admin::EquipmentController < AdminController
   end
 
   def import
-    import_equipment
+    imported = import_equipment
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:errors].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Tout votre matériel a été importé avec succès !'
+    end
     redirect_to admin_equipment_index_path
   end
 
