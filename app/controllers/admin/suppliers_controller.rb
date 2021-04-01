@@ -1,5 +1,6 @@
 class Admin::SuppliersController < AdminController
   include ImportModel
+  include DuplicateHelper
 
   def index
     @suppliers = Supplier.all.page(params[:page]).per(10)
@@ -16,17 +17,16 @@ class Admin::SuppliersController < AdminController
 
   def create
     @supplier = Supplier.new(supplier_params)
-    sup = Supplier.find_by(name: @supplier[:name])
-    if sup.nil?
+    if already_exists?(@supplier.class.name, :name, @supplier[:name])
+      @supplier.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
+      render 'new'
+    else
       if @supplier.save
         flash[:success] = 'Votre fournisseur a été crée avec succès !'
         redirect_to admin_suppliers_path
       else
         render 'new'
       end
-    else
-      @supplier.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
-      render 'new'
     end
   end
 

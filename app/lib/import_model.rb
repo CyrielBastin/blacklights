@@ -2,6 +2,7 @@ require 'roo'
 
 # Module to import Spreadsheet into the database.
 module ImportModel
+  include DuplicateHelper
 
   def import_all
     imported = import_categories
@@ -37,11 +38,19 @@ module ImportModel
           row_number += 1
           next
         end
-        exists = Category.find_by(name: row[:name])
-        next unless exists.nil?
-        parent = Category.find_by(name: row[:parent_name])
+        if row[:parent_name].present?
+          parent = Category.find_by(name: row[:parent_name])
+          if parent.nil?
+            potential_errors[:had_errors] = true
+            next
+          end
+        end
         category = Category.new(name: row[:name], category_for: row[:category_for],
-                                parent_id: parent.nil? ? nil : parent[:id])
+                                parent_id: row[:parent_name].nil? ? nil : Category.find_by(name: row[:parent_name]).id)
+        if already_exists?(category.class.name, :name, row[:name])
+          potential_errors[:had_errors] = true
+          next
+        end
         if category.valid?
           category.save
         else

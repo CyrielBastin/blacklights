@@ -1,5 +1,6 @@
 class Admin::ActivitiesController < AdminController
   include ImportModel
+  include DuplicateHelper
 
   def index
     @activities = Activity.all.page(params[:page]).per(6)
@@ -16,17 +17,16 @@ class Admin::ActivitiesController < AdminController
   def create
     @activity = Activity.new(activity_params)
     add_locations
-    act = Activity.find_by(name: @activity[:name])
-    if act.nil?
+    if already_exists?(@activity.class.name, :name, @activity[:name])
+      @activity.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
+      render 'new'
+    else
       if @activity.save
         flash[:success] = 'Votre activité a été créée avec succès !'
         redirect_to admin_activities_path
       else
         render 'new'
       end
-    else
-      @activity.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
-      render 'new'
     end
   end
 

@@ -1,5 +1,6 @@
 class Admin::CategoriesController < AdminController
   include ImportModel
+  include DuplicateHelper
 
   def index
     @categories = Category.all.page(params[:page]).per(10)
@@ -15,17 +16,16 @@ class Admin::CategoriesController < AdminController
 
   def create
     @category = Category.new(category_params)
-    cat = Category.find_by(name: @category[:name])
-    if cat.nil?
+    if already_exists?(@category.class.name, :name, @category[:name])
+      @category.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
+      render 'new'
+    else
       if @category.save
         flash[:success] = 'Votre catégorie a été créée avec succès !'
         redirect_to admin_categories_path
       else
         render 'new'
       end
-    else
-      @category.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
-      render 'new'
     end
   end
 

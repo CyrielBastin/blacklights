@@ -1,5 +1,6 @@
 class Admin::LocationsController < AdminController
   include ImportModel
+  include DuplicateHelper
 
   def index
     @locations = Location.all.page(params[:page]).per(10)
@@ -16,17 +17,16 @@ class Admin::LocationsController < AdminController
   def create
     @location = Location.new(location_params)
     add_activities
-    loc = Location.find_by(name: @location[:name])
-    if loc.nil?
+    if already_exists?(@location.class.name, :name, @location[:name])
+      @location.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
+      render 'new'
+    else
       if @location.save
         flash[:success] = 'Votre lieu a été crée avec succès !'
         redirect_to admin_locations_path
       else
         render 'new'
       end
-    else
-      @location.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
-      render 'new'
     end
   end
 
