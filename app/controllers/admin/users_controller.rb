@@ -9,17 +9,18 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    @user  = User.new(user_params)
+    @user = User.new(user_params)
+    @user.profile.contact[:email] = params[:user][:email]
     if @user.save
-      flash[:success] = "L'utilisateur a été crée avec succès !"
+      flash[:success] = 'L\'utilisateur a été crée avec succès !'
       redirect_to admin_users_path
     else
-      render "new"
+      render 'new'
     end
   end
 
-  def show
-  end
+  # def show
+  # end
 
   def edit
     @user = User.find(params[:id])

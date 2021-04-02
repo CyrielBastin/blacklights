@@ -19,18 +19,6 @@ class Profile < ActiveRecord::Base
 
   validates :gender, presence: true
   validates :birthdate, presence: true
-  validate :birthdate_in_past
 
-
-  ####################################################################################################
-  # Custom Validators
-  ####################################################################################################
-  def birthdate_in_past
-    return if birthdate.nil?
-
-    unless birthdate < Date.today
-      errors.add(:birthdate, '')
-    end
-  end
 
 end

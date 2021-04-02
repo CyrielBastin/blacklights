@@ -15,16 +15,6 @@
             .hr-line-dashed
             = f.fields_for :profile, f.object.profile.present? ? f.object.profile : Profile.new do |profile|
               .form-group
-                %label.col-lg-2.control-label Nom
-                .col-lg-10
-                  = profile.text_field :lastname, class: "form-control required"
-              .hr-line-dashed
-              .form-group
-                %label.col-lg-2.control-label Prénom
-                .col-lg-10
-                  = profile.text_field :firstname, class: "form-control required"
-              .hr-line-dashed
-              .form-group
                 %label.col-sm-2.control-label Date de naissance
                 .col-sm-10
                   = profile.date_select :birthdate, start_year: 1900, end_year: Date.today.year, class: "form-control"
@@ -34,25 +24,8 @@
                 .col-sm-10
                   = profile.select :gender, Profile.gender.options, {include_blank: true}, {class: "form-control required"}
               .hr-line-dashed
-              .form-group
-                %label.col-sm-2.control-label Rue et numéro
-                .col-sm-10
-                  = profile.text_field :street, class: "form-control"
-              .hr-line-dashed
-              .form-group
-                %label.col-sm-2.control-label Code postal
-                .col-sm-10
-                  = profile.number_field :zipcode, class: "form-control"
-              .hr-line-dashed
-              .form-group
-                %label.col-sm-2.control-label Ville
-                .col-sm-10
-                  = profile.text_field :city, class: "form-control"
-              .hr-line-dashed
-              .form-group
-                %label.col-sm-2.control-label Pays
-                .col-sm-10
-                  = profile.country_select :country,  {selected: "BE"},{class: "form-control"}
+
+              = render partial: 'shared/contact_form', locals: { form: profile, object: profile.object }
 
             .hr-line-dashed
             .form-group
