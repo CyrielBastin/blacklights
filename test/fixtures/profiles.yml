@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+cain_profile:
+  gender: male
+  birthdate: 1212-12-12
+  user: cain
+  contact: one
+
+abel_profile:
+  gender: female
+  birthdate: 1214-04-04
+  user: abel
+  contact: two

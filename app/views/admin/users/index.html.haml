@@ -31,7 +31,7 @@
                       %tr
                         %td
                           %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
-                            = user.profile.full_name
+                            = "#{user.profile.contact[:firstname]} #{user.profile.contact[:lastname]}"
                         %td
                           = #user.admin? ? "Admin" : "Utilisateur"
                         %td.contact-type
@@ -55,7 +55,7 @@
                 .row.m-b-lg
                   .col-lg-12.text-center
                     %h2
-                      = user.profile.full_name
+                      = "#{user.profile.contact[:firstname]} #{user.profile.contact[:lastname]}"
 
                 .full-height-scroll
                   %strong Informations
