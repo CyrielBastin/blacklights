@@ -146,51 +146,53 @@ module ImportModel
     end
   end
 
-  def import_activities
-    sheet_name = 'Activités'
-    potential_errors = init_errors(sheet_name)
+  def import_activities(data)
+    file_ext = File.extname(data.original_filename)
+    raise  "Type de fichier non pris en charge : #{file.original_filename}" unless [".xls", ".xlsx"].include?(file_ext)
     begin
-      activity_sheet = open_import_sheet(sheet_name)
-    rescue RangeError
-      add_sheet_title_error(potential_errors, sheet_name)
-      return potential_errors
-    end
-    row_header = { name: 'Nom', description: 'Description', list_equipment: 'Matériel + quantité' }
-    row_number = 1
-    activities_to_push = []
-    begin
-      activity_sheet.each(row_header) do |row|
-        if row_number == 1
-          row_number += 1
-          next
-        end
-        next if already_exists?(:Activity, :name, row[:name])
-
-        equipment_quantity = convert_element_qty(row[:list_equipment])
-        activity = Activity.new(name: row[:name], description: row[:description])
-        activity.activity_equipment = []
-        equipment_quantity.each do |hash|
-          equipment = Equipment.find_by(name: hash[:name])
-          next if equipment.nil?
-          activity.activity_equipment << ActivityEquipment.new(activity_id: activity,
-                                                               equipment_id: equipment[:id],
-                                                               quantity: hash[:quantity])
-        end
-        if activity.valid?
-          activities_to_push << activity
-        else
-          potential_errors[:had_errors] = true
-        end
+      spreadsheet = (file_ext == ".xls") ? Roo::Excel.new(data.path) : Roo::Excelx.new(data.path)
+      header = spreadsheet.row(1)
+      (2..spreadsheet.last_row).each do |i|
+        next if already_exists?(:Activity, :name, spreadsheet.row(i)[0])
+        Activity.create(name: spreadsheet.row(i)[0], description: spreadsheet.row(i)[1])
       end
-
-      activities_to_push.each(&:save)
-      add_data_error(potential_errors) if potential_errors[:had_errors] == true
-      potential_errors
-    rescue Roo::HeaderRowNotFoundError => e
-      add_column_error(potential_errors, e.message, sheet_name, row_header)
-      potential_errors
     end
+
+
+    # begin
+    #   activity_sheet.each(row_header) do |row|
+    #     if row_number == 1
+    #       row_number += 1
+    #       next
+    #     end
+    #     next if already_exists?(:Activity, :name, row[:name])
+    #
+    #     equipment_quantity = convert_element_qty(row[:list_equipment])
+    #     activity = Activity.new(name: row[:name], description: row[:description])
+    #     activity.activity_equipment = []
+    #     equipment_quantity.each do |hash|
+    #       equipment = Equipment.find_by(name: hash[:name])
+    #       next if equipment.nil?
+    #       activity.activity_equipment << ActivityEquipment.new(activity_id: activity,
+    #                                                            equipment_id: equipment[:id],
+    #                                                            quantity: hash[:quantity])
+    #     end
+    #     if activity.valid?
+    #       activities_to_push << activity
+    #     else
+    #       potential_errors[:had_errors] = true
+    #     end
+    #   end
+    #
+    #   activities_to_push.each(&:save)
+    #   add_data_error(potential_errors) if potential_errors[:had_errors] == true
+    #   potential_errors
+    # rescue Roo::HeaderRowNotFoundError => e
+    #   add_column_error(potential_errors, e.message, sheet_name, row_header)
+    #   potential_errors
+    # end
   end
+
 
   def import_locations
     sheet_name = 'Lieux'
