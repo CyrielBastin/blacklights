@@ -45,12 +45,10 @@ module ImportModel
             next
           end
         end
+        next if already_exists?(:Category, :name, row[:name])
+
         category = Category.new(name: row[:name], category_for: row[:category_for],
                                 parent_id: row[:parent_name].nil? ? nil : Category.find_by(name: row[:parent_name]).id)
-        if already_exists?(category.class.name, :name, row[:name])
-          potential_errors[:had_errors] = true
-          next
-        end
         if category.valid?
           category.save
         else
@@ -85,8 +83,7 @@ module ImportModel
           row_number += 1
           next
         end
-        exists = Supplier.find_by(name: row[:name])
-        next unless exists.nil?
+        next if already_exists?(:Supplier, :name, row[:name])
 
         supplier = Supplier.new(name: row[:name])
         supplier.contact = build_contact(row)
@@ -125,8 +122,8 @@ module ImportModel
           row_number += 1
           next
         end
-        exists = Equipment.find_by(name: row[:name])
-        next unless exists.nil?
+        next if already_exists?(:Equipment, :name, row[:name])
+
         category = Category.find_by(name: row[:category_name])
         supplier = Supplier.find_by(name: row[:supplier_name])
         equipment = Equipment.new(name: row[:name], description: row[:description], unit_price: row[:unit_price],
@@ -167,8 +164,7 @@ module ImportModel
           row_number += 1
           next
         end
-        exists = Activity.find_by(name: row[:name])
-        next unless exists.nil?
+        next if already_exists?(:Activity, :name, row[:name])
 
         equipment_quantity = convert_element_qty(row[:list_equipment])
         activity = Activity.new(name: row[:name], description: row[:description])
@@ -217,8 +213,7 @@ module ImportModel
           row_number += 1
           next
         end
-        exists = Location.find_by(name: row[:name])
-        next unless exists.nil?
+        next if already_exists?(:Location, :name, row[:name])
 
         location = Location.new(name: row[:name], type: row[:type])
         location.dimension = build_dimensions(row)
@@ -283,14 +278,12 @@ module ImportModel
         event[:location_id] = location[:id] unless location.nil?
         list_activities = convert_element_qty(row[:list_activities]); event.event_activities = []
         list_activities.each do |hash|
-          activity = Activity.find_by(name: hash[:name])
-          next if activity.nil?
+          next unless already_exists?(:Activity, :name, hash[:name])
           event.event_activities << EventActivity.new(event_id: event, activity_id: activity[:id], simultaneous_activities: hash[:quantity])
         end
         list_equipment = convert_element_qty(row[:list_equipment]); event.event_equipment = []
         list_equipment.each do |hash|
-          equipment = Equipment.find_by(name: hash[:name])
-          next if equipment.nil?
+          next unless already_exists?(:Equipment, :name, hash[:name])
           event.event_equipment << EventEquipment.new(event_id: event, equipment_id: equipment[:id], quantity: hash[:quantity])
         end
         if event.valid?
@@ -342,7 +335,7 @@ module ImportModel
     arr.each do |str|
       next if str.empty?
 
-      md = str.match /(.+)(\(.+\))/
+      md = str.match(/(.+)(\(.+\))/)
       name = md[1].strip
       quantity = md[2][1...-1]
       result << { name: name, quantity: quantity }
