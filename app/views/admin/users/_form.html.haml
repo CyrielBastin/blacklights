@@ -27,15 +27,15 @@
               .form-group
                 %label.col-sm-2.control-label Date de naissance
                 .col-sm-10
-                  = profile.date_select :birthdate, class: "form-control"
+                  = profile.date_select :birthdate, start_year: 1900, end_year: Date.today.year, class: "form-control"
               .hr-line-dashed
               .form-group
                 %label.col-sm-2.control-label Sexe
                 .col-sm-10
-                  = profile.select :gender, Profile.gender.options, {}, {class: "form-control required"}
+                  = profile.select :gender, Profile.gender.options, {include_blank: true}, {class: "form-control required"}
               .hr-line-dashed
               .form-group
-                %label.col-sm-2.control-label Rue
+                %label.col-sm-2.control-label Rue et numéro
                 .col-sm-10
                   = profile.text_field :street, class: "form-control"
               .hr-line-dashed
