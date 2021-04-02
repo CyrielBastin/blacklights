@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     resources :registrations, concerns: :paginatable
     get '/json/location_activities/:loc_id', to: 'activities#location_activities_json'
     resources :activities, concerns: :paginatable
-    get 'import_activities', to: 'activities#import'
+    post 'import_activities', to: 'activities#import'
     resources :categories, concerns: :paginatable
     get 'import_categories', to: 'categories#import'
     get 'import_all', to: 'dashboards#import'
