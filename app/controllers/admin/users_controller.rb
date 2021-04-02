@@ -28,18 +28,18 @@ class Admin::UsersController < AdminController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
-      flash[:success] = "L'utilisateur a été modifié avec succès !"
+    if @user.update(user_params)
+      flash[:success] = 'L\'utilisateur a été modifié avec succès !'
       redirect_to admin_users_path
     else
-      render "edit"
+      render 'edit'
     end
   end
 
   def invite
     @user = User.find(params[:user_id])
     @user.invite!
-    flash[:success] = "L'utilisateur a été invité avec succès !"
+    flash[:success] = 'L\'utilisateur a été invité avec succès !'
     redirect_to admin_users_path
   end
 
