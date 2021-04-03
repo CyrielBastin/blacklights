@@ -38,4 +38,10 @@ class Contact < ApplicationRecord
   validates :phone_number, presence: { message: ERR_MSG[:phone_number_is_blank] },
                            length: { minimum: min_char_phone_number, message: ERR_MSG[:phone_number_is_too_short] }
   validates :email, presence: { message: ERR_MSG[:email_is_blank] }, email: { message: ERR_MSG[:email_is_not_valid] }
+
+
+  def full_name
+    "#{firstname} #{lastname.upcase}"
+  end
+
 end

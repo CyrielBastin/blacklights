@@ -22,35 +22,40 @@
           -#    %button.btn.btn.btn-primary{:type => "button"}
           -#      %i.fa.fa-search
           -#      Chercher
-          .clients-list
-            .full-height-scroll
-              .table-responsive
-                %table.table.table-striped.table-hover
-                  %thead
-                    %th Nom complet
-                    %th
-                    %th
-                    %th Email
-                    %th Status
-                  %tbody
-                    - @users.each do |user|
-                      %tr
-                        %td
-                          %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
-                            = "#{user.profile.contact[:firstname]} #{user.profile.contact[:lastname].upcase}"
-                        %td
-                          = #user.admin? ? "Admin" : "Utilisateur"
-                        %td.contact-type
-                          %i.fa.fa-envelope
-                        %td
-                          = user.email
-                        %td.client-status
-                          - if user.confirmed?
-                            %span.label.label-primary Actif
-                          -elsif user.invited?
-                            %span.label.label-warning Invité
-                          -else
-                            %span.label.label-default Non invité
+
+          -if @users.size > 0
+            .clients-list
+              .full-height-scroll
+                .table-responsive
+                  %table.table.table-striped.table-hover
+                    %thead
+                      %th Nom complet
+                      %th
+                      %th
+                      %th Email
+                      %th Status
+                    %tbody
+                      - @users.each do |user|
+                        %tr
+                          %td
+                            %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
+                              = "#{user.profile.contact.full_name}"
+                          %td
+                            = #user.admin? ? "Admin" : "Utilisateur"
+                          %td.contact-type
+                            %i.fa.fa-envelope
+                          %td
+                            = user.email
+                          %td.client-status
+                            - if user.confirmed?
+                              %span.label.label-primary Actif
+                            -elsif user.invited?
+                              %span.label.label-warning Invité
+                            -else
+                              %span.label.label-default Non invité
+
+          - else
+            Aucun utilisateur enregistré actuellement
 
     .col-sm-4
       .ibox

@@ -51,5 +51,21 @@ $(function() {
         time_24hr: true,
         locale: Flatpickr.l10ns.fr
     });
+    $('#registration_confirmation_datetime').flatpickr({
+        altInput: true,
+        dateFormat: 'Y-m-d H:i',
+        altFormat: 'd/m/Y, à H:i',
+        enableTime: true,
+        time_24hr: true,
+        locale: Flatpickr.l10ns.fr
+    });
+    $('#registration_payment_confirmation_datetime').flatpickr({
+        altInput: true,
+        dateFormat: 'Y-m-d H:i',
+        altFormat: 'd/m/Y, à H:i',
+        enableTime: true,
+        time_24hr: true,
+        locale: Flatpickr.l10ns.fr
+    });
 
 });
