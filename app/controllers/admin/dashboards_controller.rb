@@ -9,10 +9,10 @@ class Admin::DashboardsController < AdminController
   end
 
   def import
-    imported = import_all
+    imported = import_all(params[:file])
     if imported[:had_errors]
       err_msg = ''
-      imported[:errors].each { |error| err_msg += "#{error}<br>" }
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
       flash[:danger] = err_msg
     else
       flash[:success] = 'Toute votre Spreadsheet a été importée avec succès !'

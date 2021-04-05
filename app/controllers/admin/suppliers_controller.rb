@@ -61,10 +61,10 @@ class Admin::SuppliersController < AdminController
   end
 
   def import
-    imported = import_suppliers
+    imported = import_suppliers(params[:file])
     if imported[:had_errors]
       err_msg = ''
-      imported[:errors].each { |error| err_msg += "#{error}<br>" }
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
       flash[:danger] = err_msg
     else
       flash[:success] = 'Tous vos fournisseurs ont été importés avec succès !'

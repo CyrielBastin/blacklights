@@ -2,225 +2,242 @@ require 'roo'
 
 # Module to import Spreadsheet into the database.
 module ImportModel
+  include ImportError
   include DuplicateHelper
+  include ConvertFloat
 
-  def import_all
-    imported = import_categories
+  def import_all(file)
+    potential_errors = init_errors('')
+    begin
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
+      return potential_errors
+    end
+    imported = import_categories(file)
     return imported if imported[:had_errors]
-    imported = import_suppliers
+    imported = import_suppliers(file)
     return imported if imported[:had_errors]
-    imported = import_equipment
+    imported = import_equipment(file)
     return imported if imported[:had_errors]
-    imported = import_activities
+    imported = import_activities(file)
     return imported if imported[:had_errors]
-    imported = import_locations
+    imported = import_locations(file)
     return imported if imported[:had_errors]
-    imported = import_events
+    imported = import_events(file)
     return imported if imported[:had_errors]
 
-    { had_errors: false }
+    potential_errors
   end
 
-  def import_categories
+
+  def import_categories(file)
     sheet_name = 'Catégories'
     potential_errors = init_errors(sheet_name)
     begin
-      category_sheet = open_import_sheet(sheet_name)
-    rescue RangeError
-      add_sheet_title_error(potential_errors, sheet_name)
-      return potential_errors
-    end
-    row_header = { name: 'Nom', parent_name: 'Catégorie parente', category_for: 'Catégorie pour' }
-    row_number = 1
-    begin
-      category_sheet.each(row_header) do |row|
-        if row_number == 1
-          row_number += 1
-          next
-        end
-        if row[:parent_name].present?
-          parent = Category.find_by(name: row[:parent_name])
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+      document = (file_ext == '.xlsx') ? Roo::Excelx.new(file.path) : Roo::OpenOffice.new(file.path)
+      sheet = nil
+      begin
+        sheet = document.sheet(sheet_name)
+      rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
+      end
+      raise SheetNameError.new(sheet_name) if sheet.nil?
+      # Order for the columns in the sheet
+      # Nom, Parent_name, Catégorie pour
+      (2..sheet.last_row).each do |i|
+        if sheet.row(i)[1].present?
+          parent = Category.find_by(name: sheet.row(i)[1])
           if parent.nil?
-            potential_errors[:had_errors] = true
+            potential_errors[:cell_error] = true
             next
           end
         end
-        next if already_exists?(:Category, :name, row[:name])
+        next if already_exists?(:Category, :name, sheet.row(i)[0])
 
-        category = Category.new(name: row[:name], category_for: row[:category_for],
-                                parent_id: row[:parent_name].nil? ? nil : Category.find_by(name: row[:parent_name]).id)
-        if category.valid?
-          category.save
-        else
-          potential_errors[:had_errors] = true
-        end
+        category = Category.new(name: sheet.row(i)[0], category_for: sheet.row(i)[2],
+                                parent_id: sheet.row(i)[1].nil? ? nil : Category.find_by(name: sheet.row(i)[1]).id)
+        potential_errors[:cell_error] = true unless category.save
       end
-
-      add_data_error(potential_errors) if potential_errors[:had_errors] == true
-      potential_errors
-    rescue Roo::HeaderRowNotFoundError => e
-      add_column_error(potential_errors, e.message, sheet_name, row_header)
-      potential_errors
+      if potential_errors[:cell_error] == true
+        potential_errors[:had_errors] = true
+        raise CellValueError
+      end
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
     end
+
+    potential_errors
   end
 
-  def import_suppliers
+
+  def import_suppliers(file)
     sheet_name = 'Fournisseurs'
     potential_errors = init_errors(sheet_name)
     begin
-      supplier_sheet = open_import_sheet(sheet_name)
-    rescue RangeError
-      add_sheet_title_error(potential_errors, sheet_name)
-      return potential_errors
-    end
-    row_header = { name: 'Entreprise', lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone',
-                   email: 'Email', street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays' }
-    row_number = 1
-    suppliers_to_push = []
-    begin
-      supplier_sheet.each(row_header) do |row|
-        if row_number == 1
-          row_number += 1
-          next
-        end
-        next if already_exists?(:Supplier, :name, row[:name])
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+      document = (file_ext == '.xlsx') ? Roo::Excelx.new(file.path) : Roo::OpenOffice.new(file.path)
+      sheet = nil
+      begin
+        sheet = document.sheet(sheet_name)
+      rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
+      end
+      raise SheetNameError.new(sheet_name) if sheet.nil?
+      suppliers_to_save = []
+      # Order for the columns in the sheet
+      # Entreprise, Nom de famille, Prénom, Téléphone, Email, Rue et numéro, Code postal, Ville, Pays
+      (2..sheet.last_row).each do |i|
+        next if already_exists?(:Supplier, :name, sheet.row(i)[0])
 
-        supplier = Supplier.new(name: row[:name])
-        supplier.contact = build_contact(row)
+        supplier = Supplier.new(name: sheet.row(i)[0])
+        supplier.contact = build_contact(sheet.row(i)[1..])
         if supplier.valid?
-          suppliers_to_push << supplier
+          suppliers_to_save << supplier
         else
-          potential_errors[:had_errors] = true
+          potential_errors[:cell_error] = true
         end
       end
-      suppliers_to_push.each(&:save)
-      add_data_error(potential_errors) if potential_errors[:had_errors] == true
-      potential_errors
-    rescue Roo::HeaderRowNotFoundError => e
-      add_column_error(potential_errors, e.message, sheet_name, row_header)
-      potential_errors
+      suppliers_to_save.each(&:save)
+      if potential_errors[:cell_error] == true
+        potential_errors[:had_errors] = true
+        raise CellValueError
+      end
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
     end
+
+    potential_errors
   end
 
-  def import_equipment
+
+  def import_equipment(file)
     sheet_name = 'Matériel'
     potential_errors = init_errors(sheet_name)
     begin
-      equipment_sheet = open_import_sheet(sheet_name)
-    rescue RangeError
-      add_sheet_title_error(potential_errors, sheet_name)
-      return potential_errors
-    end
-    row_header = { name: 'Nom', description: 'Description', unit_price: 'Prix (€)',
-                   category_name: 'Catégorie', supplier_name: 'Fournisseur',
-                   width: 'Largeur (cm)', length: 'Longueur (cm)', height: 'Hauteur (cm)', weight: 'Poids (g)' }
-    row_number = 1
-    equipment_to_push = []
-    begin
-      equipment_sheet.each(row_header) do |row|
-        if row_number == 1
-          row_number += 1
-          next
-        end
-        next if already_exists?(:Equipment, :name, row[:name])
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+      document = (file_ext == '.xlsx') ? Roo::Excelx.new(file.path) : Roo::OpenOffice.new(file.path)
+      sheet = nil
+      begin
+        sheet = document.sheet(sheet_name)
+      rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
+      end
+      raise SheetNameError.new(sheet_name) if sheet.nil?
+      equipment_to_save = []
+      # Order for the columns in the sheet
+      # Nom, Description, Prix, Nom catégorie, Nom fournisseur, Largeur, Longueur, Hauteur, Poids
+      (2..sheet.last_row).each do |i|
+        next if already_exists?(:Equipment, :name, sheet.row(i)[0])
 
-        category = Category.find_by(name: row[:category_name])
-        supplier = Supplier.find_by(name: row[:supplier_name])
-        equipment = Equipment.new(name: row[:name], description: row[:description], unit_price: row[:unit_price],
+        category = Category.find_by(name: sheet.row(i)[3])
+        supplier = Supplier.find_by(name: sheet.row(i)[4])
+        equipment = Equipment.new(name: sheet.row(i)[0], description: sheet.row(i)[1], unit_price: to_english_repr(sheet.row(i)[2]),
                                   category_id: category.nil? ? nil : category[:id],
                                   supplier_id: supplier.nil? ? nil : supplier[:id])
-        equipment.dimension = build_dimensions(row)
+        equipment.dimension = build_dimensions(sheet.row(i)[5..])
+
         if equipment.valid?
-          equipment_to_push << equipment
+          equipment_to_save << equipment
         else
-          potential_errors[:had_errors] = true
+          potential_errors[:cell_error] = true
         end
       end
-
-      equipment_to_push.each(&:save)
-      add_data_error(potential_errors) if potential_errors[:had_errors] == true
-      potential_errors
-    rescue Roo::HeaderRowNotFoundError => e
-      add_column_error(potential_errors, e.message, sheet_name, row_header)
-      potential_errors
-    end
-  end
-
-  def import_activities(data)
-    file_ext = File.extname(data.original_filename)
-    raise  "Type de fichier non pris en charge : #{file.original_filename}" unless [".xls", ".xlsx"].include?(file_ext)
-    begin
-      spreadsheet = (file_ext == ".xls") ? Roo::Excel.new(data.path) : Roo::Excelx.new(data.path)
-      header = spreadsheet.row(1)
-      (2..spreadsheet.last_row).each do |i|
-        next if already_exists?(:Activity, :name, spreadsheet.row(i)[0])
-        Activity.create(name: spreadsheet.row(i)[0], description: spreadsheet.row(i)[1])
+      equipment_to_save.each(&:save)
+      if potential_errors[:cell_error] == true
+        potential_errors[:had_errors] = true
+        raise CellValueError
       end
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
     end
 
-
-    # begin
-    #   activity_sheet.each(row_header) do |row|
-    #     if row_number == 1
-    #       row_number += 1
-    #       next
-    #     end
-    #     next if already_exists?(:Activity, :name, row[:name])
-    #
-    #     equipment_quantity = convert_element_qty(row[:list_equipment])
-    #     activity = Activity.new(name: row[:name], description: row[:description])
-    #     activity.activity_equipment = []
-    #     equipment_quantity.each do |hash|
-    #       equipment = Equipment.find_by(name: hash[:name])
-    #       next if equipment.nil?
-    #       activity.activity_equipment << ActivityEquipment.new(activity_id: activity,
-    #                                                            equipment_id: equipment[:id],
-    #                                                            quantity: hash[:quantity])
-    #     end
-    #     if activity.valid?
-    #       activities_to_push << activity
-    #     else
-    #       potential_errors[:had_errors] = true
-    #     end
-    #   end
-    #
-    #   activities_to_push.each(&:save)
-    #   add_data_error(potential_errors) if potential_errors[:had_errors] == true
-    #   potential_errors
-    # rescue Roo::HeaderRowNotFoundError => e
-    #   add_column_error(potential_errors, e.message, sheet_name, row_header)
-    #   potential_errors
-    # end
+    potential_errors
   end
 
 
-  def import_locations
+  def import_activities(file)
+    sheet_name = 'Activités'
+    potential_errors = init_errors(sheet_name)
+    begin
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+      document = (file_ext == '.xlsx') ? Roo::Excelx.new(file.path) : Roo::OpenOffice.new(file.path)
+      sheet = nil
+      begin
+        sheet = document.sheet(sheet_name)
+      rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
+      end
+      raise SheetNameError.new(sheet_name) if sheet.nil?
+      activities_to_save = []
+      # Order for the columns in the sheet
+      # Nom, Description, Matériel + qty
+      (2..sheet.last_row).each do |i|
+        next if already_exists?(:Activity, :name, sheet.row(i)[0])
+        activity = Activity.new(name: sheet.row(i)[0], description: sheet.row(i)[1])
+        list_equipment = convert_element_qty(sheet.row(i)[2])
+        activity.activity_equipment = []
+        list_equipment.each do |equipment|
+          eq = Equipment.find_by(name: equipment[:name])
+          next if eq.nil?
+          activity.activity_equipment << ActivityEquipment.new(activity_id: activity,
+                                                               equipment_id: eq[:id],
+                                                               quantity: equipment[:quantity])
+        end
+        if activity.valid?
+          activities_to_save << activity
+        else
+          potential_errors[:cell_error] = true
+        end
+      end
+      activities_to_save.each(&:save)
+      if potential_errors[:cell_error] == true
+        potential_errors[:had_errors] = true
+        raise CellValueError
+      end
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
+    end
+
+    potential_errors
+  end
+
+
+  def import_locations(file)
     sheet_name = 'Lieux'
     potential_errors = init_errors(sheet_name)
     begin
-      location_sheet = open_import_sheet(sheet_name)
-    rescue RangeError
-      add_sheet_title_error(potential_errors, sheet_name)
-      return potential_errors
-    end
-    row_header = { name: 'Nom', type: 'Type', list_activities: 'Activités disponibles',
-                   width: 'Largeur (m)', length: 'Longueur (m)', height: 'Hauteur (m)',
-                   lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone', email: 'Email',
-                   street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays' }
-    row_number = 1
-    locations_to_push = []
-    begin
-      location_sheet.each(row_header) do |row|
-        if row_number == 1
-          row_number += 1
-          next
-        end
-        next if already_exists?(:Location, :name, row[:name])
-
-        location = Location.new(name: row[:name], type: row[:type])
-        location.dimension = build_dimensions(row)
-        location.contact = build_contact(row)
-        list_activities = convert_activities(row[:list_activities])
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+      document = (file_ext == '.xlsx') ? Roo::Excelx.new(file.path) : Roo::OpenOffice.new(file.path)
+      sheet = nil
+      begin
+        sheet = document.sheet(sheet_name)
+      rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
+      end
+      raise SheetNameError.new(sheet_name) if sheet.nil?
+      locations_to_save = []
+      # Order for the columns in the sheet
+      # Nom, Type, Activités, Largeur, Longueur, Hauteur, Nom de f., Prénom, Tél, Email, Rue, Code postal, Ville, Pays
+      (2..sheet.last_row).each do |i|
+        next if already_exists?(:Location, :name, sheet.row(i)[0])
+        location = Location.new(name: sheet.row(i)[0], type: sheet.row(i)[1])
+        location.dimension = build_dimensions(sheet.row(i)[3..5])
+        location.contact = build_contact(sheet.row(i)[6..])
+        list_activities = convert_activities(sheet.row(i)[2])
         location.location_activities = []
         list_activities.each do |activity_name|
           next if activity_name.empty?
@@ -231,98 +248,107 @@ module ImportModel
           location.location_activities << LocationActivity.new(location_id: location, activity_id: activity[:id])
         end
         if location.valid?
-          locations_to_push << location
+          locations_to_save << location
         else
-          potential_errors[:had_errors] = true
+          potential_errors[:cell_error] = true
         end
       end
-
-      locations_to_push.each(&:save)
-      add_data_error(potential_errors) if potential_errors[:had_errors] == true
-      potential_errors
-    rescue Roo::HeaderRowNotFoundError => e
-      add_column_error(potential_errors, e.message, sheet_name, row_header)
-      potential_errors
+      locations_to_save.each(&:save)
+      if potential_errors[:cell_error] == true
+        potential_errors[:had_errors] = true
+        raise CellValueError
+      end
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
     end
+
+    potential_errors
   end
 
-  def import_events
+
+  def import_events(file)
     sheet_name = 'Evènements'
     potential_errors = init_errors(sheet_name)
     begin
-      event_sheet = open_import_sheet(sheet_name)
-    rescue RangeError
-      add_sheet_title_error(potential_errors, sheet_name)
-      return potential_errors
-    end
-    row_header = { name: 'Nom', start_date: 'Date de début', end_date: 'Date de fin',
-                   registration_deadline: 'Clôture des inscriptions', min_participant: 'Min. participants',
-                   max_participant: 'Max. participants', price: 'Prix (€)', location_name: 'Lieu',
-                   list_activities: 'Activités + simultanée', list_equipment: 'Matériel supplémentaire + quantité',
-                   lastname: 'Nom de famille', firstname: 'Prénom', phone_number: 'Téléphone', email: 'Email',
-                   street: 'Rue et numéro', zip_code: 'Code postal', city: 'Ville', country: 'Pays' }
-    row_number = 1
-    events_to_push = []
-    begin
-      event_sheet.each(row_header) do |row|
-        if row_number == 1
-          row_number += 1
-          next
-        end
-        exists = Event.find_by(name: row[:name], start_date: row[:start_date], end_date: row[:end_date])
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+      document = (file_ext == '.xlsx') ? Roo::Excelx.new(file.path) : Roo::OpenOffice.new(file.path)
+      sheet = nil
+      begin
+        sheet = document.sheet(sheet_name)
+      rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
+      end
+      raise SheetNameError.new(sheet_name) if sheet.nil?
+      events_to_save = []
+      # Order for the columns in the sheet
+      # Nom, Date début, Date fin, Clôture insc., Min par., Max par., Prix, Lieu, Activités, Matériel, Nom de f., Prénom, Tél, Email, Rue, Code postal, Ville, Pays
+      (2..sheet.last_row).each do |i|
+        exists = Event.find_by(name: sheet.row(i)[0], start_date: convert_to_date_time(sheet.row(i)[1]),
+                               end_date: convert_to_date_time(sheet.row(i)[2]))
         next unless exists.nil?
 
-        event = Event.new(name: row[:name], start_date: convert_to_date_time(row[:start_date]),
-                          end_date: convert_to_date_time(row[:end_date]), registration_deadline: convert_to_date_time(row[:registration_deadline]),
-                          min_participant: row[:min_participant], max_participant: row[:max_participant], price: row[:price])
-        event.contact = build_contact(row)
-        location = Location.find_by(name: row[:location_name])
+        event = Event.new(name: sheet.row(i)[0], start_date: convert_to_date_time(sheet.row(i)[1]),
+                          end_date: convert_to_date_time(sheet.row(i)[2]), registration_deadline: convert_to_date_time(sheet.row(i)[3]),
+                          min_participant: sheet.row(i)[4], max_participant: sheet.row(i)[5], price: sheet.row(i)[6])
+        event.contact = build_contact(sheet.row(i)[10..])
+        location = Location.find_by(name: sheet.row(i)[7])
         event[:location_id] = location[:id] unless location.nil?
-        list_activities = convert_element_qty(row[:list_activities]); event.event_activities = []
+        list_activities = convert_element_qty(sheet.row(i)[8]); event.event_activities = []
         list_activities.each do |hash|
           next unless already_exists?(:Activity, :name, hash[:name])
+          activity = Activity.find_by(name: hash[:name])
+          next if activity.nil?
           event.event_activities << EventActivity.new(event_id: event, activity_id: activity[:id], simultaneous_activities: hash[:quantity])
         end
-        list_equipment = convert_element_qty(row[:list_equipment]); event.event_equipment = []
+        list_equipment = convert_element_qty(sheet.row(i)[9]); event.event_equipment = []
         list_equipment.each do |hash|
           next unless already_exists?(:Equipment, :name, hash[:name])
+          equipment = Equipment.find_by(name: hash[:name])
+          next if equipment.nil?
           event.event_equipment << EventEquipment.new(event_id: event, equipment_id: equipment[:id], quantity: hash[:quantity])
         end
         if event.valid?
-          events_to_push << event
+          events_to_save << event
         else
-          potential_errors[:had_errors] = true
+          potential_errors[:cell_error] = true
         end
       end
-
-      events_to_push.each(&:save)
-      add_data_error(potential_errors) if potential_errors[:had_errors] == true
-      potential_errors
-    rescue Roo::HeaderRowNotFoundError => e
-      add_column_error(potential_errors, e.message, sheet_name, row_header)
-      potential_errors
+      events_to_save.each(&:save)
+      if potential_errors[:cell_error] == true
+        potential_errors[:had_errors] = true
+        raise CellValueError
+      end
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
     end
+
+    potential_errors
   end
 
+  # ##################################################################################################
   private
+  # ##################################################################################################
 
-  def open_import_sheet(sheet_name)
-    document = Roo::Spreadsheet.open('import_models/models.xlsx')
-
-    document.sheet(sheet_name)
+  # Returns an array containing the valid extensions for an imported file
+  def valid_extensions
+    %w[.xlsx .ods]
   end
 
-  def build_contact(hash)
-    coordinates = Coordinate.new(street: hash[:street], zip_code: hash[:zip_code], city: hash[:city], country: hash[:country])
-    contact = Contact.new(lastname: hash[:lastname], firstname: hash[:firstname], phone_number: hash[:phone_number], email: hash[:email])
+  # @param datas: array<string>
+  def build_contact(datas)
+    coordinates = Coordinate.new(street: datas[4], zip_code: datas[5], city: datas[6], country: datas[7])
+    contact = Contact.new(lastname: datas[0], firstname: datas[1], phone_number: datas[2], email: datas[3])
     contact.coordinate = coordinates
 
     contact
   end
 
-  def build_dimensions(hash)
-    Dimension.new(width: hash[:width], length: hash[:length],
-                  height: hash[:height], weight: hash[:weight].present? ? hash[:weight] : 0.01)
+  # @param datas: array<string>
+  def build_dimensions(datas)
+    Dimension.new(width: datas[0], length: datas[1], height: datas[2], weight: datas[4].nil? ? 0.01 : datas[4])
   end
 
   # Here, we receive a string containing the equipment or activity with their quantity
@@ -332,14 +358,15 @@ module ImportModel
   def convert_element_qty(string)
     return [] if string.nil?
 
-    arr = string.split(',').collect(&:strip)
+    arr = string.split('+').collect(&:strip)
     result = []
     arr.each do |str|
       next if str.empty?
 
-      md = str.match(/(.+)(\(.+\))/)
+      md = str.match(/(.+)(\(\d+[\.,]?\d*\))/)
+      return [] if md.nil?
       name = md[1].strip
-      quantity = md[2][1...-1]
+      quantity = to_english_repr md[2][1...-1]
       result << { name: name, quantity: quantity }
     end
 
@@ -349,13 +376,13 @@ module ImportModel
   def convert_activities(string)
     return [] if string.nil?
 
-    arr = string.split(',')
+    arr = string.split('+')
     arr.collect(&:strip)
   end
 
   def convert_to_date_time(str)
     return '' if str.nil?
-    return '' unless str.match %r{[0-9]{2}/[0-9]{2}/[0-9]{4},.{3}[0-9]{2}:[0-9]{2}}
+    return '' unless str.match %r{\d{2}/\d{2}/\d{4},.{3}\d{2}:\d{2}} # 14/12/2022, à 17:45
 
     date_time_arr = str.split(',')
     date_french = date_time_arr[0]
@@ -367,30 +394,12 @@ module ImportModel
     "#{date} #{time}"
   end
 
+  # @param sheet_name: string
   def init_errors(sheet_name)
-    { had_errors: false, errors: ["Erreur dans la Spreadsheet ! -->  Feuille \"#{sheet_name}\"",
-                                  '--------------------------', ''] }
-  end
-
-  def add_sheet_title_error(err_hash, sheet_name)
-    err_hash[:had_errors] = true
-    err_hash[:errors] << "Feuille \"#{sheet_name}\" non trouvée dans le fichier !"
-  end
-
-  def add_column_error(err_hash, err_msg, page_name, col_hash)
-    err_hash[:had_errors] = true
-    err_hash[:errors] << "Oups, on dirait que les colonnes suivantes n'ont pas été trouvées #{err_msg}."
-    str = ''
-    col_hash.each do |_key, value|
-      str += "\"#{value}\", "
-    end
-    err_hash[:errors] << "La feuille \"#{page_name}\" dois posséder les colonnes #{str[...-2]}."
-    err_hash[:errors] << 'Ces colonnes doives être présentes dans cet ordre la et sur la 1ère ligne de la feuille !'
-  end
-
-  def add_data_error(err_hash)
-    err_hash[:errors] << 'Il semblerait qu\'il y ait eue quelques erreurs par rapport aux données fournies !'
-    err_hash[:errors] << 'Toutes les données n\'ont pas pu être importées !'
+    { had_errors: false,
+      err_messages: ['Erreur avec le fichier importé !', " --> Feuille \"#{sheet_name}\"",
+                     '----------------------------', ''],
+      cell_error: false }
   end
 
 end

@@ -14,9 +14,14 @@
         .ibox-title
           %h5 L'ensemble des fournisseurs définis
           .ibox-tools
-            = link_to 'Exporter', admin_suppliers_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @suppliers.size > 0
-            = link_to 'Importer', admin_import_suppliers_path, class: 'btn btn-info btn-import-model'
             = link_to "Nouveau fournisseur", new_admin_supplier_path, class: "btn btn-primary"
+            = link_to 'Exporter', admin_suppliers_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @suppliers.size > 0
+            %br
+          = form_tag admin_import_suppliers_path, method: :post, multipart: true do
+            %fieldset
+              %legend Importer des données
+              = file_field_tag :file
+              = submit_tag "Importer", class: "btn btn-success mt-20"
         .ibox-content
           - if @suppliers.size > 0
             .project-list

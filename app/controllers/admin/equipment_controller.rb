@@ -48,10 +48,10 @@ class Admin::EquipmentController < AdminController
   end
 
   def import
-    imported = import_equipment
+    imported = import_equipment(params[:file])
     if imported[:had_errors]
       err_msg = ''
-      imported[:errors].each { |error| err_msg += "#{error}<br>" }
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
       flash[:danger] = err_msg
     else
       flash[:success] = 'Tout votre matériel a été importé avec succès !'

@@ -66,14 +66,14 @@ class Admin::ActivitiesController < AdminController
   end
 
   def import
-    import_activities(params[:file])
-    # if imported[:had_errors]
-    #   err_msg = ''
-    #   imported[:errors].each { |error| err_msg += "#{error}<br>" }
-    #   flash[:danger] = err_msg
-    # else
-    #   flash[:success] = 'Toutes vos activités ont été importées avec succès !'
-    # end
+    imported = import_activities(params[:file])
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Toutes vos activités ont été importées avec succès !'
+    end
     redirect_to admin_activities_path
   end
 

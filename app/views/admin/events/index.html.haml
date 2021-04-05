@@ -19,9 +19,14 @@
                 = link_to 'Evènements à venir', admin_events_path, class: "btn btn-primary" unless events_to_come
               .col-sm-2
                 = link_to 'Anciens évènements', admin_events_path(events: 'previous'), class: 'btn btn-primary' if events_to_come
-              = link_to 'Exporter', admin_events_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @events.size > 0
-              = link_to 'Importer', admin_import_events_path, class: 'btn btn-info btn-import-model'
               = link_to 'Nouvel évènement', new_admin_event_path, class: 'btn btn-primary', style: 'margin-right: 50px'
+              = link_to 'Exporter', admin_events_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @events.size > 0
+            %br
+          = form_tag admin_import_events_path, method: :post, multipart: true do
+            %fieldset
+              %legend Importer des données
+              = file_field_tag :file
+              = submit_tag "Importer", class: "btn btn-success mt-20"
 
         .ibox-content
           - if @events.size > 0
