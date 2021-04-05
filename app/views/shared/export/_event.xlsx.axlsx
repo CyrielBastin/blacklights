@@ -14,14 +14,14 @@ wb.add_worksheet(name: 'Evènements') do |sheet|
                  'Lieu',
                  'Activités + simultanée',
                  'Matériel supplémentaire + quantité',
-                 'Contact =>', 'Nom de famille', 'Prénom', 'Téléphone', 'Email',
+                 'Nom de famille', 'Prénom', 'Téléphone', 'Email',
                  'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
   events.each_with_index do |event, i|
     sheet.add_row [event[:name], date_time_to_french_format(event[:start_date]), date_time_to_french_format(event[:end_date]), date_time_to_french_format(event[:registration_deadline]), event[:min_participant], event[:max_participant], event[:price],
                    event.location[:name],
                    activities[i],
                    equipment[i],
-                   '', event.contact[:lastname], event.contact[:firstname], event.contact[:phone_number], event.contact[:email],
+                   event.contact[:lastname], event.contact[:firstname], event.contact[:phone_number], event.contact[:email],
                    event.contact.coordinate[:street], event.contact.coordinate[:zip_code], event.contact.coordinate[:city], event.contact.coordinate[:country]], style: center
   end
 end

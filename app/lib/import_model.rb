@@ -291,7 +291,7 @@ module ImportModel
 
         event = Event.new(name: sheet.row(i)[0], start_date: convert_to_date_time(sheet.row(i)[1]),
                           end_date: convert_to_date_time(sheet.row(i)[2]), registration_deadline: convert_to_date_time(sheet.row(i)[3]),
-                          min_participant: sheet.row(i)[4], max_participant: sheet.row(i)[5], price: sheet.row(i)[6])
+                          min_participant: sheet.row(i)[4], max_participant: sheet.row(i)[5], price: to_english_repr(sheet.row(i)[6]))
         event.contact = build_contact(sheet.row(i)[10..])
         location = Location.find_by(name: sheet.row(i)[7])
         event[:location_id] = location[:id] unless location.nil?
@@ -348,7 +348,8 @@ module ImportModel
 
   # @param datas: array<string>
   def build_dimensions(datas)
-    Dimension.new(width: datas[0], length: datas[1], height: datas[2], weight: datas[4].nil? ? 0.01 : datas[4])
+    Dimension.new(width: to_english_repr(datas[0]), length: to_english_repr(datas[1]),
+                  height: to_english_repr(datas[2]), weight: datas[3].nil? ? 0.01 : to_english_repr(datas[3]))
   end
 
   # Here, we receive a string containing the equipment or activity with their quantity
