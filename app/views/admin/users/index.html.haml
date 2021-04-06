@@ -54,6 +54,10 @@
                             -else
                               %span.label.label-default Non invité
 
+            .pagination-custom
+              = paginate @users, views_prefix: 'admin'
+
+
           - else
             Aucun utilisateur enregistré actuellement
 

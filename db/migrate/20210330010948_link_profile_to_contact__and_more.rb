@@ -11,6 +11,6 @@ class LinkProfileToContactAndMore < ActiveRecord::Migration[6.1]
     remove_column :profiles, :city
     remove_column :profiles, :country
     remove_column :profiles, :phone_number
-    add_reference :profiles, :contact, foreign_key: true
+    add_reference :profiles, :contact
   end
 end

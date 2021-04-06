@@ -46,7 +46,7 @@
                         - activity.activity_equipment.each_with_index do |ac_eq, i|
                           - unless i == 0
                             %br
-                          = "#{ac_eq.equipment.name} (#{ac_eq.quantity})"
+                          = "#{ac_eq.equipment.name} (#{to_french_repr(ac_eq.quantity)})"
 
                       %td
                         - activity.location_activities.each_with_index do |loc_ac, i|

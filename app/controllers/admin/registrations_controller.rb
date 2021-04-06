@@ -1,7 +1,8 @@
 class Admin::RegistrationsController < AdminController
 
   def index
-    @registrations = Registration.all
+    # We send a list of all events to come with their associated registrations in the view
+    @events = Registration.for_events_to_come.page(params[:page]).per(10)
   end
 
   def new

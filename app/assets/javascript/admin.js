@@ -32,6 +32,7 @@ $(function() {
         dateFormat: 'Y-m-d H:i',
         altFormat: 'd/m/Y, à H:i',
         enableTime: true,
+        minuteIncrement: 5,
         time_24hr: true,
         locale: Flatpickr.l10ns.fr
     });
@@ -40,6 +41,7 @@ $(function() {
         dateFormat: 'Y-m-d H:i',
         altFormat: 'd/m/Y, à H:i',
         enableTime: true,
+        minuteIncrement: 5,
         time_24hr: true,
         locale: Flatpickr.l10ns.fr
     });
@@ -48,6 +50,7 @@ $(function() {
         dateFormat: 'Y-m-d H:i',
         altFormat: 'd/m/Y, à H:i',
         enableTime: true,
+        minuteIncrement: 5,
         time_24hr: true,
         locale: Flatpickr.l10ns.fr
     });
@@ -56,7 +59,9 @@ $(function() {
         dateFormat: 'Y-m-d H:i',
         altFormat: 'd/m/Y, à H:i',
         enableTime: true,
+        minuteIncrement: 5,
         time_24hr: true,
+        allowInput: true,
         locale: Flatpickr.l10ns.fr
     });
     $('#registration_payment_confirmation_datetime').flatpickr({
@@ -64,7 +69,9 @@ $(function() {
         dateFormat: 'Y-m-d H:i',
         altFormat: 'd/m/Y, à H:i',
         enableTime: true,
+        minuteIncrement: 5,
         time_24hr: true,
+        allowInput: true,
         locale: Flatpickr.l10ns.fr
     });
 

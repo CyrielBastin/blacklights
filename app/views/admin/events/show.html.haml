@@ -72,7 +72,7 @@
     %tr
       %th Prix :
       %td
-        = "#{@event[:price]} €"
+        = "#{to_french_repr(@event[:price])} €"
 
 .row.text-center
   %button.btn.btn-secondary.btn-lg{:type => 'button'}

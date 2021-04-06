@@ -48,11 +48,11 @@
                           %br
 
                       %td
-                        = "Largeur : #{location.dimension[:width]} m"
+                        = "Largeur : #{to_french_repr(location.dimension[:width])} m"
                         %br
-                        = "Longueur : #{location.dimension[:length]} m"
+                        = "Longueur : #{to_french_repr(location.dimension[:length])} m"
                         %br
-                        = "Hauteur : #{location.dimension[:height]} m"
+                        = "Hauteur : #{to_french_repr(location.dimension[:height])} m"
 
                       %td
                         = "Nom : #{location.contact.lastname}"

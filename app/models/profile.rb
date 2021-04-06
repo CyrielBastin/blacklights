@@ -19,6 +19,20 @@ class Profile < ActiveRecord::Base
 
   validates :gender, presence: true
   validates :birthdate, presence: true
+  validate :birthdate_in_past
 
+
+  ###################################################################################################
+  # Custom validatiors
+  ###################################################################################################
+
+  def birthdate_in_past
+    return if birthdate.nil?
+
+    # we use 2 hours from now for a correct datetime !!! Careful with the UTC +02:00
+    unless birthdate <= Date.today
+      errors.add(:birthdate, 'ne peut pas être dans le futur')
+    end
+  end
 
 end

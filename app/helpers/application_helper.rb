@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include ConvertFloat # We include ConvertFloat so we can use its methods in the views
 
   def is_active_controller(controller_name, class_name = nil)
     if params[:controller] == "app/#{controller_name}"
