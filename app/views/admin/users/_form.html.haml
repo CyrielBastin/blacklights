@@ -28,6 +28,14 @@
               = render partial: 'shared/contact_form', locals: { form: profile, object: profile.object }
 
             .hr-line-dashed
+            .hr-line-dashed
+            .form-group
+              %label.col-sm-2.control-label Admin ?
+              .col-sm-10
+                = f.check_box :admin, class: 'form-control', style: 'max-width: 50px'
+
+
+            .hr-line-dashed
             .form-group
               .col-sm-4.col-sm-offset-2
                 %button.btn.btn-primary{:type => "submit"} Sauver

@@ -16,10 +16,10 @@ class SupplierTest < ActiveSupport::TestCase
     assert_not supplier.save
   end
 
-  test 'Name should be at least 4 characters long' do
+  test 'Name should be at least 3 characters long' do
     supplier = Supplier.new
     supplier.contact = contacts(:one)
-    supplier[:name] = 'Bob'
+    supplier[:name] = 'GG'
     assert_not supplier.save
   end
 

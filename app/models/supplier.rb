@@ -15,11 +15,10 @@ class Supplier < ApplicationRecord
 
   accepts_nested_attributes_for :contact
 
-  min_char_name = 4
-  ERR_MSG = { name_is_blank: 'Le nom ne peut pas être vide',
-              name_is_too_short: "Le nom doit contenir au moins #{min_char_name} caractères" }.freeze
+  min_char_name = 3
+  ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères" }.freeze
 
-  validates :name, presence: { message: ERR_MSG[:name_is_blank] },
+  validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
 
 end

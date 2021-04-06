@@ -15,11 +15,10 @@ class ActivityEquipment < ApplicationRecord
   belongs_to :activity
   belongs_to :equipment
 
-  min_qty = 0.00
-  ERR_MSG = { quantity_is_blank: 'La quantité ne peut pas être vide',
-              quantity_is_lesser_than_one: "La quantité doit être plus grand que #{min_qty}" }.freeze
+  min_qty = 0
+  ERR_MSG = { quantity_is_lesser_than_one: "doit être plus grand que #{min_qty}" }.freeze
 
-  validates :quantity, presence: { message: ERR_MSG[:quantity_is_blank] },
+  validates :quantity, presence: true,
                        numericality: { greater_than: min_qty, message: ERR_MSG[:quantity_is_lesser_than_one] }
 
 end

@@ -46,7 +46,7 @@ class Admin::UsersController < AdminController
   private
 
   def user_params
-    params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, profile_attributes:
+    params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, :admin, profile_attributes:
       [:birthdate, :gender, contact_attributes: [:lastname, :firstname, :phone_number, :email, coordinate_attributes:
         [:street, :zip_code, :city, :country]]])
   end
