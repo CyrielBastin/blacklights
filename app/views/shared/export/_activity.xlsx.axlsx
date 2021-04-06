@@ -1,0 +1,20 @@
+activities = Activity.all
+equipment = assemble_pieces_together(activities,
+                                     obj_to_assemble: :activity_equipment,
+                                     obj_name: :equipment,
+                                     name: :name,
+                                     quantity: :quantity)
+locations = assemble_pieces_together(activities,
+                                     obj_to_assemble: :location_activities,
+                                     obj_name: :location,
+                                     name: :name)
+wb.add_worksheet(name: 'Activités') do |sheet|
+  sheet.add_row ['Nom', 'Description',
+                 'Matériel + quantité',
+                 'Lieux disponibles'], style: center
+  activities.each_with_index do |activity, i|
+    sheet.add_row [activity[:name], activity[:description],
+                   equipment[i],
+                   locations[i]], style: center
+  end
+end

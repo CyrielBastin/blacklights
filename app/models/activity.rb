@@ -23,13 +23,11 @@ class Activity < ApplicationRecord
   min_char_desc = 15
   ERR_MSG = { name_not_blank: 'Le nom ne peut pas être vide',
               name_range: "Le nom doit contenir au minimum #{min_char_name} caractères et au maximum #{max_char_name} caractères",
-              name_already_exists: 'Ce nom existe déjà dans la base de données',
               description_not_blank: 'La description ne peut pas être vide',
               description_too_short: "La description doit contenir au moins #{min_char_desc} caractères" }.freeze
 
   validates :name, presence: { message: ERR_MSG[:name_not_blank] },
-                   length: { minimum: min_char_name, maximum: max_char_name, message: ERR_MSG[:name_range] },
-                   uniqueness: { message: ERR_MSG[:name_already_exists] }
+                   length: { minimum: min_char_name, maximum: max_char_name, message: ERR_MSG[:name_range] }
   validates :description, presence: { message: ERR_MSG[:description_not_blank] },
                           length: { minimum: min_char_desc, message: ERR_MSG[:description_too_short] }
 
@@ -50,9 +48,7 @@ class Activity < ApplicationRecord
 
   def add_up_equipment_duplicates
     unless activity_equipment.empty?
-      self.activity_equipment = add_up_duplicates(activity_equipment,
-                                                  id: :equipment_id,
-                                                  quantity: :quantity)
+      self.activity_equipment = add_up_duplicates(activity_equipment, id: :equipment_id, quantity: :quantity)
     end
   end
 

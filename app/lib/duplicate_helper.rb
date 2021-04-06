@@ -29,4 +29,13 @@ module DuplicateHelper
     no_duplicated_entries
   end
 
+  # Checks whether a value for the attribute is present in the table <class> in the database
+  # Example : alreadys_exists(:Category, :name, :Balles)
+  # will check if for the table associated to the Model 'Category', there is a row with 'name' == 'Balles'
+  def already_exists?(class_name, attr, value)
+    exists = class_name.to_s.constantize.method(:find_by).call({ "#{attr}": value })
+
+    exists.present?
+  end
+
 end

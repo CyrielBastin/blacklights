@@ -1,0 +1,5 @@
+wb = xlsx_package.workbook
+style = wb.styles
+center = style.add_style alignment: { horizontal: :center }
+
+render partial: 'shared/export/equipment', locals: { wb: wb, center: center }

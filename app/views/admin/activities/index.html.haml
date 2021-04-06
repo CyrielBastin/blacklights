@@ -15,6 +15,13 @@
           %h5 L'ensemble des activités définies
           .ibox-tools
             = link_to "Nouvelle activité", new_admin_activity_path, class: "btn btn-primary"
+            = link_to 'Exporter', admin_activities_path(format: :xlsx), class: 'btn btn-info' if @activities.size > 0
+            %br
+          = form_tag admin_import_activities_path, method: :post, multipart: true do
+            %fieldset
+              %legend Importer des données
+              = file_field_tag :file
+              = submit_tag "Importer", class: "btn btn-success mt-20"
         .ibox-content
           - if @activities.size > 0
             .project-list

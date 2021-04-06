@@ -59,10 +59,6 @@ class Event < ApplicationRecord
   validate :max_participant_is_higher_than_min_participant
 
 
-  def datetime_to_french_format(date_time)
-    date_time.strftime('%d/%m/%Y, à %H:%M')
-  end
-
   def Event.to_come
     Event.where(['start_date > ?', DateTime.now])
   end

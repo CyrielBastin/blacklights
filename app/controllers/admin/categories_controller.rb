@@ -1,7 +1,13 @@
 class Admin::CategoriesController < AdminController
+  include ImportModel
+  include DuplicateHelper
 
   def index
     @categories = Category.all.page(params[:page]).per(10)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def new
@@ -10,11 +16,16 @@ class Admin::CategoriesController < AdminController
 
   def create
     @category = Category.new(category_params)
-    if @category.save
-      flash[:success] = "Votre catégorie a été créée avec succès !"
-      redirect_to admin_categories_path
+    if already_exists?(@category.class.name, :name, @category[:name])
+      @category.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
+      render 'new'
     else
-      render "new"
+      if @category.save
+        flash[:success] = 'Votre catégorie a été créée avec succès !'
+        redirect_to admin_categories_path
+      else
+        render 'new'
+      end
     end
   end
 
@@ -28,11 +39,17 @@ class Admin::CategoriesController < AdminController
 
   def update
     @category = Category.find(params[:id])
-    if @category.update(category_params)
-      flash[:success] = "Votre catégorie a été modifiée avec succès !"
-      redirect_to admin_categories_path
+    cat = Category.find_by(name: params[:category][:name])
+    if cat.nil? || cat[:id] == @category[:id]
+      if @category.update(category_params)
+        flash[:success] = 'Votre catégorie a été modifiée avec succès !'
+        redirect_to admin_categories_path
+      else
+        render 'edit'
+      end
     else
-      render "edit"
+      @category.errors.add(:name, 'Ce nom existe déjà dans la base de données !')
+      render 'edit'
     end
   end
 
@@ -42,10 +59,22 @@ class Admin::CategoriesController < AdminController
     redirect_to admin_categories_path
   end
 
+  def import
+    imported = import_categories(params[:file])
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Toutes vos catégories ont été importés avec succès !'
+    end
+    redirect_to admin_categories_path
+  end
+
   private
 
   def category_params
-    params.require(:category).permit( :parent_id, :name)
+    params.require(:category).permit(:parent_id, :name, :category_for)
   end
 
 end

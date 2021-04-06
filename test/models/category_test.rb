@@ -21,10 +21,25 @@ class CategoryTest < ActiveSupport::TestCase
     assert_not category.save
   end
 
-  test 'Name should be unique' do
+  test 'Should not save a category with wrong \'category_for\' set' do
     category = Category.new
-    category[:name] = categories(:raquette_bad)[:name]
+    category[:name] = 'Plus Ultra'
+    category[:category_for] = 'Not Valid'
     assert_not category.save
+  end
+
+  test 'Should save category if \'category_for\' is "Evènement"' do
+    category = Category.new
+    category[:name] = 'Plus Ultra'
+    category[:category_for] = 'Evènement'
+    assert category.save
+  end
+
+  test 'Should save category if \'category_for\' is "Matériel"' do
+    category = Category.new
+    category[:name] = 'Plus Ultra'
+    category[:category_for] = 'Matériel'
+    assert category.save
   end
 
   test 'Should update raquettes\'s name to "Bubble"' do

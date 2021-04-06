@@ -1,7 +1,12 @@
 class Admin::EquipmentController < AdminController
+  include ImportModel
 
   def index
-    @equipments = Equipment.all.page(params[:page]).per(10)
+    @equipments = Equipment.all.page(params[:page]).per(6)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def new
@@ -39,6 +44,18 @@ class Admin::EquipmentController < AdminController
   def destroy
     Equipment.find(params[:id]).destroy
     flash[:success] = 'Votre matériel a été supprimé avec succès !'
+    redirect_to admin_equipment_index_path
+  end
+
+  def import
+    imported = import_equipment(params[:file])
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Tout votre matériel a été importé avec succès !'
+    end
     redirect_to admin_equipment_index_path
   end
 

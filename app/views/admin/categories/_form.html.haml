@@ -17,5 +17,9 @@
               .col-sm-10
                 = f.select :parent_id, options_for_select(Category.all.map{|s|[s.name, s.id]}, @category.parent_id),{:include_blank => 'Aucune'}, {:class => "form-control select"}
             .form-group
+              %label.col-sm-2.control-label Catégorie pour
+              .col-sm-10
+                = f.select :category_for, Category.category_for.options, {}, class: 'form-control required'
+            .form-group
               .col-sm-4
                 %button.btn.btn-primary{:type => "submit"} Sauver la catégorie

@@ -37,13 +37,6 @@ class ActivityTest < ActiveSupport::TestCase
     assert_not activity.save
   end
 
-  test 'Name should be unique' do
-    activity = Activity.new
-    activity[:name] = 'Badminton'
-    activity[:description] = 'This is a description'
-    assert_not activity.save
-  end
-
   test 'Description should contain at least 15 characters' do
     activity = Activity.new
     activity[:name] = 'Four'

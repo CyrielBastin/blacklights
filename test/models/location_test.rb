@@ -30,14 +30,6 @@ class LocationTest < ActiveSupport::TestCase
     assert_not location.save
   end
 
-  test 'Location\'s name should be unique' do
-    location = Location.new
-    location.contact = contacts(:one)
-    location.dimension = dimensions(:one)
-    location[:name] = 'Heaven'
-    assert_not location.save
-  end
-
   test 'Should not save location without a type' do
     location = Location.new
     location.contact = contacts(:one)

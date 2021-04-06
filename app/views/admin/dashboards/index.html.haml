@@ -90,3 +90,10 @@
   -#                  %td.text-center.small 26 Jun 2013
   -#                  %td.text-center
   -#                    %span.label.label-primary $100.00
+
+= link_to 'Exporter tous', admin_root_path(format: :xlsx), class: 'btn btn-info btn-export-model'
+= form_tag admin_import_all_path, method: :post, multipart: true do
+  %fieldset{style: 'margin-top: 40px'}
+    %legend Importer des données
+    = file_field_tag :file
+    = submit_tag "Importer tous", class: "btn btn-success mt-20"

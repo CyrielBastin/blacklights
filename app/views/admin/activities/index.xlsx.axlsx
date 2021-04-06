@@ -1,0 +1,7 @@
+require_relative '../../../helpers/export_helper'
+
+wb = xlsx_package.workbook
+style = wb.styles
+center = style.add_style alignment: { horizontal: :center }
+
+render partial: 'shared/export/activity', locals: { wb: wb, center: center }

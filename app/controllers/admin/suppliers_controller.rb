@@ -1,7 +1,13 @@
 class Admin::SuppliersController < AdminController
+  include ImportModel
+  include DuplicateHelper
 
   def index
     @suppliers = Supplier.all.page(params[:page]).per(10)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   def new
@@ -11,11 +17,16 @@ class Admin::SuppliersController < AdminController
 
   def create
     @supplier = Supplier.new(supplier_params)
-    if @supplier.save
-      flash[:success] = 'Votre fournisseur a été crée avec succès !'
-      redirect_to admin_suppliers_path
-    else
+    if already_exists?(@supplier.class.name, :name, @supplier[:name])
+      @supplier.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
+    else
+      if @supplier.save
+        flash[:success] = 'Votre fournisseur a été crée avec succès !'
+        redirect_to admin_suppliers_path
+      else
+        render 'new'
+      end
     end
   end
 
@@ -29,10 +40,16 @@ class Admin::SuppliersController < AdminController
 
   def update
     @supplier = Supplier.find(params[:id])
-    if @supplier.update(supplier_params)
-      flash[:success] = 'Votre fournisseur a été modifié avec succès !'
-      redirect_to admin_suppliers_path
+    sup = Supplier.find_by(name: params[:supplier][:name])
+    if sup.nil? || sup[:id] == @supplier[:id]
+      if @supplier.update(supplier_params)
+        flash[:success] = 'Votre fournisseur a été modifié avec succès !'
+        redirect_to admin_suppliers_path
+      else
+        render 'edit'
+      end
     else
+      @supplier.errors.add(:name, 'Ce nom existe déjà dans la base de données !')
       render 'edit'
     end
   end
@@ -40,6 +57,18 @@ class Admin::SuppliersController < AdminController
   def destroy
     Supplier.find(params[:id]).destroy
     flash[:success] = 'Votre fournisseur a été supprimé avec succès !'
+    redirect_to admin_suppliers_path
+  end
+
+  def import
+    imported = import_suppliers(params[:file])
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Tous vos fournisseurs ont été importés avec succès !'
+    end
     redirect_to admin_suppliers_path
   end
 
