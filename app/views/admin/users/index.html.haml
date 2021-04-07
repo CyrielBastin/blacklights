@@ -15,6 +15,7 @@
           %h5 L'ensemble des utilisateurs enregistrés
           .ibox-tools
             = link_to "Créer un utilisateur", new_admin_user_path, class: "btn btn-primary"
+            = link_to 'Exporter', admin_users_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @users.size > 0
         .ibox-content
           -#.input-group
           -#  %input.input.form-control{:placeholder => "Recherche ", :type => "text"}/

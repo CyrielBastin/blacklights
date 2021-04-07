@@ -4,7 +4,7 @@ class Admin::DashboardsController < AdminController
   def index
     respond_to do |format|
       format.html
-      format.xlsx
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Données exportées.xlsx"' }
     end
   end
 

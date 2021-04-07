@@ -6,7 +6,7 @@ class Admin::CategoriesController < AdminController
     @categories = Category.all.page(params[:page]).per(10)
     respond_to do |format|
       format.html
-      format.xlsx
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Catégories.xlsx"' }
     end
   end
 

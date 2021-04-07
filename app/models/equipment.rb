@@ -11,6 +11,7 @@
 #  unit_price   :decimal(10, 3)
 #
 class Equipment < ApplicationRecord
+  include ForbiddenCharacter
 
   default_scope -> { order(:name) }
 
@@ -31,9 +32,17 @@ class Equipment < ApplicationRecord
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
+  validate :name_is_valid
   validates :description, presence: true,
                           length: { minimum: min_char_description, message: ERR_MSG[:description_is_too_short] }
   validates :unit_price, presence: true,
                          numericality: { greater_than: min_unit_price, message: ERR_MSG[:unit_price_is_too_low] }
+
+
+  def name_is_valid
+    return if name.nil?
+
+    errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
+  end
 
 end

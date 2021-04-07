@@ -2,11 +2,15 @@ wb.add_worksheet(name: 'Matériel') do |sheet|
   sheet.add_row ['Nom', 'Description', 'Prix (€)',
                  'Catégorie',
                  'Fournisseur',
-                 'Largeur (cm)', 'Longueur (cm)', 'Hauteur (cm)', 'Poids (g)'], style: center
+                 'Largeur (cm)', 'Longueur (cm)', 'Hauteur (cm)', 'Poids (g)', 'id'], style: center
   Equipment.all.each do |equipment|
     sheet.add_row [equipment[:name], equipment[:description], equipment[:unit_price],
                    equipment.category[:name],
                    equipment.supplier[:name],
-                   equipment.dimension[:width], equipment.dimension[:length], equipment.dimension[:height], equipment.dimension[:weight]], style: center
+                   equipment.dimension[:width], equipment.dimension[:length], equipment.dimension[:height],
+                   equipment.dimension[:weight], equipment[:id]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[9].style = cell_id_style
   end
 end

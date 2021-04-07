@@ -9,12 +9,15 @@ wb.add_worksheet(name: 'Lieux') do |sheet|
                  'Activités disponibles',
                  'Largeur (m)', 'Longueur (m)', 'Hauteur (m)',
                  'Nom de famille', 'Prénom', 'Téléphone', 'Email',
-                 'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
+                 'Rue et numéro', 'Code postal', 'Ville', 'Pays', 'id'], style: center
   locations.each_with_index do |location, i|
     sheet.add_row [location[:name], location[:type],
                    activities[i],
                    location.dimension[:width], location.dimension[:length], location.dimension[:height],
                    location.contact[:lastname], location.contact[:firstname], location.contact[:phone_number], location.contact[:email],
-                   location.contact.coordinate[:street], location.contact.coordinate[:zip_code], location.contact.coordinate[:city], location.contact.coordinate[:country]], style: center
+                   location.contact.coordinate[:street], location.contact.coordinate[:zip_code], location.contact.coordinate[:city], location.contact.coordinate[:country], location[:id]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[14].style = cell_id_style
   end
 end

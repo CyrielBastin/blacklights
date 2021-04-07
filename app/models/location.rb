@@ -12,6 +12,7 @@
 #  updated_at    :datetime         not null
 #
 class Location < ApplicationRecord
+  include ForbiddenCharacter
 
   default_scope -> { order(:name) }
 
@@ -27,7 +28,16 @@ class Location < ApplicationRecord
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
+  validate :name_is_valid
   validates :type, presence: true
+
+
+  def name_is_valid
+    return if name.nil?
+
+    errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
+  end
+
 
   def self.inheritance_column
     nil

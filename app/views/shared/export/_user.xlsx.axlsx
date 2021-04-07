@@ -1,0 +1,16 @@
+wb.add_worksheet(name: 'Utilisateurs') do |sheet|
+  sheet.add_row ['Email', 'Date de naissance', 'sexe',
+                 'Nom de famille', 'Prénom', 'Téléphone',
+                 'Rue et numéro', 'Code postal', 'Ville', 'Pays',
+                 'Admin ?', 'id'], style: center
+  User.all.each do |user|
+    sheet.add_row [user[:email], date_to_french_format(user.profile[:birthdate]), user.profile[:gender] == 'male' ? 'M' : 'F',
+                   user.profile.contact[:lastname], user.profile.contact[:firstname], user.profile.contact[:phone_number],
+                   user.profile.contact.coordinate[:street], user.profile.contact.coordinate[:zip_code],
+                   user.profile.contact.coordinate[:city], user.profile.contact.coordinate[:country],
+                   user[:admin] == true ? 'Oui' : '', user[:id]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[11].style = cell_id_style
+  end
+end

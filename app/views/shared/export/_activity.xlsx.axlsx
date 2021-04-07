@@ -11,10 +11,13 @@ locations = assemble_pieces_together(activities,
 wb.add_worksheet(name: 'Activités') do |sheet|
   sheet.add_row ['Nom', 'Description',
                  'Matériel + quantité',
-                 'Lieux disponibles'], style: center
+                 'Lieux disponibles', 'id'], style: center
   activities.each_with_index do |activity, i|
     sheet.add_row [activity[:name], activity[:description],
                    equipment[i],
-                   locations[i]], style: center
+                   locations[i], activity[:id]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[4].style = cell_id_style
   end
 end

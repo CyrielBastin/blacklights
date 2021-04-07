@@ -1,5 +1,6 @@
 wb = xlsx_package.workbook
 style = wb.styles
 center = style.add_style alignment: { horizontal: :center }
+cell_id_style = style.add_style bg_color: 'FF0000', fg_color: 'FFFFFF', sz: 16, alignment: { horizontal: :center }
 
-render partial: 'shared/export/equipment', locals: { wb: wb, center: center }
+render partial: 'shared/export/equipment', locals: { wb: wb, center: center, cell_id_style: cell_id_style }

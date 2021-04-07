@@ -6,7 +6,7 @@ class Admin::LocationsController < AdminController
     @locations = Location.all.page(params[:page]).per(10)
     respond_to do |format|
       format.html
-      format.xlsx
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Lieux.xlsx"' }
     end
   end
 

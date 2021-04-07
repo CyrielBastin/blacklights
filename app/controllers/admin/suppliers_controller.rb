@@ -6,7 +6,7 @@ class Admin::SuppliersController < AdminController
     @suppliers = Supplier.all.page(params[:page]).per(10)
     respond_to do |format|
       format.html
-      format.xlsx
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Fournisseurs.xlsx"' }
     end
   end
 

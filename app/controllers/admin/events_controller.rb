@@ -11,6 +11,11 @@ class Admin::EventsController < AdminController
       events_to_come = true
     end
 
+    respond_to do |format|
+      format.html
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Evènements.xlsx"' }
+    end
+
     render 'index', locals: { :@events => @events, :events_to_come => events_to_come }
   end
 
