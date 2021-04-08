@@ -41,6 +41,7 @@ class User < ApplicationRecord
 
   has_many :registrations
   has_one :profile, inverse_of: :user, dependent: :nullify
+  has_one :contact, through: :profile
   attr_accessor :skip_password_validation
 
   accepts_nested_attributes_for :profile

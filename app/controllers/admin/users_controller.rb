@@ -27,7 +27,7 @@ class Admin::UsersController < AdminController
 
   def update
     @user = User.find(params[:id])
-    if @user.update_attributes(user_params)
+    if @user.update(user_params)
       flash[:success] = "L'utilisateur a été modifié avec succès !"
       redirect_to admin_users_path
     else
@@ -45,7 +45,7 @@ class Admin::UsersController < AdminController
   private
 
   def user_params
-    params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, profile_attributes: [:lastname, :firstname, :id, :birthdate, :gender, :street, :zipcode, :city, :country, :phone_number])
+    params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, profile_attributes: [:id, :birthdate, :gender, contact_attributes: [:lastname, :firstname, :phone_number, :email, :id, coordinate_attributes: [:street, :zip_code, :city, :country, :id]]])
   end
 
 end

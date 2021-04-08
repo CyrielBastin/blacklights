@@ -23,6 +23,11 @@ class Profile < ActiveRecord::Base
   belongs_to :user
   belongs_to :contact
 
+  delegate :full_name, to: :contact
+  delegate :initials, to: :contact
+
+  accepts_nested_attributes_for :contact
+
   enumerize :gender, in: [:male, :female], predicates: true, scope: true
 
 end
