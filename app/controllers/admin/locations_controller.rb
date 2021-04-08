@@ -77,7 +77,10 @@ class Admin::LocationsController < AdminController
   private
 
   def location_params
-    params.require(:location).permit(:id, :location_activity_ids, :name, :type, contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]], dimension_attributes: [:id, :width, :length, :height, :weight])
+    params.require(:location).permit(:id, :location_activity_ids, :name, :type, :capacity, :street, :zip_code, :city, :country,
+                                     contact_attributes: [:id, :lastname, :firstname, :phone_number, :email,
+                                                          coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
+                                     dimension_attributes: [:id, :width, :length, :height, :weight])
   end
 
   def add_activities

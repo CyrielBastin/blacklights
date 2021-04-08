@@ -21,6 +21,32 @@
                   = location_form.text_field :type, class: 'form-control'
                 %br
 
+              .form-group
+                %label.col-sm-2.control-label Capacité maximale
+                .col-sm-10
+                  = location_form.number_field :capacity, class: 'form-control'
+                %br
+              .form-group
+                %label.col-sm-2.control-label Rue et numéro
+                .col-sm-10
+                  = location_form.text_field :street, class: 'form-control'
+                %br
+              .form-group
+                %label.col-sm-2.control-label Code postal
+                .col-sm-10
+                  = location_form.text_field :zip_code, class: 'form-control'
+                %br
+              .form-group
+                %label.col-sm-2.control-label Ville
+                .col-sm-10
+                  = location_form.text_field :city, class: 'form-control'
+                %br
+              .form-group
+                %label.col-sm-2.control-label Pays
+                .col-sm-10
+                  = location_form.text_field :country, class: 'form-control'
+                %br
+
             %fieldset
               %legend Activités disponibles
               .form-group
