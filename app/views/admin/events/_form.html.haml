@@ -55,7 +55,7 @@
               .form-group
                 %label.col-sm-2.control-label Lieu
                 .col-sm-10
-                  = event_form.select :location_id, options_for_select(Location.all.map{|l|[l.name, l.id]}, @event.location_id), {}, {:class => "form-control select"}
+                  = event_form.select :location_id, options_for_select(Location.all.map{|l|[l.name_plus_city, l.id]}, @event.location_id), {}, {:class => "form-control select"}
 
             %fieldset
               %legend Activités

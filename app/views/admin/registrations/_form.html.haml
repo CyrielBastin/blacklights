@@ -12,7 +12,7 @@
               .form-group
                 %label.col-sm-2.control-label Evènement
                 .col-sm-10
-                  = form.select :event_id, options_for_select(Event.to_come.map{|e|[e.name, e.id]}, @registration.event_id), {include_blank: true}, class: 'form-control'
+                  = form.select :event_id, options_for_select(Event.to_come.map{|e|["#{e.name} -- #{e.location.name_plus_city}", e.id]}, @registration.event_id), {include_blank: true}, class: 'form-control'
               .form-group
                 %label.col-sm-2.control-label Utilisateur
                 .col-sm-10

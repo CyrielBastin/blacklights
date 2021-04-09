@@ -52,7 +52,7 @@
                         - activity.location_activities.each_with_index do |loc_ac, i|
                           - unless i == 0
                             %br
-                          = "#{loc_ac.location.name}"
+                          = "#{loc_ac.location.name_plus_city}"
 
                       %td.project-actions
                         .btn-group

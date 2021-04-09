@@ -19,7 +19,7 @@ wb.add_worksheet(name: 'Evènements') do |sheet|
   events.each_with_index do |event, i|
     sheet.add_row [event[:name], date_time_to_french_format(event[:start_date]),
                    date_time_to_french_format(event[:end_date]), date_time_to_french_format(event[:registration_deadline]), event[:min_participant], event[:max_participant], event[:price],
-                   event.location[:name],
+                   event.location.name_plus_city,
                    activities[i],
                    equipment[i],
                    event.contact[:lastname], event.contact[:firstname], event.contact[:phone_number], event.contact[:email],

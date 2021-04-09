@@ -26,7 +26,7 @@
                   .panel-heading{id: "heading-#{event[:id]}", role: 'tab'}
                     %h4.panel-title
                       %a{role: 'button', 'data-toggle': 'collapse', 'data-parent': '#accordion', href: "#collapse-#{event[:id]}", 'aria-expanded': 'false', 'aria-controls': "collapse-#{event[:id]}"}
-                        = "Evènement : #{event[:name]} -- Lieu : #{event.location[:name]} -- le #{date_time_to_french_format(event[:start_date])}"
+                        = "Evènement : #{event[:name]} -- Lieu : #{event.location.name_plus_city} -- le #{date_time_to_french_format(event[:start_date])}"
                   -# List registrations for event
                   .panel-collapse.collapse{id: "collapse-#{event[:id]}", role: 'tabpanel', 'aria-labelledby': "heading-#{event[:id]}"}
                     .panel-body

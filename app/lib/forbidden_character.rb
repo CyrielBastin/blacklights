@@ -5,7 +5,8 @@
 # in the method <forbidden_characters> present inside this module
 module ForbiddenCharacter
 
-  # @param str: string
+  # @param [String] str
+  # @return [Boolean]
   def contains_forbidden_char?(str)
     return true if str.match(/["#{packed_forbidden_characters}"]/)
 
@@ -14,6 +15,18 @@ module ForbiddenCharacter
 
   def forbidden_char_msg
     "ne peut pas contenir les caractères suivants =>  #{forbidden_char_as_str}"
+  end
+
+  # @param [String] str
+  # @return [Boolean]
+  def contains_forbidden_comma?(str)
+    return true if str.match(/,/)
+
+    false
+  end
+
+  def forbidden_comma_msg
+    'ne peut pas contenir de virgule \',\''
   end
 
   private

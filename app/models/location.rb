@@ -35,6 +35,7 @@ class Location < ApplicationRecord
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
   validate :name_is_valid
   validates :type, :street, :city, :country, presence: true
+  validate :city_is_valid
   validates :zip_code, presence: true,
                        numericality: { only_integer: true, message: ERR_MSG[:zip_code_NaN] },
                        length: { minimum: min_char_zip_code, maximum: max_char_zip_code, message: ERR_MSG[:zip_code_range] }
@@ -44,6 +45,17 @@ class Location < ApplicationRecord
     return if name.nil?
 
     errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
+    errors.add(:name, forbidden_comma_msg) if contains_forbidden_comma?(name)
+  end
+
+  def city_is_valid
+    return if city.nil?
+
+    errors.add(:city, forbidden_comma_msg) if contains_forbidden_comma?(city)
+  end
+
+  def name_plus_city
+    "#{name}, #{city}"
   end
 
 
