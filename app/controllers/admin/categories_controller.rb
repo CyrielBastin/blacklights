@@ -16,7 +16,7 @@ class Admin::CategoriesController < AdminController
 
   def create
     @category = Category.new(category_params)
-    if already_exists?(@category.class.name, :name, @category[:name])
+    if name_already_exists?(@category.class.name, @category[:name])
       @category.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
     else

@@ -17,7 +17,7 @@ class Admin::LocationsController < AdminController
   def create
     @location = Location.new(location_params)
     add_activities
-    if already_exists?(@location.class.name, :name, @location[:name])
+    if name_already_exists?(@location.class.name, @location[:name])
       @location.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
     else

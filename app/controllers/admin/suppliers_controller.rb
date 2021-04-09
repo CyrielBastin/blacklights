@@ -17,7 +17,7 @@ class Admin::SuppliersController < AdminController
 
   def create
     @supplier = Supplier.new(supplier_params)
-    if already_exists?(@supplier.class.name, :name, @supplier[:name])
+    if name_already_exists?(@supplier.class.name, @supplier[:name])
       @supplier.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
     else

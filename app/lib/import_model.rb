@@ -49,20 +49,28 @@ module ImportModel
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
       # Order for the columns in the sheet
-      # Nom, Parent_name, Catégorie pour
+      # Nom, Parent_name, Catégorie pour, Id
       (2..sheet.last_row).each do |i|
+        parent_id = nil
         if sheet.row(i)[1].present?
           parent = Category.find_by(name: sheet.row(i)[1])
           if parent.nil?
             potential_errors[:cell_error] = true
             next
+          else
+            parent_id = parent[:id]
           end
         end
-        next if already_exists?(:Category, :name, sheet.row(i)[0])
-
-        category = Category.new(name: sheet.row(i)[0], category_for: sheet.row(i)[2],
-                                parent_id: sheet.row(i)[1].nil? ? nil : Category.find_by(name: sheet.row(i)[1]).id)
-        potential_errors[:cell_error] = true unless category.save
+        if already_exists?(:Category, sheet.row(i)[3])
+          cat = Category.find(sheet.row(i)[3])
+          unless cat.update(name: sheet.row(i)[0], parent_id: parent_id, category_for: sheet.row(i)[2])
+            potential_errors[:cell_error] = true
+          end
+        else
+          category = Category.new(name: sheet.row(i)[0], category_for: sheet.row(i)[2],
+                                  parent_id: sheet.row(i)[1].nil? ? nil : Category.find_by(name: sheet.row(i)[1]).id)
+          potential_errors[:cell_error] = true unless category.save
+        end
       end
       if potential_errors[:cell_error] == true
         potential_errors[:had_errors] = true
@@ -91,21 +99,19 @@ module ImportModel
       rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
-      suppliers_to_save = []
       # Order for the columns in the sheet
-      # Entreprise, Nom de famille, Prénom, Téléphone, Email, Rue et numéro, Code postal, Ville, Pays
+      # Entreprise, Nom de famille, Prénom, Téléphone, Email, Rue et numéro, Code postal, Ville, Pays, Id
       (2..sheet.last_row).each do |i|
-        next if already_exists?(:Supplier, :name, sheet.row(i)[0])
-
-        supplier = Supplier.new(name: sheet.row(i)[0])
-        supplier.contact = build_contact(sheet.row(i)[1..])
-        if supplier.valid?
-          suppliers_to_save << supplier
+        if already_exists?(:Supplier, sheet.row(i)[9])
+          sup = Supplier.find(sheet.row(i)[9])
+          sup.contact = build_contact(sheet.row(i)[1..8])
+          potential_errors[:cell_error] = true unless sup.update(name: sheet.row(i)[0])
         else
-          potential_errors[:cell_error] = true
+          sup = Supplier.new(name: sheet.row(i)[0])
+          sup.contact = build_contact(sheet.row(i)[1..8])
+          potential_errors[:cell_error] = true unless sup.save
         end
       end
-      suppliers_to_save.each(&:save)
       if potential_errors[:cell_error] == true
         potential_errors[:had_errors] = true
         raise CellValueError
@@ -133,26 +139,27 @@ module ImportModel
       rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
-      equipment_to_save = []
       # Order for the columns in the sheet
-      # Nom, Description, Prix, Nom catégorie, Nom fournisseur, Largeur, Longueur, Hauteur, Poids
+      # Nom, Description, Prix, Nom catégorie, Nom fournisseur, Largeur, Longueur, Hauteur, Poids, Id
       (2..sheet.last_row).each do |i|
-        next if already_exists?(:Equipment, :name, sheet.row(i)[0])
-
         category = Category.find_by(name: sheet.row(i)[3])
         supplier = Supplier.find_by(name: sheet.row(i)[4])
-        equipment = Equipment.new(name: sheet.row(i)[0], description: sheet.row(i)[1], unit_price: to_english_repr(sheet.row(i)[2]),
-                                  category_id: category.nil? ? nil : category[:id],
-                                  supplier_id: supplier.nil? ? nil : supplier[:id])
-        equipment.dimension = build_dimensions(sheet.row(i)[5..])
-
-        if equipment.valid?
-          equipment_to_save << equipment
+        if already_exists?(:Equipment, sheet.row(i)[9])
+          eq = Equipment.find(sheet.row(i)[9])
+          eq.dimension = build_dimensions(sheet.row(i)[5..8])
+          unless eq.update(name: sheet.row(i)[0], description: sheet.row(i)[1], unit_price: to_english_repr(sheet.row(i)[2]),
+                           category_id: category.nil? ? nil : category[:id],
+                           supplier_id: supplier.nil? ? nil : supplier[:id])
+            potential_errors[:cell_error] = true
+          end
         else
-          potential_errors[:cell_error] = true
+          eq = Equipment.new(name: sheet.row(i)[0], description: sheet.row(i)[1], unit_price: to_english_repr(sheet.row(i)[2]),
+                             category_id: category.nil? ? nil : category[:id],
+                             supplier_id: supplier.nil? ? nil : supplier[:id])
+          eq.dimension = build_dimensions(sheet.row(i)[5..8])
+          potential_errors[:cell_error] = true unless eq.save
         end
       end
-      equipment_to_save.each(&:save)
       if potential_errors[:cell_error] == true
         potential_errors[:had_errors] = true
         raise CellValueError
@@ -166,6 +173,9 @@ module ImportModel
   end
 
 
+  # ###
+  # ### TODO
+  # ###
   def import_activities(file)
     sheet_name = 'Activités'
     potential_errors = init_errors(sheet_name)
@@ -180,11 +190,20 @@ module ImportModel
       rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
-      activities_to_save = []
       # Order for the columns in the sheet
-      # Nom, Description, Matériel + qty
+      # Nom, Description, Matériel + qty, Lieux disp., Id
       (2..sheet.last_row).each do |i|
-        next if already_exists?(:Activity, :name, sheet.row(i)[0])
+        if already_exists?(:Activity, sheet.row(i)[4])
+          act = Activity.find(sheet.row(i)[4])
+          list_eq = convert_element_qty(sheet.row(i)[2])
+          act.activity_equipment = []
+          list_eq.each do |e|
+            # ###
+            # ### Here
+            # ###
+          end
+        else
+        end
         activity = Activity.new(name: sheet.row(i)[0], description: sheet.row(i)[1])
         list_equipment = convert_element_qty(sheet.row(i)[2])
         activity.activity_equipment = []
