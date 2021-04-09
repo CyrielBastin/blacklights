@@ -20,17 +20,14 @@ class Contact < ApplicationRecord
   accepts_nested_attributes_for :coordinate
 
 
-  min_char_lastname = min_char_firstname = 3
+  min_char_name = 3
   min_char_phone_number = 8
-  ERR_MSG = { lastname_is_too_short: "doit contenir au moins #{min_char_lastname} caractères",
-              firstname_is_too_short: "doit contenir au moins #{min_char_firstname} caractères",
+  ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères",
               phone_number_is_too_short: "doit contenir au moins #{min_char_phone_number} caractères",
               email_is_not_valid: 'n\'est pas valide' }.freeze
 
-  validates :lastname, presence: true,
-                       length: { minimum: min_char_lastname, message: ERR_MSG[:lastname_is_too_short] }
-  validates :firstname, presence: true,
-                        length: { minimum: min_char_firstname, message: ERR_MSG[:firstname_is_too_short] }
+  validates :lastname, :firstname, presence: true,
+                                   length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
   validates :phone_number, presence: true,
                            length: { minimum: min_char_phone_number, message: ERR_MSG[:phone_number_is_too_short] }
   validates :email, presence: true, email: { message: ERR_MSG[:email_is_not_valid] }
@@ -38,6 +35,14 @@ class Contact < ApplicationRecord
 
   def full_name
     "#{firstname} #{lastname.upcase}"
+  end
+
+  def initials
+    if lastname.present?
+      "#{firstname[0]} #{lastname[0]}"
+    else
+      "#{firstname[0]} #{firstname[1]}"
+    end
   end
 
 end

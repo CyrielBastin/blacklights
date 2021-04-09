@@ -15,6 +15,11 @@ class Profile < ActiveRecord::Base
   belongs_to :contact, dependent: :destroy
   accepts_nested_attributes_for :contact
 
+  delegate :full_name, to: :contact
+  delegate :initials, to: :contact
+
+  accepts_nested_attributes_for :contact
+
   enumerize :gender, in: [:male, :female], predicates: true, scope: true
 
   validates :gender, presence: true
@@ -29,7 +34,6 @@ class Profile < ActiveRecord::Base
   def birthdate_in_past
     return if birthdate.nil?
 
-    # we use 2 hours from now for a correct datetime !!! Careful with the UTC +02:00
     unless birthdate <= Date.today
       errors.add(:birthdate, 'ne peut pas être dans le futur')
     end
