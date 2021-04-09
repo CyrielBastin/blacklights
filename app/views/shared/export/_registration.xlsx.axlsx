@@ -1,3 +1,13 @@
-#
-# TODO after adding field to locations table
-#
+wb.add_worksheet(name: 'Réservations') do |sheet|
+  sheet.add_row ['e. Nom', 'e. Lieu', 'e. Date', 'e. Id',
+                 'u. Nom complet', 'u. Email', 'u. Id',
+                 'Date confirmation', 'Prix (en €)', 'Confirmation paiement', 'id'], style: center
+  Registration.for_every_events.each do |r|
+    sheet.add_row [r.event[:name], r.event.location.name_plus_city, date_time_to_french_format(r.event[:start_date]), r.event[:id],
+                   r.user.contact.full_name, r.user[:email], r.user[:id],
+                   date_time_to_french_format(r[:confirmation_datetime]), to_french_repr(r[:price]), date_time_to_french_format(r[:payment_confirmation_datetime]), r[:id]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[10].style = cell_id_style
+  end
+end

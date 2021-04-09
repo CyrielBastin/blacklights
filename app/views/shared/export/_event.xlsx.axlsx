@@ -16,14 +16,15 @@ wb.add_worksheet(name: 'Evènements') do |sheet|
                  'Matériel supplémentaire + quantité',
                  'Nom de famille', 'Prénom', 'Téléphone', 'Email',
                  'Rue et numéro', 'Code postal', 'Ville', 'Pays', 'id'], style: center
-  events.each_with_index do |event, i|
-    sheet.add_row [event[:name], date_time_to_french_format(event[:start_date]),
-                   date_time_to_french_format(event[:end_date]), date_time_to_french_format(event[:registration_deadline]), event[:min_participant], event[:max_participant], event[:price],
-                   event.location.name_plus_city,
+  events.each_with_index do |e, i|
+    sheet.add_row [e[:name], date_time_to_french_format(e[:start_date]),
+                   date_time_to_french_format(e[:end_date]), date_time_to_french_format(e[:registration_deadline]),
+                   e[:min_participant], e[:max_participant], to_french_repr(e[:price]),
+                   e.location.name_plus_city,
                    activities[i],
                    equipment[i],
-                   event.contact[:lastname], event.contact[:firstname], event.contact[:phone_number], event.contact[:email],
-                   event.contact.coordinate[:street], event.contact.coordinate[:zip_code], event.contact.coordinate[:city], event.contact.coordinate[:country], event[:id]], style: center
+                   e.contact[:lastname], e.contact[:firstname], e.contact[:phone_number], e.contact[:email],
+                   e.contact.coordinate[:street], e.contact.coordinate[:zip_code], e.contact.coordinate[:city], e.contact.coordinate[:country], e[:id]], style: center
   end
   sheet.rows.each do |row|
     row.cells[18].style = cell_id_style

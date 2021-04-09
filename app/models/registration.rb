@@ -32,6 +32,10 @@ class Registration < ApplicationRecord
     Event.joins(:registrations).where(['events.start_date > ?', DateTime.now]).group('events.name')
   end
 
+  def Registration.for_every_events
+    Registration.joins(:event).order('events.start_date')
+  end
+
   ###################################################################################################
   # Custom validatiors
   ###################################################################################################

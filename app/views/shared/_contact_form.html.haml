@@ -3,7 +3,7 @@
     = defined?(contact_title) ? contact_title : 'Personne de contact'
   = form.fields_for :contact, object.contact.present? ? object.contact : object.build_contact  do |contact_form|
     .form-group
-      %label.col-sm-2.control-label Nom de famille
+      %label.col-sm-2.control-label Nom
       .col-sm-10
         = contact_form.text_field :lastname, class: 'form-control'
     .form-group
@@ -15,12 +15,15 @@
       .col-sm-10
         = contact_form.telephone_field :phone_number, class: 'form-control'
 
-    .form-group
-      %label.col-sm-2.control-label Email
-      .col-sm-10
-        = contact_form.email_field :email, class: 'form-control'
+    - if object.class.name == 'Profile'
+      = contact_form.hidden_field :email, value: 'hello@world.net'
+    -else
+      .form-group
+        %label.col-sm-2.control-label Email
+        .col-sm-10
+          = contact_form.email_field :email, class: 'form-control'
 
-    %br
+      %br
     %fieldset
       %legend
         = defined?(coordinate_title) ? coordinate_title : 'Coordonnées de la personne de contact'

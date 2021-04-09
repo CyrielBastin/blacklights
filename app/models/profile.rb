@@ -23,7 +23,6 @@ class Profile < ActiveRecord::Base
   enumerize :gender, in: [:male, :female], predicates: true, scope: true
 
   validates :gender, presence: true
-  validates :birthdate, presence: true
   validate :birthdate_in_past
 
 

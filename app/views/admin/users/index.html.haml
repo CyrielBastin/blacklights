@@ -31,7 +31,7 @@
                   %table.table.table-striped.table-hover
                     %thead
                       %th Nom complet
-                      %th
+                      %th Rôle
                       %th
                       %th Email
                       %th Status
@@ -40,9 +40,9 @@
                         %tr
                           %td
                             %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
-                              = "#{user.profile.contact.full_name}"
-                          %td
-                            = #user.admin? ? "Admin" : "Utilisateur"
+                              = "#{user.profile.full_name}"
+                          %td{class: "#{user.admin? ? 'bg-orange' : ''}"}
+                            = user.admin? ? "Admin" : "Utilisateur"
                           %td.contact-type
                             %i.fa.fa-envelope
                           %td
@@ -83,6 +83,17 @@
 
                 .full-height-scroll
                   %strong Réservations
+                  %br
+                  .col-lg-12.text-center
+                    - if user.registrations.present?
+                      - user.registrations.each do |r|
+                        %p ------------------------------------------
+                        = "#{r.event[:name]} -- #{r.event.location.name_plus_city}"
+                        %br
+                        = date_time_to_french_format(r.event[:start_date])
+                        %br
+                    - else
+                      Aucune réservation enregistrée
 
                 %br
                 .full-height-scroll

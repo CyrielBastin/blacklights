@@ -1,9 +1,7 @@
 wb.add_worksheet(name: 'Catégories') do |sheet|
   sheet.add_row ['Nom', 'Catégorie parente', 'Catégorie pour', 'id'], style: center
-  Category.all.each do |category|
-    sheet.add_row [category[:name],
-                   category.parent.present? ? category.parent[:name] : '',
-                   category[:category_for], category[:id]], style: center
+  Category.all.each do |c|
+    sheet.add_row [c[:name], c.parent.present? ? c.parent[:name] : '', c[:category_for], c[:id]], style: center
   end
   sheet.rows.each do |row|
     row.cells[3].style = cell_id_style
