@@ -1,4 +1,5 @@
 class Admin::RegistrationsController < AdminController
+  include ImportModel
 
   def index
     # We send a list of all events to come with their associated registrations in the view
@@ -44,6 +45,18 @@ class Admin::RegistrationsController < AdminController
     Registration.find(params[:id]).destroy
     flash[:success] = 'Votre réservation a été supprimée avec succès !'
 
+    redirect_to admin_registrations_path
+  end
+
+  def import
+    imported = import_registrations(params[:file])
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Toutes vos réservations ont été importés avec succès !'
+    end
     redirect_to admin_registrations_path
   end
 
