@@ -6,26 +6,42 @@
           %h5
             Veuillez remplir toutes les informations concernant l'utilisateur
         .ibox-content
-          = form_for [:admin, @user], validate: true, html: {class: "form-horizontal"} do |f|
+          = form_for [:admin, @user], validate: true, html: {class: 'form-horizontal'} do |f|
             .form-group
               %label.col-sm-2.control-label Email
               .col-sm-10
-                = f.text_field :email, class: "form-control required", disabled: f.object.confirmed?
+                = f.text_field :email, class: 'form-control required', disabled: f.object.confirmed?
                 = f.hidden_field :skip_password_validation, value: true
             .hr-line-dashed
-            = f.fields_for :profile do |profile_form|
-              .form-group
-                %label.col-sm-2.control-label Date de naissance
-                .col-sm-10
-                  = profile_form.date_select :birthdate, start_year: 1900, end_year: Date.today.year, class: "form-control"
-              .hr-line-dashed
+            = f.fields_for :profile, f.object.profile.present? ? f.object.profile : Profile.new do |profile_form|
+              = profile_form.fields_for :contact, profile_form.object.contact.present? ? profile_form.object.contact : Contact.new do |contact_form|
+                .form-group
+                  %label.col-sm-2.control-label Nom
+                  .col-sm-10
+                    = contact_form.text_field :lastname, class: 'form-control required'
+                .hr-line-dashed
+                .form-group
+                  %label.col-sm-2.control-label Prénom
+                  .col-sm-10
+                    = contact_form.text_field :firstname, class: 'form-control required'
+                .hr-line-dashed
+                = contact_form.hidden_field :email, value: 'hello@world.net'
+
               .form-group
                 %label.col-sm-2.control-label Sexe
                 .col-sm-10
-                  = profile_form.select :gender, Profile.gender.options, {include_blank: true}, {class: "form-control required"}
-              = render partial: "shared/contact_form", locals: {form: profile_form, object: @user.profile, contact_title: "Profil", coordinate_title: "Coordonnées"}
+                  = profile_form.select :gender, Profile.gender.options, {include_blank: true}, {class: 'form-control required'}
+              .hr-line-dashed
+
+            .hr-line-dashed
+            .hr-line-dashed
+            .form-group
+              %label.col-sm-2.control-label Admin ?
+              .col-sm-10
+                = f.check_box :admin, class: 'form-control', style: 'max-width: 50px'
+
 
             .hr-line-dashed
             .form-group
               .col-sm-4.col-sm-offset-2
-                %button.btn.btn-primary{:type => "submit"} Sauver
+                %button.btn.btn-lg.btn-primary{:type => 'submit'} Sauver

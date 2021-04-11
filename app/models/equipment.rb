@@ -11,6 +11,7 @@
 #  unit_price   :decimal(10, 3)
 #
 class Equipment < ApplicationRecord
+  include ForbiddenCharacter
 
   default_scope -> { order(:name) }
 
@@ -25,18 +26,23 @@ class Equipment < ApplicationRecord
   min_char_name = 5
   min_char_description = 20
   min_unit_price = 0.00
-  ERR_MSG = { name_is_blank: 'Le nom ne peut pas être vide',
-              name_is_too_short: "Le nom doit contenir au moins #{min_char_name} caractères",
-              description_is_blank: 'La description ne peut pas être vide',
-              description_is_too_short: "La description doit contenir au moins #{min_char_description} caractères",
-              unit_price_is_blank: 'Le prix/unité ne peut pas être vide',
-              unit_price_is_too_low: "Le prix/unité doit être supérieur à #{min_unit_price}€" }.freeze
+  ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères",
+              description_is_too_short: "doit contenir au moins #{min_char_description} caractères",
+              unit_price_is_too_low: "doit être supérieur à #{min_unit_price}€" }.freeze
 
-  validates :name, presence: { message: ERR_MSG[:name_is_blank] },
+  validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
-  validates :description, presence: { message: ERR_MSG[:description_is_blank] },
+  validate :name_is_valid
+  validates :description, presence: true,
                           length: { minimum: min_char_description, message: ERR_MSG[:description_is_too_short] }
-  validates :unit_price, presence: { message: ERR_MSG[:unit_price_is_blank] },
+  validates :unit_price, presence: true,
                          numericality: { greater_than: min_unit_price, message: ERR_MSG[:unit_price_is_too_low] }
+
+
+  def name_is_valid
+    return if name.nil?
+
+    errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
+  end
 
 end

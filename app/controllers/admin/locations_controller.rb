@@ -6,7 +6,7 @@ class Admin::LocationsController < AdminController
     @locations = Location.all.page(params[:page]).per(10)
     respond_to do |format|
       format.html
-      format.xlsx
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Lieux.xlsx"' }
     end
   end
 
@@ -17,7 +17,7 @@ class Admin::LocationsController < AdminController
   def create
     @location = Location.new(location_params)
     add_activities
-    if already_exists?(@location.class.name, :name, @location[:name])
+    if name_already_exists?(@location.class.name, @location[:name])
       @location.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
     else
@@ -77,7 +77,10 @@ class Admin::LocationsController < AdminController
   private
 
   def location_params
-    params.require(:location).permit(:id, :location_activity_ids, :name, :type, contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]], dimension_attributes: [:id, :width, :length, :height, :weight])
+    params.require(:location).permit(:id, :location_activity_ids, :name, :type, :capacity, :street, :zip_code, :city, :country,
+                                     contact_attributes: [:id, :lastname, :firstname, :phone_number, :email,
+                                                          coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
+                                     dimension_attributes: [:id, :width, :length, :height, :weight])
   end
 
   def add_activities

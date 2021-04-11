@@ -24,7 +24,7 @@
               .form-group
                 %label.col-sm-2.control-label
                 .col-sm-10
-                  = f.collection_select :location_activity_ids, Location.all, :id, :name, {selected: @activity.location_activities.pluck(:location_id)}, { :multiple => true, class: "multiple_select" }
+                  = f.collection_select :location_activity_ids, Location.all, :id, :name_plus_city, {selected: @activity.location_activities.pluck(:location_id)}, { :multiple => true, class: "multiple_select" }
 
             %fieldset
               %legend Matériel nécessaire

@@ -12,6 +12,7 @@
 #  updated_at    :datetime         not null
 #
 class Location < ApplicationRecord
+  include ForbiddenCharacter
 
   default_scope -> { order(:name) }
 
@@ -23,16 +24,40 @@ class Location < ApplicationRecord
   accepts_nested_attributes_for :contact, :dimension, :location_activities
 
   min_char_name = 3
-  min_char_type = 7
-  ERR_MSG = { name_is_blank: 'Le nom ne peut pas être vide',
-              name_is_too_short: "Le nom doit contenir au moins #{min_char_name} caractères",
-              type_is_blank: 'Le type ne peut pas être vide',
-              type_is_too_short: "Le type doit contenir au moins #{min_char_type} caractères" }.freeze
+  min_capacity = 0
+  min_char_zip_code, max_char_zip_code = 4, 5
+  ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères",
+              capacity_below_zero: "ne peut pas être inférieur à #{min_capacity}",
+              zip_code_NaN: 'doit être un nombre',
+              zip_code_range: "doit contenir au moins #{min_char_zip_code} et au plus #{max_char_zip_code} caractères" }.freeze
 
-  validates :name, presence: { message: ERR_MSG[:name_is_blank] },
+  validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
-  validates :type, presence: { message: ERR_MSG[:type_is_blank] },
-                   length: { minimum: min_char_type, message: ERR_MSG[:type_is_too_short] }
+  validate :name_is_valid
+  validates :type, :street, :city, :country, presence: true
+  validate :city_is_valid
+  validates :zip_code, presence: true,
+                       numericality: { only_integer: true, message: ERR_MSG[:zip_code_NaN] },
+                       length: { minimum: min_char_zip_code, maximum: max_char_zip_code, message: ERR_MSG[:zip_code_range] }
+
+
+  def name_is_valid
+    return if name.nil?
+
+    errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
+    errors.add(:name, forbidden_comma_msg) if contains_forbidden_comma?(name)
+  end
+
+  def city_is_valid
+    return if city.nil?
+
+    errors.add(:city, forbidden_comma_msg) if contains_forbidden_comma?(city)
+  end
+
+  def name_plus_city
+    "#{name}, #{city}"
+  end
+
 
   def self.inheritance_column
     nil

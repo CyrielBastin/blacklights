@@ -7,14 +7,17 @@ equipment = assemble_pieces_together(activities,
 locations = assemble_pieces_together(activities,
                                      obj_to_assemble: :location_activities,
                                      obj_name: :location,
-                                     name: :name)
+                                     name: :name_plus_city)
 wb.add_worksheet(name: 'Activités') do |sheet|
   sheet.add_row ['Nom', 'Description',
                  'Matériel + quantité',
-                 'Lieux disponibles'], style: center
-  activities.each_with_index do |activity, i|
-    sheet.add_row [activity[:name], activity[:description],
+                 'id', 'Lieux disponibles'], style: center
+  activities.each_with_index do |a, i|
+    sheet.add_row [a[:name], a[:description],
                    equipment[i],
-                   locations[i]], style: center
+                   a[:id], locations[i]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[3].style = cell_id_style
   end
 end

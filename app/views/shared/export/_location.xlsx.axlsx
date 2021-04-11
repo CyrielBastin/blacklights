@@ -5,16 +5,19 @@ activities = assemble_pieces_together(locations,
                                       name: :name)
 
 wb.add_worksheet(name: 'Lieux') do |sheet|
-  sheet.add_row ['Nom', 'Type',
+  sheet.add_row ['Nom', 'Capacité max.', 'Rue et numéro', 'Ville', 'Code postal', 'Pays', 'Type',
                  'Activités disponibles',
                  'Largeur (m)', 'Longueur (m)', 'Hauteur (m)',
                  'Nom de famille', 'Prénom', 'Téléphone', 'Email',
-                 'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
-  locations.each_with_index do |location, i|
-    sheet.add_row [location[:name], location[:type],
+                 'c. Rue et numéro', 'c. Code postal', 'c. Ville', 'c. Pays', 'id'], style: center
+  locations.each_with_index do |l, i|
+    sheet.add_row [l[:name], l[:capacity], l[:street], l[:city], l[:zip_code], l[:country], l[:type],
                    activities[i],
-                   location.dimension[:width], location.dimension[:length], location.dimension[:height],
-                   location.contact[:lastname], location.contact[:firstname], location.contact[:phone_number], location.contact[:email],
-                   location.contact.coordinate[:street], location.contact.coordinate[:zip_code], location.contact.coordinate[:city], location.contact.coordinate[:country]], style: center
+                   to_french_repr(l.dimension[:width]), to_french_repr(l.dimension[:length]), to_french_repr(l.dimension[:height]),
+                   l.contact[:lastname], l.contact[:firstname], l.contact[:phone_number], l.contact[:email],
+                   l.contact.coordinate[:street], l.contact.coordinate[:zip_code], l.contact.coordinate[:city], l.contact.coordinate[:country], l[:id]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[19].style = cell_id_style
   end
 end

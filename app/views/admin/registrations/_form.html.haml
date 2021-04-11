@@ -1,0 +1,42 @@
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Veuillez remplir toutes les informations concernant votre réservation
+        .ibox-content
+          = form_for [:admin, @registration], validate: true, html: {class: 'form-horizontal'} do |form|
+            %fieldset
+              %legend Informations
+              .form-group
+                %label.col-sm-2.control-label Evènement
+                .col-sm-10
+                  = form.select :event_id, options_for_select(Event.to_come.map{|e|["#{e.name} -- #{e.location.name_plus_city}", e.id]}, @registration.event_id), {include_blank: true}, class: 'form-control'
+              .form-group
+                %label.col-sm-2.control-label Utilisateur
+                .col-sm-10
+                  = form.select :user_id, options_for_select(User.all.map{|u|[u.profile.contact.full_name, u.id]}, @registration.user_id), {include_blank: true}, class: 'form-control'
+                %br
+
+              .form-group
+                %label.col-sm-2.control-label Date de confirmation
+                .col-sm-10
+                  = form.text_field :confirmation_datetime
+                %br
+
+              .form-group
+                %label.col-sm-2.control-label Prix (en €)
+                .col-sm-10
+                  = form.text_field :price
+                %br
+              .form-group
+                %label.col-sm-2.control-label Date de confirmation du paiement
+                .col-sm-10
+                  = form.text_field :payment_confirmation_datetime
+                %br
+
+
+            .form-group
+              .col-sm-4
+                %button.btn.btn-primary{:type => 'submit'} Sauver l'évènement

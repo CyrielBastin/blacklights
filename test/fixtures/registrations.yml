@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+cain_dark_badminton:
+  user: cain
+  event: dark_badminton
+  price: 9.99
+  confirmation_datetime: 2021-04-02 23:23:16
+  payment_confirmation_datetime: 2021-04-02 23:23:16
+
+abel_dark_volleyball:
+  user: abel
+  event: dark_volleyball
+  price: 9.99
+  confirmation_datetime: 2021-04-02 23:23:16
+  payment_confirmation_datetime: 2021-04-02 23:23:16

@@ -61,10 +61,10 @@
                           %br
 
                       %td
-                        = event.location[:name]
+                        = event.location.name_plus_city
 
                       %td
-                        = "#{event[:price]}€"
+                        = "#{to_french_repr(event[:price])}€"
 
                       %td.project-actions
                         .btn-group

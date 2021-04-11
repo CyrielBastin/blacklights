@@ -11,7 +11,7 @@
 #
 class Contact < ApplicationRecord
 
-  belongs_to :coordinate, dependent: :destroy
+  belongs_to :coordinate, dependent: :destroy, optional: true
   has_one :supplier
   has_one :location
   has_one :event
@@ -20,28 +20,21 @@ class Contact < ApplicationRecord
   accepts_nested_attributes_for :coordinate
 
 
-  min_char_lastname = min_char_firstname = 3
-  min_char_phone_number = 10
-  ERR_MSG = { lastname_is_blank: 'Le nom de famille ne peut pas être vide',
-              lastname_is_too_short: "Le nom de famille doit contenir au moins #{min_char_lastname} caractères",
-              firstname_is_blank: 'Le prénom ne peut pas être vide',
-              firstname_is_too_short: "Le prénom doit contenir au moins #{min_char_firstname} caractères",
-              phone_number_is_blank: 'Le numéro de téléphone ne peut pas être vide',
-              phone_number_is_too_short: "Le numéro de téléphone doit contenir au moins #{min_char_phone_number} caractères",
-              email_is_blank: 'L\'adresse email ne peut pas être vide',
-              email_is_not_valid: 'L\'adresse email n\'est pas valide' }.freeze
+  min_char_name = 3
+  # min_char_phone_number = 8
+  ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères",
+              # phone_number_is_too_short: "doit contenir au moins #{min_char_phone_number} caractères",
+              email_is_not_valid: 'n\'est pas valide' }.freeze
 
-  validates :lastname, presence: { message: ERR_MSG[:lastname_is_blank] },
-                       length: { minimum: min_char_lastname, message: ERR_MSG[:lastname_is_too_short] }
-  validates :firstname, presence: { message: ERR_MSG[:firstname_is_blank] },
-                        length: { minimum: min_char_firstname, message: ERR_MSG[:firstname_is_too_short] }
-  validates :phone_number, presence: { message: ERR_MSG[:phone_number_is_blank] },
-                           length: { minimum: min_char_phone_number, message: ERR_MSG[:phone_number_is_too_short] }
-  validates :email, presence: { message: ERR_MSG[:email_is_blank] }, email: { message: ERR_MSG[:email_is_not_valid] }
+  validates :lastname, :firstname, presence: true,
+                                   length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
+  # validates :phone_number, presence: true,
+  #                          length: { minimum: min_char_phone_number, message: ERR_MSG[:phone_number_is_too_short] }
+  validates :email, presence: true, email: { message: ERR_MSG[:email_is_not_valid] }
 
 
   def full_name
-    "#{firstname} #{lastname}"
+    "#{firstname} #{lastname.upcase}"
   end
 
   def initials
@@ -51,4 +44,5 @@ class Contact < ApplicationRecord
       "#{firstname[0]} #{firstname[1]}"
     end
   end
+
 end

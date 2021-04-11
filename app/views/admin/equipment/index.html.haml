@@ -49,16 +49,16 @@
                       %td
                         = "Fournisseur : #{equipment.supplier[:name]}"
                         %br
-                        = "Largeur : #{equipment.dimension[:width]} cm"
+                        = "Largeur : #{to_french_repr(equipment.dimension[:width])} cm"
                         %br
-                        = "Longueur : #{equipment.dimension[:length]} cm"
+                        = "Longueur : #{to_french_repr(equipment.dimension[:length])} cm"
                         %br
-                        = "Hauteur : #{equipment.dimension[:height]} cm"
+                        = "Hauteur : #{to_french_repr(equipment.dimension[:height])} cm"
                         %br
-                        = "Poids : #{equipment.dimension[:weight]} g"
+                        = "Poids : #{to_french_repr(equipment.dimension[:weight])} g"
 
                       %td
-                        = "#{equipment[:unit_price]} €"
+                        = "#{to_french_repr(equipment[:unit_price])} €"
 
                       %td.project-actions
                         .btn-group

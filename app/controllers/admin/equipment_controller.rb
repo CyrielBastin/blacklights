@@ -5,7 +5,7 @@ class Admin::EquipmentController < AdminController
     @equipments = Equipment.all.page(params[:page]).per(6)
     respond_to do |format|
       format.html
-      format.xlsx
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Matériel.xlsx"' }
     end
   end
 

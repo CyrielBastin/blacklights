@@ -29,13 +29,25 @@ module DuplicateHelper
     no_duplicated_entries
   end
 
-  # Checks whether a value for the attribute is present in the table <class> in the database
-  # Example : alreadys_exists(:Category, :name, :Balles)
+  # Checks whether a value for 'name' is present in the table <class> in the database
+  # Example : alreadys_exists(:Category, :Balles)
   # will check if for the table associated to the Model 'Category', there is a row with 'name' == 'Balles'
-  def already_exists?(class_name, attr, value)
-    exists = class_name.to_s.constantize.method(:find_by).call({ "#{attr}": value })
+  def name_already_exists?(class_name, value)
+    exists = class_name.to_s.constantize.method(:find_by).call({ name: value })
 
     exists.present?
+  end
+
+  # Checks whether the id is already present in the database.
+  # Example : alreadys_exists(:Category, 4)
+  # will check if for the table associated to the Model 'Category', there is row with 'id' == 4
+  def already_exists?(class_name, id)
+    begin
+      class_name.to_s.constantize.method(:find).call(id)
+      true
+    rescue ActiveRecord::RecordNotFound
+      false
+    end
   end
 
 end

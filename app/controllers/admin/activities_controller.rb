@@ -6,7 +6,7 @@ class Admin::ActivitiesController < AdminController
     @activities = Activity.all.page(params[:page]).per(6)
     respond_to do |format|
       format.html
-      format.xlsx
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Activités.xlsx"' }
     end
   end
 
@@ -17,7 +17,7 @@ class Admin::ActivitiesController < AdminController
   def create
     @activity = Activity.new(activity_params)
     add_locations
-    if already_exists?(@activity.class.name, :name, @activity[:name])
+    if name_already_exists?(@activity.class.name, @activity[:name])
       @activity.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
     else

@@ -38,15 +38,6 @@ class LocationTest < ActiveSupport::TestCase
     assert_not location.save
   end
 
-  test 'Location\'s type should contain at least 7 characters' do
-    location = Location.new
-    location.contact = contacts(:one)
-    location.dimension = dimensions(:one)
-    location[:name] = 'GG EZ'
-    location[:type] = '123456'
-    assert_not location.save
-  end
-
   test 'Hell\'s contact\'s name should be "Cain"' do
     location = locations(:hell)
     assert_equal 'Cain', location.contact[:firstname]
@@ -61,11 +52,6 @@ class LocationTest < ActiveSupport::TestCase
     location = locations(:heaven)
     location.update({ name: 'Purgatory' })
     assert_equal 'Purgatory', location[:name]
-  end
-
-  test 'Should not update hell\'s name to "Heaven"' do
-    location = locations(:hell)
-    assert_not location.update({ name: 'Heaven' })
   end
 
   test 'Should delete heaven' do

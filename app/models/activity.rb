@@ -10,6 +10,7 @@
 #
 class Activity < ApplicationRecord
   include DuplicateHelper
+  include ForbiddenCharacter
 
   default_scope -> { order(:name) }
 
@@ -19,23 +20,28 @@ class Activity < ApplicationRecord
   accepts_nested_attributes_for :activity_equipment, allow_destroy: true
 
   min_char_name = 4
-  max_char_name = 30
-  min_char_desc = 15
-  ERR_MSG = { name_not_blank: 'Le nom ne peut pas être vide',
-              name_range: "Le nom doit contenir au minimum #{min_char_name} caractères et au maximum #{max_char_name} caractères",
-              description_not_blank: 'La description ne peut pas être vide',
-              description_too_short: "La description doit contenir au moins #{min_char_desc} caractères" }.freeze
+  min_char_desc = 10
+  ERR_MSG = { name_range: "doit contenir au minimum #{min_char_name} caractères",
+              description_too_short: "doit contenir au moins #{min_char_desc} caractères" }.freeze
 
-  validates :name, presence: { message: ERR_MSG[:name_not_blank] },
-                   length: { minimum: min_char_name, maximum: max_char_name, message: ERR_MSG[:name_range] }
-  validates :description, presence: { message: ERR_MSG[:description_not_blank] },
+  validates :name, presence: true,
+                   length: { minimum: min_char_name, message: ERR_MSG[:name_range] }
+  validate :name_is_valid
+  validates :description, presence: true,
                           length: { minimum: min_char_desc, message: ERR_MSG[:description_too_short] }
+
 
   def self.get_activities_by_location_id(id)
     ActiveRecord::Base.connection.exec_query("select activities.name, activities.id from activities
                                               inner join location_activities on activity_id = activities.id
                                               where location_id = #{id}
                                               order by activities.name;")
+  end
+
+  def name_is_valid
+    return if name.nil?
+
+    errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
   end
 
   ####################################################################################################

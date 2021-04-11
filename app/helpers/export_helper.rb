@@ -12,7 +12,7 @@ module ExportHelper
   #       - example: :activity_equipment
   #     :obj_name => Represents the name of the objects to assemble
   #       - example: :equipment
-  #     :name => Represents the attribute of obj_name you want to assemble
+  #     :name => Represents the attribute of obj_name you want to assemble (Called as a method)
   #       - example: :name
   #     :quantity => Represents the attribute of obj_to_assemble to assemble with :name
   #       - example: :quantity
@@ -29,9 +29,11 @@ module ExportHelper
         assembled_str = ''
         object.method(obj_to_assemble).call.each do |sub_obj|
           if attributes[:quantity].present?
-            assembled_str += "#{sub_obj.method(obj_name).call[name]} (#{sub_obj[attributes[:quantity]]}) + "
+            # assembled_str += "#{sub_obj.method(obj_name).call[name]} (#{sub_obj[attributes[:quantity]]}) + "
+            assembled_str += "#{sub_obj.method(obj_name).call.method(name).call} (#{sub_obj[attributes[:quantity]]}) + "
           else
-            assembled_str += "#{sub_obj.method(obj_name).call[name]} + "
+            # assembled_str += "#{sub_obj.method(obj_name).call[name]} + "
+            assembled_str += "#{sub_obj.method(obj_name).call.method(name).call} + "
           end
         end
         assembled_objects << assembled_str

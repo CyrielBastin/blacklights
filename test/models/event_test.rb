@@ -191,14 +191,14 @@ class EventTest < ActiveSupport::TestCase
     assert_equal 'Cain', event.contact[:firstname]
   end
 
-  test 'location\'s name for event "dark_volley_ball" should be "Hell"' do
-    event = events(:dark_volley_ball)
+  test 'location\'s name for event "dark_volleyball" should be "Hell"' do
+    event = events(:dark_volleyball)
 
     assert_equal 'Hell', event.location[:name]
   end
 
   test 'Should add up duplicated activities' do
-    event = events(:dark_volley_ball)
+    event = events(:dark_volleyball)
     event.event_activities << EventActivity.new(event_id: event.id,
                                                 activity_id: activities(:basketball).id,
                                                 simultaneous_activities: 3)
@@ -211,7 +211,7 @@ class EventTest < ActiveSupport::TestCase
   end
 
   test 'Should add up duplicated equipment' do
-    event = events(:dark_volley_ball)
+    event = events(:dark_volleyball)
     event.event_equipment << EventEquipment.new(event_id: event.id,
                                                 equipment_id: equipment(:balles_de_tennis).id,
                                                 quantity: 3)

@@ -39,8 +39,8 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
 
 
-  has_many :registrations
-  has_one :profile, inverse_of: :user, dependent: :nullify
+  has_many :registrations, dependent: :destroy
+  has_one :profile, inverse_of: :user, dependent: :destroy
   has_one :contact, through: :profile
   attr_accessor :skip_password_validation
 

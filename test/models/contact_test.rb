@@ -44,11 +44,11 @@ class ContactTest < ActiveSupport::TestCase
     assert_not contact.save
   end
 
-  test 'Phone number should have at least 10 characters' do
+  test 'Phone number should have at least 8 characters' do
     contact = Contact.new
     contact[:lastname] = 'Smith'
     contact[:firstname] = 'John'
-    contact[:phone_number] = '123456789'  # 9 chars
+    contact[:phone_number] = '1234567'  # 7 chars
     assert_not contact.save
   end
 

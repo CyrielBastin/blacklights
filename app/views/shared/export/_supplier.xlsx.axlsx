@@ -1,10 +1,14 @@
 wb.add_worksheet(name: 'Fournisseurs') do |sheet|
   sheet.add_row ['Entreprise',
                  'Nom de famille', 'Prénom', 'Téléphone', 'Email',
-                 'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
-  Supplier.all.each do |supplier|
-    sheet.add_row [supplier[:name],
-                   supplier.contact[:lastname], supplier.contact[:firstname], supplier.contact[:phone_number], supplier.contact[:email],
-                   supplier.contact.coordinate[:street], supplier.contact.coordinate[:zip_code], supplier.contact.coordinate[:city], supplier.contact.coordinate[:country]], style: center
+                 'Rue et numéro', 'Code postal', 'Ville', 'Pays', 'id'], style: center
+  Supplier.all.each do |s|
+    sheet.add_row [s[:name],
+                   s.contact[:lastname], s.contact[:firstname], s.contact[:phone_number], s.contact[:email],
+                   s.contact.coordinate[:street], s.contact.coordinate[:zip_code], s.contact.coordinate[:city],
+                   s.contact.coordinate[:country], s[:id]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[9].style = cell_id_style
   end
 end

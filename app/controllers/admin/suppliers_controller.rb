@@ -6,7 +6,7 @@ class Admin::SuppliersController < AdminController
     @suppliers = Supplier.all.page(params[:page]).per(10)
     respond_to do |format|
       format.html
-      format.xlsx
+      format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Fournisseurs.xlsx"' }
     end
   end
 
@@ -17,7 +17,7 @@ class Admin::SuppliersController < AdminController
 
   def create
     @supplier = Supplier.new(supplier_params)
-    if already_exists?(@supplier.class.name, :name, @supplier[:name])
+    if name_already_exists?(@supplier.class.name, @supplier[:name])
       @supplier.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
     else
