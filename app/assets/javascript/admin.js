@@ -25,7 +25,7 @@ $(function() {
     $('.multiple_select').multiSelect()
 
     /*
-     * Used in forms for having a calendar with datetime datas
+     * Used in forms for having a calendar with datetime data
      */
     $('#event_start_date').flatpickr({
         altInput: true,
@@ -52,26 +52,6 @@ $(function() {
         enableTime: true,
         minuteIncrement: 5,
         time_24hr: true,
-        locale: Flatpickr.l10ns.fr
-    });
-    $('#registration_confirmation_datetime').flatpickr({
-        altInput: true,
-        dateFormat: 'Y-m-d H:i',
-        altFormat: 'd/m/Y, à H:i',
-        enableTime: true,
-        minuteIncrement: 5,
-        time_24hr: true,
-        allowInput: true,
-        locale: Flatpickr.l10ns.fr
-    });
-    $('#registration_payment_confirmation_datetime').flatpickr({
-        altInput: true,
-        dateFormat: 'Y-m-d H:i',
-        altFormat: 'd/m/Y, à H:i',
-        enableTime: true,
-        minuteIncrement: 5,
-        time_24hr: true,
-        allowInput: true,
         locale: Flatpickr.l10ns.fr
     });
 

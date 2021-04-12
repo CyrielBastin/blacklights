@@ -41,6 +41,19 @@ class Admin::RegistrationsController < AdminController
     end
   end
 
+  def confirm
+    @registration = Registration.find(params[:registration_id])
+    case params[:type]
+    when 'confirmation'
+      redirect_to admin_registrations_path if @registration.update(confirmation_datetime: 2.hours.from_now)
+    when 'payment_confirmation'
+      @registration[:confirmation_datetime] = 2.hours.from_now if @registration[:confirmation_datetime].nil?
+      redirect_to admin_registrations_path if @registration.update(payment_confirmation_datetime: 2.hours.from_now)
+    else
+      redirect_to admin_registrations_path
+    end
+  end
+
   def destroy
     Registration.find(params[:id]).destroy
     flash[:success] = 'Votre réservation a été supprimée avec succès !'

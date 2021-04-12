@@ -19,7 +19,9 @@ Rails.application.routes.draw do
     post 'import_equipment', to: 'equipment#import'
     resources :suppliers, concerns: :paginatable
     post 'import_suppliers', to: 'suppliers#import'
-    resources :registrations, concerns: :paginatable
+    resources :registrations, concerns: :paginatable do
+      get 'confirm'
+    end
     post 'import_registrations', to: 'registrations#import'
     get '/json/location_activities/:loc_id', to: 'activities#location_activities_json'
     resources :activities, concerns: :paginatable

@@ -36,12 +36,7 @@ module ForbiddenCharacter
   end
 
   def packed_forbidden_characters
-    str = ''
-    forbidden_characters.each do |char|
-      str += char
-    end
-
-    str
+    forbidden_characters.join('')
   end
 
   # @return string
