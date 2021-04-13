@@ -65,7 +65,7 @@
                                     = date_time_to_french_format(registration[:confirmation_datetime])
                                   - else
                                     %p Non confirmé
-                                    = link_to 'Confirmé', admin_registration_confirm_path(registration, type: 'confirmation'), class: 'btn btn-danger'
+                                    = link_to 'Confirmé', admin_registration_confirm_path(registration, type: 'confirmation'), method: :patch, class: 'btn btn-danger'
 
                                 %td
                                   - if registration[:payment_confirmation_datetime].present?
@@ -74,7 +74,7 @@
                                     = date_time_to_french_format(registration[:payment_confirmation_datetime])
                                   - else
                                     %p Non payé
-                                    = link_to 'Payé', admin_registration_confirm_path(registration, type: 'payment_confirmation'), class: 'btn btn-danger'
+                                    = link_to 'Payé', admin_registration_confirm_path(registration, type: 'payment_confirmation'), method: :patch, class: 'btn btn-danger'
 
                                 %td.project-actions
                                   .btn-group
