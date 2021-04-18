@@ -10,15 +10,51 @@
             %fieldset
               %legend Informations
               .form-group
-                %label.col-sm-2.control-label Evènement
-                .col-sm-10
-                  = form.select :event_id, options_for_select(Event.to_come.map{|e|["#{e.name} -- #{e.location.name_plus_city}", e.id]}, @registration.event_id), {include_blank: true}, class: 'form-control'
-              .form-group
-                %label.col-sm-2.control-label Utilisateur
-                .col-sm-10
-                  = form.select :user_id, options_for_select(User.all.map{|u|[u.profile.contact.full_name, u.id]}, @registration.user_id), {include_blank: true}, class: 'form-control'
-                %br
+                .search-container
+                  .search-input
+                    %label.control-label Evènement
+                    %input.form-control{id: 'search-input-Event', 'data-model': 'Event', 'data-multiple': false, type: 'text', placeholder: 'Chercher par nom, lieu, ou date'}
+                  = form.hidden_field :event_id, id: 'list-Event_ids'
+                  .search-results
+                    - Event.to_come.each do |e|
+                      %p.result-item.result-item-Event.hidden{id: "Event-#{e[:id]}"}
+                        = e[:name]
+                        %br
+                        = e.location.name_plus_city
+                        %br
+                        = date_time_to_french_format(e[:start_date])
+                  .search-chosen#search-chosen-Event
+                    - if @registration[:event_id].present?
+                      .item-selected{id: "for-Event-#{@registration.event[:id]}"}
+                        %div
+                          = @registration.event[:name]
+                          %br
+                          = @registration.event.location.name_plus_city
+                          %br
+                          = date_time_to_french_format(@registration.event[:start_date])
 
+              %br
+              .form-group
+                .search-container
+                  .search-input
+                    %label.control-label Utilisateur
+                    %input.form-control{id: 'search-input-User', 'data-model': 'User', 'data-multiple': false, type: 'text', placeholder: 'Chercher par nom ou email'}
+                  = form.hidden_field :user_id, id: 'list-User_ids'
+                  .search-results
+                    - User.all.each do |u|
+                      %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
+                        = u.contact.full_name
+                        %br
+                        = u[:email]
+                  .search-chosen#search-chosen-User
+                    - if @registration[:user_id].present?
+                      .item-selected{id: "for-User-#{@registration.user[:id]}"}
+                        %div
+                          = @registration.user.contact.full_name
+                          %br
+                          = @registration.user[:email]
+
+              %br
               .form-group
                 %label.col-sm-2.control-label Prix (en €)
                 .col-sm-10

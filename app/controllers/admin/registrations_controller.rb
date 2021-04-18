@@ -15,6 +15,7 @@ class Admin::RegistrationsController < AdminController
   end
 
   def create
+    update_registration_params
     @registration = Registration.new(registration_params)
     if @registration.save
       flash[:success] = 'Votre réservation a été créée avec succès !'
@@ -31,6 +32,7 @@ class Admin::RegistrationsController < AdminController
 
   def update
     @registration = Registration.find(params[:id])
+    update_registration_params
 
     if @registration.update(registration_params)
       flash[:success] = 'Votre réservation a été modifiée avec succès !'
@@ -78,6 +80,11 @@ class Admin::RegistrationsController < AdminController
   def registration_params
     params.require(:registration).permit(:event_id, :user_id, :confirmation_datetime,
                                          :price, :payment_confirmation_datetime)
+  end
+
+  def update_registration_params
+    params[:registration][:event_id] = params[:registration][:event_id].split(',')[0]
+    params[:registration][:user_id] = params[:registration][:user_id].split(',')[0]
   end
 
 end

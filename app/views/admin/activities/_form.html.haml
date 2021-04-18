@@ -22,10 +22,28 @@
             %fieldset
               %legend Lieux ou exercer cette activité
               .form-group
-                %label.col-sm-2.control-label
-                .col-sm-10
-                  = f.collection_select :location_activity_ids, Location.all, :id, :name_plus_city, {selected: @activity.location_activities.pluck(:location_id)}, { :multiple => true, class: "multiple_select" }
+                .search-container
+                  .search-input
+                    %label.control-label Lieu
+                    %input.form-control{id: 'search-input-Location', 'data-model': 'Location', 'data-multiple': 'true', type: 'text', placeholder: 'Chercher par nom, ville, ou code postal'}
+                  = f.hidden_field :location_activity_ids, id: 'list-Location_ids'
+                  .search-results
+                    - Location.all.each do |l|
+                      %p.result-item.result-item-Location.hidden{id: "Location-#{l[:id]}"}
+                        = l[:name]
+                        %br
+                        = "#{l[:city]}, #{l[:zip_code]}"
+                  .search-chosen#search-chosen-Location
+                    - if @activity.location_activities.present?
+                      - @activity.location_activities.each do |loc_ac|
+                        .item-selected{id: "for-Location-#{loc_ac.location[:id]}"}
+                          %i.fas.fa-ban.delete-selected{style: 'color: red'}
+                          %div
+                            = loc_ac.location[:name]
+                            %br
+                            = "#{loc_ac.location[:city]}, #{loc_ac.location[:zip_code]}"
 
+            %br
             %fieldset
               %legend Matériel nécessaire
               = f.fields_for :activity_equipment, @activity.activity_equipment.present? ? @activity.activity_equipment : @activity.activity_equipment.build, dynamic: true do |ac_eq_form|

@@ -60,7 +60,7 @@
 
                                 %td
                                   - if registration[:confirmation_datetime].present?
-                                    %span{'class': 'paid'}
+                                    %span.confirmed
                                       Confirmé le :
                                     = date_time_to_french_format(registration[:confirmation_datetime])
                                   - else
@@ -69,7 +69,7 @@
 
                                 %td
                                   - if registration[:payment_confirmation_datetime].present?
-                                    %span{'class': 'paid'}
+                                    %span.confirmed
                                       Payé le :
                                     = date_time_to_french_format(registration[:payment_confirmation_datetime])
                                   - else
