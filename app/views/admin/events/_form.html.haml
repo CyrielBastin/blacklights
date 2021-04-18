@@ -50,12 +50,34 @@
                   = event_form.text_field :price, class: 'form-control'
                 %br
 
+            -#%fieldset
+            -#  %legend Lieu
+            -#  .form-group
+            -#    %label.col-sm-2.control-label Lieu
+            -#    .col-sm-10
+            -#      = event_form.select :location_id, options_for_select(Location.all.map{|l|[l.name_plus_city, l.id]}, @event.location_id), {}, {:class => "form-control select"}
+
             %fieldset
-              %legend Lieu
+              %legend Lieu de l'évènement
               .form-group
-                %label.col-sm-2.control-label Lieu
-                .col-sm-10
-                  = event_form.select :location_id, options_for_select(Location.all.map{|l|[l.name_plus_city, l.id]}, @event.location_id), {}, {:class => "form-control select"}
+                .search-container
+                  .search-input
+                    %label.control-label Lieu
+                    %input.form-control{id: 'search-input-Location', 'data-model': 'Location', type: 'text', placeholder: 'Chercher par nom, ville, ou code postal'}
+                  = event_form.hidden_field :location_id, id: 'list-Location_ids'
+                  .search-results
+                    - Location.all.each do |l|
+                      %p.result-item.result-item-Location.hidden{id: "Location-#{l[:id]}"}
+                        = l[:name]
+                        %br
+                        = "#{l[:city]}, #{l[:zip_code]}"
+                  .search-chosen#search-chosen-Location
+                    - if @event[:location_id].present?
+                      .item-selected{id: "for-Location-#{@event[:location_id]}"}
+                        %div
+                          = @event.location[:name]
+                          %br
+                          = "#{@event.location[:city]}, #{@event.location[:zip_code]}"
 
             %fieldset
               %legend Activités

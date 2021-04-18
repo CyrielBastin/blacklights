@@ -13,7 +13,7 @@
                 .search-container
                   .search-input
                     %label.control-label Evènement
-                    %input.form-control{id: 'search-input-Event', 'data-model': 'Event', 'data-multiple': false, type: 'text', placeholder: 'Chercher par nom, lieu, ou date'}
+                    %input.form-control{id: 'search-input-Event', 'data-model': 'Event', type: 'text', placeholder: 'Chercher par nom, lieu, ou date'}
                   = form.hidden_field :event_id, id: 'list-Event_ids'
                   .search-results
                     - Event.to_come.each do |e|
@@ -38,7 +38,7 @@
                 .search-container
                   .search-input
                     %label.control-label Utilisateur
-                    %input.form-control{id: 'search-input-User', 'data-model': 'User', 'data-multiple': false, type: 'text', placeholder: 'Chercher par nom ou email'}
+                    %input.form-control{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Chercher par nom ou email'}
                   = form.hidden_field :user_id, id: 'list-User_ids'
                   .search-results
                     - User.all.each do |u|

@@ -1,7 +1,6 @@
-//$search-container-width: 770px;
 $search-container-width: 40vw;
 $list-results-max-height: 300px;
-$margin-left-filter: 15vw;
+$margin-left-filter: 7.5vw;
 
 
 .search-container {
@@ -9,12 +8,17 @@ $margin-left-filter: 15vw;
   width: $search-container-width;
 }
 .search-input {
-  margin-left: $margin-left-filter;
+  display: flex;
+
+  label {
+    width: 21.5vw;
+    margin-right: 33px;
+  }
 }
 .search-results {
   position: absolute;
   left: calc(#{$search-container-width} + 20px);
-  top: 30px;
+  top: 0;
   max-height: $list-results-max-height;
   overflow-y: auto;
   z-index: 9;
@@ -55,7 +59,7 @@ $margin-left-filter: 15vw;
   font-weight: bold;
   font-size: medium;
   color: green;
-  margin-left: $margin-left-filter;
+  margin-left: 15vw;
   max-height: $list-results-max-height;
   overflow-y: auto;
 }

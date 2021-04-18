@@ -24,15 +24,41 @@
             .hr-line-dashed
 
             .form-group
-              %label.col-sm-2.control-label Catégorie
-              .col-sm-10
-                = equipment_form.select :category_id, options_for_select(Category.all.map{|c|[c.name, c.id]}, @equipment.category_id), {}, {:class => "form-control select"}
+            .search-container
+              .search-input
+                %label.control-label Catégorie
+                %input.form-control{id: 'search-input-Category', 'data-model': 'Category', type: 'text', placeholder: 'Chercher par nom'}
+              = equipment_form.hidden_field :category_id, id: 'list-Category_ids'
+              .search-results
+                - Category.all.each do |c|
+                  %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
+                    = c[:name]
+              .search-chosen#search-chosen-Category
+                - if @equipment[:category_id].present?
+                  .item-selected{id: "for-Category-#{@equipment[:category_id]}"}
+                    %div
+                      = @equipment.category[:name]
 
             .hr-line-dashed
             .form-group
-              %label.col-sm-2.control-label Fournisseur
-              .col-sm-10
-                = equipment_form.select :supplier_id, options_for_select(Supplier.all.map{|s|[s.name, s.id]}, @equipment.supplier_id), {}, {:class => "form-control select"}
+            .search-container
+              .search-input
+                %label.control-label Fournisseur
+                %input.form-control{id: 'search-input-Supplier', 'data-model': 'Supplier', type: 'text', placeholder: 'Chercher par entreprise, nom contact'}
+              = equipment_form.hidden_field :supplier_id, id: 'list-Supplier_ids'
+              .search-results
+                - Supplier.all.each do |s|
+                  %p.result-item.result-item-Supplier.hidden{id: "Supplier-#{s[:id]}"}
+                    = s[:name]
+                    %br
+                    = "(#{s.contact.full_name})"
+              .search-chosen#search-chosen-Supplier
+                - if @equipment[:supplier_id].present?
+                  .item-selected{id: "for-Supplier-#{@equipment[:supplier_id]}"}
+                    %div
+                      = @equipment.supplier[:name]
+                      %br
+                      = "(#{@equipment.supplier.contact.full_name})"
 
             %br
             %fieldset

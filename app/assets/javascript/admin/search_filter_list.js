@@ -1,6 +1,10 @@
 /*
  * This file is used for searching and filtering a list in form.
  * Example : in form 'registration', search filter the list of users to find the one we're looking for.
+ *
+ *
+ * Set attribute data-multiple = 'true'  if you want to allow multiple selection.
+ * Set attribute data-null = 'true'  if you want to allow the data to be null.
  */
 
 document.addEventListener('DOMContentLoaded', (_) => {
@@ -9,7 +13,8 @@ document.addEventListener('DOMContentLoaded', (_) => {
     for (let data_model of data_models) {
         const model_name = data_model.getAttribute('data-model')
         const can_select_multiple = data_model.getAttribute('data-multiple')
-        init_filtering(model_name, can_select_multiple)
+        const can_be_null = data_model.getAttribute('data-null')
+        init_filtering(model_name, can_select_multiple, can_be_null)
         // let obj = init_filtering(model_name)
         // console.log(obj['search_input'])
         // console.log(obj['list_results'])
@@ -18,15 +23,15 @@ document.addEventListener('DOMContentLoaded', (_) => {
     }
 
 
-    function init_filtering (model, can_select_multiple) {
+    function init_filtering (model, can_select_multiple, can_be_null) {
         const search_input = document.getElementById(`search-input-${model}`)
         const list_results = document.querySelectorAll(`.result-item-${model}`)
         const list_ids = document.getElementById(`list-${model}_ids`)
         const search_chosen = document.getElementById(`search-chosen-${model}`)
         const children = search_chosen.childNodes[1]
-        if (can_select_multiple && children) setup_preexisting_choice(search_chosen, list_ids)
+        if ((can_select_multiple || can_be_null) && children) setup_preexisting_choice(search_chosen, list_ids)
         add_search_listener(search_input, list_results)
-        add_results_listener(search_input, list_results, list_ids, search_chosen, model, can_select_multiple)
+        add_results_listener(search_input, list_results, list_ids, search_chosen, model, can_select_multiple, can_be_null)
         // return {
         //     search_input: search_input,
         //     list_results: list_results,
@@ -57,7 +62,7 @@ document.addEventListener('DOMContentLoaded', (_) => {
         })
     }
 
-    function add_results_listener (search_input, list_results, list_ids, search_chosen, model, can_select_multiple) {
+    function add_results_listener (search_input, list_results, list_ids, search_chosen, model, can_select_multiple, can_be_null) {
         list_results.forEach((r) => {
             r.addEventListener('click', (_) => {
                 const id = r.getAttribute('id')
@@ -65,14 +70,14 @@ document.addEventListener('DOMContentLoaded', (_) => {
                 txt.innerText = txt.replace('<span class="highlight-search">', '')
                 txt.innerText = txt.replace('</span>', '')
                 if (!list_ids.value.includes(id.split('-')[1]))
-                    add_to_result(search_chosen, txt, id, list_ids, model, can_select_multiple)
+                    add_to_result(search_chosen, txt, id, list_ids, model, can_select_multiple, can_be_null)
                 search_input.value = ''
                 hides_all(list_results)
             })
         })
     }
 
-    function add_to_result(search_chosen, txt, id, list_ids, model, can_select_multiple) {
+    function add_to_result(search_chosen, txt, id, list_ids, model, can_select_multiple, can_be_null) {
         const sub_cont = document.createElement('div')
         sub_cont.id = `for-${id}`
         const id_num = id.split('-')[1]
@@ -85,6 +90,7 @@ document.addEventListener('DOMContentLoaded', (_) => {
             list_ids.value += `${id_num},`
             search_chosen.appendChild(sub_cont)
         } else {
+            if (can_be_null) add_delete_btn(sub_cont, model, id_num, list_ids)
             sub_cont.appendChild(text)
             list_ids.value = `${id_num},`
             const child = search_chosen.childNodes[1]

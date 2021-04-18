@@ -10,8 +10,8 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require admin/inspinia.js
-//= require admin/event_form.js
 //= require admin/search_filter_list.js
+//= require admin/event_form.js
 //= require multi-select
 //= require dynamic-fields-for
 //= require flatpickr
