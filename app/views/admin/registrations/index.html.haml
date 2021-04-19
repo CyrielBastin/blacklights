@@ -42,7 +42,8 @@
                             %th Nom complet
                             %th Email
                             %th Prix
-                            %th Status
+                            %th Confirmation
+                            %th Status paiement
                             %th Actions
                           %tbody
                             - event.registrations.each do |registration|
@@ -58,8 +59,22 @@
                                   = "#{to_french_repr(registration[:price])}€"
 
                                 %td
-                                  %span{'class': registration[:payment_confirmation_datetime].nil? ? 'unpaid' : 'paid'}
-                                    = registration[:payment_confirmation_datetime].nil? ? 'Non Payé' : 'Payé'
+                                  - if registration[:confirmation_datetime].present?
+                                    %span.confirmed
+                                      Confirmé le :
+                                    = date_time_to_french_format(registration[:confirmation_datetime])
+                                  - else
+                                    %p Non confirmé
+                                    = link_to 'Confirmé', admin_registration_confirm_path(registration, type: 'confirmation'), method: :patch, class: 'btn btn-danger'
+
+                                %td
+                                  - if registration[:payment_confirmation_datetime].present?
+                                    %span.confirmed
+                                      Payé le :
+                                    = date_time_to_french_format(registration[:payment_confirmation_datetime])
+                                  - else
+                                    %p Non payé
+                                    = link_to 'Payé', admin_registration_confirm_path(registration, type: 'payment_confirmation'), method: :patch, class: 'btn btn-danger'
 
                                 %td.project-actions
                                   .btn-group

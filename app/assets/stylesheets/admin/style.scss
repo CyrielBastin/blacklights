@@ -409,12 +409,13 @@ img.welcome {
 }
 
 /* Styles for registrations */
-.unpaid {
-  color: red;
+.confirmed {
+  color: green;
   font-weight: bold;
 }
 
-.paid {
-  color: green;
-  font-weight: bold;
+/* Contrast between background-color and form fields */
+.bg-contrast {
+  //background-color: #EDECEC;
+  background-color: #F2F2F2;
 }

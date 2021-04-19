@@ -15,11 +15,14 @@ Rails.application.routes.draw do
     post 'import_locations', to: 'locations#import'
     resources :events, concerns: :paginatable
     post 'import_events', to: 'events#import'
+    post 'import_event_registrations', to: 'events#import_registrations_per_event'
     resources :equipment, concerns: :paginatable
     post 'import_equipment', to: 'equipment#import'
     resources :suppliers, concerns: :paginatable
     post 'import_suppliers', to: 'suppliers#import'
-    resources :registrations, concerns: :paginatable
+    resources :registrations, concerns: :paginatable do
+      patch 'confirm'
+    end
     post 'import_registrations', to: 'registrations#import'
     get '/json/location_activities/:loc_id', to: 'activities#location_activities_json'
     resources :activities, concerns: :paginatable

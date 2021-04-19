@@ -24,7 +24,7 @@ class Equipment < ApplicationRecord
   accepts_nested_attributes_for :dimension
 
   min_char_name = 5
-  min_char_description = 20
+  min_char_description = 10
   min_unit_price = 0.00
   ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères",
               description_is_too_short: "doit contenir au moins #{min_char_description} caractères",

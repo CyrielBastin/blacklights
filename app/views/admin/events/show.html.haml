@@ -13,8 +13,14 @@
         %strong
           = @event.name
 
+= form_tag admin_import_event_registrations_path, method: :post, multipart: true do
+  %fieldset{style: 'margin-top: 20px'}
+    %legend Importer des réservations
+    = hidden_field_tag :id, value: "#{@event[:id]}"
+    = file_field_tag :file
+    = submit_tag 'Importer', class: 'btn btn-success mt-20'
 
-%table.table.table-borderless{style: 'margin-top: 50px; max-width: 500px'}
+%table.table.table-borderless{style: 'margin-top: 50px; max-width: 700px'}
   %tbody
     %tr
       %th Nom :
@@ -49,10 +55,10 @@
             %br
     %tr
       %th Matériel :
-      - if event_equipment.present?
+      - if @event.event_equipment.present?
         %td
-          - event_equipment.each do |equipment|
-            = "#{equipment[:equipment_name]} (#{equipment[:quantity].to_i})"
+          - @event.event_equipment.each do |equipment|
+            = "#{equipment.equipment[:name]} (#{equipment[:quantity].to_i})"
             %br
     %tr
       %th Lieu :
@@ -73,6 +79,13 @@
       %th Prix :
       %td
         = "#{to_french_repr(@event[:price])} €"
+    %tr
+      %th Réservations :
+      - if @event.registrations.present?
+        %td
+          - @event.registrations.each do |r|
+            = "#{r.user.contact.full_name} (#{r.user[:email]}) -- #{r[:price]}€"
+            %br
 
 .row.text-center
   %button.btn.btn-secondary.btn-lg{:type => 'button'}

@@ -10,16 +10,31 @@
             .form-group
               %label.col-sm-2.control-label Nom
               .col-sm-10
-                = f.text_field :name, class: "form-control"
+                = f.text_field :name, class: 'form-control bg-contrast'
             .hr-line-dashed
+
             .form-group
-              %label.col-sm-2.control-label Catégorie parente
-              .col-sm-10
-                = f.select :parent_id, options_for_select(Category.all.map{|s|[s.name, s.id]}, @category.parent_id),{:include_blank => 'Aucune'}, {:class => "form-control select"}
+              .search-container
+                .search-input
+                  %label.control-label Catégorie
+                  %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-null': 'true', type: 'text', placeholder: 'Chercher par nom'}
+                = f.hidden_field :parent_id, id: 'list-Category_ids'
+                .search-results
+                  - Category.all.each do |c|
+                    %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
+                      = c[:name]
+                .search-chosen#search-chosen-Category
+                  - if @category[:parent_id].present?
+                    .item-selected{id: "for-Category-#{@category[:parent_id]}"}
+                      %i.fas.fa-ban.delete-selected{style: 'color: red'}
+                      %div
+                        = @category.parent[:name]
+
+
             .form-group
               %label.col-sm-2.control-label Catégorie pour
               .col-sm-10
-                = f.select :category_for, Category.category_for.options, {}, class: 'form-control required'
+                = f.select :category_for, Category.category_for.options, {}, class: 'form-control bg-contrast required'
             .form-group
               .col-sm-4
                 %button.btn.btn-primary{:type => "submit"} Sauver la catégorie

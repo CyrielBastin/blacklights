@@ -75,6 +75,19 @@ class Admin::EventsController < AdminController
     redirect_to admin_events_path
   end
 
+  def import_registrations_per_event
+    event_id = params[:id].split(' ')[1]
+    imported = import_event_registrations(params[:file], event_id)
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Toutes vos réservations ont été importées avec succès !'
+    end
+    redirect_to admin_event_path(event_id)
+  end
+
   private
 
   def event_params
