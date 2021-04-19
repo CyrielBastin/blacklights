@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     post 'import_locations', to: 'locations#import'
     resources :events, concerns: :paginatable
     post 'import_events', to: 'events#import'
+    post 'import_event_registrations', to: 'events#import_registrations_per_event'
     resources :equipment, concerns: :paginatable
     post 'import_equipment', to: 'equipment#import'
     resources :suppliers, concerns: :paginatable

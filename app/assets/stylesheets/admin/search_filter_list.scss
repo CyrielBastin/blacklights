@@ -21,6 +21,7 @@ $margin-left-filter: 7.5vw;
   top: 0;
   max-height: $list-results-max-height;
   overflow-y: auto;
+  overflow-x: hidden;
   z-index: 9;
   background-color: white;
   border: dotted grey 1px;
@@ -29,7 +30,7 @@ $margin-left-filter: 7.5vw;
   padding-bottom: 5px;
   border-bottom: solid 1px orange;
   margin-bottom: 5px;
-  width: 250px;
+  width: 300px;
   text-align: center;
 }
 .result-item:hover {

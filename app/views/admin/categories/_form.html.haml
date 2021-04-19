@@ -10,14 +10,14 @@
             .form-group
               %label.col-sm-2.control-label Nom
               .col-sm-10
-                = f.text_field :name, class: "form-control"
+                = f.text_field :name, class: 'form-control bg-contrast'
             .hr-line-dashed
 
             .form-group
               .search-container
                 .search-input
                   %label.control-label Catégorie
-                  %input.form-control{id: 'search-input-Category', 'data-model': 'Category', 'data-null': 'true', type: 'text', placeholder: 'Chercher par nom'}
+                  %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-null': 'true', type: 'text', placeholder: 'Chercher par nom'}
                 = f.hidden_field :parent_id, id: 'list-Category_ids'
                 .search-results
                   - Category.all.each do |c|
@@ -34,7 +34,7 @@
             .form-group
               %label.col-sm-2.control-label Catégorie pour
               .col-sm-10
-                = f.select :category_for, Category.category_for.options, {}, class: 'form-control required'
+                = f.select :category_for, Category.category_for.options, {}, class: 'form-control bg-contrast required'
             .form-group
               .col-sm-4
                 %button.btn.btn-primary{:type => "submit"} Sauver la catégorie

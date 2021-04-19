@@ -13,7 +13,7 @@
               .form-group
                 %label.col-sm-2.control-label Nom
                 .col-sm-10
-                  = event_form.text_field :name, class: 'form-control'
+                  = event_form.text_field :name, class: 'form-control bg-contrast'
               .form-group
                 %label.col-sm-2.control-label Date de début
                 .col-sm-10
@@ -35,19 +35,19 @@
               .form-group
                 %label.col-sm-2.control-label Minimum participants
                 .col-sm-10
-                  = event_form.text_field :min_participant, class: 'form-control'
+                  = event_form.text_field :min_participant, class: 'form-control bg-contrast'
                 %br
 
               .form-group
                 %label.col-sm-2.control-label Maximum participants
                 .col-sm-10
-                  = event_form.text_field :max_participant, class: 'form-control'
+                  = event_form.text_field :max_participant, class: 'form-control bg-contrast'
                 %br
 
               .form-group
                 %label.col-sm-2.control-label Prix (en €)
                 .col-sm-10
-                  = event_form.text_field :price, class: 'form-control'
+                  = event_form.text_field :price, class: 'form-control bg-contrast'
                 %br
 
             -#%fieldset
@@ -63,7 +63,7 @@
                 .search-container
                   .search-input
                     %label.control-label Lieu
-                    %input.form-control{id: 'search-input-Location', 'data-model': 'Location', type: 'text', placeholder: 'Chercher par nom, ville, ou code postal'}
+                    %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', 'data-location-form-event': 'true', type: 'text', placeholder: 'Chercher par nom, ville, ou code postal'}
                   = event_form.hidden_field :location_id, id: 'list-Location_ids'
                   .search-results
                     - Location.all.each do |l|
@@ -85,10 +85,10 @@
                 .form-group
                   %label.col-sm-2.control-label Activité
                   .col-sm-2
-                    = ev_ac_form.select :activity_id, options_for_select(@event.id.nil? ? Activity.all.map{|a|[a.name, a.id]} : Activity.get_activities_by_location_id(@event.location_id).rows, ev_ac_form.object.activity_id), {}, {:class => "form-control select change_with_location"}
+                    = ev_ac_form.select :activity_id, options_for_select(@event.id.nil? ? Activity.all.map{|a|[a.name, a.id]} : Activity.get_activities_by_location_id(@event.location_id).rows, ev_ac_form.object.activity_id), {}, {:class => "form-control select bg-contrast change_with_location"}
                   %label.col-sm-2.control-label En simultané
                   .col-sm-2
-                    = ev_ac_form.number_field :simultaneous_activities, {style: 'max-width: 220px'}
+                    = ev_ac_form.number_field :simultaneous_activities, {class: 'bg-contrast', style: 'max-width: 220px'}
                   .col-sm-1
                     = ev_ac_form.remove_fields_link 'Supprimer'
               = event_form.add_fields_link :event_activities, 'Ajouter une activité', { class: 'link_add_activity' }
@@ -99,10 +99,10 @@
                 .form-group
                   %label.col-sm-2.control-label Matériel
                   .col-sm-2
-                    = ev_eq_form.select :equipment_id, options_for_select(Equipment.all.map{|e|[e.name, e.id]}, ev_eq_form.object.equipment_id), {}, {:class => "form-control select"}
+                    = ev_eq_form.select :equipment_id, options_for_select(Equipment.all.map{|e|[e.name, e.id]}, ev_eq_form.object.equipment_id), {}, class: 'form-control select bg-contrast'
                   %label.col-sm-2.control-label Quantité
                   .col-sm-2
-                    = ev_eq_form.number_field :quantity, {style: 'max-width: 220px'}
+                    = ev_eq_form.number_field :quantity, {class: 'bg-contrast', style: 'max-width: 220px'}
                   .col-sm-1
                     = ev_eq_form.remove_fields_link 'Supprimer'
               = event_form.add_fields_link :event_equipment, 'Ajouter du matériel'

@@ -421,6 +421,39 @@ module ImportModel
     potential_errors
   end
 
+
+  def import_event_registrations(file, event_id)
+    sheet_name = ''
+    potential_errors = init_errors(sheet_name)
+    begin
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+      document = (file_ext == '.xlsx') ? Roo::Excelx.new(file.path) : Roo::OpenOffice.new(file.path)
+      # Order for the columns in the sheet
+      # User_id, Date confirmation, Prix, Date confirmation paiement
+      (2..document.last_row).each do |i|
+        user_id = nil
+        begin
+          user_id = User.find(document.row(i)[0])[:id]
+        rescue ActiveRecord::RecordNotFound
+        end
+        r = Registration.new(event_id: event_id, user_id: user_id, confirmation_datetime: convert_to_date_time(document.row(i)[1]),
+                             price: to_english_repr(document.row(i)[2]), payment_confirmation_datetime: convert_to_date_time(document.row(i)[3]))
+        potential_errors[:cell_error] = true unless r.save
+      end
+      if potential_errors[:cell_error] == true
+        potential_errors[:had_errors] = true
+        raise CellValueError
+      end
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
+    end
+
+    potential_errors
+  end
+
   # ##################################################################################################
   private
   # ##################################################################################################

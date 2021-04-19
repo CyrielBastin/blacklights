@@ -5,15 +5,15 @@
     .form-group
       %label.col-sm-2.control-label Nom
       .col-sm-10
-        = contact_form.text_field :lastname, class: 'form-control'
+        = contact_form.text_field :lastname, class: 'form-control bg-contrast'
     .form-group
       %label.col-sm-2.control-label Prénom
       .col-sm-10
-        = contact_form.text_field :firstname, class: 'form-control'
+        = contact_form.text_field :firstname, class: 'form-control bg-contrast'
     .form-group
       %label.col-sm-2.control-label Numéro de téléphone
       .col-sm-10
-        = contact_form.telephone_field :phone_number, class: 'form-control'
+        = contact_form.telephone_field :phone_number, class: 'form-control bg-contrast'
 
     - if object.class.name == 'Profile'
       = contact_form.hidden_field :email, value: 'hello@world.net'
@@ -21,7 +21,7 @@
       .form-group
         %label.col-sm-2.control-label Email
         .col-sm-10
-          = contact_form.email_field :email, class: 'form-control'
+          = contact_form.email_field :email, class: 'form-control bg-contrast'
 
       %br
     %fieldset
@@ -31,16 +31,16 @@
         .form-group
           %label.col-sm-2.control-label Rue et numéro
           .col-sm-10
-            = coordinate_form.text_field :street, class: 'form-control'
+            = coordinate_form.text_field :street, class: 'form-control bg-contrast'
         .form-group
           %label.col-sm-2.control-label Code postal
           .col-sm-10
-            = coordinate_form.text_field :zip_code, class: 'form-control'
+            = coordinate_form.text_field :zip_code, class: 'form-control bg-contrast'
         .form-group
           %label.col-sm-2.control-label Ville
           .col-sm-10
-            = coordinate_form.text_field :city, class: 'form-control'
+            = coordinate_form.text_field :city, class: 'form-control bg-contrast'
         .form-group
           %label.col-sm-2.control-label Pays
           .col-sm-10
-            = coordinate_form.text_field :country, class: 'form-control'
+            = coordinate_form.text_field :country, class: 'form-control bg-contrast'

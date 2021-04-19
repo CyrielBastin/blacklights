@@ -12,12 +12,12 @@
               .form-group
                 %label.col-sm-2.control-label Nom
                 .col-sm-10
-                  = f.text_field :name, class: "form-control"
+                  = f.text_field :name, class: 'form-control bg-contrast'
               .hr-line-dashed
               .form-group
                 %label.col-sm-2.control-label Description
                 .col-sm-10
-                  = f.text_area :description, rows: 10, class: "form-control"
+                  = f.text_area :description, rows: 10, class: 'form-control bg-contrast'
 
             %fieldset
               %legend Lieux ou exercer cette activité
@@ -25,7 +25,7 @@
                 .search-container
                   .search-input
                     %label.control-label Lieu
-                    %input.form-control{id: 'search-input-Location', 'data-model': 'Location', 'data-multiple': 'true', type: 'text', placeholder: 'Chercher par nom, ville, ou code postal'}
+                    %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', 'data-multiple': 'true', type: 'text', placeholder: 'Chercher par nom, ville, ou code postal'}
                   = f.hidden_field :location_activity_ids, id: 'list-Location_ids'
                   .search-results
                     - Location.all.each do |l|
@@ -50,10 +50,10 @@
                 .form-group
                   %label.col-sm-2.control-label Matériel
                   .col-sm-2
-                    = ac_eq_form.select :equipment_id, options_for_select(Equipment.all.map{|e|[e.name, e.id]}, ac_eq_form.object.equipment_id), {}, {:class => "form-control select"}
+                    = ac_eq_form.select :equipment_id, options_for_select(Equipment.all.map{|e|[e.name, e.id]}, ac_eq_form.object.equipment_id), {}, class: 'form-control select bg-contrast'
                   %label.col-sm-1.control-label Quantité
                   .col-sm-2
-                    = ac_eq_form.number_field :quantity, class: "form-control"
+                    = ac_eq_form.number_field :quantity, class: 'form-control bg-contrast'
                   .col-sm-1
                     = ac_eq_form.remove_fields_link 'Supprimer'
 
