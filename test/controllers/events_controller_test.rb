@@ -75,7 +75,9 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should update event' do
-    patch admin_event_url(@event), params: { event: { min_participant: 5 } }
+    patch admin_event_url(@event), params: { event:
+                                               { min_participant: 5,
+                                                 location_id: "#{locations(:heaven)[:id]}," } }
 
     assert_equal 'Votre évènement a été modifié avec succès !', flash[:success]
     assert_redirected_to admin_events_url

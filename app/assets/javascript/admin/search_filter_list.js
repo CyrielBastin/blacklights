@@ -19,11 +19,6 @@ document.addEventListener('DOMContentLoaded', (_) => {
             location_form_event: data_model.getAttribute('data-location-form-event')
         }
         init_filtering(options)
-        // let obj = init_filtering(model_name)
-        // console.log(obj['search_input'])
-        // console.log(obj['list_results'])
-        // console.log(obj['search_chosen'])
-        // console.log(obj['list_ids'])
     }
     document.querySelector('.link_add_activity').addEventListener('click', (_) => {
         setTimeout((_) => {
@@ -40,27 +35,24 @@ document.addEventListener('DOMContentLoaded', (_) => {
 
 function init_filtering (options) {
     const search_input = document.getElementById(`search-input-${options['model_name']}`)
+    const results_container = document.querySelector(`.search-results-${options['model_name']}`)
     const list_results = document.querySelectorAll(`.result-item-${options['model_name']}`)
     const list_ids = document.getElementById(`list-${options['model_name']}_ids`)
     const search_chosen = document.getElementById(`search-chosen-${options['model_name']}`)
     const children = search_chosen.childNodes[1]
     if ((options['can_select_multiple'] || options['can_be_null']) && children)
         setup_preexisting_choice(search_chosen, list_ids)
-    add_search_listener(search_input, list_results)
-    add_results_listener(search_input, list_results, list_ids, search_chosen, options)
-    // return {
-    //     search_input: search_input,
-    //     list_results: list_results,
-    //     search_chosen: search_chosen,
-    //     list_ids: list_ids
-    // }
+    add_search_listener(search_input, results_container, list_results)
+    add_results_listener(search_input, results_container, list_results, list_ids, search_chosen, options)
 }
 
-function add_search_listener (search_input, list_results) {
+function add_search_listener (search_input, results_container, list_results) {
     search_input.addEventListener('keyup', (e) => {
+        results_container.classList.remove('hidden')
         const search = e.target.value
         if (search === '') {
             hides_all(list_results)
+            results_container.classList.add('hidden')
             return
         }
         const reg = new RegExp(`(${search})`, 'i')
@@ -78,7 +70,7 @@ function add_search_listener (search_input, list_results) {
     })
 }
 
-function add_results_listener (search_input, list_results, list_ids, search_chosen, options) {
+function add_results_listener (search_input, results_container, list_results, list_ids, search_chosen, options) {
     list_results.forEach((r) => {
         r.addEventListener('click', (_) => {
             const id = r.getAttribute('id')
@@ -89,6 +81,7 @@ function add_results_listener (search_input, list_results, list_ids, search_chos
                 add_to_result(search_chosen, txt, id, list_ids, options)
             search_input.value = ''
             hides_all(list_results)
+            results_container.classList.add('hidden')
         })
     })
 }

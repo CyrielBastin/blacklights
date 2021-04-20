@@ -97,6 +97,10 @@ class Admin::EventsController < AdminController
                                   event_equipment_attributes: [:id, :equipment_id, :quantity, :_destroy])
   end
 
+  def update_params
+    params[:event][:location_id] = params[:event][:location_id].split(',')[0]
+  end
+
 
   # This function gets all the equipment for an event together inside an array of objects(hash)
   # example: [{ "equipment_name": "aa", "quantity": 1" }, { "equipment_name": "bb", "quantity": "2" }]

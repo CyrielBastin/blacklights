@@ -28,25 +28,4 @@ class RegistrationTest < ActiveSupport::TestCase
     assert_not registration.save
   end
 
-  test '"confirmation_datetime" cannot be in the future' do
-    registration = Registration.new
-    registration[:user_id] = users(:cain)[:id]
-    registration[:event_id] = events(:dark_badminton)[:id]
-    registration[:price] = 0.01
-    registration[:confirmation_datetime] = DateTime.now + 1
-
-    assert_not registration.save
-  end
-
-  test '"payment_confirmation_datetime" cannot be in the future' do
-    registration = Registration.new
-    registration[:user_id] = users(:cain)[:id]
-    registration[:event_id] = events(:dark_badminton)[:id]
-    registration[:price] = 0.01
-    registration[:confirmation_datetime] = DateTime.now
-    registration[:payment_confirmation_datetime] = DateTime.now + 1
-
-    assert_not registration.save
-  end
-
 end

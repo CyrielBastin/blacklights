@@ -30,9 +30,9 @@ class Admin::SuppliersController < AdminController
     end
   end
 
-  def show
-    @supplier = Supplier.find(params[:id])
-  end
+  # def show
+  #   @supplier = Supplier.find(params[:id])
+  # end
 
   def edit
     @supplier = Supplier.find(params[:id])

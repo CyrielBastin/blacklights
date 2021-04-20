@@ -14,7 +14,6 @@ class Admin::EquipmentController < AdminController
   end
 
   def create
-    update_equipment_params
     @equipment = Equipment.new(equipment_params)
     if @equipment.save
       flash[:success] = 'Votre matériel a été crée avec succès !'
@@ -33,7 +32,6 @@ class Admin::EquipmentController < AdminController
   end
 
   def update
-    update_equipment_params
     @equipment = Equipment.find(params[:id])
     if @equipment.update(equipment_params)
       flash[:success] = 'Votre matériel a été modifié avec succès !'
@@ -68,7 +66,7 @@ class Admin::EquipmentController < AdminController
                                       dimension_attributes: [:id, :width, :length, :height, :weight])
   end
 
-  def update_equipment_params
+  def update_params
     params[:equipment][:category_id] = params[:equipment][:category_id].split(',')[0]
     params[:equipment][:supplier_id] = params[:equipment][:supplier_id].split(',')[0]
   end

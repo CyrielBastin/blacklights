@@ -36,10 +36,10 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_suppliers_url
   end
 
-  test 'Should show supplier' do
-    get admin_supplier_url(@supplier)
-    assert_response :success
-  end
+  # test 'Should show supplier' do
+  #   get admin_supplier_url(@supplier)
+  #   assert_response :success
+  # end
 
   test 'Should get edit' do
     get edit_admin_supplier_url(@supplier)

@@ -8,8 +8,8 @@
         .ibox-content
           = form_for [:admin, @supplier], validate: true, html: {class: 'form-horizontal'} do |supplier_form|
             .form-group
-              %label.col-sm-2.control-label Nom
-              .col-sm-10
+              %label.col-sm-1.control-label Nom
+              .col-sm-3
                 = supplier_form.text_field :name, class: 'form-control bg-contrast'
             %br
             = render partial: 'shared/contact_form', locals: { form: supplier_form, object: @supplier }

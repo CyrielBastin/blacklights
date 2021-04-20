@@ -1,23 +1,22 @@
-$search-container-width: 40vw;
 $list-results-max-height: 300px;
-$margin-left-filter: 7.5vw;
+$results-list-max-width: 270px;
 
 
 .search-container {
   position: relative;
-  width: $search-container-width;
 }
+
 .search-input {
   display: flex;
 
-  label {
-    width: 21.5vw;
-    margin-right: 33px;
+  input {
+    max-width: 300px;
   }
 }
+
 .search-results {
   position: absolute;
-  left: calc(#{$search-container-width} + 20px);
+  left: 90%;
   top: 0;
   max-height: $list-results-max-height;
   overflow-y: auto;
@@ -25,42 +24,49 @@ $margin-left-filter: 7.5vw;
   z-index: 9;
   background-color: white;
   border: dotted grey 1px;
+  max-width: $results-list-max-width;
 }
+
 .result-item {
   padding-bottom: 5px;
   border-bottom: solid 1px orange;
   margin-bottom: 5px;
-  width: 300px;
   text-align: center;
+  max-width: $results-list-max-width;
+
+  &:hover {
+    background-color: orange;
+    color: white;
+    cursor: pointer;
+  }
+  .highlight-search {
+    background-color: orange;
+  }
 }
-.result-item:hover {
-  background-color: orange;
-  color: white;
-  cursor: pointer;
+
+.search-chosen {
+  position: absolute;
+  top: 55px;
+  left: 40%;
+  text-align: center;
+  font-weight: bold;
+  font-size: medium;
+  color: green;
+  max-height: 100px;
+  overflow-y: auto;
 }
+
 .item-selected {
   display: flex;
   margin-bottom: 10px;
-  text-align: center;
+
   div {
     padding-top: 12px;
   }
 }
+
 .delete-selected {
   margin-right: 20px;
   margin-top: 15px;
   cursor: pointer;
-}
-.highlight-search {
-  background-color: orange;
-}
-.search-chosen {
-  text-align: center;
-  margin-top: 20px;
-  font-weight: bold;
-  font-size: medium;
-  color: green;
-  margin-left: 15vw;
-  max-height: $list-results-max-height;
-  overflow-y: auto;
 }

@@ -17,7 +17,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test 'Should create category' do
     assert_difference('Category.count') do
-      post admin_categories_url, params: { category: { name: 'Fridge', category_for: 'Matériel' } }
+      post admin_categories_url, params: { category: { name: 'Fridgette', parent_id: '', category_for: 'Matériel' } }
     end
 
     assert_equal 'Votre catégorie a été créée avec succès !', flash[:success]
@@ -35,7 +35,7 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Should update category' do
-    patch admin_category_url(@category), params: { category: { name: 'Biggu' } }
+    patch admin_category_url(@category), params: { category: { name: 'Biggu', parent_id: '' } }
     assert_redirected_to admin_categories_url
   end
 

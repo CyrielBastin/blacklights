@@ -7,35 +7,30 @@
             Veuillez remplir toutes les informations concernant l'utilisateur
         .ibox-content
           = form_for [:admin, @user], validate: true, html: {class: 'form-horizontal'} do |f|
-            .form-group
-              %label.col-sm-2.control-label Email
-              .col-sm-10
-                = f.text_field :email, class: 'form-control required', disabled: f.object.confirmed?
-                = f.hidden_field :skip_password_validation, value: true
-            .hr-line-dashed
             = f.fields_for :profile, f.object.profile.present? ? f.object.profile : Profile.new do |profile_form|
-              .form-group
-                %label.col-sm-2.control-label Sexe
-                .col-sm-10
-                  = profile_form.select :gender, Profile.gender.options, {include_blank: true}, {class: 'form-control required'}
-              .hr-line-dashed
-              .form-group
+              .row
+                %label.col-sm-1.control-label Email
+                .col-sm-2
+                  = f.text_field :email, class: 'form-control bg-contrast required', disabled: f.object.confirmed?
+                  = f.hidden_field :skip_password_validation, value: true
+                %label.col-sm-1.control-label Sexe
+                .col-sm-2
+                  = profile_form.select :gender, Profile.gender.options, {include_blank: true}, {class: 'form-control bg-contrast required'}
                 %label.col-sm-2.control-label Date de naissance
-                .col-sm-10
+                .col-sm-4
                   = profile_form.date_select :birthdate, start_year: 1900, end_year: Date.today.year, class: 'form-control'
-              .hr-line-dashed
 
+              .mt-30
               = render partial: 'shared/contact_form', locals: { form: profile_form, object: profile_form.object, contact_title: 'Profil', coordinate_title: 'Coordonnées' }
 
+            .hr-line-dashed{style: 'margin-top: -10px'}
             .hr-line-dashed
-            .hr-line-dashed
-            .form-group
-              %label.col-sm-2.control-label Admin ?
+            .row
+              %label.col-sm-1.control-label Admin ?
               .col-sm-10
                 = f.check_box :admin, class: 'form-control', style: 'max-width: 50px'
 
-
             .hr-line-dashed
             .form-group
-              .col-sm-4.col-sm-offset-2
+              .col-sm-4
                 %button.btn.btn-primary{:type => 'submit'} Sauver

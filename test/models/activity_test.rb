@@ -30,17 +30,10 @@ class ActivityTest < ActiveSupport::TestCase
     assert_not activity.save
   end
 
-  test 'Name should contain no more than 30 characters' do
-    activity = Activity.new
-    activity[:name] = '67aB9Y7y7eXtRIzM2L4Z100zgWtzwbP'  # 31 chars
-    activity[:description] = 'This is a description !!!'
-    assert_not activity.save
-  end
-
-  test 'Description should contain at least 15 characters' do
+  test 'Description should contain at least 10 characters' do
     activity = Activity.new
     activity[:name] = 'Four'
-    activity[:description] = 'This is a desc'  # 14 chars
+    activity[:description] = 'This is a'  # 9 chars
     assert_not activity.save
   end
 

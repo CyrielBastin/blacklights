@@ -15,7 +15,6 @@ class Admin::ActivitiesController < AdminController
   end
 
   def create
-    update_activity_params
     @activity = Activity.new(activity_params)
     add_locations
     if name_already_exists?(@activity.class.name, @activity[:name])
@@ -40,7 +39,6 @@ class Admin::ActivitiesController < AdminController
   end
 
   def update
-    update_activity_params
     @activity = Activity.find(params[:id])
     add_locations
     act = Activity.find_by(name: params[:activity][:name])
@@ -84,10 +82,10 @@ class Admin::ActivitiesController < AdminController
   def activity_params
     params.require(:activity).permit(:id, :name, :description,
                                      :location_activity_ids,
-                                     activity_equipment_attributes: [:id, :equipment_id, :quantity, :_destroy])
+                                     activity_equipment_attributes: %i[id equipment_id quantity _destroy])
   end
 
-  def update_activity_params
+  def update_params
     params[:activity][:location_activity_ids] = params[:activity][:location_activity_ids].split(',')
   end
 

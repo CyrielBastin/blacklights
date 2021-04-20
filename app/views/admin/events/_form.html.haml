@@ -10,76 +10,57 @@
             %fieldset
               %legend Informations
               = event_form.text_field :id, id: 'event_id', style: 'display: none', value: @event.id.present? ? @event.id : 0
-              .form-group
+              .row
                 %label.col-sm-2.control-label Nom
-                .col-sm-10
+                .col-sm-2
                   = event_form.text_field :name, class: 'form-control bg-contrast'
-              .form-group
-                %label.col-sm-2.control-label Date de début
-                .col-sm-10
-                  = event_form.text_field :start_date
-                %br
-
-              .form-group
-                %label.col-sm-2.control-label Date de fin
-                .col-sm-10
-                  = event_form.text_field :end_date
-                %br
-
-              .form-group
-                %label.col-sm-2.control-label Clôture des inscriptions
-                .col-sm-10
-                  = event_form.text_field :registration_deadline
-                %br
-
-              .form-group
-                %label.col-sm-2.control-label Minimum participants
-                .col-sm-10
+                %label.col-sm-2.control-label Min. participants
+                .col-sm-2
                   = event_form.text_field :min_participant, class: 'form-control bg-contrast'
-                %br
-
-              .form-group
-                %label.col-sm-2.control-label Maximum participants
-                .col-sm-10
+                %label.col-sm-2.control-label Max. participants
+                .col-sm-2
                   = event_form.text_field :max_participant, class: 'form-control bg-contrast'
-                %br
 
-              .form-group
+              .row.mt-30
+                %label.col-sm-2.control-label Date de début
+                .col-sm-2
+                  = event_form.text_field :start_date
+                %label.col-sm-2.control-label Date de fin
+                .col-sm-2
+                  = event_form.text_field :end_date
+                %label.col-sm-2.control-label Clôture des inscriptions
+                .col-sm-2
+                  = event_form.text_field :registration_deadline
+
+              .row.mt-30
                 %label.col-sm-2.control-label Prix (en €)
-                .col-sm-10
+                .col-sm-2
                   = event_form.text_field :price, class: 'form-control bg-contrast'
-                %br
 
-            -#%fieldset
-            -#  %legend Lieu
-            -#  .form-group
-            -#    %label.col-sm-2.control-label Lieu
-            -#    .col-sm-10
-            -#      = event_form.select :location_id, options_for_select(Location.all.map{|l|[l.name_plus_city, l.id]}, @event.location_id), {}, {:class => "form-control select"}
-
-            %fieldset
+            %fieldset.mt-30
               %legend Lieu de l'évènement
-              .form-group
-                .search-container
-                  .search-input
-                    %label.control-label Lieu
-                    %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', 'data-location-form-event': 'true', type: 'text', placeholder: 'Chercher par nom, ville, ou code postal'}
-                  = event_form.hidden_field :location_id, id: 'list-Location_ids'
-                  .search-results
-                    - Location.all.each do |l|
-                      %p.result-item.result-item-Location.hidden{id: "Location-#{l[:id]}"}
-                        = l[:name]
-                        %br
-                        = "#{l[:city]}, #{l[:zip_code]}"
-                  .search-chosen#search-chosen-Location
-                    - if @event[:location_id].present?
-                      .item-selected{id: "for-Location-#{@event[:location_id]}"}
-                        %div
-                          = @event.location[:name]
+              .row
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Lieu
+                      %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', 'data-location-form-event': 'true', type: 'text', placeholder: 'Rechercher par nom, ville, code postal'}
+                    = event_form.hidden_field :location_id, id: 'list-Location_ids'
+                    .search-results.search-results-Location.col-sm-7.hidden
+                      - Location.all.each do |l|
+                        %p.result-item.result-item-Location.hidden{id: "Location-#{l[:id]}"}
+                          = l[:name]
                           %br
-                          = "#{@event.location[:city]}, #{@event.location[:zip_code]}"
+                          = "#{l[:city]}, #{l[:zip_code]}"
+                    .search-chosen#search-chosen-Location.col-sm-7
+                      - if @event[:location_id].present?
+                        .item-selected{id: "for-Location-#{@event[:location_id]}"}
+                          %div
+                            = @event.location[:name]
+                            %br
+                            = "#{@event.location[:city]}, #{@event.location[:zip_code]}"
 
-            %fieldset
+            %fieldset{style: 'margin-top: 100px'}
               %legend Activités
               = event_form.fields_for :event_activities, @event.event_activities.present? ? @event.event_activities : @event.event_activities.build, dynamic: true do |ev_ac_form|
                 .form-group
@@ -93,7 +74,7 @@
                     = ev_ac_form.remove_fields_link 'Supprimer'
               = event_form.add_fields_link :event_activities, 'Ajouter une activité', { class: 'link_add_activity' }
 
-            %fieldset{style: 'margin-top: 40px'}
+            %fieldset.mt-50
               %legend Matériel supplémentaire
               = event_form.fields_for :event_equipment, @event.event_equipment.present? ? @event.event_equipment : @event.event_equipment.build, dynamic: true do |ev_eq_form|
                 .form-group
@@ -107,10 +88,10 @@
                     = ev_eq_form.remove_fields_link 'Supprimer'
               = event_form.add_fields_link :event_equipment, 'Ajouter du matériel'
 
-            %br
+            .mt-50
             = render partial: 'shared/contact_form', locals: { form: event_form, object: @event }
 
 
             .form-group
               .col-sm-4
-                %button.btn.btn-primary{:type => 'submit'} Sauver l'évènement
+                %button.btn.btn-primary{type: 'submit'} Sauver l'évènement
