@@ -14,7 +14,7 @@ class Category < ApplicationRecord
 
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'
-  enumerize :category_for, in: %w[Evènement Matériel]
+  enumerize :category_for, in: %w[Matériel Evènement]
   has_many :equipment
   has_many :events
 

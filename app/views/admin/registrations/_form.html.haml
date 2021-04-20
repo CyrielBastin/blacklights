@@ -9,59 +9,57 @@
           = form_for [:admin, @registration], validate: true, html: {class: 'form-horizontal'} do |form|
             %fieldset
               %legend Informations
-              .form-group
-                .search-container
-                  .search-input
-                    %label.control-label Evènement
-                    %input.form-control.bg-contrast{id: 'search-input-Event', 'data-model': 'Event', type: 'text', placeholder: 'Chercher par nom, lieu, ou date'}
-                  = form.hidden_field :event_id, id: 'list-Event_ids'
-                  .search-results
-                    - Event.to_come.each do |e|
-                      %p.result-item.result-item-Event.hidden{id: "Event-#{e[:id]}"}
-                        = e[:name]
-                        %br
-                        = e.location.name_plus_city
-                        %br
-                        = date_time_to_french_format(e[:start_date])
-                  .search-chosen#search-chosen-Event
-                    - if @registration[:event_id].present?
-                      .item-selected{id: "for-Event-#{@registration.event[:id]}"}
-                        %div
-                          = @registration.event[:name]
+              .row.mt-30
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Evènement
+                      %input.form-control.bg-contrast{id: 'search-input-Event', 'data-model': 'Event', type: 'text', placeholder: 'Rechercher par nom, lieu, ou date'}
+                    = form.hidden_field :event_id, id: 'list-Event_ids'
+                    .search-results.search-results-Event.col-sm-7.hidden
+                      - Event.to_come.each do |e|
+                        %p.result-item.result-item-Event.hidden{id: "Category-#{e[:id]}"}
+                          = e[:name]
                           %br
-                          = @registration.event.location.name_plus_city
+                          = e.location.name_plus_city
                           %br
-                          = date_time_to_french_format(@registration.event[:start_date])
+                          = date_time_to_french_format(e[:start_date])
+                    .search-chosen#search-chosen-Event.col-sm-7
+                      - if @registration[:event_id].present?
+                        .item-selected{id: "for-Event-#{@registration.event[:id]}"}
+                          %div
+                            = @registration.event[:name]
+                            %br
+                            = @registration.event.location.name_plus_city
+                            %br
+                            = date_time_to_french_format(@registration.event[:start_date])
 
-              %br
-              .form-group
-                .search-container
-                  .search-input
-                    %label.control-label Utilisateur
-                    %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Chercher par nom ou email'}
-                  = form.hidden_field :user_id, id: 'list-User_ids'
-                  .search-results
-                    - User.all.each do |u|
-                      %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
-                        = u.contact.full_name
-                        %br
-                        = u[:email]
-                  .search-chosen#search-chosen-User
-                    - if @registration[:user_id].present?
-                      .item-selected{id: "for-User-#{@registration.user[:id]}"}
-                        %div
-                          = @registration.user.contact.full_name
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Utilisateur
+                      %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
+                    = form.hidden_field :user_id, id: 'list-User_ids'
+                    .search-results.search-results-User.col-sm-7.hidden
+                      - User.all.each do |u|
+                        %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
+                          = u.contact.full_name
                           %br
-                          = @registration.user[:email]
+                          = u[:email]
+                    .search-chosen#search-chosen-User.col-sm-7
+                      - if @registration[:user_id].present?
+                        .item-selected{id: "for-User-#{@registration.user[:id]}"}
+                          %div
+                            = @registration.user.contact.full_name
+                            %br
+                            = @registration.user[:email]
 
-              %br
-              .form-group
+              .row{style: 'margin-top: 130px'}
                 %label.col-sm-2.control-label Prix (en €)
-                .col-sm-10
+                .col-sm-2
                   = form.text_field :price, class: 'form-control bg-contrast'
-                %br
 
 
-            .form-group
+            .form-group.mt-50
               .col-sm-4
                 %button.btn.btn-primary{:type => 'submit'} Sauver l'évènement

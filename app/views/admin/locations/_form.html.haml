@@ -9,86 +9,74 @@
           = form_for [:admin, @location], validate: true, html: {class: 'form-horizontal'} do |location_form|
             %fieldset
               %legend Informations
-              .form-group
-                %label.col-sm-2.control-label Nom
-                .col-sm-10
+              .row
+                %label.col-sm-1.control-label Nom
+                .col-sm-3
                   = location_form.text_field :name, class: 'form-control bg-contrast'
-                %br
-
-              .form-group
-                %label.col-sm-2.control-label Type
-                .col-sm-10
+                %label.col-sm-1.control-label Type
+                .col-sm-3
                   = location_form.text_field :type, class: 'form-control bg-contrast'
-                %br
-
-              .form-group
                 %label.col-sm-2.control-label Capacité maximale
-                .col-sm-10
+                .col-sm-2
                   = location_form.number_field :capacity, class: 'form-control bg-contrast'
-                %br
-              .form-group
-                %label.col-sm-2.control-label Rue et numéro
-                .col-sm-10
+
+              .row.mt-30
+                %label.col-sm-1.control-label Rue et n°
+                .col-sm-3
                   = location_form.text_field :street, class: 'form-control bg-contrast'
-                %br
-              .form-group
-                %label.col-sm-2.control-label Code postal
-                .col-sm-10
+                %label.col-sm-1.control-label Code postal
+                .col-sm-3
                   = location_form.text_field :zip_code, class: 'form-control bg-contrast'
-                %br
-              .form-group
-                %label.col-sm-2.control-label Ville
-                .col-sm-10
+
+              .row.mt-30
+                %label.col-sm-1.control-label Ville
+                .col-sm-3
                   = location_form.text_field :city, class: 'form-control bg-contrast'
-                %br
-              .form-group
-                %label.col-sm-2.control-label Pays
-                .col-sm-10
+                %label.col-sm-1.control-label Pays
+                .col-sm-3
                   = location_form.text_field :country, class: 'form-control bg-contrast'
                 %br
 
-            %fieldset
+            %fieldset.mt-30
               %legend Activités disponibles
-              .form-group
-                .search-container
-                  .search-input
-                    %label.control-label Activité
-                    %input.form-control.bg-contrast{id: 'search-input-Activity', 'data-model': 'Activity', 'data-multiple': 'true', type: 'text', placeholder: 'Chercher par nom'}
-                  = location_form.hidden_field :location_activity_ids, id: 'list-Activity_ids'
-                  .search-results
-                    - Activity.all.each do |a|
-                      %p.result-item.result-item-Activity.hidden{id: "Activity-#{a[:id]}"}
-                        = a[:name]
-                  .search-chosen#search-chosen-Activity
-                    - if @location.location_activities.present?
-                      - @location.location_activities.each do |loc_ac|
-                        .item-selected{id: "for-Activity-#{loc_ac.activity[:id]}"}
-                          %i.fas.fa-ban.delete-selected{style: 'color: red'}
-                          %div
-                            = loc_ac.activity[:name]
+              .row.mt-30
+                .search-container.col-sm-4
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Activité
+                      %input.form-control.bg-contrast{id: 'search-input-Activity', 'data-model': 'Activity', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    = location_form.hidden_field :location_activity_ids, id: 'list-Activity_ids'
+                    .search-results.search-results-Activity.col-sm-7.hidden
+                      - Activity.all.each do |a|
+                        %p.result-item.result-item-Activity.hidden{id: "Activity-#{a[:id]}"}
+                          = a[:name]
+                    .search-chosen#search-chosen-Activity.col-sm-7
+                      - if @location.location_activities.present?
+                        - @location.location_activities.each do |loc_ac|
+                          .item-selected{id: "for-Activity-#{loc_ac.activity[:id]}"}
+                            %i.fas.fa-ban.delete-selected{style: 'color: red'}
+                            %div
+                              = loc_ac.activity[:name]
 
-            %br
-            %fieldset
+            %fieldset{style: 'margin-top: 150px'}
               %legend Dimensions
               = location_form.fields_for :dimension, @location.dimension.present? ? @location.dimension : @location.build_dimension  do |dimension_form|
-                .form-group
+                .row
                   %label.col-sm-2.control-label Largeur (en m)
-                  .col-sm-10
+                  .col-sm-1
                     = dimension_form.text_field :width, class: 'form-control bg-contrast'
-                .form-group
                   %label.col-sm-2.control-label Longueur (en m)
-                  .col-sm-10
+                  .col-sm-1
                     = dimension_form.text_field :length, class: 'form-control bg-contrast'
-                .form-group
                   %label.col-sm-2.control-label Hauteur (en m)
-                  .col-sm-10
+                  .col-sm-1
                     = dimension_form.text_field :height, class: 'form-control bg-contrast'
-                .form-group
-                  .col-sm-10
-                    = dimension_form.text_field :weight, class: 'form-control bg-contrast', style: 'display: none', value: 0.01
+                  .col-sm-1
+                    = dimension_form.hidden_field :weight, value: 0.01
 
             %br
             = render partial: 'shared/contact_form', locals: { form: location_form, object: @location }
+
 
             .form-group
               .col-sm-4
