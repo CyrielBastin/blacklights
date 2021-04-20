@@ -15,7 +15,6 @@ class Admin::LocationsController < AdminController
   end
 
   def create
-    update_location_params
     @location = Location.new(location_params)
     add_activities
     if name_already_exists?(@location.class.name, @location[:name])
@@ -40,7 +39,6 @@ class Admin::LocationsController < AdminController
   end
 
   def update
-    update_location_params
     @location = Location.find(params[:id])
     add_activities
     loc = Location.find_by(name: params[:location][:name])
@@ -85,7 +83,7 @@ class Admin::LocationsController < AdminController
                                      dimension_attributes: [:id, :width, :length, :height, :weight])
   end
 
-  def update_location_params
+  def update_params
     params[:location][:location_activity_ids] = params[:location][:location_activity_ids].split(',')
   end
 

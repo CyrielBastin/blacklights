@@ -15,11 +15,19 @@
 heaven:
   name: Heaven
   type: Outdoor
+  street: Grand Rue
+  city: City Hall
+  zip_code: 1111
+  country: Heaven
   contact: two
   dimension: two
 
 hell:
   name: Hell
   type: Indoor
+  street: Grand Rue
+  city: City Hall
+  zip_code: 1111
+  country: Heaven
   contact: one
   dimension: one

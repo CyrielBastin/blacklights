@@ -46,8 +46,9 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update registration' do
     patch admin_registration_url(@registration), params: { registration: {
-      confirmation_datetime: '2021-04-02 12:12:12',
-      payment_confirmation_datetime: '2021-04-02 13:13:13'
+      price: 99.99,
+      user_id: "#{users(:abel)[:id]},",
+      event_id: "#{events(:dark_volleyball)[:id]},"
     } }
 
     assert_equal 'Votre réservation a été modifiée avec succès !', flash[:success]

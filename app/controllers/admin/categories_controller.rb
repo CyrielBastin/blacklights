@@ -15,7 +15,6 @@ class Admin::CategoriesController < AdminController
   end
 
   def create
-    update_category_params
     @category = Category.new(category_params)
     if name_already_exists?(@category.class.name, @category[:name])
       @category.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
@@ -39,7 +38,6 @@ class Admin::CategoriesController < AdminController
   end
 
   def update
-    update_category_params
     @category = Category.find(params[:id])
     cat = Category.find_by(name: params[:category][:name])
     if cat.nil? || cat[:id] == @category[:id]
@@ -57,7 +55,7 @@ class Admin::CategoriesController < AdminController
 
   def destroy
     Category.find(params[:id]).destroy
-    flash[:success] = "Votre catégorie a été supprimée avec succès."
+    flash[:success] = 'Votre catégorie a été supprimée avec succès !'
     redirect_to admin_categories_path
   end
 
@@ -79,7 +77,7 @@ class Admin::CategoriesController < AdminController
     params.require(:category).permit(:parent_id, :name, :category_for)
   end
 
-  def update_category_params
+  def update_params
     params[:category][:parent_id] = params[:category][:parent_id].split(',')[0]
   end
 

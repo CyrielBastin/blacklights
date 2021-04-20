@@ -21,6 +21,10 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
         { location:
             { name: 'Superb Hall',
               type: 'Outdoors',
+              street: 'Rue Haute',
+              city: 'Namur',
+              zip_code: 5000,
+              country: 'Belgique',
               contact_attributes:
                 { lastname: 'Lalouche',
                   firstname: 'Jacky',
@@ -36,7 +40,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
                   length: 2.22,
                   height: 3.33,
                   weight: 4.44 },
-              location_activity_ids: [ activities(:badminton)[:id] ] } }
+              location_activity_ids: "#{activities(:badminton)[:id]}," } }
     end
 
     assert_equal 'Votre lieu a été crée avec succès !', flash[:success]
@@ -57,7 +61,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     patch admin_location_url(@location), params:
       { location:
           { name: 'Has been patched',
-            location_activity_ids: [ activities(:badminton)[:id] ] } }
+            location_activity_ids: "#{activities(:badminton)[:id]},#{activities(:basketball)[:id]}," } }
 
     assert_equal 'Votre lieu a été modifié avec succès !', flash[:success]
     assert_redirected_to admin_locations_url

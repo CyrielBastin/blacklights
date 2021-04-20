@@ -51,7 +51,10 @@ class EquipmentControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Should update equipment' do
-    patch admin_equipment_url(@equipment), params: { equipment: { name: 'Jacky' } }
+    patch admin_equipment_url(@equipment), params: { equipment:
+                                                       { name: 'Jacky',
+                                                         category_id: "#{categories(:raquette_bad)[:id]},",
+                                                         supplier_id: "#{suppliers(:two)[:id]}," } }
 
     assert_equal 'Votre matériel a été modifié avec succès !', flash[:success]
     assert_redirected_to admin_equipment_index_url

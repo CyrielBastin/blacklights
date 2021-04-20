@@ -19,15 +19,6 @@ class ProfileTest < ActiveSupport::TestCase
     assert_not profile.save
   end
 
-  test 'should not save a profile without a birthdate' do
-    profile = Profile.new
-    profile[:user_id] = users(:cain)[:id]
-    profile[:contact_id] = contacts(:one)[:id]
-    profile[:gender] = 'male'
-
-    assert_not profile.save
-  end
-
   test 'should not save a profile with a birthdate in the future' do
     profile = Profile.new
     profile[:user_id] = users(:cain)[:id]

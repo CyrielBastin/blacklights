@@ -16,7 +16,7 @@
             .form-group
               .search-container
                 .search-input
-                  %label.control-label Catégorie
+                  %label.control-label Catégorie parente
                   %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-null': 'true', type: 'text', placeholder: 'Chercher par nom'}
                 = f.hidden_field :parent_id, id: 'list-Category_ids'
                 .search-results
