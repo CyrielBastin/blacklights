@@ -13,7 +13,6 @@ class Admin::UsersController < AdminController
   end
 
   def create
-    toto
     @user = User.new(user_params)
     @user.profile.contact[:email] = params[:user][:email]
     if @user.save
