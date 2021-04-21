@@ -43,7 +43,7 @@ class Event < ApplicationRecord
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
-  validates :start_date, :end_date, :registration_deadline, presence: true
+  validates :start_date, :end_date, :registration_deadline, :location_id, presence: true
   validate :start_date_is_in_the_future, :end_date_is_higher_than_start_date, :registration_deadline_is_before_start_date
   validates :price, presence: true,
                     numericality: { greater_than: min_price, message: ERR_MSG[:price_is_lesser_than_one] }
@@ -51,7 +51,7 @@ class Event < ApplicationRecord
                               numericality: { greater_than: min_participant, message: ERR_MSG[:min_participant_is_lesser_than_one] }
   validates :max_participant, presence: true,
                               numericality: { greater_than: min_participant, message: ERR_MSG[:max_participant_is_lesser_than_one] }
-  validate :max_participant_is_higher_than_min_participant
+  validate :max_participant_is_higher_than_min_participant, :max_participants_lesser_than_location_capacity
 
 
   def Event.to_come
@@ -95,6 +95,19 @@ class Event < ApplicationRecord
     unless max_participant > min_participant
       errors.add(:max_participant, ERR_MSG[:max_participant_is_lesser_than_min_participant])
     end
+  end
+
+  def max_participants_lesser_than_location_capacity
+    return if max_participant.nil? || location_id.nil?
+
+    l = nil
+    begin
+      l = Location.find(location_id)
+    rescue
+    end
+    return if l.nil?
+
+    errors.add(:max_participant, "ne peut pas être plus grand que #{l[:capacity]}") if max_participant > l[:capacity]
   end
 
   ####################################################################################################

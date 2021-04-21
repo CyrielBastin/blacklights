@@ -32,6 +32,7 @@ class Equipment < ApplicationRecord
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
+  validates :category_id, :supplier_id, presence: true
   validate :name_is_valid
   validates :description, presence: true,
                           length: { minimum: min_char_description, message: ERR_MSG[:description_is_too_short] }

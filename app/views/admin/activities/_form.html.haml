@@ -26,8 +26,8 @@
                   .row
                     .search-input
                       %label.control-label.col-sm-5 Lieu
+                      = f.hidden_field :location_activity_ids, class: 'list-Location_ids'
                       %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom, ville, code postal'}
-                    = f.hidden_field :location_activity_ids, id: 'list-Location_ids'
                     .search-results.search-results-Location.col-sm-7.hidden
                       - Location.all.each do |l|
                         %p.result-item.result-item-Location.hidden{id: "Location-#{l[:id]}"}
@@ -44,7 +44,7 @@
                               %br
                               = "#{loc_ac.location[:city]}, #{loc_ac.location[:zip_code]}"
 
-            %fieldset{style: 'margin-top: 150px'}
+            %fieldset{style: 'margin-top: 180px'}
               %legend Matériel nécessaire
               = f.fields_for :activity_equipment, @activity.activity_equipment.present? ? @activity.activity_equipment : @activity.activity_equipment.build, dynamic: true do |ac_eq_form|
                 .form-group

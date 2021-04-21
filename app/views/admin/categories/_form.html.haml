@@ -17,7 +17,7 @@
                   .search-input
                     %label.control-label.col-sm-5 Catégorie parente
                     %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-null': 'true', type: 'text', placeholder: 'Rechercher par nom'}
-                  = f.hidden_field :parent_id, id: 'list-Category_ids'
+                    = f.hidden_field :parent_id, class: 'list-Category_ids'
                   .search-results.search-results-Category.col-sm-7.hidden
                     - Category.all.each do |c|
                       %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}

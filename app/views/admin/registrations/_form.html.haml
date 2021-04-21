@@ -14,8 +14,12 @@
                   .row
                     .search-input
                       %label.control-label.col-sm-5 Evènement
-                      %input.form-control.bg-contrast{id: 'search-input-Event', 'data-model': 'Event', type: 'text', placeholder: 'Rechercher par nom, lieu, ou date'}
-                    = form.hidden_field :event_id, id: 'list-Event_ids'
+                      .field_with_errors
+                        = form.hidden_field :event_id, class: 'list-Event_ids'
+                        %input.form-control.bg-contrast{id: 'search-input-Event', 'data-model': 'Event', type: 'text', placeholder: 'Rechercher par nom, lieu, ou date'}
+                        - @registration.errors.full_messages_for(:event_id).each do |message|
+                          %label.message{'for': 'registration_event_id'}
+                            = epurate_err_msg(:Event, message)
                     .search-results.search-results-Event.col-sm-7.hidden
                       - Event.to_come.each do |e|
                         %p.result-item.result-item-Event.hidden{id: "Category-#{e[:id]}"}
@@ -38,8 +42,12 @@
                   .row
                     .search-input
                       %label.control-label.col-sm-5 Utilisateur
-                      %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
-                    = form.hidden_field :user_id, id: 'list-User_ids'
+                      .field_with_errors
+                        = form.hidden_field :user_id, class: 'list-User_ids'
+                        %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
+                        - @registration.errors.full_messages_for(:user_id).each do |message|
+                          %label.message{'for': 'registration_user_id'}
+                            = epurate_err_msg(:User, message)
                     .search-results.search-results-User.col-sm-7.hidden
                       - User.all.each do |u|
                         %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
@@ -54,7 +62,7 @@
                             %br
                             = @registration.user[:email]
 
-              .row{style: 'margin-top: 130px'}
+              .row{style: 'margin-top: 150px'}
                 %label.col-sm-2.control-label Prix (en €)
                 .col-sm-2
                   = form.text_field :price, class: 'form-control bg-contrast'

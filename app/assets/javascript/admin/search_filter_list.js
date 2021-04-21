@@ -37,7 +37,7 @@ function init_filtering (options) {
     const search_input = document.getElementById(`search-input-${options['model_name']}`)
     const results_container = document.querySelector(`.search-results-${options['model_name']}`)
     const list_results = document.querySelectorAll(`.result-item-${options['model_name']}`)
-    const list_ids = document.getElementById(`list-${options['model_name']}_ids`)
+    const list_ids = document.querySelector(`.list-${options['model_name']}_ids`)
     const search_chosen = document.getElementById(`search-chosen-${options['model_name']}`)
     const children = search_chosen.childNodes[1]
     if ((options['can_select_multiple'] || options['can_be_null']) && children)
@@ -77,7 +77,7 @@ function add_results_listener (search_input, results_container, list_results, li
             let txt = r.innerText
             txt.innerText = txt.replace('<span class="highlight-search">', '')
             txt.innerText = txt.replace('</span>', '')
-            if (!list_ids.value.includes(id.split('-')[1]))
+            if (!list_ids.value.split(',').includes(id.split('-')[1]))
                 add_to_result(search_chosen, txt, id, list_ids, options)
             search_input.value = ''
             hides_all(list_results)

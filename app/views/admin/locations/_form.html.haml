@@ -44,8 +44,8 @@
                   .row
                     .search-input
                       %label.control-label.col-sm-5 Activité
+                      = location_form.hidden_field :location_activity_ids, class: 'list-Activity_ids'
                       %input.form-control.bg-contrast{id: 'search-input-Activity', 'data-model': 'Activity', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
-                    = location_form.hidden_field :location_activity_ids, id: 'list-Activity_ids'
                     .search-results.search-results-Activity.col-sm-7.hidden
                       - Activity.all.each do |a|
                         %p.result-item.result-item-Activity.hidden{id: "Activity-#{a[:id]}"}
@@ -80,4 +80,4 @@
 
             .form-group
               .col-sm-4
-                %button.btn.btn-primary{:type => 'submit'} Sauver le lieu
+                %button.btn.btn-primary{type: 'submit'} Sauver le lieu
