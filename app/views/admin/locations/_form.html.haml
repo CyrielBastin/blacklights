@@ -6,14 +6,15 @@
           %h5
             Veuillez remplir toutes les informations concernant votre lieu
         .ibox-content
+          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @location], validate: true, html: {class: 'form-horizontal'} do |location_form|
             %fieldset
               %legend Informations
               .row
-                %label.col-sm-1.control-label Nom
+                %label.col-sm-1.control-label Nom <span class="red">*</span>
                 .col-sm-3
                   = location_form.text_field :name, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label Type
+                %label.col-sm-1.control-label Type <span class="red">*</span>
                 .col-sm-3
                   = location_form.text_field :type, class: 'form-control bg-contrast'
                 %label.col-sm-2.control-label Capacité maximale
@@ -21,18 +22,18 @@
                   = location_form.number_field :capacity, class: 'form-control bg-contrast'
 
               .row.mt-30
-                %label.col-sm-1.control-label Rue et n°
+                %label.col-sm-1.control-label Rue et n° <span class="red">*</span>
                 .col-sm-3
                   = location_form.text_field :street, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label Code postal
+                %label.col-sm-1.control-label Code post. <span class="red">*</span>
                 .col-sm-3
                   = location_form.text_field :zip_code, class: 'form-control bg-contrast'
 
               .row.mt-30
-                %label.col-sm-1.control-label Ville
+                %label.col-sm-1.control-label Ville <span class="red">*</span>
                 .col-sm-3
                   = location_form.text_field :city, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label Pays
+                %label.col-sm-1.control-label Pays <span class="red">*</span>
                 .col-sm-3
                   = location_form.text_field :country, class: 'form-control bg-contrast'
                 %br

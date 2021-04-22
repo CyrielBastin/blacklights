@@ -6,16 +6,17 @@
           %h5
             Veuillez remplir toutes les informations concernant votre activité
         .ibox-content
+          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
           = form_for [:admin,@activity], validate: true, html: {class: "form-horizontal"} do |f|
             %fieldset
               %legend Activité
               .form-group
-                %label.col-sm-2.control-label Nom
+                %label.col-sm-2.control-label Nom <span class="red">*</span>
                 .col-sm-5
                   = f.text_field :name, class: 'form-control bg-contrast'
               .hr-line-dashed
               .form-group
-                %label.col-sm-2.control-label Description
+                %label.col-sm-2.control-label Description <span class="red">*</span>
                 .col-sm-5
                   = f.text_area :description, rows: 4, class: 'form-control bg-contrast'
 

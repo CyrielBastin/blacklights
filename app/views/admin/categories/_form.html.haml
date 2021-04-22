@@ -6,9 +6,10 @@
           %h5
             Veuillez remplir toutes les informations concernant votre activité
         .ibox-content
+          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
           = form_for [:admin,@category], validate: true, html: {class: "form-horizontal"} do |f|
             .row
-              %label.col-sm-2.control-label Nom
+              %label.col-sm-2.control-label Nom <span class="red">*</span>
               .col-sm-2{style: 'margin-right: 30px'}
                 = f.text_field :name, class: 'form-control bg-contrast'
 
@@ -30,7 +31,7 @@
                           = @category.parent[:name]
 
             .row.mt-30
-              %label.col-sm-2.control-label Catégorie pour
+              %label.col-sm-2.control-label Catégorie pour <span class="red">*</span>
               .col-sm-2
                 = f.select :category_for, Category.category_for.options, {}, class: 'form-control bg-contrast required'
 

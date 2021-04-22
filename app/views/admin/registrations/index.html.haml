@@ -25,6 +25,10 @@
 
         .ibox-content
           - unless @events.empty?
+            .row.registration-title
+              .col-sm-4 Evènement
+              .col-sm-4 Lieu
+              .col-sm-4 Date
             .panel-group#accordion{role: 'tablist', 'aria-multiselectable': 'true'}
               - @events.each do |event|
                 .panel.panel-default
@@ -32,7 +36,14 @@
                   .panel-heading{id: "heading-#{event[:id]}", role: 'tab'}
                     %h4.panel-title
                       %a{role: 'button', 'data-toggle': 'collapse', 'data-parent': '#accordion', href: "#collapse-#{event[:id]}", 'aria-expanded': 'false', 'aria-controls': "collapse-#{event[:id]}"}
-                        = "Evènement : #{event[:name]} -- Lieu : #{event.location.name_plus_city} -- le #{date_time_to_french_format(event[:start_date])}"
+                        -# = "Evènement : #{event[:name]} -- Lieu : #{event.location.name_plus_city} -- le #{date_time_to_french_format(event[:start_date])}"
+                        .row.registration-value
+                          .col-sm-4
+                            = event[:name]
+                          .col-sm-4
+                            = event.location.name_plus_city
+                          .col-sm-4
+                            = date_time_to_french_format(event[:start_date])
 
                   -# List registrations for event
                   .panel-collapse.collapse{id: "collapse-#{event[:id]}", role: 'tabpanel', 'aria-labelledby': "heading-#{event[:id]}"}

@@ -3,34 +3,34 @@
     = defined?(contact_title) ? contact_title : 'Contact et coordonnées'
   = form.fields_for :contact, object.contact.present? ? object.contact : object.build_contact  do |contact_form|
     .row
-      %label.col-sm-1.control-label Nom
+      %label.col-sm-1.control-label Nom <span class="red">*</span>
       .col-sm-3
         = contact_form.text_field :lastname, class: 'form-control bg-contrast'
-      %label.col-sm-1.control-label Prénom
+      %label.col-sm-1.control-label Prénom <span class="red">*</span>
       .col-sm-3
         = contact_form.text_field :firstname, class: 'form-control bg-contrast'
       - if object.class.name == 'Profile'
         = contact_form.hidden_field :email, value: 'hello@world.net'
       -else
-        %label.col-sm-1.control-label Email
+        %label.col-sm-1.control-label Email <span class="red">*</span>
         .col-sm-3
           = contact_form.email_field :email, class: 'form-control bg-contrast'
 
     = contact_form.fields_for :coordinate, object.contact.coordinate.present? ? object.contact.coordinate : object.contact.build_coordinate  do |coordinate_form|
       .row.mt-30
-        %label.col-sm-1.control-label Téléphone
+        %label.col-sm-1.control-label Téléphone <span class="red">*</span>
         .col-sm-3
           = contact_form.telephone_field :phone_number, class: 'form-control bg-contrast'
-        %label.col-sm-1.control-label Rue et n°
+        %label.col-sm-1.control-label Rue et n° <span class="red">*</span>
         .col-sm-3
           = coordinate_form.text_field :street, class: 'form-control bg-contrast'
-        %label.col-sm-1.control-label Code postal
+        %label.col-sm-1.control-label Code post. <span class="red">*</span>
         .col-sm-3
           = coordinate_form.text_field :zip_code, class: 'form-control bg-contrast'
       .row.mt-30{style: 'margin-bottom: 50px'}
-        %label.col-sm-1.control-label Ville
+        %label.col-sm-1.control-label Ville <span class="red">*</span>
         .col-sm-3
           = coordinate_form.text_field :city, class: 'form-control bg-contrast'
-        %label.col-sm-1.control-label Pays
+        %label.col-sm-1.control-label Pays <span class="red">*</span>
         .col-sm-3
           = coordinate_form.text_field :country, class: 'form-control bg-contrast'

@@ -14,7 +14,7 @@
         .ibox-title
           %h5 L'ensemble des utilisateurs enregistrés
           .ibox-tools
-            = link_to "Créer un utilisateur", new_admin_user_path, class: "btn btn-primary"
+            = link_to 'Créer un utilisateur', new_admin_user_path, class: 'btn btn-primary'
             = link_to 'Exporter', admin_users_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @users.size > 0
         .ibox-content
           -#.input-group
@@ -79,7 +79,41 @@
                     %tr
                       %td Date de création
                       %td
-                        = l user.created_at
+                        = l user[:created_at]
+                    %tr
+                      %td Sexe
+                      %td
+                        = user.profile.gender == 'male' ? 'Masculin' : 'Féminin'
+                    %tr
+                      %td Date de naissance
+                      %td
+                        = date_to_french_format(user.profile[:birthdate])
+                    %tr
+                      %td Téléphone
+                      %td
+                        = user.contact[:phone_number]
+
+                    - if user.contact.coordinate.present?
+                      %tr
+                        %td Rue
+                        %td
+                          = user.contact.coordinate[:street]
+                      %tr
+                        %td Code postal
+                        %td
+                          = user.contact.coordinate[:zip_code]
+                      %tr
+                        %td Ville
+                        %td
+                          = user.contact.coordinate[:city]
+                      %tr
+                        %td Pays
+                        %td
+                          = user.contact.coordinate[:country]
+                    - else
+                      %tr
+                        %td
+                          %span.red Profil incomplet
 
                 .full-height-scroll
                   %strong Réservations
