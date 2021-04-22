@@ -15,6 +15,7 @@
 heaven:
   name: Heaven
   type: Outdoor
+  capacity: 10
   street: Grand Rue
   city: City Hall
   zip_code: 1111
@@ -25,6 +26,7 @@ heaven:
 hell:
   name: Hell
   type: Indoor
+  capacity: 20
   street: Grand Rue
   city: City Hall
   zip_code: 1111

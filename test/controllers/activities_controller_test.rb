@@ -28,10 +28,10 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to admin_activities_url
   end
 
-  # test 'should show activity' do
-  #   get admin_activity_url(@activity)
-  #   assert_response :success
-  # end
+  test 'should show activity' do
+    get admin_activity_url(@activity)
+    assert_response :success
+  end
 
   test 'should get edit' do
     get edit_admin_activity_url(@activity)

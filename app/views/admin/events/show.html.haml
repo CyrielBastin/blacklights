@@ -13,82 +13,95 @@
         %strong
           = @event.name
 
-= form_tag admin_import_event_registrations_path, method: :post, multipart: true do
-  %fieldset{style: 'margin-top: 20px'}
-    %legend Importer des réservations
-    = hidden_field_tag :id, value: "#{@event[:id]}"
-    = file_field_tag :file
-    = submit_tag 'Importer', class: 'btn btn-success mt-20'
 
-%table.table.table-borderless{style: 'margin-top: 50px; max-width: 700px'}
-  %tbody
-    %tr
-      %th Nom :
-      %td
-        = @event[:name]
-    %tr
-      %th Date de début :
-      %td
-        = date_time_to_french_format(@event[:start_date])
-    %tr
-      %th Date de fin :
-      %td
-        = date_time_to_french_format(@event[:end_date])
-    %tr
-      %th Clôture des inscriptions :
-      %td
-        = date_time_to_french_format(@event[:registration_deadline])
-    %tr
-      %th Min. participant :
-      %td
-        = @event[:min_participant]
-    %tr
-      %th Max. participant :
-      %td
-        = @event[:max_participant]
-    %tr
-      %th Activités :
-      - if @event.event_activities.present?
-        %td
-          - @event.event_activities.each do |ev_ac|
-            = "#{ev_ac.activity.name} (#{ev_ac.simultaneous_activities})"
-            %br
-    %tr
-      %th Matériel :
-      - if @event.event_equipment.present?
-        %td
-          - @event.event_equipment.each do |equipment|
-            = "#{equipment.equipment[:name]} (#{equipment[:quantity].to_i})"
-            %br
-    %tr
-      %th Lieu :
-      %td
-        = @event.location[:name]
-    %tr
-      %th Contact :
-      %td
-        = "Nom : #{@event.contact[:lastname]}"
-        %br
-        = "Prénom : #{@event.contact[:firstname]}"
-        %br
-        = "Téléphone : #{@event.contact[:phone_number]}"
-        %br
-        = "Email : #{@event.contact[:email]}"
-        %br
-    %tr
-      %th Prix :
-      %td
-        = "#{to_french_repr(@event[:price])} €"
-    %tr
-      %th Réservations :
-      - if @event.registrations.present?
-        %td
-          - @event.registrations.each do |r|
-            = "#{r.user.contact.full_name} (#{r.user[:email]}) -- #{r[:price]}€"
-            %br
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Informations sur l'évènement
+        .ibox-content
+          .row.details-show.details-item
+            .col-sm-1.details-title Nom :
+            .col-sm-3{style: 'font-size: xx-large'}
+              = @event[:name]
+            .col-sm-1.details-title Lieu :
+            .col-sm-3
+              = "#{@event.location[:name]}, #{@event.location[:city]} (#{@event.location[:zip_code]})"
+            .col-sm-1.details-title Contact :
+            .col-sm-3
+              = "Nom : #{@event.contact[:lastname]}"
+              %br
+              = "Prénom : #{@event.contact[:firstname]}"
+              %br
+              = "Tél. : #{@event.contact[:phone_number]}"
+              %br
+              = "Email : #{@event.contact[:email]}"
+              %br
 
-.row.text-center
-  %button.btn.btn-secondary.btn-lg{:type => 'button'}
-    = link_to 'Modifier', edit_admin_event_path(@event.id)
-  %button.btn.btn-danger.btn-lg{:type => 'button'}
-    = link_to 'Supprimer', admin_event_path(@event.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cet évènement ?" }
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Date début :
+            .col-sm-2
+              = date_time_to_french_format(@event[:start_date])
+            .col-sm-2.details-title Date fin :
+            .col-sm-2
+              = date_time_to_french_format(@event[:end_date])
+            .col-sm-2.details-title Clôture inscription :
+            .col-sm-2{class: @event[:registration_deadline] < Date.today ? 'red': ''}
+              = date_time_to_french_format(@event[:registration_deadline])
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Min. participant :
+            .col-sm-2
+              = @event[:min_participant]
+            .col-sm-2.details-title Max. participant :
+            .col-sm-2
+              = @event[:max_participant]
+            .col-sm-2.details-title Prix :
+            .col-sm-2
+              = "#{to_french_repr(@event[:price])} €"
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Activités :
+            - if @event.event_activities.present?
+              .col-sm-4.details-multiple
+                - @event.event_activities.each do |ev_ac|
+                  = "#{ev_ac.activity[:name]} (#{ev_ac[:simultaneous_activities]})"
+                  %br
+            - else
+              .col-sm-4.red
+                Aucune activité définie
+            .col-sm-2.col-sm-offset-1.details-title Matériel :
+            - if @event.event_equipment.present?
+              .col-sm-3.details-multiple
+                - @event.event_equipment.each do |ev_eq|
+                  = "#{ev_eq.equipment[:name]} (#{ev_eq[:quantity]})"
+                  %br
+            - else
+              .col-sm-4.red
+                Aucun matériel défini
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Réservations :
+            - if @event.registrations.present?
+              .col-sm-5.details-multiple
+                - @event.registrations.each do |r|
+                  = "#{r.user.contact.full_name} (#{r.user[:email]}) -- #{to_french_repr(r[:price])} €"
+                  %br
+            - else
+              .col-sm-5.red
+                Aucune réservation définie
+            .col-sm-2.details-title Importer des réservations
+            .col-sm-3
+              = form_tag admin_import_event_registrations_path, method: :post, multipart: true do
+                = hidden_field_tag :id, value: "#{@event[:id]}"
+                = file_field_tag :file
+                = submit_tag 'Importer', class: 'btn btn-success mt-30'
+
+          .details-btns
+            = link_to 'Modifier', edit_admin_event_path(@event[:id]), class: 'btn btn-lg details-btn-update'
+            = link_to 'Supprimer', admin_event_path(@event[:id]), class: 'btn btn-lg details-btn-delete', method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cet évènement ?" }

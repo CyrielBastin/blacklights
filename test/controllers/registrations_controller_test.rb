@@ -20,7 +20,7 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
   test 'should create registration' do
     assert_difference('Registration.count') do
       post admin_registrations_url, params: { registration: {
-        event_id: events(:dark_badminton)[:id],
+        event_id: events(:dark_volleyball)[:id],
         user_id: users(:cain)[:id],
         price: 99.99,
         confirmation_datetime: nil,
@@ -46,9 +46,9 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   test 'should update registration' do
     patch admin_registration_url(@registration), params: { registration: {
-      price: 99.99,
-      user_id: "#{users(:abel)[:id]},",
-      event_id: "#{events(:dark_volleyball)[:id]},"
+      price: 45,
+      event_id: "#{events(:dark_volleyball)[:id]},",
+      user_id: "#{users(:cain)[:id]},"
     } }
 
     assert_equal 'Votre réservation a été modifiée avec succès !', flash[:success]

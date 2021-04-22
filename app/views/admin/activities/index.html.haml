@@ -29,8 +29,6 @@
                 %thead
                   %th Nom
                   %th Description
-                  %th Matériel
-                  %th Lieux disp.
                   %th Actions
                 %tbody
                   - @activities.each do |activity|
@@ -40,19 +38,7 @@
                           = activity.name
 
                       %td
-                        = activity.description.present? ? activity.description.truncate(40) : "-"
-
-                      %td
-                        - activity.activity_equipment.each_with_index do |ac_eq, i|
-                          - unless i == 0
-                            %br
-                          = "#{ac_eq.equipment.name} (#{to_french_repr(ac_eq.quantity)})"
-
-                      %td
-                        - activity.location_activities.each_with_index do |loc_ac, i|
-                          - unless i == 0
-                            %br
-                          = "#{loc_ac.location.name_plus_city}"
+                        = activity.description.present? ? activity.description.truncate(100) : "-"
 
                       %td.project-actions
                         .btn-group
@@ -61,6 +47,9 @@
                             %span.caret
                           %ul.dropdown-menu
                             %li
+                              %a.btn.btn-white.btn-sm{:href => admin_activity_path(activity[:id])}
+                                %i.fa.fa-eye
+                                Détails
                               %a.btn.btn-white.btn-sm{:href => edit_admin_activity_path(activity.id)}
                                 %i.fa.fa-pen
                                 Modifier

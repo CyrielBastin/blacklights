@@ -1,0 +1,57 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Activités
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li
+        %a{:href => admin_activities_path} Activités
+      %li.active
+        %strong
+          = @activity.name
+
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Informations sur l'activité
+        .ibox-content
+          .row.details-show.details-item
+            .col-sm-2.details-title Nom :
+            .col-sm-10
+              = @activity[:name]
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Description :
+            .col-sm-10
+              = @activity[:description]
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Lieux :
+            - if @activity.location_activities.present?
+              .col-sm-4.details-multiple
+                - @activity.location_activities.each do |loc_ac|
+                  = "#{loc_ac.location[:name]}, #{loc_ac.location[:city]} (#{loc_ac.location[:zip_code]})"
+                  %br
+            - else
+              .col-sm-4.red
+                Aucun lieu défini
+
+            .col-sm-2.details-title Matériel :
+            - if @activity.activity_equipment.present?
+              .col-sm-4.details-multiple
+                - @activity.activity_equipment.each do |ac_eq|
+                  = "#{ac_eq.equipment.name} (#{to_french_repr(ac_eq.quantity)})"
+                  %br
+            - else
+              .col-sm-4.red
+                Aucun matériel défini
+
+
+          .details-btns
+            = link_to 'Modifier', edit_admin_activity_path(@activity[:id]), class: 'btn btn-lg details-btn-update'
+            = link_to 'Supprimer', admin_activity_path(@activity[:id]), class: 'btn btn-lg details-btn-delete', method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cette activité ?" }

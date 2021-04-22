@@ -23,7 +23,7 @@ dark_badminton:
   price: 9.99
   registration_deadline: 2051-03-11 02:35:07
   min_participant: 1
-  max_participant: 11
+  max_participant: 9
   location: heaven
   contact: one
 
@@ -34,6 +34,6 @@ dark_volleyball:
   price: 4.99
   registration_deadline: 2052-03-10 02:35:07
   min_participant: 2
-  max_participant: 22
+  max_participant: 19
   location: hell
   contact: two

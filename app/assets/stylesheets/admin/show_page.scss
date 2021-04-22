@@ -1,0 +1,36 @@
+.details-show {
+  font-size: large;
+}
+.details-title {
+  text-align: right;
+  text-decoration: underline;
+  font-weight: bold;
+  color: #3e2c42;
+}
+.details-item {
+  margin-top: 50px;
+}
+.details-multiple {
+  max-height: 400px;
+  overflow-y: auto;
+}
+.red {
+  color: #FF0000;
+}
+.details-btns {
+  margin-top: 140px;
+  margin-bottom: 60px;
+  text-align: center;
+  a {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+  .details-btn-update {
+    border: 2px solid darkorange;
+    color: orange;
+  }
+  .details-btn-delete {
+    color: #FFFFFF;
+    background-color: #FF0000;
+  }
+}
