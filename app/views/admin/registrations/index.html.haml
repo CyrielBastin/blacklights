@@ -36,7 +36,6 @@
                   .panel-heading{id: "heading-#{event[:id]}", role: 'tab'}
                     %h4.panel-title
                       %a{role: 'button', 'data-toggle': 'collapse', 'data-parent': '#accordion', href: "#collapse-#{event[:id]}", 'aria-expanded': 'false', 'aria-controls': "collapse-#{event[:id]}"}
-                        -# = "Evènement : #{event[:name]} -- Lieu : #{event.location.name_plus_city} -- le #{date_time_to_french_format(event[:start_date])}"
                         .row.registration-value
                           .col-sm-4
                             = event[:name]
@@ -51,6 +50,7 @@
                       .project-list
                         %table.table.table-hover.table-striped.dataTables
                           %thead
+                            %th Sél.
                             %th Nom complet
                             %th Email
                             %th Prix
@@ -58,49 +58,61 @@
                             %th Status paiement
                             %th Actions
                           %tbody
-                            - event.registrations.each do |registration|
-                              %tr
-                                %td.project-title
-                                  %b
-                                    = registration.user.profile.contact.full_name
+                            -# This form is to select multiple registrations so we can confirm them all at once
+                            %form{action: admin_registration_confirm_path(registration_id: 'multiple', type: ''), method: 'post'}
+                              - event.registrations.each do |registration|
+                                %tr
+                                  %td
+                                    %input{type: 'checkbox', name: 'list_registration_ids[]', value: registration[:id], class: "r-for-event-#{registration.event[:id]}"}
+                                  %td.project-title
+                                    %b
+                                      = registration.user.profile.contact.full_name
 
-                                %td
-                                  = registration.user[:email]
+                                  %td
+                                    = registration.user[:email]
 
-                                %td
-                                  = "#{to_french_repr(registration[:price])}€"
+                                  %td
+                                    = "#{to_french_repr(registration[:price])}€"
 
-                                %td
-                                  - if registration[:confirmation_datetime].present?
-                                    %span.confirmed
-                                      Confirmé le :
-                                    = date_time_to_french_format(registration[:confirmation_datetime])
-                                  - else
-                                    %p Non confirmé
-                                    = link_to 'Confirmé', admin_registration_confirm_path(registration, type: 'confirmation'), method: :patch, class: 'btn btn-danger'
+                                  %td
+                                    - if registration[:confirmation_datetime].present?
+                                      %span.confirmed
+                                        Confirmé le :
+                                      = date_time_to_french_format(registration[:confirmation_datetime])
+                                    - else
+                                      %p Non confirmé
+                                      = link_to 'Confirmé', admin_registration_confirm_path(registration, type: 'confirmation'), method: :post, class: 'btn btn-danger'
 
-                                %td
-                                  - if registration[:payment_confirmation_datetime].present?
-                                    %span.confirmed
-                                      Payé le :
-                                    = date_time_to_french_format(registration[:payment_confirmation_datetime])
-                                  - else
-                                    %p Non payé
-                                    = link_to 'Payé', admin_registration_confirm_path(registration, type: 'payment_confirmation'), method: :patch, class: 'btn btn-danger'
+                                  %td
+                                    - if registration[:payment_confirmation_datetime].present?
+                                      %span.confirmed
+                                        Payé le :
+                                      = date_time_to_french_format(registration[:payment_confirmation_datetime])
+                                    - else
+                                      %p Non payé
+                                      = link_to 'Payé', admin_registration_confirm_path(registration, type: 'payment_confirmation'), method: :post, class: 'btn btn-danger'
 
-                                %td.project-actions
-                                  .btn-group
-                                    %button.btn.btn-success.dropdown-toggle{'data-toggle': 'dropdown'}
-                                      Actions
-                                      %span.caret
-                                    %ul.dropdown-menu
-                                      %li
-                                        %a.btn.btn-white.btn-sm{:href => edit_admin_registration_path(registration[:id])}
-                                          %i.fa.fa-pen
-                                          Modifier
-                                        = link_to admin_registration_path(registration[:id]), method: :delete, data: { confirm: 'Êtes-vous sur de vouloir supprimer cette réservation ?' }, class: 'btn btn-white btn-sm' do
-                                          %i.fa.fa-trash
-                                          Supprimer
+                                  %td.project-actions
+                                    .btn-group
+                                      %button.btn.btn-success.dropdown-toggle{'data-toggle': 'dropdown'}
+                                        Actions
+                                        %span.caret
+                                      %ul.dropdown-menu
+                                        %li
+                                          %a.btn.btn-white.btn-sm{:href => edit_admin_registration_path(registration[:id])}
+                                            %i.fa.fa-pen
+                                            Modifier
+                                          = link_to admin_registration_path(registration[:id]), method: :delete, data: { confirm: 'Êtes-vous sur de vouloir supprimer cette réservation ?' }, class: 'btn btn-white btn-sm' do
+                                            %i.fa.fa-trash
+                                            Supprimer
+                              %td
+                                %input{type: 'checkbox', 'r-for-event': event[:id], id: "for-event-#{event[:id]}"}
+                              %td
+                                %label{for: "for-event-#{event[:id]}"} Sélectionnez tout
+                              %td
+                              %td
+                              %td
+                                %input{type: 'submit', value: 'Confirmer sél.', class: 'btn btn-danger'}
 
             .pagination-custom
               = paginate @events, views_prefix: 'admin'
