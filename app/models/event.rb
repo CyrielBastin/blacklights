@@ -19,6 +19,8 @@ class Event < ApplicationRecord
   include DuplicateHelper
 
   default_scope -> { order(:start_date) }
+  scope :to_come, -> { where(['start_date > ?', DateTime.now]) }
+  scope :previous, -> { where(['start_date < ?', DateTime.now]) }
 
   belongs_to :location
   belongs_to :contact, dependent: :destroy
@@ -53,14 +55,6 @@ class Event < ApplicationRecord
                               numericality: { greater_than: min_participant, message: ERR_MSG[:max_participant_is_lesser_than_one] }
   validate :max_participant_is_higher_than_min_participant, :max_participants_lesser_than_location_capacity
 
-
-  def Event.to_come
-    Event.where(['start_date > ?', DateTime.now])
-  end
-
-  def Event.previous
-    Event.where(['start_date < ?', DateTime.now])
-  end
 
   ####################################################################################################
   # Custom Validators for an event. They are put here as we need to compare those datas together

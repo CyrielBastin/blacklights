@@ -6,7 +6,7 @@ module UserHelper
   # @param [ActiveRecord::User] user
   # @return [Boolean]
   def registration_eligible?(user)
-    user.profile[:birthdate].present? && user.contact[:phone_number].present? && user.contact.coordinate.present?
+    user.profile[:birthdate].present? && user.contact.coordinate.present?
   end
 
 end

@@ -16,6 +16,11 @@ fr:
       gender:
         male: Masculin
         female: Féminin
+    category:
+      category_for:
+        equipment: Matériel
+        activity: Activité
+        event: Evènement
   activerecord:
     errors:
       messages:

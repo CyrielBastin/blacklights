@@ -38,9 +38,23 @@
                         %b
                           = category.name
                       %td
-                        = category.parent_id.present? ? category.parent.name : ''
+                        - if category.parent.present?
+                          - if category.parent.parent.present?
+                            %ul
+                              %li
+                                = category.parent.parent[:name]
+                              %ul
+                                %li
+                                  = category.parent[:name]
+                          - else
+                            %ul
+                              %li
+                                = category.parent[:name]
+                        - else
+
                       %td
-                        = category[:category_for]
+                        = category[:category_for].text
+
                       %td.project-actions
                         .btn-group
                           %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}

@@ -9,12 +9,12 @@
 class Category < ApplicationRecord
   extend Enumerize
 
-  scope :for_event, -> { where('category_for = Evènement') }
-  scope :for_equipment, -> { where('category_for = Matériel') }
+  scope :for_event, -> { where('category_for = event') }
+  scope :for_equipment, -> { where('category_for = equipment') }
 
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'
-  enumerize :category_for, in: %w[Matériel Evènement]
+  enumerize :category_for, in: %i[equipment activity event]
   has_many :equipment
   has_many :events
 

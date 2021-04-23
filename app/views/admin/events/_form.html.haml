@@ -6,35 +6,49 @@
           %h5
             Veuillez remplir toutes les informations concernant votre évènement
         .ibox-content
-          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
+          .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @event], validate: true, html: {class: 'form-horizontal'} do |event_form|
             %fieldset
               %legend Informations
               = event_form.text_field :id, id: 'event_id', style: 'display: none', value: @event.id.present? ? @event.id : 0
               .row
-                %label.col-sm-2.control-label Nom <span class="red">*</span>
+                %label.col-sm-2.control-label
+                  Nom
+                  %span.red *
                 .col-sm-2
                   = event_form.text_field :name, class: 'form-control bg-contrast'
-                %label.col-sm-2.control-label Min. participants <span class="red">*</span>
+                %label.col-sm-2.control-label
+                  Min. participants
+                  %span.red *
                 .col-sm-2
                   = event_form.text_field :min_participant, class: 'form-control bg-contrast'
-                %label.col-sm-2.control-label Max. participants <span class="red">*</span>
+                %label.col-sm-2.control-label
+                  Max. participants
+                  %span.red *
                 .col-sm-2
                   = event_form.text_field :max_participant, class: 'form-control bg-contrast'
 
               .row.mt-30
-                %label.col-sm-2.control-label Date de début <span class="red">*</span>
+                %label.col-sm-2.control-label
+                  Date de début
+                  %span.red *
                 .col-sm-2
                   = event_form.text_field :start_date
-                %label.col-sm-2.control-label Date de fin <span class="red">*</span>
+                %label.col-sm-2.control-label
+                  Date de fin
+                  %span.red *
                 .col-sm-2
                   = event_form.text_field :end_date
-                %label.col-sm-2.control-label Clôture des inscriptions <span class="red">*</span>
+                %label.col-sm-2.control-label
+                  Clôture des inscriptions
+                  %span.red *
                 .col-sm-2
                   = event_form.text_field :registration_deadline
 
               .row.mt-30
-                %label.col-sm-2.control-label Prix (en €) <span class="red">*</span>
+                %label.col-sm-2.control-label
+                  Prix (en €)
+                  %span.red *
                 .col-sm-2
                   = event_form.text_field :price, class: 'form-control bg-contrast'
 
@@ -44,7 +58,9 @@
                 .search-container.col-sm-5
                   .row
                     .search-input
-                      %label.control-label.col-sm-5 Lieu <span class="red">*</span>
+                      %label.control-label.col-sm-5
+                        Lieu
+                        %span.red *
                       .field_with_errors
                         = event_form.hidden_field :location_id, class: 'list-Location_ids'
                         %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', 'data-location-form-event': 'true', type: 'text', placeholder: 'Rechercher par nom, ville, code postal'}
