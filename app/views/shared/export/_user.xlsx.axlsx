@@ -1,18 +1,15 @@
 wb.add_worksheet(name: 'Utilisateurs') do |sheet|
-  sheet.add_row ['Email', 'Date de naissance', 'sexe',
-                 'Nom de famille', 'Prénom', 'Téléphone',
-                 'Rue et numéro', 'Code postal', 'Ville', 'Pays',
-                 'Admin ?', 'id'], style: center
+  sheet.add_row ['Id', 'Nom', 'Prénom', 'Role', 'Email', 'Statut', 'Sexe', 'Date de naissance',
+                 'Téléphone', 'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
   User.all.each do |u|
-    next unless registration_eligible?(u)
-
-    sheet.add_row [u[:email], date_to_french_format(u.profile[:birthdate]), u.profile[:gender] == 'male' ? 'M' : 'F',
-                   u.contact[:lastname], u.contact[:firstname], u.contact[:phone_number],
-                   u.contact.coordinate[:street], u.contact.coordinate[:zip_code],
-                   u.contact.coordinate[:city], u.contact.coordinate[:country],
-                   u[:admin] == true ? 'Oui' : '', u[:id]], style: center
+    coord = u.contact.coordinate.present?
+    sheet.add_row [u[:id], u.contact[:lastname], u.contact[:firstname], u.admin? ? 'Admin' : 'Utilisateur', u[:email],
+                   u.confirmed? ? 'Actif' : u.invited? ? 'Invité' : 'Non invité', u.profile.gender.male? ? 'M' : 'F',
+                   date_to_french_format(u.profile[:birthdate]), u.contact[:phone_number],
+                   coord ? u.contact.coordinate[:street] : '', coord ? u.contact.coordinate[:zip_code] : '',
+                   coord ? u.contact.coordinate[:city] : '', coord ? u.contact.coordinate[:country] : ''], style: center
   end
   sheet.rows.each do |row|
-    row.cells[11].style = cell_id_style
+    row.cells[0].style = cell_id_style
   end
 end
