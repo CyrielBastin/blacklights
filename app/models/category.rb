@@ -9,8 +9,10 @@
 class Category < ApplicationRecord
   extend Enumerize
 
-  scope :for_event, -> { where('category_for = event') }
-  scope :for_equipment, -> { where('category_for = equipment') }
+  scope :for_equipment, -> { where(['category_for = ?', :equipment]) }
+  scope :for_activity, -> { where(['category_for = ?', :activity]) }
+  scope :for_event, -> { where(['category_for = ?', :event]) }
+  scope :to_export, -> { where('parent_id is null').order(:category_for) }
 
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'
