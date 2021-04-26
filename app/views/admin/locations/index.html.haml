@@ -14,14 +14,13 @@
         .ibox-title
           %h5 L'ensemble des lieux définis
           .ibox-tools
-            = link_to 'Nouveau lieu', new_admin_location_path, class: 'btn btn-primary'
-            = link_to 'Exporter', admin_locations_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @locations.size > 0
-            %br
-          = form_tag admin_import_locations_path, method: :post, multipart: true do
-            %fieldset
-              %legend Importer des données
-              = file_field_tag :file
-              = submit_tag "Importer", class: "btn btn-success mt-20"
+            = form_tag admin_import_locations_path, method: :post, multipart: true do
+              .title-group-btns
+                .import-container
+                  = file_field_tag :file
+                  = submit_tag 'Importer', class: 'btn btn-success btn-import'
+                = link_to 'Nouveau lieu', new_admin_location_path, class: 'btn btn-primary'
+                = link_to 'Exporter', admin_locations_path(format: :xlsx), class: 'btn btn-info' if @locations.size > 0
         .ibox-content
           - if @locations.size > 0
             .project-list

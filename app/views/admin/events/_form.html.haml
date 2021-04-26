@@ -88,7 +88,7 @@
                   %label.col-sm-2.control-label Activité
                   .col-sm-2
                     = ev_ac_form.select :activity_id, options_for_select(@event.id.nil? ? Activity.all.map{|a|[a.name, a.id]} : Activity.get_activities_by_location_id(@event.location_id).rows, ev_ac_form.object.activity_id), {}, {:class => "form-control select bg-contrast change_with_location"}
-                  %label.col-sm-2.control-label En simultané
+                  %label.col-sm-2.control-label Quantité
                   .col-sm-2
                     = ev_ac_form.number_field :simultaneous_activities, {class: 'bg-contrast', style: 'max-width: 220px'}
                   .col-sm-1
