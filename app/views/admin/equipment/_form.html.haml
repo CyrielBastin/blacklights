@@ -41,7 +41,7 @@
                         %label.message{'for': 'equipment_category_id'}
                           = epurate_err_msg(:Category, message)
                   .search-results.search-results-Category.col-sm-7.hidden
-                    - Category.all.each do |c|
+                    - Category.for_equipment.each do |c|
                       %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
                         = c[:name]
                   .search-chosen#search-chosen-Category.col-sm-7

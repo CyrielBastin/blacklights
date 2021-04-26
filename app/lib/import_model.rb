@@ -51,7 +51,7 @@ module ImportModel
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
       # Order for the columns in the sheet
-      # Nom, Parent_name, Catégorie pour, Id
+      # Nom, Parent_name, Numerotation, Catégorie pour, Id
       (2..sheet.last_row).each do |i|
         parent_id = nil
         if sheet.row(i)[1].present?
@@ -63,13 +63,14 @@ module ImportModel
             parent_id = parent[:id]
           end
         end
-        if already_exists?(:Category, sheet.row(i)[3])
-          cat = Category.find(sheet.row(i)[3])
-          unless cat.update(name: sheet.row(i)[0], parent_id: parent_id, category_for: sheet.row(i)[2])
+        if already_exists?(:Category, sheet.row(i)[4])
+          cat = Category.find(sheet.row(i)[4])
+          type = sheet.row(i)[3] == 'Activité' ? 'activity' : sheet.row(i)[3] == 'Matériel' ? 'equipment' : sheet.row(i)[3] == 'Evènement' ? 'event' : ''
+          unless cat.update(name: sheet.row(i)[0], parent_id: parent_id, category_for: type)
             potential_errors[:cell_error] = true
           end
         else
-          category = Category.new(name: sheet.row(i)[0], category_for: sheet.row(i)[2],
+          category = Category.new(name: sheet.row(i)[0], category_for: sheet.row(i)[3],
                                   parent_id: sheet.row(i)[1].nil? ? nil : Category.find_by(name: sheet.row(i)[1]).id)
           potential_errors[:cell_error] = true unless category.save
         end
