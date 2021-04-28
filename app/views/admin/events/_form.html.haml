@@ -75,7 +75,7 @@
                           = "#{l[:city]}, #{l[:zip_code]}"
                     .search-chosen#search-chosen-Location.col-sm-7
                       - if @event[:location_id].present?
-                        .item-selected{id: "for-Location-#{@event[:location_id]}"}
+                        .item-selected.item-selected-Location{id: "for-Location-#{@event[:location_id]}"}
                           %div
                             = @event.location[:name]
                             %br
@@ -97,19 +97,29 @@
 
             %fieldset.mt-50
               %legend Matériel supplémentaire
-              = event_form.fields_for :event_equipment, @event.event_equipment.present? ? @event.event_equipment : @event.event_equipment.build, dynamic: true do |ev_eq_form|
-                .form-group
-                  %label.col-sm-2.control-label Matériel
-                  .col-sm-2
-                    = ev_eq_form.select :equipment_id, options_for_select(Equipment.all.map{|e|[e.name, e.id]}, ev_eq_form.object.equipment_id), {}, class: 'form-control select bg-contrast'
-                  %label.col-sm-2.control-label Quantité
-                  .col-sm-2
-                    = ev_eq_form.number_field :quantity, {class: 'bg-contrast', style: 'max-width: 220px'}
-                  .col-sm-1
-                    = ev_eq_form.remove_fields_link 'Supprimer'
-              = event_form.add_fields_link :event_equipment, 'Ajouter du matériel'
+              .row
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Matériel
+                      = event_form.hidden_field :event_equipment_ids, class: 'list-Equipment_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Equipment', 'data-model': 'Equipment', 'data-multiple': 'true', 'data-quantity': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Equipment.col-sm-7.hidden
+                      - Equipment.all.each do |e|
+                        %p.result-item.result-item-Equipment.hidden{id: "Equipment-#{e[:id]}"}
+                          = e[:name]
+                    .search-chosen#search-chosen-Equipment
+                      - if @event.event_equipment.present?
+                        - @event.event_equipment.each do |ev_eq|
+                          .item-selected.item-selected-Equipment{id: "for-Equipment-#{ev_eq.equipment[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Equipment{style: 'color: red'}
+                            .equipment-name
+                              = ev_eq.equipment[:name]
+                            .equipment-qty
+                              %div Quantité :
+                              %input.bg-contrast{type: 'number', value: "#{ev_eq[:quantity].to_i}", name: 'list_equipment_qty[]'}
 
-            .mt-50
+            .mt-180
             = render partial: 'shared/contact_form', locals: { form: event_form, object: @event }
 
 

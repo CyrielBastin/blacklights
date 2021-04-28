@@ -17,7 +17,6 @@ class Activity < ApplicationRecord
   has_many :event_activities, dependent: :destroy
   has_many :location_activities, dependent: :destroy
   has_many :activity_equipment, dependent: :destroy, inverse_of: :activity
-  accepts_nested_attributes_for :activity_equipment, allow_destroy: true
 
   min_char_name = 4
   min_char_desc = 10

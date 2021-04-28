@@ -78,10 +78,10 @@
             - if @event.event_equipment.present?
               .col-sm-3.details-multiple
                 - @event.event_equipment.each do |ev_eq|
-                  = "#{ev_eq.equipment[:name]} (#{ev_eq[:quantity]})"
+                  = "#{ev_eq.equipment[:name]} (#{ev_eq[:quantity].to_i})"
                   %br
             - else
-              .col-sm-4.red
+              .col-sm-3.red
                 Aucun matériel défini
 
           .hr-line-dashed

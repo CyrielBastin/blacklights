@@ -25,6 +25,7 @@ class Admin::EventsController < AdminController
 
   def create
     @event = Event.new(event_params)
+    add_equipment
     if @event.save
       flash[:success] = 'Votre évènement a été crée avec succès !'
       redirect_to admin_events_path
@@ -49,6 +50,7 @@ class Admin::EventsController < AdminController
 
   def update
     @event = Event.find(params[:id])
+    add_equipment
     if @event.update(event_params)
       flash[:success] = 'Votre évènement a été modifié avec succès !'
       redirect_to admin_events_path
@@ -92,15 +94,27 @@ class Admin::EventsController < AdminController
 
   def event_params
     params.require(:event).permit(:name, :start_date, :end_date, :registration_deadline, :min_participant, :max_participant, :price, :location_id,
+                                  :event_equipment_ids,
                                   contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
-                                  event_activities_attributes: [:id, :activity_id, :simultaneous_activities, :_destroy],
-                                  event_equipment_attributes: [:id, :equipment_id, :quantity, :_destroy])
+                                  event_activities_attributes: [:id, :activity_id, :simultaneous_activities, :_destroy])
   end
 
   def update_params
     params[:event][:location_id] = params[:event][:location_id].split(',')[0]
+    params[:event][:event_equipment_ids] = params[:event][:event_equipment_ids].split(',')
   end
 
+  def add_equipment
+    @event.event_equipment = []
+    return if params[:event][:event_equipment_ids].empty?
+
+    list_equipment = params[:event][:event_equipment_ids].zip(params[:list_equipment_qty])
+    list_equipment.each do |eq_q|
+      unless eq_q[1].empty?
+        @event.event_equipment << EventEquipment.new(event_id: @event, equipment_id: eq_q[0], quantity: eq_q[1])
+      end
+    end
+  end
 
   # This function gets all the equipment for an event together inside an array of objects(hash)
   # example: [{ "equipment_name": "aa", "quantity": 1" }, { "equipment_name": "bb", "quantity": "2" }]

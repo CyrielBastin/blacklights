@@ -45,7 +45,7 @@
             - if @activity.activity_equipment.present?
               .col-sm-4.details-multiple
                 - @activity.activity_equipment.each do |ac_eq|
-                  = "#{ac_eq.equipment.name} (#{to_french_repr(ac_eq.quantity)})"
+                  = "#{ac_eq.equipment.name} (#{ac_eq.quantity.to_i})"
                   %br
             - else
               .col-sm-4.red

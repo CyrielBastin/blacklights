@@ -46,7 +46,7 @@
                         = c[:name]
                   .search-chosen#search-chosen-Category.col-sm-7
                     - if @equipment[:category_id].present?
-                      .item-selected{id: "for-Category-#{@equipment[:category_id]}"}
+                      .item-selected.item-selected-Category{id: "for-Category-#{@equipment[:category_id]}"}
                         %div
                           = @equipment.category[:name]
 
@@ -58,21 +58,23 @@
                       %span.red *
                     .field_with_errors
                       = equipment_form.hidden_field :supplier_id, class: 'list-Supplier_ids'
-                      %input.form-control.bg-contrast{id: 'search-input-Supplier', 'data-model': 'Supplier', type: 'text', placeholder: 'Rechercher par entreprise ou nom'}
+                      %input.form-control.bg-contrast{id: 'search-input-Supplier', 'data-model': 'Supplier', type: 'text', placeholder: 'Rechercher par nom'}
                       - @equipment.errors.full_messages_for(:supplier_id).each do |message|
                         %label.message{'for': 'equipment_supplier_id'}
                           = epurate_err_msg(:Supplier, message)
                   .search-results.search-results-Supplier.col-sm-7.hidden
-                    - Supplier.all.each do |c|
-                      %p.result-item.result-item-Supplier.hidden{id: "Supplier-#{c[:id]}"}
-                        = c[:name]
+                    - Supplier.all.each do |s|
+                      %p.result-item.result-item-Supplier.hidden{id: "Supplier-#{s[:id]}"}
+                        = s[:name]
+                        %br
+                        = s.contact.coordinate[:city]
                   .search-chosen#search-chosen-Supplier.col-sm-7
                     - if @equipment[:supplier_id].present?
-                      .item-selected{id: "for-Supplier-#{@equipment[:supplier_id]}"}
+                      .item-selected.item-selected-Supplier{id: "for-Supplier-#{@equipment[:supplier_id]}"}
                         %div
                           = @equipment.supplier[:name]
                           %br
-                          = @equipment.supplier.contact.full_name
+                          = @equipment.supplier.contact.coordinate[:city]
 
 
             %fieldset{style: 'margin-top: 130px'}

@@ -42,28 +42,39 @@
                     .search-chosen#search-chosen-Location.col-sm-7
                       - if @activity.location_activities.present?
                         - @activity.location_activities.each do |loc_ac|
-                          .item-selected{id: "for-Location-#{loc_ac.location[:id]}"}
-                            %i.fas.fa-ban.delete-selected{style: 'color: red'}
+                          .item-selected.item-selected-Location{id: "for-Location-#{loc_ac.location[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Location{style: 'color: red'}
                             %div
                               = loc_ac.location[:name]
                               %br
                               = "#{loc_ac.location[:city]}, #{loc_ac.location[:zip_code]}"
 
-            %fieldset{style: 'margin-top: 180px'}
-              %legend Matériel nécessaire
-              = f.fields_for :activity_equipment, @activity.activity_equipment.present? ? @activity.activity_equipment : @activity.activity_equipment.build, dynamic: true do |ac_eq_form|
-                .form-group
-                  %label.col-sm-2.control-label Matériel
-                  .col-sm-2
-                    = ac_eq_form.select :equipment_id, options_for_select(Equipment.all.map{|e|[e.name, e.id]}, ac_eq_form.object.equipment_id), {}, class: 'form-control select bg-contrast'
-                  %label.col-sm-1.control-label Quantité
-                  .col-sm-2
-                    = ac_eq_form.number_field :quantity, class: 'form-control bg-contrast'
-                  .col-sm-1
-                    = ac_eq_form.remove_fields_link 'Supprimer'
 
-              = f.add_fields_link :activity_equipment, 'Ajouter du matériel'
+            %fieldset.mt-180
+              %legend Matériel
+              .row
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Matériel
+                      = f.hidden_field :activity_equipment_ids, class: 'list-Equipment_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Equipment', 'data-model': 'Equipment', 'data-multiple': 'true', 'data-quantity': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Equipment.col-sm-7.hidden
+                      - Equipment.all.each do |e|
+                        %p.result-item.result-item-Equipment.hidden{id: "Equipment-#{e[:id]}"}
+                          = e[:name]
+                    .search-chosen#search-chosen-Equipment
+                      - if @activity.activity_equipment.present?
+                        - @activity.activity_equipment.each do |ac_eq|
+                          .item-selected.item-selected-Equipment{id: "for-Equipment-#{ac_eq.equipment[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Equipment{style: 'color: red'}
+                            .equipment-name
+                              = ac_eq.equipment[:name]
+                            .equipment-qty
+                              %div Quantité :
+                              %input.bg-contrast{type: 'number', value: "#{ac_eq[:quantity].to_i}", name: 'list_equipment_qty[]'}
 
-            .form-group
+
+            .form-group.mt-180
               .col-sm-4
-                %button.btn.btn-primary{:type => "submit", style: 'margin-top: 60px'} Sauver l'activité
+                %button.btn.btn-primary{type: 'submit', style: 'margin-top: 60px'} Sauver l'activité

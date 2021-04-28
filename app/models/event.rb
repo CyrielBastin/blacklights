@@ -28,7 +28,6 @@ class Event < ApplicationRecord
   has_many :event_activities, inverse_of: :event, dependent: :destroy
   accepts_nested_attributes_for :event_activities, allow_destroy: true
   has_many :event_equipment, inverse_of: :event, dependent: :destroy
-  accepts_nested_attributes_for :event_equipment, allow_destroy: true
   has_many :registrations, dependent: :destroy
 
   min_char_name = 8

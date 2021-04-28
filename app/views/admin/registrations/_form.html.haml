@@ -33,7 +33,7 @@
                           = date_time_to_french_format(e[:start_date])
                     .search-chosen#search-chosen-Event.col-sm-7
                       - if @registration[:event_id].present?
-                        .item-selected{id: "for-Event-#{@registration.event[:id]}"}
+                        .item-selected.item-selected-Event{id: "for-Event-#{@registration.event[:id]}"}
                           %div
                             = @registration.event[:name]
                             %br
@@ -61,13 +61,13 @@
                           = u[:email]
                     .search-chosen#search-chosen-User.col-sm-7
                       - if @registration[:user_id].present?
-                        .item-selected{id: "for-User-#{@registration.user[:id]}"}
+                        .item-selected.item-selected-User{id: "for-User-#{@registration.user[:id]}"}
                           %div
                             = @registration.user.contact.full_name
                             %br
                             = @registration.user[:email]
 
-              .row{style: 'margin-top: 150px'}
+              .row.mt-180
                 %label.col-sm-2.control-label
                   Prix (en €)
                   %span.red *

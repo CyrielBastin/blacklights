@@ -56,7 +56,7 @@
                 .search-container.col-sm-4
                   .row
                     .search-input
-                      %label.control-label.col-sm-5 Activité
+                      %label.control-label.col-sm-4 Activité
                       = location_form.hidden_field :location_activity_ids, class: 'list-Activity_ids'
                       %input.form-control.bg-contrast{id: 'search-input-Activity', 'data-model': 'Activity', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
                     .search-results.search-results-Activity.col-sm-7.hidden
@@ -66,12 +66,12 @@
                     .search-chosen#search-chosen-Activity.col-sm-7
                       - if @location.location_activities.present?
                         - @location.location_activities.each do |loc_ac|
-                          .item-selected{id: "for-Activity-#{loc_ac.activity[:id]}"}
-                            %i.fas.fa-ban.delete-selected{style: 'color: red'}
+                          .item-selected.item-selected-Activity{id: "for-Activity-#{loc_ac.activity[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Activity{style: 'color: red'}
                             %div
                               = loc_ac.activity[:name]
 
-            %fieldset{style: 'margin-top: 150px'}
+            %fieldset.mt-180
               %legend Dimensions
               = location_form.fields_for :dimension, @location.dimension.present? ? @location.dimension : @location.build_dimension  do |dimension_form|
                 .row
@@ -88,6 +88,7 @@
                     = dimension_form.hidden_field :weight, value: 0.01
 
             %br
+            .mt-30
             = render partial: 'shared/contact_form', locals: { form: location_form, object: @location }
 
 
