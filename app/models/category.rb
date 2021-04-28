@@ -8,6 +8,7 @@
 #
 class Category < ApplicationRecord
   extend Enumerize
+  include ForbiddenCharacter
 
   scope :for_equipment, -> { where(['category_for = ?', :equipment]) }
   scope :for_activity, -> { where(['category_for = ?', :activity]) }
@@ -25,6 +26,14 @@ class Category < ApplicationRecord
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
+  validate :name_is_valid
   validates :category_for, presence: true
+
+
+  def name_is_valid
+    return if name.nil?
+
+    errors.add(:name, forbidden_ampersand_msg) if contains_forbidden_ampersand?(name)
+  end
 
 end

@@ -17,6 +17,7 @@
 #
 class Event < ApplicationRecord
   include DuplicateHelper
+  include ForbiddenCharacter
 
   default_scope -> { order(:start_date) }
   scope :to_come, -> { where(['start_date > ?', DateTime.now]) }
@@ -44,6 +45,7 @@ class Event < ApplicationRecord
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
+  validate :name_is_valid
   validates :start_date, :end_date, :registration_deadline, :location_id, presence: true
   validate :start_date_is_in_the_future, :end_date_is_higher_than_start_date, :registration_deadline_is_before_start_date
   validates :price, presence: true,
@@ -101,6 +103,12 @@ class Event < ApplicationRecord
     return if l.nil?
 
     errors.add(:max_participant, "ne peut pas être plus grand que #{l[:capacity]}") if max_participant > l[:capacity]
+  end
+
+  def name_is_valid
+    return if name.nil?
+
+    errors.add(:name, forbidden_ampersand_msg) if contains_forbidden_ampersand?(name)
   end
 
   ####################################################################################################

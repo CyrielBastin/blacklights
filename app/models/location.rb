@@ -46,12 +46,14 @@ class Location < ApplicationRecord
 
     errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
     errors.add(:name, forbidden_comma_msg) if contains_forbidden_comma?(name)
+    errors.add(:name, forbidden_ampersand_msg) if contains_forbidden_ampersand?(name)
   end
 
   def city_is_valid
     return if city.nil?
 
     errors.add(:city, forbidden_comma_msg) if contains_forbidden_comma?(city)
+    errors.add(:city, forbidden_ampersand_msg) if contains_forbidden_ampersand?(city)
   end
 
   def name_plus_city

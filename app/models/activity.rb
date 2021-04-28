@@ -41,6 +41,7 @@ class Activity < ApplicationRecord
     return if name.nil?
 
     errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
+    errors.add(:name, forbidden_ampersand_msg) if contains_forbidden_ampersand?(name)
   end
 
   ####################################################################################################
