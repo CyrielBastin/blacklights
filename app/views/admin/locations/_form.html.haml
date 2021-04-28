@@ -16,12 +16,10 @@
                   %span.red *
                 .col-sm-3
                   = location_form.text_field :name, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label
-                  Type
-                  %span.red *
-                .col-sm-3
-                  = location_form.text_field :type, class: 'form-control bg-contrast'
-                %label.col-sm-2.control-label Capacité maximale
+                %label.col-sm-1.control-label Public ?
+                .col-sm-1
+                  = location_form.check_box :type, class: 'form-control bg-contrast', checked: @location.type.present? ? @location.type.public? : false
+                %label.col-sm-2.col-sm-offset-2.control-label Capacité maximale
                 .col-sm-2
                   = location_form.number_field :capacity, class: 'form-control bg-contrast'
 

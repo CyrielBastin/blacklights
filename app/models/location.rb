@@ -13,6 +13,7 @@
 #
 class Location < ApplicationRecord
   include ForbiddenCharacter
+  extend Enumerize
 
   default_scope -> { order(:name) }
 
@@ -22,6 +23,8 @@ class Location < ApplicationRecord
   has_many :events
 
   accepts_nested_attributes_for :contact, :dimension, :location_activities
+
+  enumerize :type, in: %i[private public], predicates: true, scope: true
 
   min_char_name = 3
   min_capacity = 0

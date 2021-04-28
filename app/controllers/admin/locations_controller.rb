@@ -16,6 +16,7 @@ class Admin::LocationsController < AdminController
 
   def create
     @location = Location.new(location_params)
+    # add_type
     add_activities
     if name_already_exists?(@location.class.name, @location[:name])
       @location.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
@@ -40,6 +41,7 @@ class Admin::LocationsController < AdminController
 
   def update
     @location = Location.find(params[:id])
+    # add_type
     add_activities
     loc = Location.find_by(name: params[:location][:name])
     if loc.nil? || loc[:id] == @location[:id]
@@ -85,6 +87,7 @@ class Admin::LocationsController < AdminController
 
   def update_params
     params[:location][:location_activity_ids] = params[:location][:location_activity_ids].split(',')
+    params[:location][:type] = params[:location][:type] == 1 ? :public : :private
   end
 
   def add_activities
@@ -94,6 +97,10 @@ class Admin::LocationsController < AdminController
         @location.location_activities << LocationActivity.new(activity_id: activity_id, location_id: @location)
       end
     end
+  end
+
+  def add_type
+    @location[:type] = params[:location][:is_public] == 1 ? :public : :private
   end
 
 end
