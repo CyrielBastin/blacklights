@@ -21,6 +21,14 @@ fr:
         equipment: Matériel
         activity: Activité
         event: Evènement
+    location:
+      type:
+        private: Privé
+        public: Public
+    event:
+      type:
+        private: Privé
+        public: Public
   activerecord:
     errors:
       messages:

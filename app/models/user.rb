@@ -35,6 +35,8 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :invitable
 
+  scope :active, -> { where('deleted_at is null') }
+
   validates :email, presence: true
   validate :email_is_valid
   validates_uniqueness_of :email

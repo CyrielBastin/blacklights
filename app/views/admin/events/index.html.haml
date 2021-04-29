@@ -36,7 +36,8 @@
                   %th Clôture inscriptions
                   %th Activités
                   %th Lieu
-                  %th Prix
+                  %th type
+                  %th Prix (€)
                   %th Actions
                 %tbody
                   - @events.each do |event|
@@ -62,7 +63,10 @@
                         = event.location.name_plus_city
 
                       %td
-                        = "#{to_french_repr(event[:price])}€"
+                        = event[:type].text
+
+                      %td
+                        = to_french_repr(event[:price])
 
                       %td.project-actions
                         .btn-group

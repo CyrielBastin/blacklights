@@ -38,8 +38,8 @@
                         %b
                           = location.name_plus_city
 
-                      %td{:style => 'word-wrap: break-word'}
-                        = location[:type]
+                      %td
+                        = location[:type].text
 
                       %td
                         - location.location_activities.each do |loc_ac|

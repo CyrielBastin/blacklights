@@ -16,6 +16,7 @@
 #  name                  :string(255)
 #
 class Event < ApplicationRecord
+  extend Enumerize
   include DuplicateHelper
   include ForbiddenCharacter
 
@@ -33,14 +34,15 @@ class Event < ApplicationRecord
   has_many :event_categories, dependent: :destroy
   has_many :consortium_events, dependent: :destroy
 
+
+  enumerize :type, in: %i[private public], predicates: true, scope: true
+
   min_char_name = 8
-  min_price = 0.00
   min_participant = 0
   ERR_MSG = { start_date_in_the_past: 'ne peut pas être dans le passé',
               end_date_is_before_start_date: 'doit prendre place après la date de début',
               registration_deadline_after_start_date: 'doit prendre place avant la date de début',
               name_is_too_short: "doit contenir au moins #{min_char_name} caractères",
-              price_is_lesser_than_one: "doit être plus grand que #{min_price}€",
               min_participant_is_lesser_than_one: "doit être au moins de #{min_participant} personne(s)",
               max_participant_is_lesser_than_one: "doit être au moins de #{min_participant} personne(s)",
               max_participant_is_lesser_than_min_participant: 'ne peut pas être inférieur au nombre minimum de participants' }.freeze
@@ -50,8 +52,7 @@ class Event < ApplicationRecord
   validate :name_is_valid
   validates :start_date, :end_date, :registration_deadline, :location_id, presence: true
   validate :start_date_is_in_the_future, :end_date_is_higher_than_start_date, :registration_deadline_is_before_start_date
-  validates :price, presence: true,
-                    numericality: { greater_than: min_price, message: ERR_MSG[:price_is_lesser_than_one] }
+  validates :price, presence: true
   validates :min_participant, presence: true,
                               numericality: { greater_than: min_participant, message: ERR_MSG[:min_participant_is_lesser_than_one] }
   validates :max_participant, presence: true,

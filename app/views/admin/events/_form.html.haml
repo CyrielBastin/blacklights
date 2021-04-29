@@ -51,22 +51,20 @@
                   %span.red *
                 .col-sm-2
                   = event_form.text_field :price, class: 'form-control bg-contrast'
+                %label.col-sm-2.control-label Public ?
+                .col-sm-1
+                  = event_form.check_box :type, class: 'form-control bg-contrast', checked: @event.type.present? ? @event.type.public? : false
+
 
             %fieldset.mt-30
-              %legend Lieu de l'évènement
-              .row
+              %legend Lieu et catégories
+              .row.mt-30
                 .search-container.col-sm-5
                   .row
                     .search-input
-                      %label.control-label.col-sm-5
-                        Lieu
-                        %span.red *
-                      .field_with_errors
-                        = event_form.hidden_field :location_id, class: 'list-Location_ids'
-                        %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', 'data-location-form-event': 'true', type: 'text', placeholder: 'Rechercher par nom, ville, code postal'}
-                        - @event.errors.full_messages_for(:location_id).each do |message|
-                          %label.message{'for': 'event_location_id'}
-                            = epurate_err_msg(:Location, message)
+                      %label.control-label.col-sm-5 Lieu
+                      = event_form.hidden_field :location_id, class: 'list-Location_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', type: 'text', placeholder: 'Rechercher par nom, ville, code postal'}
                     .search-results.search-results-Location.col-sm-7.hidden
                       - Location.all.each do |l|
                         %p.result-item.result-item-Location.hidden{id: "Location-#{l[:id]}"}
@@ -75,13 +73,31 @@
                           = "#{l[:city]}, #{l[:zip_code]}"
                     .search-chosen#search-chosen-Location.col-sm-7
                       - if @event[:location_id].present?
-                        .item-selected.item-selected-Location{id: "for-Location-#{@event[:location_id]}"}
+                        .item-selected.item-selected-Location{id: "for-Location-#{@event.location[:id]}"}
                           %div
                             = @event.location[:name]
                             %br
                             = "#{@event.location[:city]}, #{@event.location[:zip_code]}"
 
-            %fieldset{style: 'margin-top: 130px'}
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Catégorie
+                      = event_form.hidden_field :event_category_ids, class: 'list-Category_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Category.col-sm-7.hidden
+                      - Category.for_event.each do |c|
+                        %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
+                          = c[:name]
+                    .search-chosen#search-chosen-Category.col-sm-7
+                      - if @event.event_categories.present?
+                        - @event.event_categories.each do |ev_c|
+                          .item-selected.item-selected-Category{id: "for-Category-#{ev_c.category[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Category{style: 'color: red'}
+                            %div
+                              = ev_c.category[:name]
+
+            %fieldset.mt-180
               %legend Activités
               = event_form.fields_for :event_activities, @event.event_activities.present? ? @event.event_activities : @event.event_activities.build, dynamic: true do |ev_ac_form|
                 .form-group
