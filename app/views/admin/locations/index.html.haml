@@ -47,11 +47,27 @@
                           %br
 
                       %td
-                        = "Largeur : #{to_french_repr(location.dimension[:width])} m"
-                        %br
-                        = "Longueur : #{to_french_repr(location.dimension[:length])} m"
-                        %br
-                        = "Hauteur : #{to_french_repr(location.dimension[:height])} m"
+                        - if location.dimension[:width].present?
+                          = "Largeur : #{to_french_repr(location.dimension[:width])} m"
+                          %br
+                        - else
+                          = 'Largeur :'
+                          %span.red Non défini
+                          %br
+                        - if location.dimension[:length].present?
+                          = "Longueur : #{to_french_repr(location.dimension[:length])} m"
+                          %br
+                        - else
+                          = 'Longueur :'
+                          %span.red Non défini
+                          %br
+                        - if location.dimension[:height].present?
+                          = "Hauteur : #{to_french_repr(location.dimension[:height])} m"
+                          %br
+                        - else
+                          = 'Hauteur :'
+                          %span.red Non défini
+                          %br
 
                       %td
                         = "Nom : #{location.contact.lastname}"

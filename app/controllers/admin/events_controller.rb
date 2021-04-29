@@ -95,10 +95,10 @@ class Admin::EventsController < AdminController
   private
 
   def event_params
-    params.require(:event).permit(:name, :start_date, :end_date, :registration_deadline, :min_participant, :max_participant, :price, :type, :location_id,
-                                  :event_category_ids,
-                                  :event_equipment_ids,
-                                  contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
+    params.require(:event).permit(:name, :start_date, :end_date, :registration_deadline, :min_participant,
+                                  :max_participant, :price, :type, :location_id, :event_category_ids, :event_equipment_ids,
+                                  contact_attributes: [:id, :lastname, :firstname, :phone_number, :email,
+                                                       coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
                                   event_activities_attributes: [:id, :activity_id, :simultaneous_activities, :_destroy])
   end
 
@@ -106,7 +106,7 @@ class Admin::EventsController < AdminController
     params[:event][:location_id] = params[:event][:location_id].split(',')[0]
     params[:event][:event_equipment_ids] = params[:event][:event_equipment_ids].split(',')
     params[:event][:event_category_ids] = params[:event][:event_category_ids].split(',')
-    params[:event][:type] = params[:event][:type] == 1 ? :public : :private
+    params[:event][:type] = params[:event][:type] == '1' ? 'public' : 'private'
   end
 
   def add_equipment
