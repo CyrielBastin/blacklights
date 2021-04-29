@@ -28,8 +28,10 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :contact
   has_many :event_activities, inverse_of: :event, dependent: :destroy
   accepts_nested_attributes_for :event_activities, allow_destroy: true
-  has_many :event_equipment, inverse_of: :event, dependent: :destroy
+  has_many :event_equipment, dependent: :destroy
   has_many :registrations, dependent: :destroy
+  has_many :event_categories, dependent: :destroy
+  has_many :association_events, dependent: :destroy
 
   min_char_name = 8
   min_price = 0.00
@@ -130,6 +132,10 @@ class Event < ApplicationRecord
                                                id: :equipment_id,
                                                quantity: :quantity)
     end
+  end
+
+  def self.inheritance_column
+    nil
   end
 
 end

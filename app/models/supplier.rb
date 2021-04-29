@@ -11,10 +11,9 @@ class Supplier < ApplicationRecord
 
   default_scope -> { order(:name) }
 
-  belongs_to :contact, dependent: :destroy
   has_many :equipments
+  has_many :supplier_contacts
 
-  accepts_nested_attributes_for :contact
 
   min_char_name = 3
   ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères" }.freeze
