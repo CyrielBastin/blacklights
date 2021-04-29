@@ -20,6 +20,7 @@ class Category < ApplicationRecord
   has_many :equipment
   has_many :activity_categories, dependent: :destroy
   has_many :event_categories, dependent: :destroy
+  has_many :consortia
 
   enumerize :type, in: %i[equipment activity event]
 

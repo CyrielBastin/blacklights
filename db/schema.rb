@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_160546) do
+ActiveRecord::Schema.define(version: 2021_04_29_212510) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -37,45 +37,45 @@ ActiveRecord::Schema.define(version: 2021_04_29_160546) do
     t.index ["equipment_id"], name: "index_activity_equipment_on_equipment_id"
   end
 
-  create_table "association_activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "association_id"
-    t.bigint "activity_id"
-    t.index ["activity_id"], name: "index_association_activities_on_activity_id"
-    t.index ["association_id"], name: "index_association_activities_on_association_id"
-  end
-
-  create_table "association_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "association_id"
-    t.bigint "event_id"
-    t.index ["association_id"], name: "index_association_events_on_association_id"
-    t.index ["event_id"], name: "index_association_events_on_event_id"
-  end
-
-  create_table "association_locations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "association_id"
-    t.bigint "location_id"
-    t.index ["association_id"], name: "index_association_locations_on_association_id"
-    t.index ["location_id"], name: "index_association_locations_on_location_id"
-  end
-
-  create_table "association_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "association_id"
-    t.bigint "user_id"
-    t.index ["association_id"], name: "index_association_users_on_association_id"
-    t.index ["user_id"], name: "index_association_users_on_user_id"
-  end
-
-  create_table "associations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "name"
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_associations_on_category_id"
-  end
-
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.bigint "parent_id"
     t.string "type"
     t.index ["parent_id"], name: "index_categories_on_parent_id"
+  end
+
+  create_table "consortia", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_consortia_on_category_id"
+  end
+
+  create_table "consortium_activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "association_id"
+    t.bigint "activity_id"
+    t.index ["activity_id"], name: "index_consortium_activities_on_activity_id"
+    t.index ["association_id"], name: "index_consortium_activities_on_association_id"
+  end
+
+  create_table "consortium_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "association_id"
+    t.bigint "event_id"
+    t.index ["association_id"], name: "index_consortium_events_on_association_id"
+    t.index ["event_id"], name: "index_consortium_events_on_event_id"
+  end
+
+  create_table "consortium_locations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "association_id"
+    t.bigint "location_id"
+    t.index ["association_id"], name: "index_consortium_locations_on_association_id"
+    t.index ["location_id"], name: "index_consortium_locations_on_location_id"
+  end
+
+  create_table "consortium_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "association_id"
+    t.bigint "user_id"
+    t.index ["association_id"], name: "index_consortium_users_on_association_id"
+    t.index ["user_id"], name: "index_consortium_users_on_user_id"
   end
 
   create_table "contacts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

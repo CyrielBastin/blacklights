@@ -20,7 +20,7 @@ class Location < ApplicationRecord
   belongs_to :contact, dependent: :destroy
   belongs_to :dimension, dependent: :destroy
   has_many :location_activities, dependent: :destroy
-  has_many :association_locations, dependent: :destroy
+  has_many :consortium_locations, dependent: :destroy
   has_many :events
 
   accepts_nested_attributes_for :contact, :dimension, :location_activities

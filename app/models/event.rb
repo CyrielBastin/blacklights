@@ -31,7 +31,7 @@ class Event < ApplicationRecord
   has_many :event_equipment, dependent: :destroy
   has_many :registrations, dependent: :destroy
   has_many :event_categories, dependent: :destroy
-  has_many :association_events, dependent: :destroy
+  has_many :consortium_events, dependent: :destroy
 
   min_char_name = 8
   min_price = 0.00
