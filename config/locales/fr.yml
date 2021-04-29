@@ -17,7 +17,7 @@ fr:
         male: Masculin
         female: Féminin
     category:
-      category_for:
+      type:
         equipment: Matériel
         activity: Activité
         event: Evènement

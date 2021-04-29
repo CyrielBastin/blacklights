@@ -74,7 +74,7 @@ class Admin::CategoriesController < AdminController
   private
 
   def category_params
-    params.require(:category).permit(:parent_id, :name, :category_for)
+    params.require(:category).permit(:parent_id, :name, :type)
   end
 
   def update_params

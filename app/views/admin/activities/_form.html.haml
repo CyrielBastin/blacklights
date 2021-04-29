@@ -23,10 +23,15 @@
                   %span.red *
                 .col-sm-5
                   = f.text_area :description, rows: 4, class: 'form-control bg-contrast'
+              .form-group
+                %label.col-sm-2.control-label Partie publique
+                .col-sm-1
+                  = f.check_box :public_display, class: 'form-control bg-contrast', checked: @activity[:public_display].nil? ? true : @activity[:public_display]
+
 
             %fieldset.mt-30
-              %legend Lieux ou exercer cette activité
-              .row
+              %legend Lieux et catégories
+              .row.mt-30
                 .search-container.col-sm-5
                   .row
                     .search-input
@@ -49,6 +54,23 @@
                               %br
                               = "#{loc_ac.location[:city]}, #{loc_ac.location[:zip_code]}"
 
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Catégorie
+                      = f.hidden_field :activity_category_ids, class: 'list-Category_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Category.col-sm-7.hidden
+                      - Category.for_activity.each do |c|
+                        %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
+                          = c[:name]
+                    .search-chosen#search-chosen-Category.col-sm-7
+                      - if @activity.activity_categories.present?
+                        - @activity.activity_categories.each do |ac_c|
+                          .item-selected.item-selected-Category{id: "for-Category-#{ac_c.category[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Category{style: 'color: red'}
+                            %div
+                              = ac_c.category[:name]
 
             %fieldset.mt-180
               %legend Matériel

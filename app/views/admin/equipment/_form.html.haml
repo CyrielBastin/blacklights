@@ -65,16 +65,16 @@
                   .search-results.search-results-Supplier.col-sm-7.hidden
                     - Supplier.all.each do |s|
                       %p.result-item.result-item-Supplier.hidden{id: "Supplier-#{s[:id]}"}
-                        = s[:name]
+                        = "#{s[:name]}, #{s[:country]}"
                         %br
-                        = s.contact.coordinate[:city]
+                        = s[:phone_number]
                   .search-chosen#search-chosen-Supplier.col-sm-7
                     - if @equipment[:supplier_id].present?
                       .item-selected.item-selected-Supplier{id: "for-Supplier-#{@equipment[:supplier_id]}"}
                         %div
-                          = @equipment.supplier[:name]
+                          = "#{@equipment.supplier[:name]}, #{@equipment.supplier[:country]}"
                           %br
-                          = @equipment.supplier.contact.coordinate[:city]
+                          = @equipment.supplier[:phone_number]
 
 
             %fieldset{style: 'margin-top: 130px'}

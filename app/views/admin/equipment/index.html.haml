@@ -48,13 +48,29 @@
                       %td
                         = "Fournisseur : #{equipment.supplier[:name]}"
                         %br
-                        = "Largeur : #{to_french_repr(equipment.dimension[:width])} cm"
+                        - if equipment.dimension[:width].present?
+                          = "Largeur : #{to_french_repr(equipment.dimension[:width])} cm"
+                        - else
+                          Largeur :
+                          %span.red Non défini
                         %br
-                        = "Longueur : #{to_french_repr(equipment.dimension[:length])} cm"
+                        - if equipment.dimension[:length].present?
+                          = "Longueur : #{to_french_repr(equipment.dimension[:length])} cm"
+                        - else
+                          Longueur :
+                          %span.red Non défini
                         %br
-                        = "Hauteur : #{to_french_repr(equipment.dimension[:height])} cm"
+                        - if equipment.dimension[:height].present?
+                          = "Hauteur : #{to_french_repr(equipment.dimension[:height])} cm"
+                        - else
+                          Hauteur :
+                          %span.red Non défini
                         %br
-                        = "Poids : #{to_french_repr(equipment.dimension[:weight])} g"
+                        - if equipment.dimension[:weight].present?
+                          = "Poids : #{to_french_repr(equipment.dimension[:weight])} g"
+                        - else
+                          Poids :
+                          %span.red Non défini
 
                       %td
                         = "#{to_french_repr(equipment[:unit_price])} €"

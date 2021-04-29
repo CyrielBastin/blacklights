@@ -12,7 +12,6 @@ class Admin::SuppliersController < AdminController
 
   def new
     @supplier = Supplier.new
-    @supplier.contact = Contact.new
   end
 
   def create
@@ -75,7 +74,9 @@ class Admin::SuppliersController < AdminController
   private
 
   def supplier_params
-    params.require(:supplier).permit(:id, :name, contact_attributes: [:id, :lastname, :firstname, :phone_number, :email, coordinate_attributes: [:id, :street, :zip_code, :city, :country]])
+    params.require(:supplier).permit(:id, :name, :email, :phone_number, :country, :zip_code, :city,
+                                     contact_attributes: [:id, :lastname, :firstname, :phone_number, :email,
+                                                          coordinate_attributes: [:id, :street, :zip_code, :city, :country]])
   end
 
 end

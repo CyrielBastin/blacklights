@@ -20,14 +20,31 @@
         .ibox-content
           .row.details-show.details-item
             .col-sm-2.details-title Nom :
-            .col-sm-10
+            .col-sm-3
               = @activity[:name]
+
+            .col-sm-3.details-title Partie publique du site ?
+            .col-sm-2
+              - if @activity[:public_display]
+                = 'Oui'
+              - else
+                .red Non
 
           .hr-line-dashed
           .row.details-show.details-item
             .col-sm-2.details-title Description :
-            .col-sm-10
+            .col-sm-4
               = @activity[:description]
+
+            .col-sm-2.details-title Catégories :
+            - if @activity.activity_categories.present?
+              .col-sm-4.details-multiple
+                - @activity.activity_categories.each do |ac_c|
+                  = "- #{ac_c.category[:name]}"
+                  %br
+            - else
+              .col-sm-4.red
+                Aucune catégorie définie
 
           .hr-line-dashed
           .row.details-show.details-item
