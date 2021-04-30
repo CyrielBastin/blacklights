@@ -18,8 +18,6 @@ class Category < ApplicationRecord
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'
   has_many :equipment
-  has_many :activity_categories, dependent: :destroy
-  has_many :event_categories, dependent: :destroy
   has_many :consortia
 
   enumerize :type, in: %i[equipment activity event]

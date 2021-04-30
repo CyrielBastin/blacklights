@@ -93,7 +93,7 @@ class Admin::EventsController < AdminController
   private
 
   def event_params
-    params.require(:event).permit(:name, :start_date, :end_date, :registration_deadline, :min_participant,
+    params.require(:event).permit(:name, :start_date, :end_date, :category_id, :registration_deadline, :min_participant,
                                   :max_participant, :price, :type, :location_id, :event_category_ids, :event_equipment_ids,
                                   contact_attributes: [:id, :lastname, :firstname, :phone_number, :email,
                                                        coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
