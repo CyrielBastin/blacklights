@@ -32,7 +32,7 @@ class Event < ApplicationRecord
   has_many :event_equipment, dependent: :destroy
   has_many :registrations, dependent: :destroy
   has_many :entity_events, dependent: :destroy
-  belongs_to :category
+  belongs_to :category, optional: true
 
 
   enumerize :type, in: %i[private public], predicates: true, scope: true
@@ -126,7 +126,7 @@ class Event < ApplicationRecord
     unless event_activities.empty?
       self.event_activities = add_up_duplicates(event_activities,
                                                 id: :activity_id,
-                                                quantity: :simultaneous_activities)
+                                                quantity: :quantity)
     end
     unless event_equipment.empty?
       self.event_equipment = add_up_duplicates(event_equipment,

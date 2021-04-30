@@ -28,8 +28,8 @@
                 %thead
                   %th Nom
                   %th Description
-                  %th Catégories
-                  %th Partie publique du site ?
+                  %th Catégorie
+                  %th Visible ?
                   %th Actions
                 %tbody
                   - @activities.each do |activity|
@@ -43,12 +43,12 @@
 
                       %td
                         - if activity.category.present?
-                          - activity.category.name
+                          = activity.category.name
                         - else
                           .red Aucune catégorie définie
 
                       %td
-                        - if activity[:public_display]
+                        - if activity[:visible]
                           = 'Oui'
                         - else
                           .red Non

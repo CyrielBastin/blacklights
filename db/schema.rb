@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_30_152735) do
+ActiveRecord::Schema.define(version: 2021_04_30_153709) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2021_04_30_152735) do
     t.integer "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "public_display"
+    t.boolean "visible"
   end
 
   create_table "activity_equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

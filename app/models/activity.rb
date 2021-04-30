@@ -13,6 +13,7 @@ class Activity < ApplicationRecord
   include ForbiddenCharacter
 
   default_scope -> { order(:name) }
+  scope :visible, -> { where(['visible = ?', true]) }
 
   has_many :event_activities, dependent: :destroy
   has_many :location_activities, dependent: :destroy
@@ -30,6 +31,7 @@ class Activity < ApplicationRecord
   validate :name_is_valid
   validates :description, presence: true,
                           length: { minimum: min_char_desc, message: ERR_MSG[:description_too_short] }
+  validates :category_id, presence: true
 
 
   def self.get_activities_by_location_id(id)

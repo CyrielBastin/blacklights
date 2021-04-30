@@ -12,11 +12,9 @@ class EventActivity < ApplicationRecord
   belongs_to :event
   belongs_to :activity
 
-  min_simultaneous_activities = 0
-  ERR_MSG = { sim_ac_is_lesser_than_one: "doit être plus grand que #{min_simultaneous_activities}" }.freeze
+  min_quantity = 0
+  ERR_MSG = { sim_ac_is_lesser_than_one: "doit être plus grand que #{min_quantity}" }.freeze
 
-  validates :simultaneous_activities, presence: true,
-                                      numericality: { greater_than: min_simultaneous_activities,
-                                                      message: ERR_MSG[:sim_ac_is_lesser_than_one] }
+  validates :quantity, presence: true, numericality: { greater_than: min_quantity, message: ERR_MSG[:sim_ac_is_lesser_than_one] }
 
 end

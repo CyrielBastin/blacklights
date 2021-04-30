@@ -68,12 +68,10 @@
             .col-sm-2.details-title Type :
             .col-sm-2
               = @event[:type].text
-            .col-sm-2.details-title Catégories :
-            - if @event.event_categories.present?
-              .col-sm-4.details-multiple
-                - @event.event_categories.each do |ev_c|
-                  = "- #{ev_c.category[:name]}"
-                  %br
+            .col-sm-2.details-title Catégorie :
+            - if @event.category.present?
+              .col-sm-4
+                = @event.category[:name]
             - else
               .col-sm-4.red
                 Aucune catégorie définie

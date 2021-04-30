@@ -26,11 +26,11 @@
               .form-group
                 %label.col-sm-2.control-label Partie publique
                 .col-sm-1
-                  = f.check_box :public_display, class: 'form-control bg-contrast', checked: @activity[:public_display].nil? ? true : @activity[:public_display]
+                  = f.check_box :visible, class: 'form-control bg-contrast', checked: @activity[:visible].nil? ? true : @activity[:visible]
 
 
             %fieldset.mt-30
-              %legend Lieux et catégories
+              %legend Lieux et catégorie
               .row.mt-30
                 .search-container.col-sm-5
                   .row
@@ -57,7 +57,9 @@
                 .search-container.col-sm-5
                   .row
                     .search-input
-                      %label.control-label.col-sm-5 Catégorie
+                      %label.control-label.col-sm-5
+                        Catégorie
+                        %span.red *
                       = f.select :category_id, options_from_collection_for_select(Category.for_activity, :id, :name, @activity.category_id), { prompt: 'Sélectionnez une catégorie' }, class: 'form-control bg-contrast'
                     -#   = f.hidden_field :activity_category_ids, class: 'list-Category_ids'
                     -#   %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
