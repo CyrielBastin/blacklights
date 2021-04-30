@@ -85,6 +85,7 @@ class Admin::LocationsController < AdminController
 
   def update_params
     params[:location][:location_activity_ids] = params[:location][:location_activity_ids].split(',')
+    params[:location][:type] = params[:location][:type] == '1' ? 'public' : 'private'
   end
 
   def add_activities

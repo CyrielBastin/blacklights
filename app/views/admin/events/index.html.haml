@@ -14,21 +14,19 @@
         .ibox-title
           %h5 L'ensemble des Evènements définis
           .ibox-tools
-            .row
-              .col-sm-2
-                = link_to 'Evènements à venir', admin_events_path, class: "btn btn-primary" unless events_to_come
-              .col-sm-2
-                = link_to 'Anciens évènements', admin_events_path(events: 'previous'), class: 'btn btn-primary' if events_to_come
-              = link_to 'Nouvel évènement', new_admin_event_path, class: 'btn btn-primary', style: 'margin-right: 50px'
-              = link_to 'Exporter', admin_events_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @events.size > 0
-            %br
-          = form_tag admin_import_events_path, method: :post, multipart: true do
-            %fieldset
-              %legend Importer des données
-              = file_field_tag :file
-              = submit_tag "Importer", class: "btn btn-success mt-20"
-
+            = form_tag admin_import_events_path, method: :post, multipart: true do
+              .title-group-btns
+                .import-container
+                  = file_field_tag :file
+                  = submit_tag 'Importer', class: 'btn btn-success btn-import'
+                = link_to 'Nouvel évènement', new_admin_event_path, class: 'btn btn-primary'
+                = link_to 'Exporter', admin_events_path(format: :xlsx), class: 'btn btn-info' if @events.size > 0
         .ibox-content
+          .row.mb-20
+            .col-sm-2
+              = link_to 'Evènements à venir', admin_events_path, class: "btn btn-primary" unless events_to_come
+            .col-sm-2
+              = link_to 'Anciens évènements', admin_events_path(events: 'previous'), class: 'btn btn-primary' if events_to_come
           - if @events.size > 0
             .project-list
               %table.table.table-hover.table-striped.dataTables
@@ -38,7 +36,8 @@
                   %th Clôture inscriptions
                   %th Activités
                   %th Lieu
-                  %th Prix
+                  %th type
+                  %th Prix (€)
                   %th Actions
                 %tbody
                   - @events.each do |event|
@@ -64,7 +63,10 @@
                         = event.location.name_plus_city
 
                       %td
-                        = "#{to_french_repr(event[:price])}€"
+                        = event[:type].text
+
+                      %td
+                        = to_french_repr(event[:price])
 
                       %td.project-actions
                         .btn-group

@@ -14,14 +14,13 @@
         .ibox-title
           %h5 L'ensemble du matériel défini
           .ibox-tools
-            = link_to 'Nouveau matériel', new_admin_equipment_path, class: 'btn btn-primary'
-            = link_to 'Exporter', admin_equipment_index_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @equipments.size > 0
-            %br
-          = form_tag admin_import_equipment_path, method: :post, multipart: true do
-            %fieldset
-              %legend Importer des données
-              = file_field_tag :file
-              = submit_tag "Importer", class: "btn btn-success mt-20"
+            = form_tag admin_import_equipment_path, method: :post, multipart: true do
+              .title-group-btns
+                .import-container
+                  = file_field_tag :file
+                  = submit_tag 'Importer', class: 'btn btn-success btn-import'
+                = link_to 'Nouveau matériel', new_admin_equipment_path, class: 'btn btn-primary'
+                = link_to 'Exporter', admin_equipment_index_path(format: :xlsx), class: 'btn btn-info' if @equipments.size > 0
         .ibox-content
           - if @equipments.size > 0
             .project-list
@@ -49,13 +48,29 @@
                       %td
                         = "Fournisseur : #{equipment.supplier[:name]}"
                         %br
-                        = "Largeur : #{to_french_repr(equipment.dimension[:width])} cm"
+                        - if equipment.dimension[:width].present?
+                          = "Largeur : #{to_french_repr(equipment.dimension[:width])} cm"
+                        - else
+                          Largeur :
+                          %span.red Non défini
                         %br
-                        = "Longueur : #{to_french_repr(equipment.dimension[:length])} cm"
+                        - if equipment.dimension[:length].present?
+                          = "Longueur : #{to_french_repr(equipment.dimension[:length])} cm"
+                        - else
+                          Longueur :
+                          %span.red Non défini
                         %br
-                        = "Hauteur : #{to_french_repr(equipment.dimension[:height])} cm"
+                        - if equipment.dimension[:height].present?
+                          = "Hauteur : #{to_french_repr(equipment.dimension[:height])} cm"
+                        - else
+                          Hauteur :
+                          %span.red Non défini
                         %br
-                        = "Poids : #{to_french_repr(equipment.dimension[:weight])} g"
+                        - if equipment.dimension[:weight].present?
+                          = "Poids : #{to_french_repr(equipment.dimension[:weight])} g"
+                        - else
+                          Poids :
+                          %span.red Non défini
 
                       %td
                         = "#{to_french_repr(equipment[:unit_price])} €"

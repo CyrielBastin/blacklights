@@ -14,14 +14,13 @@
         .ibox-title
           %h5 L'ensemble des lieux définis
           .ibox-tools
-            = link_to 'Nouveau lieu', new_admin_location_path, class: 'btn btn-primary'
-            = link_to 'Exporter', admin_locations_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @locations.size > 0
-            %br
-          = form_tag admin_import_locations_path, method: :post, multipart: true do
-            %fieldset
-              %legend Importer des données
-              = file_field_tag :file
-              = submit_tag "Importer", class: "btn btn-success mt-20"
+            = form_tag admin_import_locations_path, method: :post, multipart: true do
+              .title-group-btns
+                .import-container
+                  = file_field_tag :file
+                  = submit_tag 'Importer', class: 'btn btn-success btn-import'
+                = link_to 'Nouveau lieu', new_admin_location_path, class: 'btn btn-primary'
+                = link_to 'Exporter', admin_locations_path(format: :xlsx), class: 'btn btn-info' if @locations.size > 0
         .ibox-content
           - if @locations.size > 0
             .project-list
@@ -39,8 +38,8 @@
                         %b
                           = location.name_plus_city
 
-                      %td{:style => 'word-wrap: break-word'}
-                        = location[:type]
+                      %td
+                        = location[:type].text
 
                       %td
                         - location.location_activities.each do |loc_ac|
@@ -48,11 +47,27 @@
                           %br
 
                       %td
-                        = "Largeur : #{to_french_repr(location.dimension[:width])} m"
-                        %br
-                        = "Longueur : #{to_french_repr(location.dimension[:length])} m"
-                        %br
-                        = "Hauteur : #{to_french_repr(location.dimension[:height])} m"
+                        - if location.dimension[:width].present?
+                          = "Largeur : #{to_french_repr(location.dimension[:width])} m"
+                          %br
+                        - else
+                          = 'Largeur :'
+                          %span.red Non défini
+                          %br
+                        - if location.dimension[:length].present?
+                          = "Longueur : #{to_french_repr(location.dimension[:length])} m"
+                          %br
+                        - else
+                          = 'Longueur :'
+                          %span.red Non défini
+                          %br
+                        - if location.dimension[:height].present?
+                          = "Hauteur : #{to_french_repr(location.dimension[:height])} m"
+                          %br
+                        - else
+                          = 'Hauteur :'
+                          %span.red Non défini
+                          %br
 
                       %td
                         = "Nom : #{location.contact.lastname}"

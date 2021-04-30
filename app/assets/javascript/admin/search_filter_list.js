@@ -5,6 +5,7 @@
  *
  * Set attribute data-multiple = 'true'  if you want to allow multiple selection.
  * Set attribute data-null = 'true'  if you want to allow the data to be null.
+ * Set attribute data-quantity = 'true'  if you want to add a quantity field.
  * Set attribute data-location-form-event = 'true' in location input in the event form.
  */
 
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', (_) => {
             model_name: data_model.getAttribute('data-model'),
             can_select_multiple: data_model.getAttribute('data-multiple'),
             can_be_null: data_model.getAttribute('data-null'),
+            quantity: data_model.getAttribute('data-quantity'),
             location_form_event: data_model.getAttribute('data-location-form-event')
         }
         init_filtering(options)
@@ -41,7 +43,7 @@ function init_filtering (options) {
     const search_chosen = document.getElementById(`search-chosen-${options['model_name']}`)
     const children = search_chosen.childNodes[1]
     if ((options['can_select_multiple'] || options['can_be_null']) && children)
-        setup_preexisting_choice(search_chosen, list_ids)
+        setup_preexisting_choice(search_chosen, list_ids, options)
     add_search_listener(search_input, results_container, list_results)
     add_results_listener(search_input, results_container, list_results, list_ids, search_chosen, options)
 }
@@ -57,6 +59,7 @@ function add_search_listener (search_input, results_container, list_results) {
         }
         const reg = new RegExp(`(${search})`, 'i')
         list_results.forEach((result) => {
+            result.innerHTML = result.innerHTML.replace('<br>', '|')
             const matched = result.innerText.match(reg)
             result.innerHTML = result.innerHTML.replace('<span class="highlight-search">', '')
             result.innerHTML = result.innerHTML.replace('</span>', '')
@@ -66,6 +69,7 @@ function add_search_listener (search_input, results_container, list_results) {
             } else {
                 result.classList.add('hidden')
             }
+            result.innerHTML = result.innerHTML.replace('|', '<br>')
         })
     })
 }
@@ -91,12 +95,15 @@ function add_to_result(search_chosen, txt, id, list_ids, options) {
     sub_cont.id = `for-${id}`
     const id_num = id.split('-')[1]
     sub_cont.className = 'item-selected'
+    if (options['quantity']) sub_cont.classList.add('item-selected-Equipment')
     const text = document.createElement('div')
+    if (options['quantity']) text.className = 'equipment-name'
     text.innerText = txt
     if (options['can_select_multiple']) {
         add_delete_btn(sub_cont, options['model_name'], id_num, list_ids)
         sub_cont.appendChild(text)
         list_ids.value += `${id_num},`
+        if (options['quantity']) add_qty_field(sub_cont)
         search_chosen.appendChild(sub_cont)
     } else {
         if (options['can_be_null']) add_delete_btn(sub_cont, options['model_name'], id_num, list_ids)
@@ -123,19 +130,29 @@ function add_delete_btn(parent, model, id, list_ids) {
     })
 }
 
-function hides_all(list_results) {
-    for (let r of list_results) {
-        r.classList.add('hidden')
-    }
+function add_qty_field (parent) {
+    const div_qty = document.createElement('div')
+    div_qty.className = 'equipment-qty'
+    const label_qty = document.createElement('div')
+    label_qty.textContent = 'Quantité :'
+    const input_qty = document.createElement('input')
+    input_qty.type = 'number'; input_qty.className = 'bg-contrast'
+    input_qty.name = 'list_equipment_qty[]'
+    div_qty.appendChild(label_qty); div_qty.appendChild(input_qty)
+    parent.appendChild(div_qty)
 }
 
-function setup_preexisting_choice(search_chosen, list_ids) {
+function hides_all(list_results) {
+    list_results.forEach(r => { r.classList.add('hidden') })
+}
+
+function setup_preexisting_choice(search_chosen, list_ids, options) {
     list_ids.value = ''
-    const list_item_selected = document.querySelectorAll('.item-selected')
+    const list_item_selected = document.querySelectorAll(`.item-selected-${options['model_name']}`)
     list_item_selected.forEach((selected) => {
         list_ids.value += `${selected.id.split('-')[2]},`
     })
-    const list_selected = document.querySelectorAll('.delete-selected')
+    const list_selected = document.querySelectorAll(`.delete-selected-${options['model_name']}`)
     list_selected.forEach((selected) => {
         selected.addEventListener('click', (e) => {
             const parent = e.target.parentElement

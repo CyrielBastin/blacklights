@@ -17,6 +17,8 @@ class Admin::ActivitiesController < AdminController
   def create
     @activity = Activity.new(activity_params)
     add_locations
+    add_categories
+    add_equipment
     if name_already_exists?(@activity.class.name, @activity[:name])
       @activity.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
@@ -41,6 +43,8 @@ class Admin::ActivitiesController < AdminController
   def update
     @activity = Activity.find(params[:id])
     add_locations
+    add_categories
+    add_equipment
     act = Activity.find_by(name: params[:activity][:name])
     if act.nil? || act[:id] == @activity[:id]
       if @activity.update(activity_params)
@@ -80,13 +84,16 @@ class Admin::ActivitiesController < AdminController
   private
 
   def activity_params
-    params.require(:activity).permit(:id, :name, :description,
+    params.require(:activity).permit(:id, :name, :description, :public_display,
                                      :location_activity_ids,
-                                     activity_equipment_attributes: %i[id equipment_id quantity _destroy])
+                                     :activity_category_ids,
+                                     :activity_equipment_ids)
   end
 
   def update_params
     params[:activity][:location_activity_ids] = params[:activity][:location_activity_ids].split(',')
+    params[:activity][:activity_equipment_ids] = params[:activity][:activity_equipment_ids].split(',')
+    params[:activity][:activity_category_ids] = params[:activity][:activity_category_ids].split(',')
   end
 
   def add_locations
@@ -94,6 +101,27 @@ class Admin::ActivitiesController < AdminController
     params[:activity][:location_activity_ids].each do |location_id|
       unless location_id.empty?
         @activity.location_activities << LocationActivity.new(activity_id: @activity, location_id: location_id)
+      end
+    end
+  end
+
+  def add_categories
+    @activity.activity_categories = []
+    params[:activity][:activity_category_ids].each do |c_id|
+      unless c_id.empty?
+        @activity.activity_categories << ActivityCategory.new(activity_id: @activity, category_id: c_id)
+      end
+    end
+  end
+
+  def add_equipment
+    @activity.activity_equipment = []
+    return if params[:activity][:activity_equipment_ids].empty?
+
+    list_equipment = params[:activity][:activity_equipment_ids].zip(params[:list_equipment_qty])
+    list_equipment.each do |eq_q|
+      unless eq_q[1].empty?
+        @activity.activity_equipment << ActivityEquipment.new(activity_id: @activity, equipment_id: eq_q[0], quantity: eq_q[1])
       end
     end
   end

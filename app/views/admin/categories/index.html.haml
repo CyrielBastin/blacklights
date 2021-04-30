@@ -14,14 +14,13 @@
         .ibox-title
           %h5 L'ensemble des catégories définies
           .ibox-tools
-            = link_to "Nouvelle catégorie", new_admin_category_path, class: "btn btn-primary"
-            = link_to 'Exporter', admin_categories_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @categories.size > 0
-            %br
-          = form_tag admin_import_categories_path, method: :post, multipart: true do
-            %fieldset
-              %legend Importer des données
-              = file_field_tag :file
-              = submit_tag "Importer", class: "btn btn-success mt-20"
+            = form_tag admin_import_categories_path, method: :post, multipart: true do
+              .title-group-btns
+                .import-container
+                  = file_field_tag :file
+                  = submit_tag 'Importer', class: 'btn btn-success btn-import'
+                = link_to 'Nouvelle catégorie', new_admin_category_path, class: 'btn btn-primary'
+                = link_to 'Exporter', admin_categories_path(format: :xlsx), class: 'btn btn-info' if @categories.size > 0
         .ibox-content
           - if @categories.size > 0
             .project-list
@@ -29,7 +28,7 @@
                 %thead
                   %th Nom
                   %th Catégorie parente
-                  %th Catégorie pour
+                  %th Type
                   %th Actions
                 %tbody
                   - @categories.each do |category|
@@ -38,9 +37,23 @@
                         %b
                           = category.name
                       %td
-                        = category.parent_id.present? ? category.parent.name : ''
+                        - if category.parent.present?
+                          - if category.parent.parent.present?
+                            %ul
+                              %li
+                                = category.parent.parent[:name]
+                              %ul
+                                %li
+                                  = category.parent[:name]
+                          - else
+                            %ul
+                              %li
+                                = category.parent[:name]
+                        - else
+
                       %td
-                        = category[:category_for]
+                        = category[:type].text
+
                       %td.project-actions
                         .btn-group
                           %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}

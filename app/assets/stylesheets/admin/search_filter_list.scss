@@ -51,17 +51,39 @@ $results-list-max-width: 270px;
   text-align: center;
   font-weight: bold;
   font-size: medium;
-  color: green;
+  color: black;
   max-height: 100px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .item-selected {
   display: flex;
   margin-bottom: 10px;
+  text-align: left;
+
+  .equipment-name {
+    width: $results-list-max-width;
+  }
 
   div {
     padding-top: 12px;
+  }
+}
+.item-selected-Equipment {
+  width: 540px;
+}
+.equipment-qty {
+  display: flex;
+  margin-top: -12px;
+
+  input {
+    margin-left: 15px;
+    width: 90px;
+    font-weight: normal;
+    text-align: center;
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
   }
 }
 

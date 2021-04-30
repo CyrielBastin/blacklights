@@ -20,7 +20,7 @@ class Profile < ActiveRecord::Base
 
   accepts_nested_attributes_for :contact
 
-  enumerize :gender, in: [:male, :female], predicates: true, scope: true
+  enumerize :gender, in: %i[male female], predicates: true, scope: true
 
   validates :gender, presence: true
   validate :birthdate_in_past

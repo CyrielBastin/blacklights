@@ -6,34 +6,44 @@
           %h5
             Veuillez remplir toutes les informations concernant votre lieu
         .ibox-content
-          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
+          .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @location], validate: true, html: {class: 'form-horizontal'} do |location_form|
             %fieldset
               %legend Informations
               .row
-                %label.col-sm-1.control-label Nom <span class="red">*</span>
+                %label.col-sm-1.control-label
+                  Nom
+                  %span.red *
                 .col-sm-3
                   = location_form.text_field :name, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label Type <span class="red">*</span>
-                .col-sm-3
-                  = location_form.text_field :type, class: 'form-control bg-contrast'
-                %label.col-sm-2.control-label Capacité maximale
+                %label.col-sm-1.control-label Public ?
+                .col-sm-1
+                  = location_form.check_box :type, class: 'form-control bg-contrast', checked: @location.type.present? ? @location.type.public? : false
+                %label.col-sm-2.col-sm-offset-2.control-label Capacité maximale
                 .col-sm-2
                   = location_form.number_field :capacity, class: 'form-control bg-contrast'
 
               .row.mt-30
-                %label.col-sm-1.control-label Rue et n° <span class="red">*</span>
+                %label.col-sm-1.control-label
+                  Rue et n°
+                  %span.red *
                 .col-sm-3
                   = location_form.text_field :street, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label Code post. <span class="red">*</span>
+                %label.col-sm-1.control-label
+                  Code post.
+                  %span.red *
                 .col-sm-3
                   = location_form.text_field :zip_code, class: 'form-control bg-contrast'
 
               .row.mt-30
-                %label.col-sm-1.control-label Ville <span class="red">*</span>
+                %label.col-sm-1.control-label
+                  Ville
+                  %span.red *
                 .col-sm-3
                   = location_form.text_field :city, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label Pays <span class="red">*</span>
+                %label.col-sm-1.control-label
+                  Pays
+                  %span.red *
                 .col-sm-3
                   = location_form.text_field :country, class: 'form-control bg-contrast'
                 %br
@@ -44,7 +54,7 @@
                 .search-container.col-sm-4
                   .row
                     .search-input
-                      %label.control-label.col-sm-5 Activité
+                      %label.control-label.col-sm-4 Activité
                       = location_form.hidden_field :location_activity_ids, class: 'list-Activity_ids'
                       %input.form-control.bg-contrast{id: 'search-input-Activity', 'data-model': 'Activity', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
                     .search-results.search-results-Activity.col-sm-7.hidden
@@ -54,12 +64,12 @@
                     .search-chosen#search-chosen-Activity.col-sm-7
                       - if @location.location_activities.present?
                         - @location.location_activities.each do |loc_ac|
-                          .item-selected{id: "for-Activity-#{loc_ac.activity[:id]}"}
-                            %i.fas.fa-ban.delete-selected{style: 'color: red'}
+                          .item-selected.item-selected-Activity{id: "for-Activity-#{loc_ac.activity[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Activity{style: 'color: red'}
                             %div
                               = loc_ac.activity[:name]
 
-            %fieldset{style: 'margin-top: 150px'}
+            %fieldset.mt-180
               %legend Dimensions
               = location_form.fields_for :dimension, @location.dimension.present? ? @location.dimension : @location.build_dimension  do |dimension_form|
                 .row
@@ -76,6 +86,7 @@
                     = dimension_form.hidden_field :weight, value: 0.01
 
             %br
+            .mt-30
             = render partial: 'shared/contact_form', locals: { form: location_form, object: @location }
 
 

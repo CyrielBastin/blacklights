@@ -6,7 +6,7 @@
           %h5
             Veuillez remplir toutes les informations concernant votre réservation
         .ibox-content
-          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
+          .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @registration], validate: true, html: {class: 'form-horizontal'} do |form|
             %fieldset
               %legend Informations
@@ -14,7 +14,9 @@
                 .search-container.col-sm-5
                   .row
                     .search-input
-                      %label.control-label.col-sm-5 Evènement <span class="red">*</span>
+                      %label.control-label.col-sm-5
+                        Evènement
+                        %span.red *
                       .field_with_errors
                         = form.hidden_field :event_id, class: 'list-Event_ids'
                         %input.form-control.bg-contrast{id: 'search-input-Event', 'data-model': 'Event', type: 'text', placeholder: 'Rechercher par nom, lieu, ou date'}
@@ -31,7 +33,7 @@
                           = date_time_to_french_format(e[:start_date])
                     .search-chosen#search-chosen-Event.col-sm-7
                       - if @registration[:event_id].present?
-                        .item-selected{id: "for-Event-#{@registration.event[:id]}"}
+                        .item-selected.item-selected-Event{id: "for-Event-#{@registration.event[:id]}"}
                           %div
                             = @registration.event[:name]
                             %br
@@ -42,7 +44,9 @@
                 .search-container.col-sm-5
                   .row
                     .search-input
-                      %label.control-label.col-sm-5 Utilisateur <span class="red">*</span>
+                      %label.control-label.col-sm-5
+                        Utilisateur
+                        %span.red *
                       .field_with_errors
                         = form.hidden_field :user_id, class: 'list-User_ids'
                         %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
@@ -57,14 +61,16 @@
                           = u[:email]
                     .search-chosen#search-chosen-User.col-sm-7
                       - if @registration[:user_id].present?
-                        .item-selected{id: "for-User-#{@registration.user[:id]}"}
+                        .item-selected.item-selected-User{id: "for-User-#{@registration.user[:id]}"}
                           %div
                             = @registration.user.contact.full_name
                             %br
                             = @registration.user[:email]
 
-              .row{style: 'margin-top: 150px'}
-                %label.col-sm-2.control-label Prix (en €) <span class="red">*</span>
+              .row.mt-180
+                %label.col-sm-2.control-label
+                  Prix (en €)
+                  %span.red *
                 .col-sm-2
                   = form.text_field :price, class: 'form-control bg-contrast'
 

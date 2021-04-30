@@ -9,6 +9,7 @@
 #  country  :string(255)
 #
 class Coordinate < ApplicationRecord
+  include ForbiddenCharacter
 
   has_one :contact
   has_one :location
@@ -29,6 +30,15 @@ class Coordinate < ApplicationRecord
                        length: { minimum: min_char_zip_code, maximum: max_char_zip_code, message: ERR_MSG[:zip_code_range] }
   validates :city, presence: true,
                    length: { minimum: min_char_city, message: ERR_MSG[:city_is_too_short] }
+  validate :city_is_valid
   validates :country, presence: true,
                       length: { minimum: min_char_country, message: ERR_MSG[:country_is_too_short] }
+
+
+  def city_is_valid
+    return if city.nil?
+
+    errors.add(:city, forbidden_ampersand_msg) if contains_forbidden_ampersand?(city)
+  end
+
 end

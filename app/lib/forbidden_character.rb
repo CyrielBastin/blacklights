@@ -29,6 +29,18 @@ module ForbiddenCharacter
     'ne peut pas contenir de virgule \',\''
   end
 
+  # We forbid the '&' for the 'search and filter' functionality
+  # This sign causes bugs because of innerHTML that represents '&' as '&amp;'
+  def contains_forbidden_ampersand?(str)
+    return true if str.match(/&/)
+
+    false
+  end
+
+  def forbidden_ampersand_msg
+    'ne peut pas contenir le signe \'&\', utiliser \'and\' ou \'et\' à la place'
+  end
+
   private
 
   def forbidden_characters

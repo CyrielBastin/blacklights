@@ -34,7 +34,7 @@
                       %th Rôle
                       %th
                       %th Email
-                      %th Status
+                      %th Statut
                     %tbody
                       - @users.each do |user|
                         %tr
@@ -83,7 +83,7 @@
                     %tr
                       %td Sexe
                       %td
-                        = user.profile.gender == 'male' ? 'Masculin' : 'Féminin'
+                        = user.profile.gender.text
                     %tr
                       %td Date de naissance
                       %td

@@ -14,6 +14,16 @@
 class Registration < ApplicationRecord
   include UserHelper
 
+
+  # Require to modify 'config/database.yml'
+  # Add a new key under default config
+  # variables:
+  #   sql_mode: traditional
+  #
+  # Without that, ActiveRecord will throw an error on the 'group by' statement
+  scope :for_events_to_come, -> { Event.joins(:registrations).where(['events.start_date > ?', DateTime.now]).group('events.name') }
+  scope :for_every_events, -> { joins(:event).order('events.start_date') }
+
   belongs_to :event
   belongs_to :user
 
@@ -21,21 +31,6 @@ class Registration < ApplicationRecord
   validates :price, presence: true, numericality: { greater_than: 0.00 }
   validates :event_id, :user_id, presence: true
   validate :user_profile_completed
-
-
-  def Registration.for_events_to_come
-    # Require to modify 'config/database.yml'
-    # Add a new key under default config
-    # variables:
-    #   sql_mode: traditional
-    #
-    # Without that, ActiveRecord will throw an error on the 'group by' statement
-    Event.joins(:registrations).where(['events.start_date > ?', DateTime.now]).group('events.name')
-  end
-
-  def Registration.for_every_events
-    Registration.joins(:event).order('events.start_date')
-  end
 
 
   ###################################################################################################

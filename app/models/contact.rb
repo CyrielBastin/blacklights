@@ -10,9 +10,10 @@
 #  coordinate_id :bigint
 #
 class Contact < ApplicationRecord
+  include ForbiddenCharacter
 
   belongs_to :coordinate, dependent: :destroy, optional: true
-  has_one :supplier
+  has_many :supplier_contacts, dependent: :destroy
   has_one :location
   has_one :event
   has_one :profile
@@ -28,9 +29,11 @@ class Contact < ApplicationRecord
 
   validates :lastname, :firstname, presence: true,
                                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
+  validate :lastname_is_valid, :firstname_is_valid
   validates :phone_number, presence: true,
                            length: { minimum: min_char_phone_number, message: ERR_MSG[:phone_number_is_too_short] }
   validates :email, presence: true, email: { message: ERR_MSG[:email_is_not_valid] }
+  validate :email_is_valid
 
 
   def full_name
@@ -43,6 +46,24 @@ class Contact < ApplicationRecord
     else
       "#{firstname[0]} #{firstname[1]}"
     end
+  end
+
+  def lastname_is_valid
+    return if lastname.nil?
+
+    errors.add(:lastname, forbidden_ampersand_msg) if contains_forbidden_ampersand?(lastname)
+  end
+
+  def firstname_is_valid
+    return if firstname.nil?
+
+    errors.add(:firstname, forbidden_ampersand_msg) if contains_forbidden_ampersand?(firstname)
+  end
+
+  def email_is_valid
+    return if email.nil?
+
+    errors.add(:email, forbidden_ampersand_msg) if contains_forbidden_ampersand?(email)
   end
 
 end

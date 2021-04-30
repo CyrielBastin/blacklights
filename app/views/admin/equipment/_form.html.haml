@@ -6,18 +6,24 @@
           %h5
             Veuillez remplir toutes les informations concernant votre matériel
         .ibox-content
-          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
+          .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @equipment], validate: true, html: {class: 'form-horizontal'} do |equipment_form|
             .row
-              %label.col-sm-2.control-label Nom <span class="red">*</span>
+              %label.col-sm-2.control-label
+                Nom
+                %span.red *
               .col-sm-3
                 = equipment_form.text_field :name, class: 'form-control bg-contrast'
-              %label.col-sm-2.control-label Prix/unité (en €) <span class="red">*</span>
+              %label.col-sm-2.control-label
+                Prix/unité (en €)
+                %span.red *
               .col-sm-3
                 = equipment_form.text_field :unit_price, class: 'form-control bg-contrast'
 
             .row.mt-30
-              %label.col-sm-2.control-label Description <span class="red">*</span>
+              %label.col-sm-2.control-label
+                Description
+                %span.red *
               .col-sm-8
                 = equipment_form.text_area :description, class: 'form-control bg-contrast'
 
@@ -25,7 +31,9 @@
               .search-container.col-sm-5
                 .row
                   .search-input
-                    %label.control-label.col-sm-5 Catégorie <span class="red">*</span>
+                    %label.control-label.col-sm-5
+                      Catégorie
+                      %span.red *
                     .field_with_errors
                       = equipment_form.hidden_field :category_id, class: 'list-Category_ids'
                       %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', type: 'text', placeholder: 'Rechercher par nom'}
@@ -33,36 +41,40 @@
                         %label.message{'for': 'equipment_category_id'}
                           = epurate_err_msg(:Category, message)
                   .search-results.search-results-Category.col-sm-7.hidden
-                    - Category.all.each do |c|
+                    - Category.for_equipment.each do |c|
                       %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
                         = c[:name]
                   .search-chosen#search-chosen-Category.col-sm-7
                     - if @equipment[:category_id].present?
-                      .item-selected{id: "for-Category-#{@equipment[:category_id]}"}
+                      .item-selected.item-selected-Category{id: "for-Category-#{@equipment[:category_id]}"}
                         %div
                           = @equipment.category[:name]
 
               .search-container.col-sm-5
                 .row
                   .search-input
-                    %label.control-label.col-sm-5 Fournisseur <span class="red">*</span>
+                    %label.control-label.col-sm-5
+                      Fournisseur
+                      %span.red *
                     .field_with_errors
                       = equipment_form.hidden_field :supplier_id, class: 'list-Supplier_ids'
-                      %input.form-control.bg-contrast{id: 'search-input-Supplier', 'data-model': 'Supplier', type: 'text', placeholder: 'Rechercher par entreprise ou nom'}
+                      %input.form-control.bg-contrast{id: 'search-input-Supplier', 'data-model': 'Supplier', type: 'text', placeholder: 'Rechercher par nom'}
                       - @equipment.errors.full_messages_for(:supplier_id).each do |message|
                         %label.message{'for': 'equipment_supplier_id'}
                           = epurate_err_msg(:Supplier, message)
                   .search-results.search-results-Supplier.col-sm-7.hidden
-                    - Supplier.all.each do |c|
-                      %p.result-item.result-item-Supplier.hidden{id: "Supplier-#{c[:id]}"}
-                        = c[:name]
+                    - Supplier.all.each do |s|
+                      %p.result-item.result-item-Supplier.hidden{id: "Supplier-#{s[:id]}"}
+                        = "#{s[:name]}, #{s[:country]}"
+                        %br
+                        = s[:phone_number]
                   .search-chosen#search-chosen-Supplier.col-sm-7
                     - if @equipment[:supplier_id].present?
-                      .item-selected{id: "for-Supplier-#{@equipment[:supplier_id]}"}
+                      .item-selected.item-selected-Supplier{id: "for-Supplier-#{@equipment[:supplier_id]}"}
                         %div
-                          = @equipment.supplier[:name]
+                          = "#{@equipment.supplier[:name]}, #{@equipment.supplier[:country]}"
                           %br
-                          = @equipment.supplier.contact.full_name
+                          = @equipment.supplier[:phone_number]
 
 
             %fieldset{style: 'margin-top: 130px'}

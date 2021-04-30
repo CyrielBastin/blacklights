@@ -69,6 +69,7 @@ class Admin::EquipmentController < AdminController
   def update_params
     params[:equipment][:category_id] = params[:equipment][:category_id].split(',')[0]
     params[:equipment][:supplier_id] = params[:equipment][:supplier_id].split(',')[0]
+    params[:equipment][:unit_price] = to_english_repr(params[:equipment][:unit_price])
   end
 
 end
