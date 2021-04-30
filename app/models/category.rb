@@ -22,11 +22,6 @@ class Category < ApplicationRecord
 
   enumerize :type, in: %i[equipment activity event]
 
-  min_char_name = 5
-  ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères" }.freeze
-
-  validates :name, presence: true,
-                   length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
   validate :name_is_valid
   validates :type, presence: true
 
