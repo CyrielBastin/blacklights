@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_212510) do
+ActiveRecord::Schema.define(version: 2021_04_30_144418) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -44,40 +44,6 @@ ActiveRecord::Schema.define(version: 2021_04_29_212510) do
     t.index ["parent_id"], name: "index_categories_on_parent_id"
   end
 
-  create_table "consortia", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.string "name"
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_consortia_on_category_id"
-  end
-
-  create_table "consortium_activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "association_id"
-    t.bigint "activity_id"
-    t.index ["activity_id"], name: "index_consortium_activities_on_activity_id"
-    t.index ["association_id"], name: "index_consortium_activities_on_association_id"
-  end
-
-  create_table "consortium_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "association_id"
-    t.bigint "event_id"
-    t.index ["association_id"], name: "index_consortium_events_on_association_id"
-    t.index ["event_id"], name: "index_consortium_events_on_event_id"
-  end
-
-  create_table "consortium_locations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "association_id"
-    t.bigint "location_id"
-    t.index ["association_id"], name: "index_consortium_locations_on_association_id"
-    t.index ["location_id"], name: "index_consortium_locations_on_location_id"
-  end
-
-  create_table "consortium_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "association_id"
-    t.bigint "user_id"
-    t.index ["association_id"], name: "index_consortium_users_on_association_id"
-    t.index ["user_id"], name: "index_consortium_users_on_user_id"
-  end
-
   create_table "contacts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "lastname"
     t.string "firstname"
@@ -99,6 +65,40 @@ ActiveRecord::Schema.define(version: 2021_04_29_212510) do
     t.decimal "length", precision: 10, scale: 3
     t.decimal "height", precision: 10, scale: 3
     t.decimal "weight", precision: 10, scale: 3
+  end
+
+  create_table "entities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.string "name"
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_entities_on_category_id"
+  end
+
+  create_table "entity_activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "entity_id"
+    t.bigint "activity_id"
+    t.index ["activity_id"], name: "index_entity_activities_on_activity_id"
+    t.index ["entity_id"], name: "index_entity_activities_on_entity_id"
+  end
+
+  create_table "entity_events", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "entity_id"
+    t.bigint "event_id"
+    t.index ["entity_id"], name: "index_entity_events_on_entity_id"
+    t.index ["event_id"], name: "index_entity_events_on_event_id"
+  end
+
+  create_table "entity_locations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "entity_id"
+    t.bigint "location_id"
+    t.index ["entity_id"], name: "index_entity_locations_on_entity_id"
+    t.index ["location_id"], name: "index_entity_locations_on_location_id"
+  end
+
+  create_table "entity_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+    t.bigint "entity_id"
+    t.bigint "user_id"
+    t.index ["entity_id"], name: "index_entity_users_on_entity_id"
+    t.index ["user_id"], name: "index_entity_users_on_user_id"
   end
 
   create_table "equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -199,11 +199,11 @@ ActiveRecord::Schema.define(version: 2021_04_29_212510) do
     t.index ["user_id"], name: "index_registrations_on_user_id"
   end
 
-  create_table "supplier_contacts", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
+  create_table "supplier_users", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "supplier_id"
-    t.bigint "contact_id"
-    t.index ["contact_id"], name: "index_supplier_contacts_on_contact_id"
-    t.index ["supplier_id"], name: "index_supplier_contacts_on_supplier_id"
+    t.bigint "user_id"
+    t.index ["supplier_id"], name: "index_supplier_users_on_supplier_id"
+    t.index ["user_id"], name: "index_supplier_users_on_user_id"
   end
 
   create_table "suppliers", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

@@ -32,7 +32,7 @@ class Event < ApplicationRecord
   has_many :event_equipment, dependent: :destroy
   has_many :registrations, dependent: :destroy
   has_many :event_categories, dependent: :destroy
-  has_many :consortium_events, dependent: :destroy
+  has_many :entity_events, dependent: :destroy
 
 
   enumerize :type, in: %i[private public], predicates: true, scope: true
