@@ -26,7 +26,6 @@ class Admin::EventsController < AdminController
   def create
     @event = Event.new(event_params)
     add_equipment
-    add_categories
     if @event.save
       flash[:success] = 'Votre évènement a été crée avec succès !'
       redirect_to admin_events_path
@@ -52,7 +51,6 @@ class Admin::EventsController < AdminController
   def update
     @event = Event.find(params[:id])
     add_equipment
-    add_categories
     if @event.update(event_params)
       flash[:success] = 'Votre évènement a été modifié avec succès !'
       redirect_to admin_events_path
@@ -117,15 +115,6 @@ class Admin::EventsController < AdminController
     list_equipment.each do |eq_q|
       unless eq_q[1].empty?
         @event.event_equipment << EventEquipment.new(event_id: @event, equipment_id: eq_q[0], quantity: eq_q[1])
-      end
-    end
-  end
-
-  def add_categories
-    @event.event_categories = []
-    params[:event][:event_category_ids].each do |e_id|
-      unless e_id.empty?
-        @event.event_categories << EventCategory.new(event_id: @event, category_id: e_id)
       end
     end
   end
