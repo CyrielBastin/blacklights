@@ -8,21 +8,39 @@
 #
 class Category < ApplicationRecord
   extend Enumerize
+  include ForbiddenCharacter
 
-  scope :for_event, -> { where('category_for = Evènement') }
-  scope :for_equipment, -> { where('category_for = Matériel') }
+  scope :for_equipment, -> { where(['type = ?', :equipment]) }
+  scope :for_activity, -> { where(['type = ?', :activity]) }
+  scope :for_event, -> { where(['type = ?', :event]) }
+  scope :to_export, -> { where('parent_id is null').order(:category_for) }
 
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'
-  enumerize :category_for, in: %w[Matériel Evènement]
   has_many :equipment
-  has_many :events
+  has_many :activity_categories, dependent: :destroy
+  has_many :event_categories, dependent: :destroy
+  has_many :consortia
+
+  enumerize :type, in: %i[equipment activity event]
 
   min_char_name = 5
   ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères" }.freeze
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
-  validates :category_for, presence: true
+  validate :name_is_valid
+  validates :type, presence: true
+
+
+  def name_is_valid
+    return if name.nil?
+
+    errors.add(:name, forbidden_ampersand_msg) if contains_forbidden_ampersand?(name)
+  end
+
+  def self.inheritance_column
+    nil
+  end
 
 end

@@ -1,0 +1,24 @@
+.title-group-btns {
+  display: flex;
+  justify-content: flex-end;
+
+  .import-container {
+    display: flex;
+    align-items: center;
+    border: dotted 1px #c4c0c0;
+    margin-right: 80px;
+    margin-top: -5px;
+
+    .btn-import {
+      margin-bottom: 0;
+
+      &:hover {
+        font-weight: bold;
+      }
+    }
+  }
+
+  a {
+    margin-left: 50px;
+  }
+}

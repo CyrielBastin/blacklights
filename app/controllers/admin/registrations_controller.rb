@@ -41,15 +41,20 @@ class Admin::RegistrationsController < AdminController
   end
 
   def confirm
-    @registration = Registration.find(params[:registration_id])
-    case params[:type]
-    when 'confirmation'
-      redirect_to admin_registrations_path if @registration.update(confirmation_datetime: 2.hours.from_now)
-    when 'payment_confirmation'
-      @registration[:confirmation_datetime] = 2.hours.from_now if @registration[:confirmation_datetime].nil?
-      redirect_to admin_registrations_path if @registration.update(payment_confirmation_datetime: 2.hours.from_now)
-    else
+    if params[:registration_id] == 'multiple'
+      set_multiple_confirmation
       redirect_to admin_registrations_path
+    else
+      @registration = Registration.find(params[:registration_id])
+      case params[:type]
+      when 'confirmation'
+        redirect_to admin_registrations_path if @registration.update(confirmation_datetime: 2.hours.from_now)
+      when 'payment_confirmation'
+        @registration[:confirmation_datetime] = 2.hours.from_now if @registration[:confirmation_datetime].nil?
+        redirect_to admin_registrations_path if @registration.update(payment_confirmation_datetime: 2.hours.from_now)
+      else
+        redirect_to admin_registrations_path
+      end
     end
   end
 
@@ -81,6 +86,13 @@ class Admin::RegistrationsController < AdminController
   def update_params
     params[:registration][:event_id] = params[:registration][:event_id].split(',')[0]
     params[:registration][:user_id] = params[:registration][:user_id].split(',')[0]
+  end
+
+  def set_multiple_confirmation
+    params[:list_registration_ids].each do |r_id|
+      r = Registration.find(r_id)
+      r.update(confirmation_datetime: 2.hours.from_now) if r[:confirmation_datetime].nil?
+    end
   end
 
 end

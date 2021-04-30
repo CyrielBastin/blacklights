@@ -14,14 +14,13 @@
         .ibox-title
           %h5 L'ensemble des activités définies
           .ibox-tools
-            = link_to "Nouvelle activité", new_admin_activity_path, class: "btn btn-primary"
-            = link_to 'Exporter', admin_activities_path(format: :xlsx), class: 'btn btn-info' if @activities.size > 0
-            %br
-          = form_tag admin_import_activities_path, method: :post, multipart: true do
-            %fieldset
-              %legend Importer des données
-              = file_field_tag :file
-              = submit_tag "Importer", class: "btn btn-success mt-20"
+            = form_tag admin_import_activities_path, method: :post, multipart: true do
+              .title-group-btns
+                .import-container
+                  = file_field_tag :file
+                  = submit_tag 'Importer', class: 'btn btn-success btn-import'
+                = link_to 'Nouvelle activité', new_admin_activity_path, class: 'btn btn-primary'
+                = link_to 'Exporter', admin_activities_path(format: :xlsx), class: 'btn btn-info' if @activities.size > 0
         .ibox-content
           - if @activities.size > 0
             .project-list
@@ -29,16 +28,32 @@
                 %thead
                   %th Nom
                   %th Description
+                  %th Catégories
+                  %th Partie publique du site ?
                   %th Actions
                 %tbody
                   - @activities.each do |activity|
                     %tr
                       %td.project-title
                         %b
-                          = activity.name
+                          = activity[:name]
 
                       %td
-                        = activity.description.present? ? activity.description.truncate(100) : "-"
+                        = activity[:description].truncate(100)
+
+                      %td
+                        - if activity.activity_categories.present?
+                          - activity.activity_categories.each do |ac_c|
+                            = "- #{ac_c.category[:name]}"
+                            %br
+                        - else
+                          .red Aucune catégorie définie
+
+                      %td
+                        - if activity[:public_display]
+                          = 'Oui'
+                        - else
+                          .red Non
 
                       %td.project-actions
                         .btn-group

@@ -59,9 +59,24 @@
             .col-sm-2.details-title Max. participant :
             .col-sm-2
               = @event[:max_participant]
-            .col-sm-2.details-title Prix :
+            .col-sm-2.details-title Prix (€) :
             .col-sm-2
-              = "#{to_french_repr(@event[:price])} €"
+              = to_french_repr(@event[:price])
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Type :
+            .col-sm-2
+              = @event[:type].text
+            .col-sm-2.details-title Catégories :
+            - if @event.event_categories.present?
+              .col-sm-4.details-multiple
+                - @event.event_categories.each do |ev_c|
+                  = "- #{ev_c.category[:name]}"
+                  %br
+            - else
+              .col-sm-4.red
+                Aucune catégorie définie
 
           .hr-line-dashed
           .row.details-show.details-item
@@ -78,10 +93,10 @@
             - if @event.event_equipment.present?
               .col-sm-3.details-multiple
                 - @event.event_equipment.each do |ev_eq|
-                  = "#{ev_eq.equipment[:name]} (#{ev_eq[:quantity]})"
+                  = "#{ev_eq.equipment[:name]} (#{ev_eq[:quantity].to_i})"
                   %br
             - else
-              .col-sm-4.red
+              .col-sm-3.red
                 Aucun matériel défini
 
           .hr-line-dashed

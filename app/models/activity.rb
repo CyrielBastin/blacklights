@@ -16,8 +16,9 @@ class Activity < ApplicationRecord
 
   has_many :event_activities, dependent: :destroy
   has_many :location_activities, dependent: :destroy
-  has_many :activity_equipment, dependent: :destroy, inverse_of: :activity
-  accepts_nested_attributes_for :activity_equipment, allow_destroy: true
+  has_many :activity_equipment, dependent: :destroy
+  has_many :activity_categories, dependent: :destroy
+  has_many :consortium_activities, dependent: :destroy
 
   min_char_name = 4
   min_char_desc = 10
@@ -42,6 +43,7 @@ class Activity < ApplicationRecord
     return if name.nil?
 
     errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
+    errors.add(:name, forbidden_ampersand_msg) if contains_forbidden_ampersand?(name)
   end
 
   ####################################################################################################

@@ -6,10 +6,12 @@
           %h5
             Veuillez remplir toutes les informations concernant votre activité
         .ibox-content
-          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
+          .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin,@category], validate: true, html: {class: "form-horizontal"} do |f|
             .row
-              %label.col-sm-2.control-label Nom <span class="red">*</span>
+              %label.col-sm-2.control-label
+                Nom
+                %span.red *
               .col-sm-2{style: 'margin-right: 30px'}
                 = f.text_field :name, class: 'form-control bg-contrast'
 
@@ -17,23 +19,25 @@
                 .row
                   .search-input
                     %label.control-label.col-sm-5 Catégorie parente
-                    %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-null': 'true', type: 'text', placeholder: 'Rechercher par nom'}
                     = f.hidden_field :parent_id, class: 'list-Category_ids'
+                    %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-null': 'true', type: 'text', placeholder: 'Rechercher par nom'}
                   .search-results.search-results-Category.col-sm-7.hidden
                     - Category.all.each do |c|
                       %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
                         = c[:name]
                   .search-chosen#search-chosen-Category.col-sm-7
                     - if @category[:parent_id].present?
-                      .item-selected{id: "for-Category-#{@category[:parent_id]}"}
-                        %i.fas.fa-ban.delete-selected{style: 'color: red'}
+                      .item-selected.item-selected-Category{id: "for-Category-#{@category[:parent_id]}"}
+                        %i.fas.fa-ban.delete-selected.delete-selected-Category{style: 'color: red'}
                         %div
                           = @category.parent[:name]
 
             .row.mt-30
-              %label.col-sm-2.control-label Catégorie pour <span class="red">*</span>
+              %label.col-sm-2.control-label
+                Type
+                %span.red *
               .col-sm-2
-                = f.select :category_for, Category.category_for.options, {}, class: 'form-control bg-contrast required'
+                = f.select :type, Category.type.options, {}, class: 'form-control bg-contrast required'
 
 
             .form-group.mt-50

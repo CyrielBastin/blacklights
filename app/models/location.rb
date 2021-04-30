@@ -13,15 +13,19 @@
 #
 class Location < ApplicationRecord
   include ForbiddenCharacter
+  extend Enumerize
 
   default_scope -> { order(:name) }
 
   belongs_to :contact, dependent: :destroy
   belongs_to :dimension, dependent: :destroy
   has_many :location_activities, dependent: :destroy
+  has_many :consortium_locations, dependent: :destroy
   has_many :events
 
   accepts_nested_attributes_for :contact, :dimension, :location_activities
+
+  enumerize :type, in: %i[private public], predicates: true, scope: true
 
   min_char_name = 3
   min_capacity = 0
@@ -46,12 +50,14 @@ class Location < ApplicationRecord
 
     errors.add(:name, forbidden_char_msg) if contains_forbidden_char?(name)
     errors.add(:name, forbidden_comma_msg) if contains_forbidden_comma?(name)
+    errors.add(:name, forbidden_ampersand_msg) if contains_forbidden_ampersand?(name)
   end
 
   def city_is_valid
     return if city.nil?
 
     errors.add(:city, forbidden_comma_msg) if contains_forbidden_comma?(city)
+    errors.add(:city, forbidden_ampersand_msg) if contains_forbidden_ampersand?(city)
   end
 
   def name_plus_city

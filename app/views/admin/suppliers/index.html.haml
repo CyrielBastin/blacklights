@@ -14,37 +14,52 @@
         .ibox-title
           %h5 L'ensemble des fournisseurs définis
           .ibox-tools
-            = link_to "Nouveau fournisseur", new_admin_supplier_path, class: "btn btn-primary"
-            = link_to 'Exporter', admin_suppliers_path(format: :xlsx), class: 'btn btn-info btn-export-model' if @suppliers.size > 0
-            %br
-          = form_tag admin_import_suppliers_path, method: :post, multipart: true do
-            %fieldset
-              %legend Importer des données
-              = file_field_tag :file
-              = submit_tag "Importer", class: "btn btn-success mt-20"
+            = form_tag admin_import_suppliers_path, method: :post, multipart: true do
+              .title-group-btns
+                .import-container
+                  = file_field_tag :file
+                  = submit_tag 'Importer', class: 'btn btn-success btn-import'
+                = link_to 'Nouveau fournisseur', new_admin_supplier_path, class: 'btn btn-primary'
+                = link_to 'Exporter', admin_suppliers_path(format: :xlsx), class: 'btn btn-info' if @suppliers.size > 0
         .ibox-content
           - if @suppliers.size > 0
             .project-list
               %table.table.table-hover.table-striped.dataTables
                 %thead
-                  %th{width: '20%'} Nom
-                  %th{width: '30%'} Contact
-                  %th{width: '25%'} Coordonnées
-                  %th{width: '25%'} Actions
+                  %th Nom
+                  %th Informations
+                  %th Contacts
+                  %th Actions
                 %tbody
                   - @suppliers.each do |supplier|
                     %tr
                       %td.project-title
                         %b
-                          = supplier.name
+                          = supplier[:name]
+
                       %td
-                        = "#{supplier.contact.lastname} #{supplier.contact.firstname}"
+                        = "email : #{supplier[:email]}"
                         %br
-                        = "#{supplier.contact.email} - #{supplier.contact.phone_number}"
+                        = "tél. : #{supplier[:phone_number]}"
+                        - if supplier[:city].present? && supplier[:zip_code].present?
+                          %br
+                          = supplier.loc_details
+                        - else
+                          %br
+                            = supplier[:country]
+
                       %td
-                        = "#{supplier.contact.coordinate.street}"
-                        %br
-                        = "#{supplier.contact.coordinate.zip_code} - #{supplier.contact.coordinate.city}"
+                        - if supplier.supplier_contacts.present?
+                          - supplier.supplier_contacts.each do |s_c|
+                            = s_c.contact.full_name
+                            %br
+                            = "#{s_c.contact[:email]}, #{s_c.contact[:phone_number]}"
+                            %br
+                            = '-------------------------------------------------'
+                        - else
+                          .red
+                            Aucun contact supplémentaire
+
                       %td.project-actions
                         .btn-group
                           %button.btn.btn-success.dropdown-toggle{"data-toggle" => "dropdown"}

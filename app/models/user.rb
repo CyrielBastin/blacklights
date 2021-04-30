@@ -29,16 +29,20 @@
 #  invitations_count      :integer          default(0)
 #
 class User < ApplicationRecord
+  include ForbiddenCharacter
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :invitable
 
-  validates :email, presence: true
+  scope :active, -> { where('deleted_at is null') }
 
+  validates :email, presence: true
+  validate :email_is_valid
   validates_uniqueness_of :email
 
 
+  has_many :consortium_users, dependent: :destroy
   has_many :registrations, dependent: :destroy
   has_one :profile, inverse_of: :user, dependent: :destroy
   has_one :contact, through: :profile
@@ -60,4 +64,11 @@ class User < ApplicationRecord
     return false if skip_password_validation
     super
   end
+
+  def email_is_valid
+    return if email.nil?
+
+    errors.add(:email, forbidden_ampersand_msg) if contains_forbidden_ampersand?(email)
+  end
+
 end

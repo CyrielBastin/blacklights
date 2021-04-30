@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     resources :suppliers, concerns: :paginatable
     post 'import_suppliers', to: 'suppliers#import'
     resources :registrations, concerns: :paginatable do
-      patch 'confirm'
+      post 'confirm'
     end
     post 'import_registrations', to: 'registrations#import'
     get '/json/location_activities/:loc_id', to: 'activities#location_activities_json'

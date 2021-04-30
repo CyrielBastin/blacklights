@@ -6,28 +6,38 @@
           %h5
             Veuillez remplir toutes les informations concernant l'utilisateur
         .ibox-content
-          .red{style: 'margin-bottom: 20px'} Les champs marqués de (*) sont obligatoires
+          .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @user], validate: true, html: {class: 'form-horizontal'} do |f|
             = f.fields_for :profile, f.object.profile.present? ? f.object.profile : Profile.new do |profile_form|
               = profile_form.fields_for :contact, profile_form.object.contact.present? ? profile_form.object.contact : Contact.new do |contact_form|
                 .row
-                  %label.col-sm-1.control-label Email <span class="red">*</span>
+                  %label.col-sm-1.control-label
+                    Email
+                    %span.red *
                   .col-sm-3
                     = f.text_field :email, class: 'form-control bg-contrast required', disabled: f.object.confirmed?
                     = f.hidden_field :skip_password_validation, value: true
-                  %label.col-sm-1.control-label Nom <span class="red">*</span>
+                  %label.col-sm-1.control-label
+                    Nom
+                    %span.red *
                   .col-sm-3
                     = contact_form.text_field :lastname, class: 'form-control bg-contrast required'
-                  %label.col-sm-1.control-label Prénom <span class="red">*</span>
+                  %label.col-sm-1.control-label
+                    Prénom
+                    %span.red *
                   .col-sm-3
                     = contact_form.text_field :firstname, class: 'form-control bg-contrast required'
                     = contact_form.hidden_field :email, value: 'hello@world.net'
 
                 .row.mt-30
-                  %label.col-sm-1.control-label Tél. <span class="red">*</span>
+                  %label.col-sm-1.control-label
+                    Tél.
+                    %span.red *
                   .col-sm-3
                     = contact_form.text_field :phone_number, class: 'form-control bg-contrast required'
-                  %label.col-sm-1.control-label Sexe <span class="red">*</span>
+                  %label.col-sm-1.control-label
+                    Sexe
+                    %span.red *
                   .col-sm-3
                     = profile_form.select :gender, Profile.gender.options, {include_blank: true}, {class: 'form-control bg-contrast required'}
 
