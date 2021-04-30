@@ -31,7 +31,7 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :event_activities, allow_destroy: true
   has_many :event_equipment, dependent: :destroy
   has_many :registrations, dependent: :destroy
-  has_many :event_categories, dependent: :destroy
+  belongs_to :category
   has_many :consortium_events, dependent: :destroy
 
 

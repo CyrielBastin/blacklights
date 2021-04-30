@@ -17,7 +17,7 @@ class Activity < ApplicationRecord
   has_many :event_activities, dependent: :destroy
   has_many :location_activities, dependent: :destroy
   has_many :activity_equipment, dependent: :destroy
-  has_many :activity_categories, dependent: :destroy
+  belongs_to :category
   has_many :consortium_activities, dependent: :destroy
 
   min_char_name = 4

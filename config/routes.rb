@@ -34,7 +34,7 @@ Rails.application.routes.draw do
 
   root to: 'public#index'
 
-  get "activities", to: "public#activities"
+  resources :activities
   resources :events
   get "events", to: "public#events"
   get "about", to: "public#about"

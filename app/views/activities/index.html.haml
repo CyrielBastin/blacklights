@@ -1,0 +1,37 @@
+%section.breadcrumbs-custom.bg-image.context-dark.scroll-handler{:style => "background-image: #{asset_path('bg-breadcrumbs.jpg')};"}
+  .image-overlay{"data-canvas-src" => asset_path("bg-breadcrumbs.jpg"), :style => "background-image: #{asset_path('bg-breadcrumbs.jpg')};"}
+  .breadcrumbs-main
+    .container
+      %h2.breadcrumbs-custom-title.scroll-title Team Member
+  .breadcrumbs-panel
+    .container
+      %ul.breadcrumbs-custom-path
+        %li
+          %a{:href => "index.html"} Home
+        %li
+          %a{:href => "#"} About
+        %li.active Team Member
+
+%section.section.section-xl.bg-default.text-center
+  .container
+    -@categories.each do |category|
+      %h2 Evènements sportifs
+      .row.row-xl.row-30
+        -@activities.where(category_id: category.id).each do |activity|
+          .col-sm-6.col-lg-4
+            / Team
+            %article.team.block-md
+              %img.team-image{:alt => "", :height => "314", :src => asset_path("team-1-370x314.jpg"), :width => "370"}/
+              .team-content
+                %div
+                  .team-position Founder, Director
+                  .heading-5.team-name
+                    %a{:href => activity_path(activity)}
+                      = activity.name
+                  %ul.team-list-social.list-social.list-inline.list-inline-sm
+                    %li
+                      %a.icon.mdi.mdi-facebook{:href => "#"}
+                    %li
+                      %a.icon.mdi.mdi-instagram{:href => "#"}
+                    %li
+                      %a.icon.mdi.mdi-twitter{:href => "#"}

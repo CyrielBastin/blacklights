@@ -87,19 +87,20 @@
                   .row
                     .search-input
                       %label.control-label.col-sm-5 Catégorie
-                      = event_form.hidden_field :event_category_ids, class: 'list-Category_ids'
-                      %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
-                    .search-results.search-results-Category.col-sm-7.hidden
-                      - Category.for_event.each do |c|
-                        %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
-                          = c[:name]
-                    .search-chosen#search-chosen-Category.col-sm-7
-                      - if @event.event_categories.present?
-                        - @event.event_categories.each do |ev_c|
-                          .item-selected.item-selected-Category{id: "for-Category-#{ev_c.category[:id]}"}
-                            %i.fas.fa-ban.delete-selected.delete-selected-Category{style: 'color: red'}
-                            %div
-                              = ev_c.category[:name]
+                      = event_form.select :category_id, options_from_collection_for_select(Category.for_event, :id, :name, @event.category_id), { prompt: 'Sélectionnez une catégorie' }, class: 'form-control bg-contrast'
+                    -#   = event_form.hidden_field :event_category_ids, class: 'list-Category_ids'
+                    -#   %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    -# .search-results.search-results-Category.col-sm-7.hidden
+                    -#   - Category.for_event.each do |c|
+                    -#     %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
+                    -#       = c[:name]
+                    -# .search-chosen#search-chosen-Category.col-sm-7
+                    -#   - if @event.event_categories.present?
+                    -#     - @event.event_categories.each do |ev_c|
+                    -#       .item-selected.item-selected-Category{id: "for-Category-#{ev_c.category[:id]}"}
+                    -#         %i.fas.fa-ban.delete-selected.delete-selected-Category{style: 'color: red'}
+                    -#         %div
+                    -#           = ev_c.category[:name]
 
             %fieldset.mt-180
               %legend Activités
