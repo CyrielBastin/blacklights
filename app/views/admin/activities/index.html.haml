@@ -42,10 +42,8 @@
                         = activity[:description].truncate(100)
 
                       %td
-                        - if activity.activity_categories.present?
-                          - activity.activity_categories.each do |ac_c|
-                            = "- #{ac_c.category[:name]}"
-                            %br
+                        - if activity.category.present?
+                          - activity.category.name
                         - else
                           .red Aucune catégorie définie
 

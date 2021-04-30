@@ -10,21 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_30_144418) do
+ActiveRecord::Schema.define(version: 2021_04_30_152735) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
+    t.integer "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "public_display"
-  end
-
-  create_table "activity_categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "activity_id"
-    t.bigint "category_id"
-    t.index ["activity_id"], name: "index_activity_categories_on_activity_id"
-    t.index ["category_id"], name: "index_activity_categories_on_category_id"
   end
 
   create_table "activity_equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -116,16 +110,9 @@ ActiveRecord::Schema.define(version: 2021_04_30_144418) do
   create_table "event_activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "activity_id"
-    t.integer "simultaneous_activities"
+    t.integer "quantity"
     t.index ["activity_id"], name: "index_event_activities_on_activity_id"
     t.index ["event_id"], name: "index_event_activities_on_event_id"
-  end
-
-  create_table "event_categories", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
-    t.bigint "event_id"
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_event_categories_on_category_id"
-    t.index ["event_id"], name: "index_event_categories_on_event_id"
   end
 
   create_table "event_equipment", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -145,6 +132,7 @@ ActiveRecord::Schema.define(version: 2021_04_30_144418) do
     t.integer "min_participant"
     t.integer "max_participant"
     t.bigint "contact_id"
+    t.integer "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
