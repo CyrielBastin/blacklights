@@ -1,0 +1,73 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Associations
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li
+        %a{:href => admin_entities_path} Associations
+      %li.active
+        %strong
+          = @entity[:name]
+
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Informations sur l'association
+        .ibox-content
+          .row.details-show.details-item
+            .col-sm-2.details-title Nom :
+            .col-sm-4{style: 'font-size: xx-large'}
+              = @entity[:name]
+            .col-sm-2.details-title Catégorie :
+            .col-sm-4
+              - if @entity.category.present?
+                = @entity.category[:name]
+              - else
+                %span.red Aucune catégorie définie
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Utilisateurs :
+            .col-sm-4.details-multiple
+              - if @entity.entity_users.present?
+                - @entity.entity_users.each do |e_u|
+                  = "#{e_u.user.contact.full_name} (#{e_u.user[:email]})"
+                  %br
+              - else
+                %span.red Aucun utilisateur défini
+            .col-sm-2.details-title Lieux :
+            .col-sm-4.details-multiple
+              - if @entity.entity_locations.present?
+                - @entity.entity_locations.each do |e_l|
+                  = "#{e_l.location.name_plus_city} (#{e_l.location[:zip_code]})"
+                  %br
+              - else
+                %span.red Aucun lieu défini
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Activités :
+            .col-sm-4.details-multiple
+              - if @entity.entity_activities.present?
+                - @entity.entity_activities.each do |e_a|
+                  = e_a.activity[:name]
+                  %br
+              - else
+                %span.red Aucune activité définie
+            .col-sm-2.details-title Evènements :
+            .col-sm-4.details-multiple
+              - if @entity.entity_events.present?
+                - @entity.entity_events.each do |e_e|
+                  = "#{e_e.event[:name]} (#{e_e.event.location[:city]})"
+                  %br
+              - else
+                %span.red Aucun évènement défini
+
+
+          .details-btns
+            = link_to 'Modifier', edit_admin_entity_path(@entity[:id]), class: 'btn btn-lg details-btn-update'
+            = link_to 'Supprimer', admin_entity_path(@entity[:id]), class: 'btn btn-lg details-btn-delete', method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cette association ?" }

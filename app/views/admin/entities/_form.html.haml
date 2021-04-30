@@ -1,0 +1,136 @@
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5
+            Veuillez remplir toutes les informations concernant votre association
+        .ibox-content
+          .red.mb-20 Les champs marqués de (*) sont obligatoires
+          = form_for [:admin, @entity], validate: true, html: {class: 'form-horizontal'} do |entity_form|
+            %fieldset
+              %legend Informations
+              .row
+                %label.col-sm-2.control-label
+                  Nom
+                  %span.red *
+                .col-sm-3
+                  = entity_form.text_field :name, class: 'form-control bg-contrast'
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5
+                        Catégorie
+                        %span.red *
+                      .field_with_errors
+                        = entity_form.hidden_field :category_id, class: 'list-Category_ids'
+                        %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', type: 'text', placeholder: 'Rechercher par nom'}
+                        - @entity.errors.full_messages_for(:category_id).each do |message|
+                          %label.message{'for': 'entity_category_id'}
+                            = epurate_err_msg(:Category, message)
+                    .search-results.search-results-Category.col-sm-7.hidden
+                      - Category.all.each do |c|
+                        %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
+                          = c[:name]
+                    .search-chosen#search-chosen-Category.col-sm-7
+                      - if @entity.category.present?
+                        .item-selected.item-selected-Category{id: "for-Category-#{@entity.category[:id]}"}
+                          %div
+                            = @entity.category[:name]
+
+            %fieldset{style: 'margin-top: 130px'}
+              %legend Utilisateurs et lieux
+              .row.mt-30
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Utilisateur
+                      = entity_form.hidden_field :entity_user_ids, class: 'list-User_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom, email'}
+                    .search-results.search-results-User.col-sm-7.hidden
+                      - User.all.each do |u|
+                        %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
+                          = u.contact.full_name
+                          %br
+                          = u[:email]
+                    .search-chosen#search-chosen-User.col-sm-7
+                      - if @entity.entity_users.present?
+                        - @entity.entity_users.each do |e_u|
+                          .item-selected.item-selected-User{id: "for-User-#{e_u.user[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-User{style: 'color: red'}
+                            %div
+                              = e_u.user.contact.full_name
+                              %br
+                              = e_u.user[:email]
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Lieu
+                      = entity_form.hidden_field :entity_location_ids, class: 'list-Location_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Location', 'data-model': 'Location', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom, ville, code postal'}
+                    .search-results.search-results-Location.col-sm-7.hidden
+                      - Location.all.each do |l|
+                        %p.result-item.result-item-Location.hidden{id: "Location-#{l[:id]}"}
+                          = l[:name]
+                          %br
+                          = "#{l[:city]}, #{l[:zip_code]}"
+                    .search-chosen#search-chosen-Location.col-sm-7
+                      - if @entity.entity_locations.present?
+                        - @entity.entity_locations.each do |e_l|
+                          .item-selected.item-selected-Location{id: "for-Location-#{e_l.location[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Location{style: 'color: red'}
+                            %div
+                              = e_l.location[:name]
+                              %br
+                              = "#{e_l.location[:city]}, #{e_l.location[:zip_code]}"
+
+            %fieldset.mt-180
+              %legend Activités et evènements
+              .row.mt-30
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Activité
+                      = entity_form.hidden_field :entity_activity_ids, class: 'list-Activity_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Activity', 'data-model': 'Activity', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Activity.col-sm-7.hidden
+                      - Activity.all.each do |a|
+                        %p.result-item.result-item-Activity.hidden{id: "Activity-#{a[:id]}"}
+                          = a[:name]
+                    .search-chosen#search-chosen-Activity.col-sm-7
+                      - if @entity.entity_activities.present?
+                        - @entity.entity_activities.each do |e_a|
+                          .item-selected.item-selected-Activity{id: "for-Activity-#{e_a.activity[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Activity{style: 'color: red'}
+                            %div
+                              = e_a.activity[:name]
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Evènement
+                      = entity_form.hidden_field :entity_event_ids, class: 'list-Event_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Event', 'data-model': 'Event', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom, ville, date'}
+                    .search-results.search-results-Event.col-sm-7.hidden
+                      - Event.to_come.each do |e|
+                        %p.result-item.result-item-Event.hidden{id: "Event-#{e[:id]}"}
+                          = e[:name]
+                          %br
+                          = "#{e.location[:name]}, #{e.location[:city]}"
+                          %br
+                          = date_time_to_french_format(e[:start_date])
+                    .search-chosen#search-chosen-Event.col-sm-7
+                      - if @entity.entity_events.present?
+                        - @entity.entity_events.each do |e_e|
+                          .item-selected.item-selected-Event{id: "for-Event-#{e_e.event[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Event{style: 'color: red'}
+                            %div
+                              = e_e.event[:name]
+                              %br
+                              = "#{e_e.event.location[:name]}, #{e_e.event.location[:city]}"
+                              %br
+                              = date_time_to_french_format(e_e.event[:start_date])
+
+
+            .form-group.mt-180
+              .col-sm-4
+                %button.btn.btn-primary{type: 'submit'} Sauver l'association

@@ -19,13 +19,13 @@
                         %span.red *
                       .field_with_errors
                         = form.hidden_field :event_id, class: 'list-Event_ids'
-                        %input.form-control.bg-contrast{id: 'search-input-Event', 'data-model': 'Event', type: 'text', placeholder: 'Rechercher par nom, lieu, ou date'}
+                        %input.form-control.bg-contrast{id: 'search-input-Event', 'data-model': 'Event', type: 'text', placeholder: 'Rechercher par nom, ville, ou date'}
                         - @registration.errors.full_messages_for(:event_id).each do |message|
                           %label.message{'for': 'registration_event_id'}
                             = epurate_err_msg(:Event, message)
                     .search-results.search-results-Event.col-sm-7.hidden
                       - Event.to_come.each do |e|
-                        %p.result-item.result-item-Event.hidden{id: "Category-#{e[:id]}"}
+                        %p.result-item.result-item-Event.hidden{id: "Event-#{e[:id]}"}
                           = e[:name]
                           %br
                           = e.location.name_plus_city

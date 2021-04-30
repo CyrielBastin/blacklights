@@ -20,6 +20,10 @@
         %a{:href => admin_users_path}
           %i.fa.fa-users.fa-lg
           %span.nav-label Utilisateurs
+      %li{:class => "#{is_active_controller('entities')}"}
+        %a{:href => admin_entities_path}
+          %i.fa.fa-globe.fa-lg
+          %span.nav-label Associations
       %li{:class => "#{is_active_controller('activities')}"}
         %a{:href => admin_activities_path}
           %i.fa.fa-running.fa-lg

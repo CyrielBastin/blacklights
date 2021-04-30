@@ -7,4 +7,8 @@ class Entity < ApplicationRecord
   has_many :entity_activities, dependent: :destroy
   has_many :entity_events, dependent: :destroy
 
+
+  validates :name, presence: true, uniqueness: true
+  validates :category_id, presence: true
+
 end
