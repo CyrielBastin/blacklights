@@ -15,7 +15,8 @@
 %section.section.section-xl.bg-default.text-center
   .container
     -@categories.each do |category|
-      %h2 Evènements sportifs
+      %h2
+        = category.name
       .row.row-xl.row-30
         -@activities.where(category_id: category.id).each do |activity|
           .col-sm-6.col-lg-4
