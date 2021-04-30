@@ -54,7 +54,7 @@
                           %label.message{'for': 'registration_user_id'}
                             = epurate_err_msg(:User, message)
                     .search-results.search-results-User.col-sm-7.hidden
-                      - User.all.each do |u|
+                      - User.active.each do |u|
                         %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
                           = u.contact.full_name
                           %br

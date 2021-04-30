@@ -48,7 +48,7 @@
                       = entity_form.hidden_field :entity_user_ids, class: 'list-User_ids'
                       %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom, email'}
                     .search-results.search-results-User.col-sm-7.hidden
-                      - User.all.each do |u|
+                      - User.active.each do |u|
                         %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
                           = u.contact.full_name
                           %br
