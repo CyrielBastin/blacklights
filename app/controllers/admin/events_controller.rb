@@ -103,7 +103,6 @@ class Admin::EventsController < AdminController
   def update_params
     params[:event][:location_id] = params[:event][:location_id].split(',')[0]
     params[:event][:event_equipment_ids] = params[:event][:event_equipment_ids].split(',')
-    params[:event][:event_category_ids] = params[:event][:event_category_ids].split(',')
     params[:event][:type] = params[:event][:type] == '1' ? 'public' : 'private'
   end
 

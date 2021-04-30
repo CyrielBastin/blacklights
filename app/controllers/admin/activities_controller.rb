@@ -91,7 +91,6 @@ class Admin::ActivitiesController < AdminController
   def update_params
     params[:activity][:location_activity_ids] = params[:activity][:location_activity_ids].split(',')
     params[:activity][:activity_equipment_ids] = params[:activity][:activity_equipment_ids].split(',')
-    params[:activity][:activity_category_ids] = params[:activity][:activity_category_ids].split(',')
   end
 
   def add_locations
