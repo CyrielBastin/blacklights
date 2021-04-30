@@ -20,16 +20,9 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
       post admin_suppliers_url, params:
         { supplier:
           { name: 'Brand_new_supplier',
-            contact_attributes:
-              { lastname: 'Lastname',
-                firstname: 'Firstname',
-                phone_number: '0111/11.11.11',
-                email: 'hello@world.net',
-                coordinate_attributes:
-                  { street: 'Best street ever, 123',
-                    zip_code: 1111,
-                    city: 'My city',
-                    country: 'Welcome to the country' } } } }
+            email: 'superemail@email.com',
+            phone_number: '01 02 03 04 05',
+            country: 'Belgique' } }
     end
 
     assert_equal 'Votre fournisseur a été crée avec succès !', flash[:success]

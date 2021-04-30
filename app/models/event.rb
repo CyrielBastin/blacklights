@@ -37,7 +37,7 @@ class Event < ApplicationRecord
 
   enumerize :type, in: %i[private public], predicates: true, scope: true
 
-  min_char_name = 8
+  min_char_name = 5
   min_participant = 0
   ERR_MSG = { start_date_in_the_past: 'ne peut pas être dans le passé',
               end_date_is_before_start_date: 'doit prendre place après la date de début',
@@ -50,7 +50,7 @@ class Event < ApplicationRecord
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
   validate :name_is_valid
-  validates :start_date, :end_date, :registration_deadline, :location_id, presence: true
+  validates :start_date, :end_date, :registration_deadline, :location_id, :type, presence: true
   validate :start_date_is_in_the_future, :end_date_is_higher_than_start_date, :registration_deadline_is_before_start_date
   validates :price, presence: true
   validates :min_participant, presence: true,

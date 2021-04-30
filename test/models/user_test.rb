@@ -15,6 +15,13 @@ class UserTest < ActiveSupport::TestCase
     assert_not user.save
   end
 
+  test 'should not save a user if \'&\' in email' do
+    user = User.new
+    user[:email] = 'michel&picard@free.fr'
+
+    assert_not user.save
+  end
+
   test 'should save fixture "cain"' do
     assert users(:cain).save
   end

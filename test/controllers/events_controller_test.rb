@@ -27,21 +27,12 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
               # 'start_date(4i)': '08',
               # 'start_date(5i)': '45',
               end_date: '2051-05-21 18:45:21',
-              # 'end_date(3i)': '21',
-              # 'end_date(2i)': '05',
-              # 'end_date(1i)': '2051',
-              # 'end_date(4i)': '18',
-              # 'end_date(5i)': '45',
               registration_deadline: '2051-04-21 08:45:22',
-              # 'registration_deadline(3i)': '21',
-              # 'registration_deadline(2i)': '04',
-              # 'registration_deadline(1i)': '2051',
-              # 'registration_deadline(4i)': '08',
-              # 'registration_deadline(5i)': '45',
               price: 99.99,
               min_participant: 7,
               max_participant: 9,
               location_id: locations(:heaven).id,
+              type: '1',
               contact_attributes:
                 { lastname: 'Lalouche',
                   firstname: 'Jacky',
@@ -54,10 +45,8 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
                       country: 'Belgique' } },
               activity_equipment_attributes: { '0': {
                 equipment_id: equipment(:raquette_de_badminton).id,
-                simultaneous_activities: 5 } },
-              event_equipment_attributes: { '0': {
-                equipment_id: equipment(:raquette_de_badminton).id,
-                quantity: 4 } } } }
+                quantity: 5 } },
+              event_equipment_ids: '' } }
     end
 
     assert_equal 'Votre évènement a été crée avec succès !', flash[:success]
@@ -77,7 +66,9 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
   test 'should update event' do
     patch admin_event_url(@event), params: { event:
                                                { min_participant: 5,
-                                                 location_id: "#{locations(:heaven)[:id]}," } }
+                                                 location_id: "#{locations(:heaven)[:id]},",
+                                                 event_equipment_ids: '',
+                                                 type: '0' } }
 
     assert_equal 'Votre évènement a été modifié avec succès !', flash[:success]
     assert_redirected_to admin_events_url

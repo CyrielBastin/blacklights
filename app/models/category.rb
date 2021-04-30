@@ -23,7 +23,7 @@ class Category < ApplicationRecord
   enumerize :type, in: %i[equipment activity event]
 
   validate :name_is_valid
-  validates :type, presence: true
+  validates :name, :type, presence: true
 
 
   def name_is_valid

@@ -14,36 +14,77 @@ class ActivityTest < ActiveSupport::TestCase
 
   test 'Should not save activity without a name' do
     activity = Activity.new
-    assert_not activity.save
-  end
+    activity.category = categories(:bizutage)
 
-  test 'Should not save activity without a description' do
-    activity = Activity.new
-    activity[:name] = 'Badminton'
     assert_not activity.save
   end
 
   test 'Name should contain at least 4 characters' do
     activity = Activity.new
+    activity.category = categories(:bizutage)
     activity[:name] = 'one'
-    activity[:description] = 'This is a description !!!'
+
+    assert_not activity.save
+  end
+
+  test 'should not save an activity with \'&\' in name' do
+    activity = Activity.new
+    activity.category = categories(:bizutage)
+    activity[:name] = 'Hello & World'
+
+    assert_not activity.save
+  end
+
+  test 'should not save an activity with \'+\' in name' do
+    activity = Activity.new
+    activity.category = categories(:bizutage)
+    activity[:name] = 'Hello + World'
+
+    assert_not activity.save
+  end
+
+  test 'should not save an activity with \'(\' in name' do
+    activity = Activity.new
+    activity.category = categories(:bizutage)
+    activity[:name] = 'Hello ( World'
+
+    assert_not activity.save
+  end
+
+  test 'should not save an activity with \')\' in name' do
+    activity = Activity.new
+    activity.category = categories(:bizutage)
+    activity[:name] = 'Hello ) World'
+
+    assert_not activity.save
+  end
+
+  test 'Should not save activity without a description' do
+    activity = Activity.new
+    activity.category = categories(:bizutage)
+    activity[:name] = 'Badminton'
+
     assert_not activity.save
   end
 
   test 'Description should contain at least 10 characters' do
     activity = Activity.new
+    activity.category = categories(:bizutage)
     activity[:name] = 'Four'
     activity[:description] = 'This is a'  # 9 chars
+
     assert_not activity.save
   end
 
   test 'Badminton\'s name' do
     activity = activities(:badminton)
+
     assert_equal('Badminton', activity[:name])
   end
 
   test 'Basketball\'s description' do
     activity = activities(:basketball)
+
     assert_equal 'Le basketball, ça étonne!', activity[:description]
   end
 
@@ -58,13 +99,15 @@ class ActivityTest < ActiveSupport::TestCase
 
   test 'Should update Badminton\'s name' do
     activity = activities(:badminton)
-    activity.update({ name: 'Climbing' })
+    assert activity.update({ name: 'Climbing' })
     activity = activities(:badminton)
+
     assert_equal 'Climbing', activity[:name]
   end
 
   test 'Should delete Badminton' do
     activity = activities(:badminton)
+
     assert activity.delete
   end
 

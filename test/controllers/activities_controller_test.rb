@@ -20,8 +20,11 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
       post admin_activities_url, params:
         { activity:
             { name: 'Climbing',
-              description: 'Climbing is wholesome!',
-              location_activity_ids: "#{locations(:heaven)[:id]},#{locations(:hell)[:id]}," } }
+              description: 'Climbing is wholesome',
+              category_id: categories(:bizutage)[:id],
+              visible: '1',
+              location_activity_ids: "#{locations(:heaven)[:id]},#{locations(:hell)[:id]},",
+              activity_equipment_ids: '' } }
     end
 
     assert_equal 'Votre activité a été créée avec succès !', flash[:success]
@@ -41,8 +44,9 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
   test 'should update activity' do
     patch admin_activity_url(@activity), params:
       { activity:
-          { name: 'Climbing',
-            location_activity_ids: "#{locations(:heaven)[:id]}," } }
+          { name: 'Paintball',
+            location_activity_ids: "#{locations(:heaven)[:id]},",
+            activity_equipment_ids: '' } }
     assert_equal 'Votre activité a été modifiée avec succès !', flash[:success]
     assert_redirected_to admin_activities_url
   end

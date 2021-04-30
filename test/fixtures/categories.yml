@@ -9,23 +9,27 @@
 
 raquettes:
   name: Raquettes pour jouer
-  category_for: Matériel
+  type: equipment
 
 raquette_bad:
   name: Raquette de badminton
   parent: raquettes
-  category_for: Matériel
+  type: equipment
 
 raquette_ten:
   name: Raquette de tennis
   parent: raquettes
-  category_for: Matériel
+  type: equipment
 
 balles:
   name: Balles pour jouer
-  category_for: Evènement
+  type: event
 
 balle_ten:
   name: Balle de tennis
   parent: balles
-  category_for: Evènement
+  type: event
+
+bizutage:
+  name: Bizutage
+  type: activity

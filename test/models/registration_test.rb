@@ -2,30 +2,40 @@ require "test_helper"
 
 class RegistrationTest < ActiveSupport::TestCase
 
+  test 'should not save a registration without an event' do
+    registration = Registration.new
+
+    assert_not registration.save
+  end
+
+  test 'should not save a registration without a user' do
+    registration = Registration.new
+    registration.event = events(:dark_badminton)
+
+    assert_not registration.save
+  end
+
   test 'should not save a registration without a price' do
     registration = Registration.new
-    registration[:user_id] = users(:cain)[:id]
-    registration[:event_id] = events(:dark_badminton)[:id]
+    registration.user = users(:cain)
+    registration.event = events(:dark_badminton)
 
     assert_not registration.save
   end
 
-  test '"price" should be a number' do
-    registration = Registration.new
-    registration[:user_id] = users(:cain)[:id]
-    registration[:event_id] = events(:dark_badminton)[:id]
-    registration[:price] = 'Not a number'
+  test 'should update registration price to "Gratuit"' do
+    registration = registrations(:cain_dark_badminton)
+    registration[:price] = 'Gratuit'
+    assert registration.save
+    registration = registrations(:cain_dark_badminton)
 
-    assert_not registration.save
+    assert_equal 'Gratuit', registration[:price]
   end
 
-  test '"price" should be higher than "0.00"' do
-    registration = Registration.new
-    registration[:user_id] = users(:cain)[:id]
-    registration[:event_id] = events(:dark_badminton)[:id]
-    registration[:price] = 0.00
+  test 'should delete registration' do
+    registration = registrations(:cain_dark_badminton)
 
-    assert_not registration.save
+    assert registration.delete
   end
 
 end

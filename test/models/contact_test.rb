@@ -106,9 +106,4 @@ class ContactTest < ActiveSupport::TestCase
     assert_equal 'Lamb\'s street, 2', contact.coordinate[:street]
   end
 
-  test 'Should get supplier\'s name from one' do
-    contact = contacts(:one)
-    assert_equal 'ABC_Agency', contact.supplier[:name]
-  end
-
 end

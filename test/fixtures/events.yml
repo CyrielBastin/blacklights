@@ -24,6 +24,8 @@ dark_badminton:
   registration_deadline: 2051-03-11 02:35:07
   min_participant: 1
   max_participant: 9
+  type: public
+  category: balles
   location: heaven
   contact: one
 
@@ -35,5 +37,7 @@ dark_volleyball:
   registration_deadline: 2052-03-10 02:35:07
   min_participant: 2
   max_participant: 19
+  type: private
+  category: balle_ten
   location: hell
   contact: two

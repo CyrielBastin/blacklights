@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_30_153709) do
+ActiveRecord::Schema.define(version: 2021_04_30_182845) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -178,7 +178,7 @@ ActiveRecord::Schema.define(version: 2021_04_30_153709) do
   create_table "registrations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.bigint "event_id"
     t.bigint "user_id"
-    t.decimal "price", precision: 10, scale: 3
+    t.string "price"
     t.datetime "confirmation_datetime"
     t.datetime "payment_confirmation_datetime"
     t.datetime "created_at", precision: 6, null: false

@@ -2,6 +2,8 @@
 
 cain:
   email: cain@bigbro.hell
+  admin: true
 
 abel:
   email: abel@lilbro.lamb
+  admin: false

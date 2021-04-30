@@ -14,7 +14,7 @@
 
 heaven:
   name: Heaven
-  type: Outdoor
+  type: private
   capacity: 10
   street: Grand Rue
   city: City Hall
@@ -25,7 +25,7 @@ heaven:
 
 hell:
   name: Hell
-  type: Indoor
+  type: public
   capacity: 20
   street: Grand Rue
   city: City Hall

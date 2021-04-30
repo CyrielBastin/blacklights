@@ -19,6 +19,7 @@ class LocationTest < ActiveSupport::TestCase
     location = Location.new
     location.contact = contacts(:one)
     location.dimension = dimensions(:one)
+
     assert_not location.save
   end
 
@@ -27,6 +28,52 @@ class LocationTest < ActiveSupport::TestCase
     location.contact = contacts(:one)
     location.dimension = dimensions(:one)
     location[:name] = 'GG'
+
+    assert_not location.save
+  end
+
+  test 'should not save a location with \'&\' in name' do
+    location = Location.new
+    location.contact = contacts(:one)
+    location.dimension = dimensions(:one)
+    location[:name] = 'Tortuga &'
+
+    assert_not location.save
+  end
+
+  test 'should not save a location with \'+\' in name' do
+    location = Location.new
+    location.contact = contacts(:one)
+    location.dimension = dimensions(:one)
+    location[:name] = 'Tortuga +'
+
+    assert_not location.save
+  end
+
+  test 'should not save a location with \'(\' in name' do
+    location = Location.new
+    location.contact = contacts(:one)
+    location.dimension = dimensions(:one)
+    location[:name] = 'Tortuga ('
+
+    assert_not location.save
+  end
+
+  test 'should not save a location with \')\' in name' do
+    location = Location.new
+    location.contact = contacts(:one)
+    location.dimension = dimensions(:one)
+    location[:name] = 'Tortuga )'
+
+    assert_not location.save
+  end
+
+  test 'should not save a location with \',\' in name' do
+    location = Location.new
+    location.contact = contacts(:one)
+    location.dimension = dimensions(:one)
+    location[:name] = 'Tortuga ,'
+
     assert_not location.save
   end
 
@@ -34,7 +81,113 @@ class LocationTest < ActiveSupport::TestCase
     location = Location.new
     location.contact = contacts(:one)
     location.dimension = dimensions(:one)
-    location[:name] = 'GG EZ'
+    location[:name] = 'Tortuga'
+
+    assert_not location.save
+  end
+
+  test 'should save location if type equals "private"' do
+    location = Location.new
+    location.contact = contacts(:one)
+    location.dimension = dimensions(:one)
+    location[:name] = 'Tortuga'
+    location[:type] = 'private'
+    location[:street] = 'djadjaojda'
+    location[:city] = 'djadjaojda'
+    location[:country] = 'djadjaojda'
+    location[:zip_code] = 1000
+
+    assert location.save
+  end
+
+  test 'should not save a location without a street' do
+    location = Location.new do |l|
+      l.contact = contacts(:one)
+      l.dimension = dimensions(:one)
+      l[:name] = 'Tortuga'
+      l[:type] = 'public'
+    end
+
+    assert_not location.save
+  end
+
+  test 'should not save a location without a city' do
+    location = Location.new do |l|
+      l.contact = contacts(:one)
+      l.dimension = dimensions(:one)
+      l[:name] = 'Tortuga'
+      l[:type] = 'public'
+      l[:street] = 'Rue des Bergères'
+    end
+
+    assert_not location.save
+  end
+
+  test 'should not save a location with \'&\' in city' do
+    location = Location.new do |l|
+      l.contact = contacts(:one)
+      l.dimension = dimensions(:one)
+      l[:name] = 'Tortuga'
+      l[:type] = 'public'
+      l[:street] = 'Rue des Bergères'
+      l[:city] = 'Paris &'
+    end
+
+    assert_not location.save
+  end
+
+  test 'should not save a location with \',\' in city' do
+    location = Location.new do |l|
+      l.contact = contacts(:one)
+      l.dimension = dimensions(:one)
+      l[:name] = 'Tortuga'
+      l[:type] = 'public'
+      l[:street] = 'Rue des Bergères'
+      l[:city] = 'Paris ,'
+    end
+
+    assert_not location.save
+  end
+
+  test 'should not save a location without a country' do
+    location = Location.new do |l|
+      l.contact = contacts(:one)
+      l.dimension = dimensions(:one)
+      l[:name] = 'Tortuga'
+      l[:type] = 'public'
+      l[:street] = 'Rue des Bergères'
+      l[:city] = 'Paris'
+    end
+
+    assert_not location.save
+  end
+
+  test 'should not save a location without a zip code' do
+    location = Location.new do |l|
+      l.contact = contacts(:one)
+      l.dimension = dimensions(:one)
+      l[:name] = 'Tortuga'
+      l[:type] = 'public'
+      l[:street] = 'Rue des Bergères'
+      l[:city] = 'Paris'
+      l[:country] = 'France'
+    end
+
+    assert_not location.save
+  end
+
+  test 'zip code should be a number' do
+    location = Location.new do |l|
+      l.contact = contacts(:one)
+      l.dimension = dimensions(:one)
+      l[:name] = 'Tortuga'
+      l[:type] = 'public'
+      l[:street] = 'Rue des Bergères'
+      l[:city] = 'Paris'
+      l[:country] = 'France'
+      l[:zip_code] = 'Not a Number'
+    end
+
     assert_not location.save
   end
 

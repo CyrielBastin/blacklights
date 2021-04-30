@@ -35,6 +35,49 @@ class EquipmentTest < ActiveSupport::TestCase
     assert_not equipment.save
   end
 
+  test 'should not save an equipment with \'&\' in name' do
+    equipment = Equipment.new do |e|
+      e.category = categories(:balles)
+      e.supplier = suppliers(:one)
+      e.dimension = dimensions(:one)
+      e[:name] = 'Hello & Salut'
+    end
+
+    assert_not equipment.save
+  end
+
+  test 'should not save an equipment with \'+\' in name' do
+    equipment = Equipment.new do |e|
+      e.category = categories(:balles)
+      e.supplier = suppliers(:one)
+      e.dimension = dimensions(:one)
+      e[:name] = 'Hello + Salut'
+    end
+
+    assert_not equipment.save
+  end
+
+  test 'should not save an equipment with \'(\' in name' do
+    equipment = Equipment.new do |e|
+      e.category = categories(:balles)
+      e.supplier = suppliers(:one)
+      e.dimension = dimensions(:one)
+      e[:name] = 'Hello ( Salut'
+    end
+
+    assert_not equipment.save
+  end
+  test 'should not save an equipment with \')\' in name' do
+    equipment = Equipment.new do |e|
+      e.category = categories(:balles)
+      e.supplier = suppliers(:one)
+      e.dimension = dimensions(:one)
+      e[:name] = 'Hello ) Salut'
+    end
+
+    assert_not equipment.save
+  end
+
   test 'Should not save equipment without a description' do
     equipment = Equipment.new do |e|
       e.category = categories(:balles)
@@ -46,13 +89,13 @@ class EquipmentTest < ActiveSupport::TestCase
     assert_not equipment.save
   end
 
-  test 'Equipment\'s description should contain at least 20 characters' do
+  test 'Equipment\'s description should contain at least 10 characters' do
     equipment = Equipment.new do |e|
       e.category = categories(:balles)
       e.supplier = suppliers(:one)
       e.dimension = dimensions(:one)
       e[:name] = 'Hello'
-      e[:description] = 'WV2paCwK4plV5At5jjO'  # 19 characters
+      e[:description] = 'WV2paCwK4'  # 9 characters
     end
 
     assert_not equipment.save

@@ -12,7 +12,11 @@
 badminton:
   name: Badminton
   description: Le badminton, ça étonne!
+  visible: true
+  category: raquettes
 
 basketball:
   name: Basketball
   description: Le basketball, ça étonne!
+  visible: true
+  category: balles
