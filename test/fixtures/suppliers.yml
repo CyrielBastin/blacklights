@@ -9,8 +9,16 @@
 
 one:
   name: ABC_Agency
-  contact: one
+  email: abc_agency@contact.com
+  phone_number: 06 05 04 03 02 01
+  zip_code: 77500
+  city: Paris
+  country: France
 
 two:
   name: ZZZ_sleep
-  contact: two
+  email: sleeping.money@contact.be
+  phone_number: 0474/31.00.14
+  zip_code: 1000
+  city: Bruxelles
+  country: Belgique

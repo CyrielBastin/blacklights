@@ -82,7 +82,7 @@ class Admin::ActivitiesController < AdminController
   private
 
   def activity_params
-    params.require(:activity).permit(:id, :name, :description, :public_display,
+    params.require(:activity).permit(:id, :name, :description, :visible,
                                      :location_activity_ids,
                                      :category_id,
                                      :activity_equipment_ids)

@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+les_bienfaiteurs:
+  name: Les BienFaiteurs
+  category: bizutage
+
+arc_en_ciel:
+  name: Arc en Ciel
+  category: balles

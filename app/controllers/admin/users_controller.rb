@@ -1,7 +1,7 @@
 class Admin::UsersController < AdminController
 
   def index
-    @users = User.all.page(params[:page]).per(15)
+    @users = User.active.page(params[:page]).per(15)
     respond_to do |format|
       format.html
       format.xlsx { response.headers['Content-Disposition'] = 'attachment; filename="Utilisateurs.xlsx"' }

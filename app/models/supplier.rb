@@ -12,7 +12,7 @@ class Supplier < ApplicationRecord
   default_scope -> { order(:name) }
 
   has_many :equipments, dependent: :destroy
-  has_many :supplier_contacts, dependent: :destroy
+  has_many :supplier_users, dependent: :destroy
 
 
   min_char_name = 3

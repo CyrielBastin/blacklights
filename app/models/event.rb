@@ -31,13 +31,13 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :event_activities, allow_destroy: true
   has_many :event_equipment, dependent: :destroy
   has_many :registrations, dependent: :destroy
-  belongs_to :category
-  has_many :consortium_events, dependent: :destroy
+  has_many :entity_events, dependent: :destroy
+  belongs_to :category, optional: true
 
 
   enumerize :type, in: %i[private public], predicates: true, scope: true
 
-  min_char_name = 8
+  min_char_name = 5
   min_participant = 0
   ERR_MSG = { start_date_in_the_past: 'ne peut pas être dans le passé',
               end_date_is_before_start_date: 'doit prendre place après la date de début',
@@ -50,7 +50,7 @@ class Event < ApplicationRecord
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
   validate :name_is_valid
-  validates :start_date, :end_date, :registration_deadline, :location_id, presence: true
+  validates :start_date, :end_date, :registration_deadline, :location_id, :type, presence: true
   validate :start_date_is_in_the_future, :end_date_is_higher_than_start_date, :registration_deadline_is_before_start_date
   validates :price, presence: true
   validates :min_participant, presence: true,
@@ -126,7 +126,7 @@ class Event < ApplicationRecord
     unless event_activities.empty?
       self.event_activities = add_up_duplicates(event_activities,
                                                 id: :activity_id,
-                                                quantity: :simultaneous_activities)
+                                                quantity: :quantity)
     end
     unless event_equipment.empty?
       self.event_equipment = add_up_duplicates(event_equipment,

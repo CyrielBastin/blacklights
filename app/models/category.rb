@@ -18,12 +18,12 @@ class Category < ApplicationRecord
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'
   has_many :equipment
-  has_many :consortia
+  has_many :entities
 
   enumerize :type, in: %i[equipment activity event]
 
   validate :name_is_valid
-  validates :type, presence: true
+  validates :name, :type, presence: true
 
 
   def name_is_valid

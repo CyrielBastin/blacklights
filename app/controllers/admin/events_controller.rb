@@ -128,7 +128,7 @@ class Admin::EventsController < AdminController
         if ev_ac.activity.activity_equipment.present?
           ev_ac.activity.activity_equipment.each do |ac_eq|
             equipment_assembled << { equipment_name: ac_eq.equipment.name,
-                                     quantity: ac_eq.quantity * ev_ac.simultaneous_activities }
+                                     quantity: ac_eq.quantity * ev_ac.quantity }
           end
         end
       end

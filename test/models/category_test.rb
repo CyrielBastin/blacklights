@@ -15,30 +15,24 @@ class CategoryTest < ActiveSupport::TestCase
     assert_not category.save
   end
 
-  test 'Name should have at least 5 characters' do
+  test 'Should not save a category with wrong \'type\' set' do
     category = Category.new
-    category[:name] = 'GGEZ'
+    category[:name] = 'Plus Ultra'
+    category[:type] = 'Not Valid'
     assert_not category.save
   end
 
-  test 'Should not save a category with wrong \'category_for\' set' do
+  test 'Should save category if \'type\' is "event"' do
     category = Category.new
     category[:name] = 'Plus Ultra'
-    category[:category_for] = 'Not Valid'
-    assert_not category.save
-  end
-
-  test 'Should save category if \'category_for\' is "Evènement"' do
-    category = Category.new
-    category[:name] = 'Plus Ultra'
-    category[:category_for] = 'Evènement'
+    category[:type] = 'event'
     assert category.save
   end
 
-  test 'Should save category if \'category_for\' is "Matériel"' do
+  test 'Should save category if \'type\' is "equipment"' do
     category = Category.new
     category[:name] = 'Plus Ultra'
-    category[:category_for] = 'Matériel'
+    category[:type] = 'equipment'
     assert category.save
   end
 
@@ -64,7 +58,7 @@ class CategoryTest < ActiveSupport::TestCase
     assert_equal 'Balles pour jouer', category.parent[:name]
   end
 
-  test 'Raquette\'s childen\'names shoulde be "Raquette de badminton" and "Raquette de tennis"' do
+  test 'Raquette\'s children\'names shoulde be "Raquette de badminton" and "Raquette de tennis"' do
     category = categories(:raquettes)
     assert_equal 'Raquette de badminton', category.children[0][:name]
     assert_equal 'Raquette de tennis', category.children[1][:name]

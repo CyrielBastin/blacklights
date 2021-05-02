@@ -52,7 +52,8 @@ class EquipmentControllerTest < ActionDispatch::IntegrationTest
 
   test 'Should update equipment' do
     patch admin_equipment_url(@equipment), params: { equipment:
-                                                       { name: 'Jacky',
+                                                       { name: 'Tournevis',
+                                                         unit_price: '15,49',
                                                          category_id: "#{categories(:raquette_bad)[:id]},",
                                                          supplier_id: "#{suppliers(:two)[:id]}," } }
 

@@ -42,7 +42,8 @@ class User < ApplicationRecord
   validates_uniqueness_of :email
 
 
-  has_many :consortium_users, dependent: :destroy
+  has_many :supplier_users, dependent: :destroy
+  has_many :entity_users, dependent: :destroy
   has_many :registrations, dependent: :destroy
   has_one :profile, inverse_of: :user, dependent: :destroy
   has_one :contact, through: :profile

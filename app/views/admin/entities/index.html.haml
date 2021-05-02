@@ -1,0 +1,60 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Associations
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li.active
+        %strong Associations
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 L'ensemble des associations définies
+          .ibox-tools
+            = link_to 'Nouvelle association', new_admin_entity_path, class: 'btn btn-primary'
+            = link_to 'Exporter', admin_entities_path(format: :xlsx), class: 'btn btn-info' if @entities.size > 0
+        .ibox-content
+          - if @entities.size > 0
+            .project-list
+              %table.table.table-hover.table-striped.dataTables
+                %thead
+                  %th Nom
+                  %th Catégorie
+                  %th Actions
+                %tbody
+                  - @entities.each do |entity|
+                    %tr
+                      %td.project-title
+                        %b
+                          = entity[:name]
+                      %td
+                        - if entity.category.present?
+                          = entity.category[:name]
+                        - else
+                          .red Aucune catégorie définie
+
+                      %td.project-actions
+                        .btn-group
+                          %button.btn.btn-success.dropdown-toggle{'data-toggle': 'dropdown'}
+                            Actions
+                            %span.caret
+                          %ul.dropdown-menu
+                            %li
+                              %a.btn.btn-white.btn-sm{href: admin_entity_path(entity[:id])}
+                                %i.fa.fa-eye
+                                Détails
+                              %a.btn.btn-white.btn-sm{href: edit_admin_entity_path(entity[:id])}
+                                %i.fa.fa-pen
+                                Modifier
+                              = link_to admin_entity_path(entity[:id]), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cette association ?" }, class: "btn btn-white btn-sm" do
+                                %i.fa.fa-trash
+                                Supprimer
+
+            .pagination-custom
+              = paginate @entities, views_prefix: 'admin'
+
+          - else
+            Aucune association enregistée actuellement

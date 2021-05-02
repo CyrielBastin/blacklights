@@ -49,11 +49,11 @@
                             = supplier[:country]
 
                       %td
-                        - if supplier.supplier_contacts.present?
-                          - supplier.supplier_contacts.each do |s_c|
-                            = s_c.contact.full_name
+                        - if supplier.supplier_users.present?
+                          - supplier.supplier_users.each do |s_u|
+                            = s_u.user.contact.full_name
                             %br
-                            = "#{s_c.contact[:email]}, #{s_c.contact[:phone_number]}"
+                            = "#{s_u.user[:email]}, #{s_u.user.contact[:phone_number]}"
                             %br
                             = '-------------------------------------------------'
                         - else

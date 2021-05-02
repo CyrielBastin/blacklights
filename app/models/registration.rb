@@ -28,7 +28,7 @@ class Registration < ApplicationRecord
   belongs_to :user
 
 
-  validates :price, presence: true, numericality: { greater_than: 0.00 }
+  validates :price, presence: true
   validates :event_id, :user_id, presence: true
   validate :user_profile_completed
 

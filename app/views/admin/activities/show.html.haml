@@ -25,7 +25,7 @@
 
             .col-sm-3.details-title Partie publique du site ?
             .col-sm-2
-              - if @activity[:public_display]
+              - if @activity[:visible]
                 = 'Oui'
               - else
                 .red Non
@@ -36,12 +36,10 @@
             .col-sm-4
               = @activity[:description]
 
-            .col-sm-2.details-title Catégories :
-            - if @activity.activity_categories.present?
-              .col-sm-4.details-multiple
-                - @activity.activity_categories.each do |ac_c|
-                  = "- #{ac_c.category[:name]}"
-                  %br
+            .col-sm-2.details-title Catégorie :
+            - if @activity.category.present?
+              .col-sm-4
+                = @activity.category[:name]
             - else
               .col-sm-4.red
                 Aucune catégorie définie

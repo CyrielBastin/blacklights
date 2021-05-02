@@ -13,7 +13,6 @@ class Contact < ApplicationRecord
   include ForbiddenCharacter
 
   belongs_to :coordinate, dependent: :destroy, optional: true
-  has_many :supplier_contacts, dependent: :destroy
   has_one :location
   has_one :event
   has_one :profile
