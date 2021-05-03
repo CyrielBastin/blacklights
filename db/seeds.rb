@@ -54,7 +54,7 @@ user_four.save
 # User 5
 # #####################################################################################################################
 profile_five = Profile.new(gender: 'male')
-contact_five = Contact.new(lastname: 'Lucas', firstname: 'George', email: 'lucas_george@movies.us')
+contact_five = Contact.new(lastname: 'Lucas', firstname: 'George', email: 'lucas_george@movies.us', phone_number: '123456789')
 user_five = User.new(email: 'lucas_george@movies.us', admin: false, skip_password_validation: true)
 profile_five.contact = contact_five
 user_five.profile = profile_five

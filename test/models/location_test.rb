@@ -17,7 +17,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'Should not save location without a name' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
 
     assert_not location.save
@@ -25,7 +25,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'Location\'s name should contain at least 3 characters' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
     location[:name] = 'GG'
 
@@ -34,7 +34,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location with \'&\' in name' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
     location[:name] = 'Tortuga &'
 
@@ -43,7 +43,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location with \'+\' in name' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
     location[:name] = 'Tortuga +'
 
@@ -52,7 +52,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location with \'(\' in name' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
     location[:name] = 'Tortuga ('
 
@@ -61,7 +61,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location with \')\' in name' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
     location[:name] = 'Tortuga )'
 
@@ -70,7 +70,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location with \',\' in name' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
     location[:name] = 'Tortuga ,'
 
@@ -79,7 +79,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'Should not save location without a type' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
     location[:name] = 'Tortuga'
 
@@ -88,7 +88,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should save location if type equals "private"' do
     location = Location.new
-    location.contact = contacts(:one)
+    location.user = users(:cain)
     location.dimension = dimensions(:one)
     location[:name] = 'Tortuga'
     location[:type] = 'private'
@@ -102,7 +102,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location without a street' do
     location = Location.new do |l|
-      l.contact = contacts(:one)
+      l.user = users(:cain)
       l.dimension = dimensions(:one)
       l[:name] = 'Tortuga'
       l[:type] = 'public'
@@ -113,7 +113,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location without a city' do
     location = Location.new do |l|
-      l.contact = contacts(:one)
+      l.user = users(:cain)
       l.dimension = dimensions(:one)
       l[:name] = 'Tortuga'
       l[:type] = 'public'
@@ -125,7 +125,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location with \'&\' in city' do
     location = Location.new do |l|
-      l.contact = contacts(:one)
+      l.user = users(:cain)
       l.dimension = dimensions(:one)
       l[:name] = 'Tortuga'
       l[:type] = 'public'
@@ -138,7 +138,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location with \',\' in city' do
     location = Location.new do |l|
-      l.contact = contacts(:one)
+      l.user = users(:cain)
       l.dimension = dimensions(:one)
       l[:name] = 'Tortuga'
       l[:type] = 'public'
@@ -151,7 +151,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location without a country' do
     location = Location.new do |l|
-      l.contact = contacts(:one)
+      l.user = users(:cain)
       l.dimension = dimensions(:one)
       l[:name] = 'Tortuga'
       l[:type] = 'public'
@@ -164,7 +164,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'should not save a location without a zip code' do
     location = Location.new do |l|
-      l.contact = contacts(:one)
+      l.user = users(:cain)
       l.dimension = dimensions(:one)
       l[:name] = 'Tortuga'
       l[:type] = 'public'
@@ -178,7 +178,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'zip code should be a number' do
     location = Location.new do |l|
-      l.contact = contacts(:one)
+      l.user = users(:cain)
       l.dimension = dimensions(:one)
       l[:name] = 'Tortuga'
       l[:type] = 'public'
@@ -193,7 +193,7 @@ class LocationTest < ActiveSupport::TestCase
 
   test 'Hell\'s contact\'s name should be "Cain"' do
     location = locations(:hell)
-    assert_equal 'Cain', location.contact[:firstname]
+    assert_equal 'Cain', location.user.contact[:firstname]
   end
 
   test 'Heaven\'s dimension\' weight should be "9.99"' do

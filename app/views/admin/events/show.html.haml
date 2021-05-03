@@ -30,13 +30,13 @@
               = "#{@event.location[:name]}, #{@event.location[:city]} (#{@event.location[:zip_code]})"
             .col-sm-1.details-title Contact :
             .col-sm-3
-              = "Nom : #{@event.contact[:lastname]}"
+              = "Nom : #{@event.user.contact[:lastname]}"
               %br
-              = "Prénom : #{@event.contact[:firstname]}"
+              = "Prénom : #{@event.user.contact[:firstname]}"
               %br
-              = "Tél. : #{@event.contact[:phone_number]}"
+              = "Tél. : #{@event.user.contact[:phone_number]}"
               %br
-              = "Email : #{@event.contact[:email]}"
+              = "Email : #{@event.user.contact[:email]}"
               %br
 
           .hr-line-dashed
@@ -82,7 +82,7 @@
             - if @event.event_activities.present?
               .col-sm-4.details-multiple
                 - @event.event_activities.each do |ev_ac|
-                  = "#{ev_ac.activity[:name]} (#{ev_ac[:simultaneous_activities]})"
+                  = "#{ev_ac.activity[:name]} (#{ev_ac[:quantity]})"
                   %br
             - else
               .col-sm-4.red

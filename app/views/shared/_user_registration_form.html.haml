@@ -1,0 +1,43 @@
+%fieldset
+  %legend Créer un utilisateur
+  -# = form.fields_for :user,form.object.user.present? ? form.object.user : User.new do |user_form|
+  = user_form.fields_for :profile, user_form.object.profile.present? ? user_form.object.profile : Profile.new do |profile_form|
+    = profile_form.fields_for :contact, profile_form.object.contact.present? ? profile_form.object.contact : Contact.new do |contact_form|
+      .row
+        %label.col-sm-1.control-label
+          Email
+          %span.red *
+        .col-sm-3
+          %input{type: 'hidden', id: 'creating-new-user', value: '0', name: 'creating_new_user'}
+          = user_form.hidden_field :skip_password_validation, value: true
+          = user_form.text_field :email, class: 'form-control bg-contrast required'
+        %label.col-sm-1.control-label
+          Nom
+          %span.red *
+        .col-sm-3
+          = contact_form.text_field :lastname, class: 'form-control bg-contrast required'
+        %label.col-sm-1.control-label
+          Prénom
+          %span.red *
+        .col-sm-3
+          = contact_form.text_field :firstname, class: 'form-control bg-contrast required'
+          = contact_form.hidden_field :email, value: 'hello@world.net'
+
+      .row.mt-30
+        %label.col-sm-1.control-label
+          Tél.
+          %span.red *
+        .col-sm-3
+          = contact_form.text_field :phone_number, class: 'form-control bg-contrast required'
+        %label.col-sm-1.control-label
+          Sexe
+          %span.red *
+        .col-sm-3
+          = profile_form.select :gender, Profile.gender.options, {include_blank: true}, {class: 'form-control bg-contrast required'}
+
+      .hr-line-dashed
+      .hr-line-dashed
+      .form-group
+        %label.col-sm-1.control-label Admin ?
+        .col-sm-10
+          = user_form.check_box :admin, class: 'form-control bg-contrast', style: 'max-width: 50px'

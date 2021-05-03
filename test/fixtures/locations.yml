@@ -20,7 +20,7 @@ heaven:
   city: City Hall
   zip_code: 1111
   country: Heaven
-  contact: two
+  user: abel
   dimension: two
 
 hell:
@@ -31,5 +31,5 @@ hell:
   city: City Hall
   zip_code: 1111
   country: Heaven
-  contact: one
+  user: cain
   dimension: one

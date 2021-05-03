@@ -29,14 +29,14 @@
                   %th{width: '20%'} Nom
                   %th{width: '15%'} Type
                   %th{width: '15%'} Activités
-                  %th{width: '20%'} Dimensions
+                  %th{width: '20%'} Localisation
                   %th{width: '25%'} Contact
                 %tbody
                   - @locations.each do |location|
                     %tr
                       %td.project-title{:style => 'word-wrap: break-word'}
                         %b
-                          = location.name_plus_city
+                          = location[:name]
 
                       %td
                         = location[:type].text
@@ -47,36 +47,20 @@
                           %br
 
                       %td
-                        - if location.dimension[:width].present?
-                          = "Largeur : #{to_french_repr(location.dimension[:width])} m"
-                          %br
-                        - else
-                          = 'Largeur :'
-                          %span.red Non défini
-                          %br
-                        - if location.dimension[:length].present?
-                          = "Longueur : #{to_french_repr(location.dimension[:length])} m"
-                          %br
-                        - else
-                          = 'Longueur :'
-                          %span.red Non défini
-                          %br
-                        - if location.dimension[:height].present?
-                          = "Hauteur : #{to_french_repr(location.dimension[:height])} m"
-                          %br
-                        - else
-                          = 'Hauteur :'
-                          %span.red Non défini
-                          %br
+                        = location[:street]
+                        %br
+                        = "#{location[:city]} (#{location[:zip_code]})"
+                        %br
+                        = location[:country]
 
                       %td
-                        = "Nom : #{location.contact.lastname}"
+                        = "Nom : #{location.user.contact[:lastname]}"
                         %br
-                        = "Prénom : #{location.contact.firstname}"
+                        = "Prénom : #{location.user.contact[:firstname]}"
                         %br
-                        = "Tél. : #{location.contact.phone_number}"
+                        = "Tél. : #{location.user.contact[:phone_number]}"
                         %br
-                        = "Email : #{location.contact.email}"
+                        = "Email : #{location.user[:email]}"
 
                       %td.project-actions
                         .btn-group
@@ -85,6 +69,9 @@
                             %span.caret
                           %ul.dropdown-menu
                             %li
+                              %a.btn.btn-white.btn-sm{:href => admin_location_path(location[:id])}
+                                %i.fa.fa-eye
+                                Détails
                               %a.btn.btn-white.btn-sm{:href => edit_admin_location_path(location[:id])}
                                 %i.fa.fa-pen
                                 Modifier

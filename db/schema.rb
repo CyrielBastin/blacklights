@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_30_182845) do
+ActiveRecord::Schema.define(version: 2021_05_03_141854) do
 
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
@@ -131,14 +131,14 @@ ActiveRecord::Schema.define(version: 2021_04_30_182845) do
     t.datetime "registration_deadline"
     t.integer "min_participant"
     t.integer "max_participant"
-    t.bigint "contact_id"
     t.integer "category_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
     t.string "type"
-    t.index ["contact_id"], name: "index_events_on_contact_id"
+    t.bigint "user_id"
     t.index ["location_id"], name: "index_events_on_location_id"
+    t.index ["user_id"], name: "index_events_on_user_id"
   end
 
   create_table "location_activities", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
@@ -151,7 +151,6 @@ ActiveRecord::Schema.define(version: 2021_04_30_182845) do
   create_table "locations", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|
     t.string "name"
     t.string "type"
-    t.bigint "contact_id"
     t.bigint "dimension_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -160,8 +159,9 @@ ActiveRecord::Schema.define(version: 2021_04_30_182845) do
     t.integer "zip_code"
     t.string "city"
     t.string "country"
-    t.index ["contact_id"], name: "index_locations_on_contact_id"
+    t.bigint "user_id"
     t.index ["dimension_id"], name: "index_locations_on_dimension_id"
+    t.index ["user_id"], name: "index_locations_on_user_id"
   end
 
   create_table "profiles", charset: "utf8mb4", collation: "utf8mb4_unicode_ci", force: :cascade do |t|

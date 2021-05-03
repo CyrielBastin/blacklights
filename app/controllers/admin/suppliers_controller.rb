@@ -16,6 +16,7 @@ class Admin::SuppliersController < AdminController
 
   def create
     @supplier = Supplier.new(supplier_params)
+    add_users
     if name_already_exists?(@supplier.class.name, @supplier[:name])
       @supplier.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
@@ -39,6 +40,7 @@ class Admin::SuppliersController < AdminController
 
   def update
     @supplier = Supplier.find(params[:id])
+    add_users
     sup = Supplier.find_by(name: params[:supplier][:name])
     if sup.nil? || sup[:id] == @supplier[:id]
       if @supplier.update(supplier_params)
@@ -74,9 +76,42 @@ class Admin::SuppliersController < AdminController
   private
 
   def supplier_params
-    params.require(:supplier).permit(:id, :name, :email, :phone_number, :country, :zip_code, :city,
-                                     contact_attributes: [:id, :lastname, :firstname, :phone_number, :email,
-                                                          coordinate_attributes: [:id, :street, :zip_code, :city, :country]])
+    params.require(:supplier).permit(:id, :name, :email, :phone_number, :country, :zip_code, :city, :supplier_user_ids)
+  end
+
+  def update_params
+    params[:supplier][:supplier_user_ids] = params[:supplier][:supplier_user_ids].split(',')
+  end
+
+  def add_users
+    @supplier.supplier_users = []
+    params[:supplier][:supplier_user_ids].each do |user_id|
+      unless user_id.empty?
+        @supplier.supplier_users << SupplierUser.new(supplier_id: @supplier, user_id: user_id)
+      end
+    end
+    if params[:creating_new_user] == '1'
+      u = create_new_user
+      @supplier.supplier_users << SupplierUser.new(supplier_id: @supplier, user_id: u[:id]) if u.save
+    end
+  end
+
+  def create_new_user
+    u = User.new
+    p = Profile.new
+    c = Contact.new
+    c[:email] = params[:user][:email]
+    c[:lastname] = params[:user][:profile_attributes][:contact_attributes][:lastname]
+    c[:firstname] = params[:user][:profile_attributes][:contact_attributes][:firstname]
+    c[:phone_number] = params[:user][:profile_attributes][:contact_attributes][:phone_number]
+    p[:gender] = params[:user][:profile_attributes][:gender]
+    p.contact = c
+    u[:email] = params[:user][:email]
+    u[:admin] = params[:user][:admin] == '1'
+    u.skip_password_validation = true
+    u.profile = p
+
+    u
   end
 
 end

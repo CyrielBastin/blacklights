@@ -25,16 +25,24 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
               city: 'Namur',
               zip_code: 5000,
               country: 'Belgique',
-              contact_attributes:
-                { lastname: 'Lalouche',
-                  firstname: 'Jacky',
-                  phone_number: '0411/11.11.11',
-                  email: 'jacky@lalouche.net',
-                  coordinate_attributes:
-                    { street: 'Rue du Manouche, 11',
-                      zip_code: 1000,
-                      city: 'Bruxelles',
-                      country: 'Belgique' } },
+              user_attributes: {
+                email: 'jacky@lalouche.net',
+                admin: 'true',
+                skip_password_validation: 'true',
+                profile_attributes: {
+                  gender: 'male',
+                  contact_attributes:
+                    { lastname: 'Lalouche',
+                      firstname: 'Jacky',
+                      phone_number: '0411/11.11.11',
+                      email: 'jacky@lalouche.net',
+                      coordinate_attributes:
+                        { street: 'Rue du Manouche, 11',
+                          zip_code: 1000,
+                          city: 'Bruxelles',
+                          country: 'Belgique' } }
+                }
+              },
               dimension_attributes:
                 { width: 1.11,
                   length: 2.22,

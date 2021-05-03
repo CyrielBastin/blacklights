@@ -94,16 +94,19 @@ class Admin::EventsController < AdminController
 
   def event_params
     params.require(:event).permit(:name, :start_date, :end_date, :category_id, :registration_deadline, :min_participant,
-                                  :max_participant, :price, :type, :location_id, :event_category_ids, :event_equipment_ids,
-                                  contact_attributes: [:id, :lastname, :firstname, :phone_number, :email,
-                                                       coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
-                                  event_activities_attributes: [:id, :activity_id, :simultaneous_activities, :_destroy])
+                                  :max_participant, :price, :type, :location_id, :user_id, :event_category_ids, :event_equipment_ids,
+                                  event_activities_attributes: [:id, :activity_id, :simultaneous_activities, :_destroy],
+                                  user_attributes: [:email, :admin, :skip_password_validation,
+                                                    profile_attributes: [:gender, contact_attributes: [:email, :lastname, :firstname, :phone_number]]])
   end
 
   def update_params
     params[:event][:location_id] = params[:event][:location_id].split(',')[0]
     params[:event][:event_equipment_ids] = params[:event][:event_equipment_ids].split(',')
     params[:event][:type] = params[:event][:type] == '1' ? 'public' : 'private'
+    if params[:creating_new_user] == '0'
+      params[:event] = params[:event].except(:user_attributes)
+    end
   end
 
   def add_equipment

@@ -33,16 +33,24 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
               max_participant: 9,
               location_id: locations(:heaven).id,
               type: '1',
-              contact_attributes:
-                { lastname: 'Lalouche',
-                  firstname: 'Jacky',
-                  phone_number: '0411/11.11.11',
-                  email: 'jacky@lalouche.net',
-                  coordinate_attributes:
-                    { street: 'Rue du Manouche, 11',
-                      zip_code: 1000,
-                      city: 'Bruxelles',
-                      country: 'Belgique' } },
+              user_attributes: {
+                email: 'jacky@lalouche.net',
+                admin: '0',
+                skip_password_validation: 'true',
+                profile_attributes: {
+                  gender: 'male',
+                  contact_attributes:
+                    { lastname: 'Lalouche',
+                      firstname: 'Jacky',
+                      phone_number: '0411/11.11.11',
+                      email: 'jacky@lalouche.net',
+                      coordinate_attributes:
+                        { street: 'Rue du Manouche, 11',
+                          zip_code: 1000,
+                          city: 'Bruxelles',
+                          country: 'Belgique' } }
+                }
+              },
               activity_equipment_attributes: { '0': {
                 equipment_id: equipment(:raquette_de_badminton).id,
                 quantity: 5 } },

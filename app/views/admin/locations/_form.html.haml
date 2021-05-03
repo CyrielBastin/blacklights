@@ -49,7 +49,23 @@
                 %br
 
             %fieldset.mt-30
-              %legend Activités disponibles
+              %legend Dimensions
+              = location_form.fields_for :dimension, @location.dimension.present? ? @location.dimension : @location.build_dimension  do |dimension_form|
+                .row
+                  %label.col-sm-2.control-label Largeur (en m)
+                  .col-sm-1
+                    = dimension_form.text_field :width, class: 'form-control bg-contrast'
+                  %label.col-sm-2.control-label Longueur (en m)
+                  .col-sm-1
+                    = dimension_form.text_field :length, class: 'form-control bg-contrast'
+                  %label.col-sm-2.control-label Hauteur (en m)
+                  .col-sm-1
+                    = dimension_form.text_field :height, class: 'form-control bg-contrast'
+                  .col-sm-1
+                    = dimension_form.hidden_field :weight, value: 0.01
+
+            %fieldset.mt-30
+              %legend Activités disponibles et contact
               .row.mt-30
                 .search-container.col-sm-4
                   .row
@@ -69,27 +85,43 @@
                             %div
                               = loc_ac.activity[:name]
 
-            %fieldset.mt-180
-              %legend Dimensions
-              = location_form.fields_for :dimension, @location.dimension.present? ? @location.dimension : @location.build_dimension  do |dimension_form|
-                .row
-                  %label.col-sm-2.control-label Largeur (en m)
-                  .col-sm-1
-                    = dimension_form.text_field :width, class: 'form-control bg-contrast'
-                  %label.col-sm-2.control-label Longueur (en m)
-                  .col-sm-1
-                    = dimension_form.text_field :length, class: 'form-control bg-contrast'
-                  %label.col-sm-2.control-label Hauteur (en m)
-                  .col-sm-1
-                    = dimension_form.text_field :height, class: 'form-control bg-contrast'
-                  .col-sm-1
-                    = dimension_form.hidden_field :weight, value: 0.01
+                .search-container.col-sm-5.col-sm-offset-1
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5
+                        Utilisateur
+                        %span.red *
+                      .field_with_errors
+                        = location_form.hidden_field :user_id, class: 'list-User_ids'
+                        %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
+                        - @location.errors.full_messages_for(:user_id).each do |message|
+                          %label.message{'for': 'location_user_id'}
+                            = epurate_err_msg(:User, message)
+                    .search-results.search-results-User.col-sm-7.hidden
+                      - User.active.each do |u|
+                        %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
+                          = u.contact.full_name
+                          %br
+                          = u[:email]
+                    .search-chosen#search-chosen-User.col-sm-7
+                      - if @location[:user_id].present?
+                        .item-selected.item-selected-User{id: "for-User-#{@location.user[:id]}"}
+                          %div
+                            = @location.user.contact.full_name
+                            %br
+                            = @location.user[:email]
 
-            %br
-            .mt-30
-            = render partial: 'shared/contact_form', locals: { form: location_form, object: @location }
+            .row.mt-180
+              .btn-add_user
+                Ajouter un contact
+              .btn-delete-add_user.hidden
+                Supprimer le formulaire
+            #user-model-form.hidden
+              .mt-30
+              = location_form.fields_for :user, location_form.object.user.present? ? location_form.object.user : User.new do |user_form|
+                = render partial: 'shared/user_registration_form', locals: { user_form: user_form }
 
 
-            .form-group
+            .form-group.mt-50
               .col-sm-4
                 %button.btn.btn-primary{type: 'submit'} Sauver le lieu

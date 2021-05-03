@@ -13,8 +13,6 @@ class Contact < ApplicationRecord
   include ForbiddenCharacter
 
   belongs_to :coordinate, dependent: :destroy, optional: true
-  has_one :location
-  has_one :event
   has_one :profile
 
   accepts_nested_attributes_for :coordinate
