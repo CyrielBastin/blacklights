@@ -54,6 +54,7 @@
                         = u[:email]
                   .search-chosen#search-chosen-User.col-sm-7
                     - if @supplier.supplier_users.present?
+                      -# - if @supplier.supplier_users[0].id.present?
                       - @supplier.supplier_users.each do |s_u|
                         .item-selected.item-selected-User{id: "for-User-#{s_u.user[:id]}"}
                           %i.fas.fa-ban.delete-selected.delete-selected-User{style: 'color: red'}
@@ -69,7 +70,7 @@
                   Supprimer le formulaire
               #user-model-form.hidden
                 .mt-30
-                = form_for [:admin, User.new], validate: true, html: {class: 'form-horizontal'} do |user_form|
+                = form_for [:admin, @user], validate: true, html: {class: 'form-horizontal'} do |user_form|
                   = render partial: 'shared/user_registration_form', locals: { user_form: user_form }
 
 
