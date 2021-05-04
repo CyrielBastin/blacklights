@@ -51,7 +51,7 @@
                             %th Sél.
                             %th Nom complet
                             %th Email
-                            %th Prix
+                            %th Prix (€)
                             %th Confirmation
                             %th Status paiement
                             %th Actions
@@ -70,7 +70,7 @@
                                     = registration.user[:email]
 
                                   %td
-                                    = "#{to_french_repr(registration[:price])}€"
+                                    = to_french_repr(registration[:price])
 
                                   %td
                                     - if registration[:confirmation_datetime].present?

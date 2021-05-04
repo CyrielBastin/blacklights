@@ -54,6 +54,10 @@ class Admin::EntitiesController < AdminController
     redirect_to admin_entities_path
   end
 
+  def import
+
+  end
+
   private
 
   def entity_params

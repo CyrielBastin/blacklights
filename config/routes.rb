@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get 'invite'
     end
     resources :entities, concerns: :paginatable
+    post 'import_entities', to: 'entities#import'
     resources :locations, concerns: :paginatable
     post 'import_locations', to: 'locations#import'
     resources :events, concerns: :paginatable

@@ -95,7 +95,7 @@ class Admin::EventsController < AdminController
   def event_params
     params.require(:event).permit(:name, :start_date, :end_date, :category_id, :registration_deadline, :min_participant,
                                   :max_participant, :price, :type, :location_id, :user_id, :event_category_ids, :event_equipment_ids,
-                                  event_activities_attributes: [:id, :activity_id, :simultaneous_activities, :_destroy],
+                                  event_activities_attributes: [:id, :activity_id, :quantity, :_destroy],
                                   user_attributes: [:email, :admin, :skip_password_validation,
                                                     profile_attributes: [:gender, contact_attributes: [:email, :lastname, :firstname, :phone_number]]])
   end
