@@ -1,4 +1,5 @@
 class Admin::EntitiesController < AdminController
+  include ImportModel
 
   def index
     @entities = Entity.all.page(params[:page]).per(10)
@@ -55,7 +56,15 @@ class Admin::EntitiesController < AdminController
   end
 
   def import
-
+    imported = import_entities(params[:file])
+    if imported[:had_errors]
+      err_msg = ''
+      imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
+      flash[:danger] = err_msg
+    else
+      flash[:success] = 'Toutes vos associations ont été importées avec succès !'
+    end
+    redirect_to admin_entities_path
   end
 
   private

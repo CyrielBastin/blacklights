@@ -12,7 +12,7 @@ equipment = assemble_pieces_together(events,
 wb.add_worksheet(name: 'Evènements') do |sheet|
   sheet.add_row ['Nom', 'Type', 'Catégorie', 'Date de début', 'Date de fin', 'Clôture des inscriptions', 'Min. participants', 'Max. participants', 'Prix (€)',
                  'Lieu',
-                 'Activités + simultanée',
+                 'Activités + quantité',
                  'Matériel supplémentaire + quantité',
                  'Contact (user Id)', 'id'], style: center
   events.each_with_index do |e, i|

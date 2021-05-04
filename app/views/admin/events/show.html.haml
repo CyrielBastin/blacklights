@@ -103,7 +103,7 @@
             - if @event.registrations.present?
               .col-sm-5.details-multiple
                 - @event.registrations.each do |r|
-                  = "#{r.user.contact.full_name} (#{r.user[:email]}) -- #{to_french_repr(r[:price])} €"
+                  = "#{r.user.contact.full_name} (#{r.user[:email]}) -- (€) #{to_french_repr(r[:price])}"
                   %br
             - else
               .col-sm-5.red
