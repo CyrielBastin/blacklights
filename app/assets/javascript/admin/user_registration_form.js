@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', (_) => {
         if (field.value) user_form_empty = false
     })
     if (!user_form_empty) show_user_form(elements)
+    const model = document.getElementById('id-model--user-form')
+    if (model && model.value) hide_user_form(elements, required_fields)
 
     elements['btn_add_user'].addEventListener('click', (_) => {
         show_user_form(elements)

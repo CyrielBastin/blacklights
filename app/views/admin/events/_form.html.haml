@@ -8,6 +8,7 @@
         .ibox-content
           .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @event], validate: true, html: {class: 'form-horizontal'} do |event_form|
+            = event_form.hidden_field :id, id: 'id-model--user-form'
             %fieldset
               %legend Informations
               = event_form.text_field :id, id: 'event_id', style: 'display: none', value: @event.id.present? ? @event.id : 0
