@@ -89,6 +89,8 @@ class Admin::RegistrationsController < AdminController
   end
 
   def set_multiple_confirmation
+    return if params[:list_registration_ids].nil?
+
     params[:list_registration_ids].each do |r_id|
       r = Registration.find(r_id)
       r.update(confirmation_datetime: 2.hours.from_now) if r[:confirmation_datetime].nil?

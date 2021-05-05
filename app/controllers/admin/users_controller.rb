@@ -55,12 +55,43 @@ class Admin::UsersController < AdminController
     redirect_to admin_users_path
   end
 
+  def multiple_select
+    case params[:to_do]
+    when 'delete'
+      multiple_delete
+    when 'invite'
+      multiple_invite
+    else
+      ''
+    end
+
+    redirect_to admin_users_path
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, :admin, profile_attributes:
       [:birthdate, :gender, contact_attributes: [:lastname, :firstname, :phone_number, :email, coordinate_attributes:
         [:street, :zip_code, :city, :country]]])
+  end
+
+  def multiple_delete
+    return if params[:list_user_ids].nil?
+
+    params[:list_user_ids].each do |id|
+      u = User.find(id)
+      u.update(deleted_at: DateTime.now)
+    end
+  end
+
+  def multiple_invite
+    return if params[:list_user_ids].nil?
+
+    params[:list_user_ids].each do |id|
+      # TODO
+      # Call invite method for each user id
+    end
   end
 
 end
