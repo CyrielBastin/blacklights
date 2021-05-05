@@ -402,6 +402,14 @@ img.welcome {
   font-weight: bold;
   color: orange;
 }
+.btn-delete-user {
+  color: red;
+  border: 1px solid red;
+  &:hover {
+    font-weight: bold;
+    color: red;
+  }
+}
 
 /* Styles for registrations */
 .confirmed {

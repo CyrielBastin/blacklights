@@ -146,3 +146,6 @@
                       %i.fa.fa-pen
                       Modifier
                     = link_to "Connexion", "/switch_user?scope_identifier=user_#{user.id}", class: "btn btn-primary btn-sm"
+                    = link_to admin_user_path(user.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cet utilisateur ?" }, class: "btn btn-sm btn-delete-user" do
+                      %i.fa.fa-trash
+                      Supprimer

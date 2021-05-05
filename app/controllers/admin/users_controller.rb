@@ -40,6 +40,14 @@ class Admin::UsersController < AdminController
     end
   end
 
+  def destroy
+    u = User.find(params[:id])
+    if u.update(deleted_at: DateTime.now)
+      flash[:success] = 'L\'utilisateur a été supprimé avec succès !'
+      redirect_to admin_users_path
+    end
+  end
+
   def invite
     @user = User.find(params[:user_id])
     @user.invite!
