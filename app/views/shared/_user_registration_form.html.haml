@@ -1,6 +1,5 @@
 %fieldset
   %legend Créer un utilisateur
-  -# = form.fields_for :user,form.object.user.present? ? form.object.user : User.new do |user_form|
   = user_form.fields_for :profile, user_form.object.profile.present? ? user_form.object.profile : Profile.new do |profile_form|
     = profile_form.fields_for :contact, profile_form.object.contact.present? ? profile_form.object.contact : Contact.new do |contact_form|
       .row
@@ -35,9 +34,10 @@
         .col-sm-3
           = profile_form.select :gender, Profile.gender.options, {include_blank: true}, {class: 'form-control bg-contrast required'}
 
-      .hr-line-dashed
-      .hr-line-dashed
-      .form-group
-        %label.col-sm-1.control-label Admin ?
-        .col-sm-10
-          = user_form.check_box :admin, class: 'form-control bg-contrast', style: 'max-width: 50px'
+      - if defined? admin_field
+        .hr-line-dashed
+        .hr-line-dashed
+        .form-group
+          %label.col-sm-1.control-label Admin ?
+          .col-sm-10
+            %input.form-control.bg-contrast{type: 'checkbox', style: 'max-width: 50px', name: 'user_admin'}

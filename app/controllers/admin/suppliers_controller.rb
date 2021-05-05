@@ -28,6 +28,7 @@ class Admin::SuppliersController < AdminController
           @user.save
           add_users @user
           @supplier.save
+          @supplier.supplier_users.each { |s_u| s_u.user.add_role :supplier }
 
           flash[:success] = 'Votre fournisseur a été crée avec succès !'
           redirect_to admin_suppliers_path
@@ -38,6 +39,7 @@ class Admin::SuppliersController < AdminController
         if @supplier.valid?
           add_users @user
           @supplier.save
+          @supplier.supplier_users.each { |s_u| s_u.user.add_role :supplier }
 
           flash[:success] = 'Votre fournisseur a été crée avec succès !'
           redirect_to admin_suppliers_path
@@ -69,6 +71,7 @@ class Admin::SuppliersController < AdminController
           @user.save
           add_users @user
           @supplier.save
+          @supplier.supplier_users.each { |s_u| s_u.user.add_role :supplier }
 
           flash[:success] = 'Votre fournisseur a été modifié avec succès !'
           redirect_to admin_suppliers_path
@@ -79,6 +82,7 @@ class Admin::SuppliersController < AdminController
         if @supplier.valid?
           add_users @user
           @supplier.save
+          @supplier.supplier_users.each { |s_u| s_u.user.add_role :supplier }
 
           flash[:success] = 'Votre fournisseur a été modifié avec succès !'
           redirect_to admin_suppliers_path
@@ -117,7 +121,7 @@ class Admin::SuppliersController < AdminController
   end
 
   def user_params
-    params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, :admin, profile_attributes:
+    params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, profile_attributes:
       [:birthdate, :gender, contact_attributes: [:lastname, :firstname, :phone_number, :email]])
   end
 
@@ -127,7 +131,10 @@ class Admin::SuppliersController < AdminController
   end
 
   def add_users(new_user)
-    @supplier.supplier_users = []
+    unless @supplier.supplier_users.empty?
+      @supplier.supplier_users.each { |s_u| s_u.user.remove_role :supplier }
+      @supplier.supplier_users = []
+    end
     params[:supplier][:supplier_user_ids].each do |user_id|
       unless user_id.empty?
         @supplier.supplier_users << SupplierUser.new(supplier_id: @supplier, user_id: user_id)

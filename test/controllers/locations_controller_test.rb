@@ -27,7 +27,6 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
               country: 'Belgique',
               user_attributes: {
                 email: 'jacky@lalouche.net',
-                admin: 'true',
                 skip_password_validation: 'true',
                 profile_attributes: {
                   gender: 'male',

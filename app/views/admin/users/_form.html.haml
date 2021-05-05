@@ -8,7 +8,7 @@
         .ibox-content
           .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @user], validate: true, html: {class: 'form-horizontal'} do |f|
-            = render partial: 'shared/user_registration_form', locals: { user_form: f }
+            = render partial: 'shared/user_registration_form', locals: { user_form: f, admin_field: true }
 
             .form-group.mt-50
               .col-sm-4

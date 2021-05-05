@@ -25,9 +25,9 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
             country: 'Belgique',
             supplier_user_ids: '' },
           creating_new_user: '1',
+          user_admin: 'on',
           user: {
               email: 'jacky@lalouche.net',
-              admin: '1',
               skip_password_validation: 'true',
               profile_attributes: {
                 gender: 'male',
@@ -59,7 +59,6 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
                                                    creating_new_user: '1',
                                                    user: {
                                                      email: 'jacky@lalouche.net',
-                                                     admin: '0',
                                                      skip_password_validation: 'true',
                                                      profile_attributes: {
                                                        gender: 'male',

@@ -35,7 +35,7 @@
             .row
               %label.col-sm-1.control-label Admin ?
               .col-sm-10
-                = f.check_box :admin, class: 'form-control', style: 'max-width: 50px'
+                %input.form-control.bg-contrast{type: 'checkbox', style: 'max-width: 50px', name: 'user_admin', checked: @user.has_role?(:admin)}
 
             .hr-line-dashed
             .form-group

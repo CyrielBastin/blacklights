@@ -79,7 +79,7 @@ class Admin::LocationsController < AdminController
   def location_params
     params.require(:location).permit(:id, :location_activity_ids, :name, :type, :capacity, :street, :zip_code, :city, :country, :user_id,
                                      dimension_attributes: [:width, :length, :height, :weight],
-                                     user_attributes: [:email, :admin, :skip_password_validation,
+                                     user_attributes: [:email, :skip_password_validation,
                                                        profile_attributes: [:gender, contact_attributes: [:email, :lastname, :firstname, :phone_number]]])
   end
 

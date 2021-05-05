@@ -46,8 +46,16 @@
                             %td
                               %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
                                 = "#{user.profile.full_name}"
-                            %td{class: "#{user.admin? ? 'bg-orange' : ''}"}
-                              = user.admin? ? "Admin" : "Utilisateur"
+                            %td.font-bold
+                              - if user.roles.present?
+                                - if user.has_role? :organizer
+                                  %span.purple - Organisateur
+                                - if user.has_role? :supplier
+                                  %span.light-blue - Fournisseur
+                                - if user.has_role? :admin
+                                  %span.orange - Admin
+                              - else
+                                Utilisateur
                             %td.contact-type
                               %i.fa.fa-envelope
                             %td

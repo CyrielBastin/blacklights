@@ -35,7 +35,6 @@ class EventsControllerTest < ActionDispatch::IntegrationTest
               type: '1',
               user_attributes: {
                 email: 'jacky@lalouche.net',
-                admin: '0',
                 skip_password_validation: 'true',
                 profile_attributes: {
                   gender: 'male',
