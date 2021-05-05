@@ -33,11 +33,19 @@
             .hr-line-dashed{style: 'margin-top: -10px'}
             .hr-line-dashed
             .row
-              %label.col-sm-1.control-label Admin ?
+              %label.col-sm-2.control-label Admin ?
               .col-sm-10
                 %input.form-control.bg-contrast{type: 'checkbox', style: 'max-width: 50px', name: 'user_admin', checked: @user.has_role?(:admin)}
+            .row.mt-20
+              %label.col-sm-2.control-label Organisateur ?
+              .col-sm-10
+                %input.form-control.bg-contrast{type: 'checkbox', style: 'max-width: 50px', name: 'user_organizer', checked: @user.has_role?(:organizer)}
+            .row.mt-20
+              %label.col-sm-2.control-label Fournisseur ?
+              .col-sm-10
+                %input.form-control.bg-contrast{type: 'checkbox', style: 'max-width: 50px', name: 'user_supplier', checked: @user.has_role?(:supplier)}
 
             .hr-line-dashed
             .form-group
               .col-sm-4
-                %button.btn.btn-primary{:type => 'submit'} Sauver
+                %button.btn.btn-primary.btn-lg{:type => 'submit'} Sauver

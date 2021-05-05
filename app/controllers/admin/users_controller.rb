@@ -15,8 +15,10 @@ class Admin::UsersController < AdminController
   def create
     @user = User.new(user_params)
     @user.profile.contact[:email] = params[:user][:email]
-    @user.add_role(:admin) if params[:user_admin].present?
     if @user.save
+      @user.add_role(:admin) if params[:user_admin].present?
+      @user.add_role(:organizer) if params[:user_organizer].present?
+      @user.add_role(:supplier) if params[:user_supplier].present?
       flash[:success] = 'L\'utilisateur a été crée avec succès !'
       redirect_to admin_users_path
     else
@@ -34,11 +36,9 @@ class Admin::UsersController < AdminController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      if params[:user_admin].present?
-        @user.add_role :admin
-      else
-        @user.remove_role :admin
-      end
+      params[:user_admin].present? ? @user.add_role(:admin) : @user.remove_role(:admin)
+      params[:user_organizer].present? ? @user.add_role(:organizer) : @user.remove_role(:organizer)
+      params[:user_supplier].present? ? @user.add_role(:supplier) : @user.remove_role(:supplier)
       flash[:success] = 'L\'utilisateur a été modifié avec succès !'
       redirect_to admin_users_path
     else
