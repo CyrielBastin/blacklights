@@ -127,9 +127,12 @@ module ImportModel
             rescue ActiveRecord::RecordNotFound
             end
           end
-          potential_errors[:cell_error] = true unless sup.update(name: sheet.row(i)[0], email: sheet.row(i)[1],
-                                                                 phone_number: sheet.row(i)[2], zip_code: sheet.row(i)[3],
-                                                                 city: sheet.row(i)[4], country: sheet.row(i)[5])
+          if sup.update(name: sheet.row(i)[0], email: sheet.row(i)[1], phone_number: sheet.row(i)[2],
+                        zip_code: sheet.row(i)[3], city: sheet.row(i)[4], country: sheet.row(i)[5])
+            sup.supplier_users.each { |s_u| s_u.user.add_role :supplier }
+          else
+            potential_errors[:cell_error] = true
+          end
         else
           sup = Supplier.new(name: sheet.row(i)[0], email: sheet.row(i)[1],
                              phone_number: sheet.row(i)[2], zip_code: sheet.row(i)[3],
@@ -142,7 +145,11 @@ module ImportModel
             rescue ActiveRecord::RecordNotFound
             end
           end
-          potential_errors[:cell_error] = true unless sup.save
+          if sup.save
+            sup.supplier_users.each { |s_u| s_u.user.add_role :supplier }
+          else
+            potential_errors[:cell_error] = true
+          end
         end
       end
       if potential_errors[:cell_error] == true
@@ -385,11 +392,13 @@ module ImportModel
             next if eq.nil?
             e.event_equipment << EventEquipment.new(event_id: e, equipment_id: eq[:id], quantity: hash[:quantity])
           end
-          unless e.update(name: sheet.row(i)[0], type: type, category_id: category.present? ? category[:id] : nil,
+          if e.update(name: sheet.row(i)[0], type: type, category_id: category.present? ? category[:id] : nil,
                           start_date: convert_to_date_time(sheet.row(i)[3]), end_date: convert_to_date_time(sheet.row(i)[4]),
                           registration_deadline: convert_to_date_time(sheet.row(i)[5]), min_participant: sheet.row(i)[6],
                           max_participant: sheet.row(i)[7], price: to_english_repr(sheet.row(i)[8]),
                           user_id: user.present? ? user[:id] : nil)
+            e.user.add_role :organizer
+          else
             potential_errors[:cell_error] = true
           end
         else
@@ -411,7 +420,11 @@ module ImportModel
             next if eq.nil?
             e.event_equipment << EventEquipment.new(event_id: e, equipment_id: eq[:id], quantity: hash[:quantity])
           end
-          potential_errors[:cell_error] = true unless e.save
+          if e.save
+            e.user.add_role :organizer
+          else
+            potential_errors[:cell_error] = true
+          end
         end
       end
       if potential_errors[:cell_error] == true
