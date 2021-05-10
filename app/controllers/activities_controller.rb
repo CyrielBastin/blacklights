@@ -1,7 +1,7 @@
 class ActivitiesController < ApplicationController
 
   def index
-    @activities = Activity.all
+    @activities = Activity.visible
     @categories = Category.for_activity
   end
 

@@ -7,32 +7,31 @@
     .container
       %ul.breadcrumbs-custom-path
         %li
-          %a{:href => "index.html"} Home
-        %li
-          %a{:href => "#"} About
-        %li.active Team Member
+          %a{:href => root_path} Home
+        %li.active Activités
 
 %section.section.section-xl.bg-default.text-center
   .container
     -@categories.each do |category|
-      %h2
-        = category.name
-      .row.row-xl.row-30
-        -@activities.where(category_id: category.id).each do |activity|
-          .col-sm-6.col-lg-4
-            / Team
-            %article.team.block-md
-              %img.team-image{:alt => "", :height => "314", :src => asset_path("team-1-370x314.jpg"), :width => "370"}/
-              .team-content
-                %div
-                  .team-position Founder, Director
-                  .heading-5.team-name
-                    %a{:href => activity_path(activity)}
-                      = activity.name
-                  %ul.team-list-social.list-social.list-inline.list-inline-sm
-                    %li
-                      %a.icon.mdi.mdi-facebook{:href => "#"}
-                    %li
-                      %a.icon.mdi.mdi-instagram{:href => "#"}
-                    %li
-                      %a.icon.mdi.mdi-twitter{:href => "#"}
+      -if category.activities.visible.size > 0
+        %h2
+          = category.name
+        .row.row-xl.row-30
+          -@activities.where(category_id: category.id).each do |activity|
+            .col-sm-6.col-lg-4
+              / Team
+              %article.team.block-md
+                %img.team-image{:alt => "", :height => "314", :src => asset_path("team-1-370x314.jpg"), :width => "370"}/
+                .team-content
+                  %div
+                    .team-position Founder, Director
+                    .heading-5.team-name
+                      %a{:href => activity_path(activity)}
+                        = activity.name
+                    %ul.team-list-social.list-social.list-inline.list-inline-sm
+                      %li
+                        %a.icon.mdi.mdi-facebook{:href => "#"}
+                      %li
+                        %a.icon.mdi.mdi-instagram{:href => "#"}
+                      %li
+                        %a.icon.mdi.mdi-twitter{:href => "#"}
