@@ -64,7 +64,7 @@ $(function() {
         editor_selector : "tinymce",
         menubar:false,
         height: 600,
-        plugins: "image, link",
+        plugins: "image, link, lists",
         toolbar1: 'insertfile undo redo | styleselect fontsizeselect fontselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
     });
 
