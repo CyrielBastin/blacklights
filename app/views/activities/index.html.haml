@@ -7,7 +7,7 @@
           %a{:href => root_path} Accueil
         %li.active Activités
 
-%section.section.section-xl.bg-default.text-center
+%section.section.section-sm.bg-default.text-center
   .container
     -@categories.each do |category|
       -if category.activities.visible.size > 0
