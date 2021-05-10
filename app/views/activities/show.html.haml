@@ -22,11 +22,6 @@
       .col-md-11.col-lg-7.col-xl-6
         %h3.font-family-base
           = @activity.name
-        %p.big Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Condimentum lacinia quis vel eros. Molestie ac feugiat sed lectus vestibulum mattis ullamcorper velit. Quis eleifend quam adipiscing vitae proin sagittis. Risus commodo viverra maecenas accumsan lacus vel facilisis.
-        / Quote
-        %ul.list-marked.list-2-column.big
-          %li Faucibus scelerisque eleifend
-          %li Egestas fringilla phasellus
-          %li Sit amet justo donec enim
-          %li Molestie a iaculis at erat
+        %p.big
+          = raw @activity.description
         %a.button.button-lg.button-secondary{:href => "#"} Book Now

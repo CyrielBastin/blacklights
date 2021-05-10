@@ -21,10 +21,10 @@
                 %label.col-sm-2.control-label
                   Description
                   %span.red *
-                .col-sm-5
-                  = f.text_area :description, rows: 4, class: 'form-control bg-contrast'
+                .col-sm-8
+                  = f.text_area :description, rows: 4, class: 'form-control bg-contrast tinymce'
               .form-group
-                %label.col-sm-2.control-label Partie publique
+                %label.col-sm-2.control-label Visibilité
                 .col-sm-1
                   = f.check_box :visible, class: 'form-control bg-contrast', checked: @activity[:visible].nil? ? true : @activity[:visible]
 

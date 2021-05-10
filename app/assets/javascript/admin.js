@@ -18,6 +18,7 @@
 //= require dynamic-fields-for
 //= require flatpickr
 //= require flatpickr/l10n/fr
+//= require tinymce-jquery
 
 
 $(function() {
@@ -56,6 +57,15 @@ $(function() {
         minuteIncrement: 5,
         time_24hr: true,
         locale: Flatpickr.l10ns.fr
+    });
+
+    tinyMCE.init({
+        mode : "textareas",
+        editor_selector : "tinymce",
+        menubar:false,
+        height: 600,
+        plugins: "image, link",
+        toolbar1: 'insertfile undo redo | styleselect fontsizeselect fontselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
     });
 
 });
