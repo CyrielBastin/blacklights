@@ -1,69 +1,27 @@
 %section.breadcrumbs-custom.bg-image.context-dark.scroll-handler{:style => "background-image: #{asset_path('bg-breadcrumbs.jpg')};"}
   .image-overlay{"data-canvas-src" => asset_path("bg-breadcrumbs.jpg"), :style => "background-image: #{asset_path('bg-breadcrumbs.jpg')};"}
-  .breadcrumbs-main
-    .container
-      %h2.breadcrumbs-custom-title.scroll-title Evènements
   .breadcrumbs-panel
     .container
       %ul.breadcrumbs-custom-path
         %li
-          %a{:href => "index.html"} Accueil
-        %li.active Events
+          %a{:href => root_path} Accueil
+        %li.active Evènements
 / Events
-%section.section.section-lg.bg-default
+%section.section.section-sm.bg-default
   .container
     .row.row-30.row-md-50.row-lg-70
-      .col-sm-6
-        %article.post.block-xl
-          %img.post-image{:alt => "", :height => "367", :src => asset_path("post-12-570x367.jpg"), :width => "570"}/
-          .post-content
-            %div
-              %a.post-tag.post-tag-white-outline{:href => "single-event.html"} EDM
-              .heading-5.post-title
-                %a{href: ""}
-                  EDM Thursdays:
-                  %br DJ ocean  DJ Thunder
-              .post-time
-                %time{:datetime => "2020-05-29"} May 29, 2020
-          .post-dummy
-      .col-sm-6
-        %article.post.block-xl
-          %img.post-image{:alt => "", :height => "367", :src => asset_path("post-13-570x367.jpg"), :width => "570"}/
-          .post-content
-            %div
-              %a.post-tag.post-tag-white-outline{:href => "single-event.html"} Live Sets
-              .heading-5.post-title
-                %a{:href => "single-event.html"}
-                  Miss Apollo and
-                  %br The Trickers: Live DJ Set
-              .post-time
-                %time{:datetime => "2020-05-15"} May 15, 2020
-          .post-dummy
-      .col-sm-6
-        / post
-        %article.post.block-xl
-          %img.post-image{:alt => "", :height => "367", :src => asset_path("post-14-570x367.jpg"), :width => "570"}/
-          .post-content
-            %div
-              %a.post-tag.post-tag-white-outline{:href => "single-event.html"} Indie rock
-              .heading-5.post-title
-                %a{:href => ""}
-                  Knight Fighters:
-                  %br New album presentation
-              .post-time
-                %time{:datetime => "2020-05-05"} May 5, 2020
-          .post-dummy
-      .col-sm-6
-        / post
-        %article.post.block-xl
-          %img.post-image{:alt => "", :height => "367", :src => asset_path("post-15-570x367.jpg"), :width => "570"}/
-          .post-content
-            %div
-              %a.post-tag.post-tag-white-outline{:href => "single-event.html"} Bass music
-              .heading-5.post-title
-                %a{:href => "single-event.html"}
-                  Bass Fridays:
-                  %br DJ MadZone  MC Weaponizer
-              .post-time
-                %time{:datetime => "2020-05-03"} May 3, 2020
-          .post-dummy
+      -Event.to_come.each do |event|
+        .col-sm-6
+          %article.post.block-xl
+            %img.post-image{:alt => "", :height => "367", :src => asset_path("post-12-570x367.jpg"), :width => "570"}/
+            .post-content
+              %div
+                %a.post-tag.post-tag-white-outline{:href => "#"}
+                  = event.category.name
+                .heading-5.post-title
+                  %a{href: event_path(event)}
+                    = event.name
+                .post-time
+                  %time
+                    = event.start_date
+            .post-dummy
