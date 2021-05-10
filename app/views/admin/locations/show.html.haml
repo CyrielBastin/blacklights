@@ -1,0 +1,84 @@
+.row.wrapper.border-bottom.white-bg.page-heading
+  .col-lg-10
+    %h2 Lieux
+    %ol.breadcrumb
+      %li
+        %a{:href => admin_root_path} Accueil
+      %li
+        %a{:href => admin_locations_path} Lieux
+      %li.active
+        %strong
+          = @location.name_plus_city
+
+
+.wrapper.wrapper-content.animated.fadeInRight
+  .row
+    .col-lg-12
+      .ibox.float-e-margins
+        .ibox-title
+          %h5 Informations sur le lieu
+        .ibox-content
+          .row.details-show.details-item
+            .col-sm-1.details-title Nom :
+            .col-sm-3{style: 'font-size: xx-large'}
+              = @location[:name]
+            .col-sm-1.details-title Type :
+            .col-sm-1
+              = @location[:type].text
+            .col-sm-1.details-title Capacité :
+            .col-sm-1
+              = @location[:capacity]
+            .col-sm-1.details-title Contact :
+            .col-sm-3
+              = "Nom : #{@location.user.contact[:lastname]}"
+              %br
+              = "Prénom : #{@location.user.contact[:firstname]}"
+              %br
+              = "Tél. : #{@location.user.contact[:phone_number]}"
+              %br
+              = "Email : #{@location.user.contact[:email]}"
+              %br
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-1.details-title Loc. :
+            .col-sm-3.details-multiple
+              = @location[:street]
+              %br
+              = "#{@location[:city]} (#{@location[:zip_code]})"
+              %br
+              = @location[:country]
+            .col-sm-1.details-title Dim. :
+            .col-sm-3.details-multiple
+              - if @location.dimension[:width].present?
+                = "Largeur : #{to_french_repr(@location.dimension[:width])} m"
+              - else
+                Largeur :
+                %span.red Non défini
+              %br
+              - if @location.dimension[:length].present?
+                = "Longueur : #{to_french_repr(@location.dimension[:length])} m"
+              - else
+                Longueur :
+                %span.red Non défini
+              %br
+              - if @location.dimension[:height].present?
+                = "Hauteur : #{to_french_repr(@location.dimension[:height])} m"
+              - else
+                Hauteur :
+                %span.red Non défini
+              %br
+            .col-sm-1.details-title Activités :
+            - if @location.location_activities.present?
+              .col-sm-3.details-multiple
+                - @location.location_activities.each do |loc_ac|
+                  = loc_ac.activity[:name]
+                  %br
+            - else
+              .col-sm-3.red
+                Aucune activité définie
+
+
+          .details-btns
+            = link_to 'Modifier', edit_admin_location_path(@location[:id]), class: 'btn btn-lg details-btn-update'
+            = link_to 'Supprimer', admin_location_path(@location[:id]), class: 'btn btn-lg details-btn-delete', method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer ce lieu ?" }

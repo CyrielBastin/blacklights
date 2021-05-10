@@ -13,7 +13,7 @@ class Category < ApplicationRecord
   scope :for_equipment, -> { where(['type = ?', :equipment]) }
   scope :for_activity, -> { where(['type = ?', :activity]) }
   scope :for_event, -> { where(['type = ?', :event]) }
-  scope :to_export, -> { where('parent_id is null').order(:category_for) }
+  scope :to_export, -> { where('parent_id is null').order(:type) }
 
   belongs_to :parent, class_name: 'Category', optional: true
   has_many :children, class_name: 'Category', foreign_key: 'parent_id'

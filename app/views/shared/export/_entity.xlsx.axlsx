@@ -1,0 +1,31 @@
+entities = Entity.all
+users = assemble_pieces_together(entities,
+                                 obj_to_assemble: :entity_users,
+                                 obj_name: :user,
+                                 name: :id)
+locations = assemble_pieces_together(entities,
+                                     obj_to_assemble: :entity_locations,
+                                     obj_name: :location,
+                                     name: :id)
+activities = assemble_pieces_together(entities,
+                                      obj_to_assemble: :entity_activities,
+                                      obj_name: :activity,
+                                      name: :id)
+events = assemble_pieces_together(entities,
+                                  obj_to_assemble: :entity_events,
+                                  obj_name: :event,
+                                  name: :id)
+wb.add_worksheet(name: 'Associations') do |sheet|
+  sheet.add_row ['Nom', 'Catégorie', 'Utilisateurs (Id)', 'Lieux (Id)', 'Activités (Id)', 'Evènements (Id)', 'Id'], style: center
+  entities.each_with_index do |e, i|
+    sheet.add_row [e[:name], e.category[:name],
+                   users[i],
+                   locations[i],
+                   activities[i],
+                   events[i],
+                   e[:id]], style: center
+  end
+  sheet.rows.each do |row|
+    row.cells[6].style = cell_id_style
+  end
+end

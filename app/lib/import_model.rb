@@ -31,6 +31,8 @@ module ImportModel
     return imported if imported[:had_errors]
     imported = import_registrations(file)
     return imported if imported[:had_errors]
+    imported = import_entities(file)
+    return imported if imported[:had_errors]
 
     potential_errors
   end
@@ -51,7 +53,7 @@ module ImportModel
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
       # Order for the columns in the sheet
-      # Nom, Parent_name, Numerotation, Catégorie pour, Id
+      # Nom, Catégorie parent, Numerotation, Type, Id
       (2..sheet.last_row).each do |i|
         parent_id = nil
         if sheet.row(i)[1].present?
@@ -63,15 +65,23 @@ module ImportModel
             parent_id = parent[:id]
           end
         end
+        type = case sheet.row(i)[3]
+               when 'Activité'
+                 'activity'
+               when 'Matériel'
+                 'equipment'
+               when 'Evènement'
+                 'event'
+               else
+                 ''
+               end
         if already_exists?(:Category, sheet.row(i)[4])
           cat = Category.find(sheet.row(i)[4])
-          type = sheet.row(i)[3] == 'Activité' ? 'activity' : sheet.row(i)[3] == 'Matériel' ? 'equipment' : sheet.row(i)[3] == 'Evènement' ? 'event' : ''
-          unless cat.update(name: sheet.row(i)[0], parent_id: parent_id, category_for: type)
+          unless cat.update(name: sheet.row(i)[0], parent_id: parent_id, type: type)
             potential_errors[:cell_error] = true
           end
         else
-          category = Category.new(name: sheet.row(i)[0], category_for: sheet.row(i)[3],
-                                  parent_id: sheet.row(i)[1].nil? ? nil : Category.find_by(name: sheet.row(i)[1]).id)
+          category = Category.new(name: sheet.row(i)[0], parent_id: parent_id, type: type)
           potential_errors[:cell_error] = true unless category.save
         end
       end
@@ -103,17 +113,43 @@ module ImportModel
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
       # Order for the columns in the sheet
-      # Entreprise, Nom de famille, Prénom, Téléphone, Email, Rue et numéro, Code postal, Ville, Pays, Id
+      # Nom, Email, Téléphone, Code postal, Ville, Pays, Contact supp. (Id), Id
       (2..sheet.last_row).each do |i|
-        contact = build_contact(sheet.row(i)[1..8])
-        if already_exists?(:Supplier, sheet.row(i)[9])
-          sup = Supplier.find(sheet.row(i)[9])
-          sup.contact = contact
-          potential_errors[:cell_error] = true unless sup.update(name: sheet.row(i)[0])
+        list_users = convert_activities(sheet.row(i)[6])
+        if already_exists?(:Supplier, sheet.row(i)[7])
+          sup = Supplier.find(sheet.row(i)[7])
+          sup.supplier_users = []
+          list_users.each do |user_id|
+            next if user_id.nil?
+            begin
+              u = User.find(user_id)
+              sup.supplier_users << SupplierUser.new(supplier_id: sheet.row(i)[7], user_id: u[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          if sup.update(name: sheet.row(i)[0], email: sheet.row(i)[1], phone_number: sheet.row(i)[2],
+                        zip_code: sheet.row(i)[3], city: sheet.row(i)[4], country: sheet.row(i)[5])
+            sup.supplier_users.each { |s_u| s_u.user.add_role :supplier }
+          else
+            potential_errors[:cell_error] = true
+          end
         else
-          sup = Supplier.new(name: sheet.row(i)[0])
-          sup.contact = contact
-          potential_errors[:cell_error] = true unless sup.save
+          sup = Supplier.new(name: sheet.row(i)[0], email: sheet.row(i)[1],
+                             phone_number: sheet.row(i)[2], zip_code: sheet.row(i)[3],
+                             city: sheet.row(i)[4], country: sheet.row(i)[5])
+          list_users.each do |user_id|
+            next if user_id.nil?
+            begin
+              u = User.find(user_id)
+              sup.supplier_users << SupplierUser.new(supplier_id: sheet.row(i)[7], user_id: u[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          if sup.save
+            sup.supplier_users.each { |s_u| s_u.user.add_role :supplier }
+          else
+            potential_errors[:cell_error] = true
+          end
         end
       end
       if potential_errors[:cell_error] == true
@@ -193,22 +229,32 @@ module ImportModel
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
       # Order for the columns in the sheet
-      # Nom, Description, Matériel + qty, Id, Lieux disp.
+      # Nom, Description, Catégorie, Publique ?, Matériel + qty, Id, Lieux disp.
       (2..sheet.last_row).each do |i|
-        list_equipment = convert_element_qty(sheet.row(i)[2])
-        if already_exists?(:Activity, sheet.row(i)[3])
-          act = Activity.find(sheet.row(i)[3])
+        list_equipment = convert_element_qty(sheet.row(i)[4])
+        category = Category.find_by(name: sheet.row(i)[2])
+        visible = case sheet.row(i)[3]
+                  when 'Oui'
+                    true
+                  else
+                    false
+                  end
+        if already_exists?(:Activity, sheet.row(i)[5])
+          act = Activity.find(sheet.row(i)[5])
           act.activity_equipment = []
           list_equipment.each do |e|
             eq = Equipment.find_by(name: e[:name])
             next if eq.nil?
-            act.activity_equipment << ActivityEquipment.new(activity_id: act,
+            act.activity_equipment << ActivityEquipment.new(activity_id: act[:id],
                                                             equipment_id: eq[:id],
                                                             quantity: e[:quantity])
           end
-          potential_errors[:cell_error] = true unless act.update(name: sheet.row(i)[0], description: sheet.row(i)[1])
+          potential_errors[:cell_error] = true unless act.update(name: sheet.row(i)[0], description: sheet.row(i)[1],
+                                                                 visible: visible,
+                                                                 category_id: category.present? ? category[:id] : nil)
         else
-          act = Activity.new(name: sheet.row(i)[0], description: sheet.row(i)[1])
+          act = Activity.new(name: sheet.row(i)[0], description: sheet.row(i)[1], visible: visible,
+                             category_id: category.present? ? category[:id] : nil)
           act.activity_equipment = []
           list_equipment.each do |e|
             eq = Equipment.find_by(name: e[:name])
@@ -248,16 +294,21 @@ module ImportModel
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
       # Order for the columns in the sheet
-      # Nom, Capacité, Rue et num, Ville, Code p, Pays, Type, Activités, Largeur, Longueur, Hauteur,
-      # Nom de f., Prénom, Tél, Email, Rue, Code postal, Ville, Pays, Id
+      # Nom, Type, Capacité, Rue et num, Code p, Ville, Pays, Activités, Largeur, Longueur, Hauteur,
+      # Contact (user Id), Id
       (2..sheet.last_row).each do |i|
+        next if sheet.row(i)[11].nil?
         dimensions = build_dimensions(sheet.row(i)[8..10])
-        contact = build_contact(sheet.row(i)[11..18])
+        type = convert_type(sheet.row(i)[1])
+        user = nil
+        begin
+          user = User.find(sheet.row(i)[11])
+        rescue ActiveRecord::RecordNotFound
+        end
         list_activities = convert_activities(sheet.row(i)[7])
-        if already_exists?(:Location, sheet.row(i)[19])
-          loc = Location.find(sheet.row(i)[19])
+        if already_exists?(:Location, sheet.row(i)[12])
+          loc = Location.find(sheet.row(i)[12])
           loc.dimension = dimensions
-          loc.contact = contact
           loc.location_activities = []
           list_activities.each do |a_name|
             next if a_name.empty?
@@ -265,15 +316,16 @@ module ImportModel
             next if a.nil?
             loc.location_activities << LocationActivity.new(location_id: loc, activity_id: a[:id])
           end
-          unless loc.update(name: sheet.row(i)[0], capacity: sheet.row(i)[1], street: sheet.row(i)[2], city: sheet.row(i)[3],
-                            zip_code: sheet.row(i)[4], country: sheet.row(i)[5], type: sheet.row(i)[6])
+          unless loc.update(name: sheet.row(i)[0], type: type, capacity: sheet.row(i)[2], street: sheet.row(i)[3],
+                            city: sheet.row(i)[5], zip_code: sheet.row(i)[4], country: sheet.row(i)[6],
+                            user_id: user.present? ? user[:id] : nil)
             potential_errors[:cell_error] = true
           end
         else
-          loc = Location.new(name: sheet.row(i)[0], capacity: sheet.row(i)[1], street: sheet.row(i)[2], city: sheet.row(i)[3],
-                             zip_code: sheet.row(i)[4], country: sheet.row(i)[5], type: sheet.row(i)[6])
+          loc = Location.new(name: sheet.row(i)[0], type: type, capacity: sheet.row(i)[2], street: sheet.row(i)[3],
+                             city: sheet.row(i)[5], zip_code: sheet.row(i)[4], country: sheet.row(i)[6],
+                             user_id: user.present? ? user[:id] : nil)
           loc.dimension = dimensions
-          loc.contact = contact
           loc.location_activities = []
           list_activities.each do |a_name|
             next if a_name.empty?
@@ -312,22 +364,27 @@ module ImportModel
       end
       raise SheetNameError.new(sheet_name) if sheet.nil?
       # Order for the columns in the sheet
-      # Nom, Date début, Date fin, Clôture insc., Min par., Max par., Prix, Lieu, Activités, Matériel,
-      # Nom de f., Prénom, Tél, Email, Rue, Code postal, Ville, Pays, Id
+      # Nom, Type, Catégorie, Date début, Date fin, Clôture insc., Min par., Max par., Prix, Lieu, Activités, Matériel,
+      # Contact (user Id), Id
       (2..sheet.last_row).each do |i|
-        contact = build_contact(sheet.row(i)[10..17])
-        location = Location.find_by(name: convert_location(sheet.row(i)[7])[0], city: convert_location(sheet.row(i)[7])[1])
-        list_activities = convert_element_qty(sheet.row(i)[8])
-        list_equipment = convert_element_qty(sheet.row(i)[9])
-        if already_exists?(:Event, sheet.row(i)[18])
-          e = Event.find(sheet.row(i)[18])
-          e.contact = contact
+        location = Location.find_by(name: convert_location(sheet.row(i)[9])[0], city: convert_location(sheet.row(i)[9])[1])
+        list_activities = convert_element_qty(sheet.row(i)[10])
+        list_equipment = convert_element_qty(sheet.row(i)[11])
+        type = convert_type(sheet.row(i)[1])
+        category = Category.find_by(name: sheet.row(i)[2])
+        user = nil
+        begin
+          user = User.find(sheet.row(i)[12])
+        rescue ActiveRecordError::RecordNotFound
+        end
+        if already_exists?(:Event, sheet.row(i)[13])
+          e = Event.find(sheet.row(i)[13])
           e[:location_id] = location[:id] if location.present?
           e.event_activities = []
           list_activities.each do |hash|
             act = Activity.find_by(name: hash[:name])
             next if act.nil?
-            e.event_activities << EventActivity.new(event_id: e, activity_id: act[:id], simultaneous_activities: hash[:quantity])
+            e.event_activities << EventActivity.new(event_id: e, activity_id: act[:id], quantity: hash[:quantity])
           end
           e.event_equipment = []
           list_equipment.each do |hash|
@@ -335,22 +392,27 @@ module ImportModel
             next if eq.nil?
             e.event_equipment << EventEquipment.new(event_id: e, equipment_id: eq[:id], quantity: hash[:quantity])
           end
-          unless e.update(name: sheet.row(i)[0], start_date: convert_to_date_time(sheet.row(i)[1]),
-                          end_date: convert_to_date_time(sheet.row(i)[2]), registration_deadline: convert_to_date_time(sheet.row(i)[3]),
-                          min_participant: sheet.row(i)[4], max_participant: sheet.row(i)[5], price: to_english_repr(sheet.row(i)[6]))
+          if e.update(name: sheet.row(i)[0], type: type, category_id: category.present? ? category[:id] : nil,
+                          start_date: convert_to_date_time(sheet.row(i)[3]), end_date: convert_to_date_time(sheet.row(i)[4]),
+                          registration_deadline: convert_to_date_time(sheet.row(i)[5]), min_participant: sheet.row(i)[6],
+                          max_participant: sheet.row(i)[7], price: to_english_repr(sheet.row(i)[8]),
+                          user_id: user.present? ? user[:id] : nil)
+            e.user.add_role :organizer
+          else
             potential_errors[:cell_error] = true
           end
         else
-          e = Event.new(name: sheet.row(i)[0], start_date: convert_to_date_time(sheet.row(i)[1]),
-                            end_date: convert_to_date_time(sheet.row(i)[2]), registration_deadline: convert_to_date_time(sheet.row(i)[3]),
-                            min_participant: sheet.row(i)[4], max_participant: sheet.row(i)[5], price: to_english_repr(sheet.row(i)[6]))
-          e.contact = contact
+          e = Event.new(name: sheet.row(i)[0], type: type, category_id: category.present? ? category[:id] : nil,
+                        start_date: convert_to_date_time(sheet.row(i)[3]), end_date: convert_to_date_time(sheet.row(i)[4]),
+                        registration_deadline: convert_to_date_time(sheet.row(i)[5]), min_participant: sheet.row(i)[6],
+                        max_participant: sheet.row(i)[7], price: to_english_repr(sheet.row(i)[8]),
+                        user_id: user.present? ? user[:id] : nil)
           e[:location_id] = location[:id] unless location.nil?
           e.event_activities = []
           list_activities.each do |hash|
             act = Activity.find_by(name: hash[:name])
             next if act.nil?
-            e.event_activities << EventActivity.new(event_id: e, activity_id: act[:id], simultaneous_activities: hash[:quantity])
+            e.event_activities << EventActivity.new(event_id: e, activity_id: act[:id], quantity: hash[:quantity])
           end
           e.event_equipment = []
           list_equipment.each do |hash|
@@ -358,7 +420,11 @@ module ImportModel
             next if eq.nil?
             e.event_equipment << EventEquipment.new(event_id: e, equipment_id: eq[:id], quantity: hash[:quantity])
           end
-          potential_errors[:cell_error] = true unless e.save
+          if e.save
+            e.user.add_role :organizer
+          else
+            potential_errors[:cell_error] = true
+          end
         end
       end
       if potential_errors[:cell_error] == true
@@ -455,6 +521,122 @@ module ImportModel
     potential_errors
   end
 
+
+  def import_entities(file)
+    sheet_name = 'Associations'
+    potential_errors = init_errors(sheet_name)
+    begin
+      raise FileExistError if file.nil?
+      file_ext = File.extname(file.original_filename)
+      raise ExtensionNameError.new(file.original_filename, valid_extensions) unless valid_extensions.include?(file_ext)
+      document = (file_ext == '.xlsx') ? Roo::Excelx.new(file.path) : Roo::OpenOffice.new(file.path)
+      sheet = nil
+      begin
+        sheet = document.sheet(sheet_name)
+      rescue RangeError # The RangeError occurs when <sheet_name> doesn't exist in the document
+      end
+      raise SheetNameError.new(sheet_name) if sheet.nil?
+      # Order for the columns in the sheet
+      # Nom, Catégorie, Utilisateurs (id), Lieux (id), Activités (id), Evènements (id), Id
+      (2..sheet.last_row).each do |i|
+        category = Category.find_by(name: sheet.row(i)[1])
+        list_users = convert_activities(sheet.row(i)[2])
+        list_locations = convert_activities(sheet.row(i)[3])
+        list_activities = convert_activities(sheet.row(i)[4])
+        list_events = convert_activities(sheet.row(i)[5])
+        if already_exists?(:Entity, sheet.row(i)[6])
+          ent = Entity.find(sheet.row(i)[6])
+          ent.entity_users = []
+          list_users.each do |user_id|
+            next if user_id.nil?
+            begin
+              u = User.find(user_id)
+              ent.entity_users << EntityUser.new(entity_id: sheet.row(i)[6], user_id: u[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          ent.entity_locations = []
+          list_locations.each do |loc_id|
+            next if loc_id.nil?
+            begin
+              l = Location.find(loc_id)
+              ent.entity_locations << EntityLocation.new(entity_id: sheet.row(i)[6], location_id: l[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          ent.entity_activities = []
+          list_activities.each do |act_id|
+            next if act_id.nil?
+            begin
+              a = Activity.find(act_id)
+              ent.entity_activities << EntityActivity.new(entity_id: sheet.row(i)[6], activity_id: a[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          ent.entity_events = []
+          list_events.each do |event_id|
+            next if event_id.nil?
+            begin
+              e = Event.find(event_id)
+              ent.entity_events << EntityEvent.new(entity_id: sheet.row(i)[6], event_id: e[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          potential_errors[:cell_error] = true unless ent.update(name: sheet.row(i)[0],
+                                                                 category_id: category.present? ? category[:id] : nil)
+        else
+          ent = Entity.new(name: sheet.row(i)[0], category_id: category.present? ? category[:id] : nil)
+          ent.entity_users = []
+          list_users.each do |user_id|
+            next if user_id.nil?
+            begin
+              u = User.find(user_id)
+              ent.entity_users << EntityUser.new(entity_id: sheet.row(i)[6], user_id: u[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          ent.entity_locations = []
+          list_locations.each do |loc_id|
+            next if loc_id.nil?
+            begin
+              l = Location.find(loc_id)
+              ent.entity_locations << EntityLocation.new(entity_id: sheet.row(i)[6], location_id: l[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          ent.entity_activities = []
+          list_activities.each do |act_id|
+            next if act_id.nil?
+            begin
+              a = Activity.find(act_id)
+              ent.entity_activities << EntityActivity.new(entity_id: sheet.row(i)[6], activity_id: a[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          ent.entity_events = []
+          list_events.each do |event_id|
+            next if event_id.nil?
+            begin
+              e = Event.find(event_id)
+              ent.entity_events << EntityEvent.new(entity_id: sheet.row(i)[6], event_id: e[:id])
+            rescue ActiveRecord::RecordNotFound
+            end
+          end
+          potential_errors[:cell_error] = true unless ent.save
+        end
+      end
+      if potential_errors[:cell_error] == true
+        potential_errors[:had_errors] = true
+        raise CellValueError
+      end
+    rescue ImportFileError => e
+      potential_errors[:had_errors] = true
+      potential_errors[:err_messages] << e.message
+    end
+
+    potential_errors
+  end
+
   # ##################################################################################################
   private
   # ##################################################################################################
@@ -462,6 +644,19 @@ module ImportModel
   # Returns an array containing the valid extensions for an imported file
   def valid_extensions
     %w[.xlsx .ods]
+  end
+
+  # @param [String] str
+  # @return [String]
+  def convert_type(str)
+    case str
+    when 'Public'
+      'public'
+    when 'Privé'
+      'private'
+    else
+      ''
+    end
   end
 
   # @param datas: array<string>
@@ -476,7 +671,7 @@ module ImportModel
   # @param datas: array<string>
   def build_dimensions(datas)
     Dimension.new(width: to_english_repr(datas[0]), length: to_english_repr(datas[1]),
-                  height: to_english_repr(datas[2]), weight: datas[3].nil? ? 0.01 : to_english_repr(datas[3]))
+                  height: to_english_repr(datas[2]), weight: datas[3].nil? ? nil : to_english_repr(datas[3]))
   end
 
   # Here, we receive a string containing the equipment or activity with their quantity
@@ -504,7 +699,7 @@ module ImportModel
   def convert_activities(string)
     return [] if string.nil?
 
-    string.split('+').collect(&:strip)
+    string.to_s.split('+').collect(&:strip)
   end
 
   # @param string [String]

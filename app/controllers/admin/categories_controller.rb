@@ -66,7 +66,7 @@ class Admin::CategoriesController < AdminController
       imported[:err_messages].each { |error| err_msg += "#{error}<br>" }
       flash[:danger] = err_msg
     else
-      flash[:success] = 'Toutes vos catégories ont été importés avec succès !'
+      flash[:success] = 'Toutes vos catégories ont été importées avec succès !'
     end
     redirect_to admin_categories_path
   end

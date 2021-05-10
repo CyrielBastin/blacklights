@@ -29,6 +29,7 @@
 #  invitations_count      :integer          default(0)
 #
 class User < ApplicationRecord
+  rolify
   include ForbiddenCharacter
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
@@ -41,7 +42,8 @@ class User < ApplicationRecord
   validate :email_is_valid
   validates_uniqueness_of :email
 
-
+  has_many :locations
+  has_many :events
   has_many :supplier_users, dependent: :destroy
   has_many :entity_users, dependent: :destroy
   has_many :registrations, dependent: :destroy

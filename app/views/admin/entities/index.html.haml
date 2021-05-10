@@ -14,8 +14,13 @@
         .ibox-title
           %h5 L'ensemble des associations définies
           .ibox-tools
-            = link_to 'Nouvelle association', new_admin_entity_path, class: 'btn btn-primary'
-            = link_to 'Exporter', admin_entities_path(format: :xlsx), class: 'btn btn-info' if @entities.size > 0
+            = form_tag admin_import_entities_path, method: :post, multipart: true do
+              .title-group-btns
+                .import-container
+                  = file_field_tag :file
+                  = submit_tag 'Importer', class: 'btn btn-success btn-import'
+                = link_to 'Nouvelle association', new_admin_entity_path, class: 'btn btn-primary'
+                = link_to 'Exporter', admin_entities_path(format: :xlsx), class: 'btn btn-info' if @entities.size > 0
         .ibox-content
           - if @entities.size > 0
             .project-list

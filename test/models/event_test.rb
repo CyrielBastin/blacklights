@@ -22,7 +22,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event without a name' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
 
     assert_not event.save
@@ -31,7 +31,7 @@ class EventTest < ActiveSupport::TestCase
   test 'name should contain at least 5 characters' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = 'Hell'
 
@@ -41,7 +41,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event with \'&\' in name' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = 'Hello &'
 
@@ -51,7 +51,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event without a start date' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
 
@@ -61,7 +61,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event without an end date' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -72,7 +72,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event without a price' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -84,7 +84,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event without a registration deadline' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -97,7 +97,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event without min participant' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -111,7 +111,7 @@ class EventTest < ActiveSupport::TestCase
   test 'min participant should be a number' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -126,7 +126,7 @@ class EventTest < ActiveSupport::TestCase
   test 'min participant should be higher than 0' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -141,7 +141,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event without max participant' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -156,7 +156,7 @@ class EventTest < ActiveSupport::TestCase
   test 'max participant should be a number' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -172,7 +172,7 @@ class EventTest < ActiveSupport::TestCase
   test 'max participant should be higher than 0' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -188,7 +188,7 @@ class EventTest < ActiveSupport::TestCase
   test 'max participant should be higher than min participant' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -204,7 +204,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should not save an event without a type' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -220,7 +220,7 @@ class EventTest < ActiveSupport::TestCase
   test 'should save an event if type equals "private"' do
     event = Event.new
     event.location = locations(:heaven)
-    event.contact = contacts(:two)
+    event.user = users(:abel)
     event.category = categories(:balles)
     event[:name] = events(:dark_badminton)[:name]
     event[:start_date] = '2051-04-21 08:41:21'
@@ -237,7 +237,7 @@ class EventTest < ActiveSupport::TestCase
   test 'contact\'s firstname for event "dark_badminton" should be "Cain"' do
     event = events(:dark_badminton)
 
-    assert_equal 'Cain', event.contact[:firstname]
+    assert_equal 'Cain', event.user.contact[:firstname]
   end
 
   test 'location\'s name for event "dark_volleyball" should be "Hell"' do

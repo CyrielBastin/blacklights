@@ -22,7 +22,20 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
           { name: 'Brand_new_supplier',
             email: 'superemail@email.com',
             phone_number: '01 02 03 04 05',
-            country: 'Belgique' } }
+            country: 'Belgique',
+            supplier_user_ids: '' },
+          creating_new_user: '1',
+          user_admin: 'on',
+          user: {
+              email: 'jacky@lalouche.net',
+              skip_password_validation: 'true',
+              profile_attributes: {
+                gender: 'male',
+                contact_attributes:
+                  { lastname: 'Lalouche',
+                    firstname: 'Jacky',
+                    phone_number: '0411/11.11.11',
+                    email: 'jacky@lalouche.net' } } } }
     end
 
     assert_equal 'Votre fournisseur a été crée avec succès !', flash[:success]
@@ -40,7 +53,20 @@ class SuppliersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'Should update supplier' do
-    patch admin_supplier_url(@supplier), params: { supplier: { name: 'New_name' } }
+    patch admin_supplier_url(@supplier), params: { supplier: { name: 'New_name', email: 'djapojda@djao.c',
+                                                               phone_number: '123456789', country: 'France',
+                                                               supplier_user_ids: '' },
+                                                   creating_new_user: '1',
+                                                   user: {
+                                                     email: 'jacky@lalouche.net',
+                                                     skip_password_validation: 'true',
+                                                     profile_attributes: {
+                                                       gender: 'male',
+                                                       contact_attributes:
+                                                         { lastname: 'Lalouche',
+                                                           firstname: 'Jacky',
+                                                           phone_number: '0411/11.11.11',
+                                                           email: 'jacky@lalouche.net' } } } }
     assert_equal 'Votre fournisseur a été modifié avec succès !', flash[:success]
     assert_redirected_to admin_suppliers_url
   end

@@ -11,3 +11,4 @@ render partial: 'shared/export/location', locals: { wb: wb, center: center, cell
 render partial: 'shared/export/supplier', locals: { wb: wb, center: center, cell_id_style: cell_id_style }
 render partial: 'shared/export/user', locals: { wb: wb, center: center, cell_id_style: cell_id_style }
 render partial: 'shared/export/registration', locals: { wb: wb, center: center, cell_id_style: cell_id_style }
+render partial: 'shared/export/entity', locals: { wb: wb, center: center, cell_id_style: cell_id_style }

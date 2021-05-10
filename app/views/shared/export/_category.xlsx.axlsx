@@ -1,13 +1,13 @@
 wb.add_worksheet(name: 'Catégories') do |sheet|
-  sheet.add_row ['Nom', 'Catégorie parente', 'Numérotation', 'Type', 'id'], style: center
+  sheet.add_row ['Nom', 'Catégorie parente', 'Numérotation', 'Type', 'Id'], style: center
   Category.to_export.each_with_index do |c_gp, i_gp|
-    sheet.add_row [c_gp[:name], '', "#{i_gp + 1}.", c_gp[:category_for].text, c_gp[:id]], style: center
+    sheet.add_row [c_gp[:name], '', "#{i_gp + 1}.", c_gp[:type].text, c_gp[:id]], style: center
     if c_gp.children.present?
       c_gp.children.each_with_index do |c_p, i_p|
-        sheet.add_row [c_p[:name], c_p.parent[:name], "#{i_gp + 1}.#{i_p + 1}.", c_p[:category_for].text, c_p[:id]], style: center
+        sheet.add_row [c_p[:name], c_p.parent[:name], "#{i_gp + 1}.#{i_p + 1}.", c_p[:type].text, c_p[:id]], style: center
         if c_p.children.present?
           c_p.children.each_with_index do |c_c, i_c|
-            sheet.add_row [c_c[:name], c_c.parent[:name], "#{i_gp + 1}.#{i_p + 1}.#{i_c + 1}.", c_c[:category_for].text, c_c[:id]], style: center
+            sheet.add_row [c_c[:name], c_c.parent[:name], "#{i_gp + 1}.#{i_p + 1}.#{i_c + 1}.", c_c[:type].text, c_c[:id]], style: center
           end
         end
       end

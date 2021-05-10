@@ -30,9 +30,9 @@ class Admin::LocationsController < AdminController
     end
   end
 
-  # def show
-  #   @location = Location.find(params[:id])
-  # end
+  def show
+    @location = Location.find(params[:id])
+  end
 
   def edit
     @location = Location.find(params[:id])
@@ -77,15 +77,18 @@ class Admin::LocationsController < AdminController
   private
 
   def location_params
-    params.require(:location).permit(:id, :location_activity_ids, :name, :type, :capacity, :street, :zip_code, :city, :country,
-                                     contact_attributes: [:id, :lastname, :firstname, :phone_number, :email,
-                                                          coordinate_attributes: [:id, :street, :zip_code, :city, :country]],
-                                     dimension_attributes: [:id, :width, :length, :height, :weight])
+    params.require(:location).permit(:id, :location_activity_ids, :name, :type, :capacity, :street, :zip_code, :city, :country, :user_id,
+                                     dimension_attributes: [:width, :length, :height, :weight],
+                                     user_attributes: [:email, :skip_password_validation,
+                                                       profile_attributes: [:gender, contact_attributes: [:email, :lastname, :firstname, :phone_number]]])
   end
 
   def update_params
     params[:location][:location_activity_ids] = params[:location][:location_activity_ids].split(',')
     params[:location][:type] = params[:location][:type] == '1' ? 'public' : 'private'
+    if params[:creating_new_user] == '0'
+      params[:location] = params[:location].except(:user_attributes)
+    end
   end
 
   def add_activities

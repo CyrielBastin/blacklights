@@ -3,7 +3,7 @@ wb.add_worksheet(name: 'Utilisateurs') do |sheet|
                  'Téléphone', 'Rue et numéro', 'Code postal', 'Ville', 'Pays'], style: center
   User.all.each do |u|
     coord = u.contact.coordinate.present?
-    sheet.add_row [u[:id], u.contact[:lastname], u.contact[:firstname], u.admin? ? 'Admin' : 'Utilisateur', u[:email],
+    sheet.add_row [u[:id], u.contact[:lastname], u.contact[:firstname], pack_roles_to_fr(u), u[:email],
                    u.confirmed? ? 'Actif' : u.invited? ? 'Invité' : 'Non invité', u.profile.gender.male? ? 'M' : 'F',
                    date_to_french_format(u.profile[:birthdate]), u.contact[:phone_number],
                    coord ? u.contact.coordinate[:street] : '', coord ? u.contact.coordinate[:zip_code] : '',

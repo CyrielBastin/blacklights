@@ -30,30 +30,56 @@
                 .table-responsive
                   %table.table.table-striped.table-hover
                     %thead
+                      %th Sél.
                       %th Nom complet
                       %th Rôle
                       %th
                       %th Email
                       %th Statut
                     %tbody
-                      - @users.each do |user|
-                        %tr
+                      -# This form is to select multiple users
+                      %form{action: admin_user_multiple_select_path(user_id: 'multiple'), method: 'post'}
+                        - @users.each do |user|
+                          %tr
+                            %td
+                              %input.select-one-user{type: 'checkbox', name: 'list_user_ids[]', value: user[:id]}
+                            %td
+                              %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
+                                = "#{user.profile.full_name}"
+                            %td.font-bold
+                              - if user.roles.present?
+                                - if user.has_role? :organizer
+                                  %span.purple - Organisateur
+                                - if user.has_role? :supplier
+                                  %span.light-blue - Fournisseur
+                                - if user.has_role? :admin
+                                  %span.orange - Admin
+                              - else
+                                Utilisateur
+                            %td.contact-type
+                              %i.fa.fa-envelope
+                            %td
+                              = user.email
+                            %td.client-status
+                              - if user.confirmed?
+                                %span.label.label-primary Actif
+                              -elsif user.invited?
+                                %span.label.label-warning Invité
+                              -else
+                                %span.label.label-default Non invité
+
+                        %tr{style: 'border-top: 1px solid grey'}
                           %td
-                            %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
-                              = "#{user.profile.full_name}"
-                          %td{class: "#{user.admin? ? 'bg-orange' : ''}"}
-                            = user.admin? ? "Admin" : "Utilisateur"
-                          %td.contact-type
-                            %i.fa.fa-envelope
+                            %input{type: 'checkbox', id: 'select-all-user'}
                           %td
-                            = user.email
-                          %td.client-status
-                            - if user.confirmed?
-                              %span.label.label-primary Actif
-                            -elsif user.invited?
-                              %span.label.label-warning Invité
-                            -else
-                              %span.label.label-default Non invité
+                            %label{for: 'select-all-user'} Sélectionnez tout
+                          %td
+                          %td
+                          %td
+                            %input{type: 'submit', value: 'Supprimer', class: 'btn btn-danger', formaction: admin_user_multiple_select_path(user_id: 'multiple', to_do: 'delete')}
+                          %td
+                            %input{type: 'submit', value: 'Inviter', class: 'btn btn-primary', formaction: admin_user_multiple_select_path(user_id: 'multiple', to_do: 'invite')}
+
 
             .pagination-custom
               = paginate @users, views_prefix: 'admin'
@@ -146,3 +172,6 @@
                       %i.fa.fa-pen
                       Modifier
                     = link_to "Connexion", "/switch_user?scope_identifier=user_#{user.id}", class: "btn btn-primary btn-sm"
+                    = link_to admin_user_path(user.id), method: :delete, data: { confirm: "Êtes-vous sur de vouloir supprimer cet utilisateur ?" }, class: "btn btn-sm btn-delete-user" do
+                      %i.fa.fa-trash
+                      Supprimer

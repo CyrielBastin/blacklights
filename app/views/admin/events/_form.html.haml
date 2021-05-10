@@ -8,6 +8,7 @@
         .ibox-content
           .red.mb-20 Les champs marqués de (*) sont obligatoires
           = form_for [:admin, @event], validate: true, html: {class: 'form-horizontal'} do |event_form|
+            = event_form.hidden_field :id, id: 'id-model--user-form'
             %fieldset
               %legend Informations
               = event_form.text_field :id, id: 'event_id', style: 'display: none', value: @event.id.present? ? @event.id : 0
@@ -119,7 +120,7 @@
               = event_form.add_fields_link :event_activities, 'Ajouter une activité', { class: 'link_add_activity' }
 
             %fieldset.mt-50
-              %legend Matériel supplémentaire
+              %legend Matériel supplémentaire et contact
               .row
                 .search-container.col-sm-5
                   .row
@@ -142,10 +143,42 @@
                               %div Quantité :
                               %input.bg-contrast{type: 'number', value: "#{ev_eq[:quantity].to_i}", name: 'list_equipment_qty[]'}
 
-            .mt-180
-            = render partial: 'shared/contact_form', locals: { form: event_form, object: @event }
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5
+                        Utilisateur
+                        %span.red *
+                      .field_with_errors
+                        = event_form.hidden_field :user_id, class: 'list-User_ids'
+                        %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
+                        - @event.errors.full_messages_for(:user_id).each do |message|
+                          %label.message{'for': 'event_user_id'}
+                            = epurate_err_msg(:User, message)
+                    .search-results.search-results-User.col-sm-7.hidden
+                      - User.active.each do |u|
+                        %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
+                          = u.contact.full_name
+                          %br
+                          = u[:email]
+                    .search-chosen#search-chosen-User.col-sm-7
+                      - if @event[:user_id].present?
+                        .item-selected.item-selected-User{id: "for-User-#{@event.user[:id]}"}
+                          %div
+                            = @event.user.contact.full_name
+                            %br
+                            = @event.user[:email]
 
+            .row.mt-180
+              .btn-add_user
+                Ajouter un contact
+              .btn-delete-add_user.hidden
+                Supprimer le formulaire
+            #user-model-form.hidden
+              .mt-30
+              = event_form.fields_for :user, event_form.object.user.present? ? event_form.object.user : User.new do |user_form|
+                = render partial: 'shared/user_registration_form', locals: { user_form: user_form }
 
-            .form-group
+            .form-group.mt-50
               .col-sm-4
                 %button.btn.btn-primary{type: 'submit'} Sauver l'évènement

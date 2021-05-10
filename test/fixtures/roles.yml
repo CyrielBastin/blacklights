@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-cain:
-  email: cain@bigbro.hell
+supplier:
+  name: supplier
 
-abel:
-  email: abel@lilbro.lamb
+admin:
+  name: admin

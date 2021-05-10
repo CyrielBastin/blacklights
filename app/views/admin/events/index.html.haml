@@ -56,7 +56,7 @@
 
                       %td
                         - event.event_activities.each do |ev_ac|
-                          = "#{ev_ac.activity.name} (#{ev_ac.simultaneous_activities})"
+                          = "#{ev_ac.activity.name} (#{ev_ac[:quantity]})"
                           %br
 
                       %td

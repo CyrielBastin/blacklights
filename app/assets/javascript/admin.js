@@ -12,6 +12,8 @@
 //= require admin/inspinia.js
 //= require admin/search_filter_list.js
 //= require admin/registration.js
+//= require admin/user.js
+//= require admin/user_registration_form.js
 //= require multi-select
 //= require dynamic-fields-for
 //= require flatpickr

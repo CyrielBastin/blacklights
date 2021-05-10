@@ -27,7 +27,7 @@ dark_badminton:
   type: public
   category: balles
   location: heaven
-  contact: one
+  user: cain
 
 dark_volleyball:
   name: Dark Volleyball
@@ -40,4 +40,4 @@ dark_volleyball:
   type: private
   category: balle_ten
   location: hell
-  contact: two
+  user: abel

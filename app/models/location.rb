@@ -17,13 +17,13 @@ class Location < ApplicationRecord
 
   default_scope -> { order(:name) }
 
-  belongs_to :contact, dependent: :destroy
+  belongs_to :user
   belongs_to :dimension, dependent: :destroy
   has_many :location_activities, dependent: :destroy
   has_many :entity_locations, dependent: :destroy
   has_many :events
 
-  accepts_nested_attributes_for :contact, :dimension, :location_activities
+  accepts_nested_attributes_for :user, :dimension, :location_activities
 
   enumerize :type, in: %i[private public], predicates: true, scope: true
 

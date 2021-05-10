@@ -30,7 +30,7 @@ module ExportHelper
         object.method(obj_to_assemble).call.each do |sub_obj|
           if attributes[:quantity].present?
             # assembled_str += "#{sub_obj.method(obj_name).call[name]} (#{sub_obj[attributes[:quantity]]}) + "
-            assembled_str += "#{sub_obj.method(obj_name).call.method(name).call} (#{sub_obj[attributes[:quantity]]}) + "
+            assembled_str += "#{sub_obj.method(obj_name).call.method(name).call} (#{to_french_repr(sub_obj[attributes[:quantity]])}) + "
           else
             # assembled_str += "#{sub_obj.method(obj_name).call[name]} + "
             assembled_str += "#{sub_obj.method(obj_name).call.method(name).call} + "

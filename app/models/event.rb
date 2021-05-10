@@ -25,8 +25,8 @@ class Event < ApplicationRecord
   scope :previous, -> { where(['start_date < ?', DateTime.now]) }
 
   belongs_to :location
-  belongs_to :contact, dependent: :destroy
-  accepts_nested_attributes_for :contact
+  belongs_to :user
+  accepts_nested_attributes_for :user
   has_many :event_activities, inverse_of: :event, dependent: :destroy
   accepts_nested_attributes_for :event_activities, allow_destroy: true
   has_many :event_equipment, dependent: :destroy
