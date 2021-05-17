@@ -25,6 +25,8 @@ class Admin::EventsController < AdminController
 
   def create
     @event = Event.new(event_params)
+    add_activities
+    add_entities
     add_equipment
     if @event.save
       @event.user.add_role :organizer
@@ -52,6 +54,8 @@ class Admin::EventsController < AdminController
   def update
     @event = Event.find(params[:id])
     @event.user.remove_role :organizer # We remove organizer role from user in case the user is changed
+    add_activities
+    add_entities
     add_equipment
     if @event.update(event_params)
       @event.user.add_role :organizer
@@ -97,18 +101,45 @@ class Admin::EventsController < AdminController
 
   def event_params
     params.require(:event).permit(:name, :start_date, :end_date, :category_id, :registration_deadline, :min_participant,
-                                  :max_participant, :price, :type, :location_id, :user_id, :event_category_ids, :event_equipment_ids,
-                                  event_activities_attributes: [:id, :activity_id, :quantity, :_destroy],
+                                  :max_participant, :price, :type, :location_id, :user_id,
+                                  :event_category_ids, :event_activity_ids, :entity_event_ids, :event_equipment_ids,
+                                  :event_registration_ids,
                                   user_attributes: [:email, :skip_password_validation,
                                                     profile_attributes: [:gender, contact_attributes: [:email, :lastname, :firstname, :phone_number]]])
   end
 
   def update_params
     params[:event][:location_id] = params[:event][:location_id].split(',')[0]
+    params[:event][:event_activity_ids] = params[:event][:event_activity_ids].split(',')
+    params[:event][:entity_event_ids] = params[:event][:entity_event_ids].split(',')
     params[:event][:event_equipment_ids] = params[:event][:event_equipment_ids].split(',')
+    params[:event][:event_registration_ids] = params[:event][:event_registration_ids].split(',')
     params[:event][:type] = params[:event][:type] == '1' ? 'public' : 'private'
     if params[:creating_new_user] == '0'
       params[:event] = params[:event].except(:user_attributes)
+    end
+  end
+
+  def add_activities
+    @event.event_activities = []
+    return if params[:event][:event_activity_ids].empty?
+
+    list_activities = params[:event][:event_activity_ids].zip(params[:list_activity_qty])
+    list_activities.each do |ac_q|
+      next if ac_q[1].to_i <= 0
+
+      unless ac_q[1].empty?
+        @event.event_activities << EventActivity.new(event_id: @event, activity_id: ac_q[0], quantity: ac_q[1])
+      end
+    end
+  end
+
+  def add_entities
+    @event.entity_events = []
+    params[:event][:entity_event_ids].each do |entity_id|
+      unless entity_id.empty?
+        @event.entity_events << EntityEvent.new(entity_id: entity_id, event_id: @event)
+      end
     end
   end
 

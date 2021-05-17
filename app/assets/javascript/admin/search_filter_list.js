@@ -22,15 +22,15 @@ document.addEventListener('DOMContentLoaded', (_) => {
         }
         init_filtering(options)
     }
-    document.querySelector('.link_add_activity').addEventListener('click', (_) => {
-        setTimeout((_) => {
-            const chosen_location = document.getElementById('search-chosen-Location').childNodes[1]
-            if (chosen_location) {
-                const location_id = chosen_location.id.split('-')[2]
-                set_available_activities(location_id, 'last')
-            }
-        }, 200)
-    })
+    // document.querySelector('.link_add_activity').addEventListener('click', (_) => {
+    //     setTimeout((_) => {
+    //         const chosen_location = document.getElementById('search-chosen-Location').childNodes[1]
+    //         if (chosen_location) {
+    //             const location_id = chosen_location.id.split('-')[2]
+    //             set_available_activities(location_id, 'last')
+    //         }
+    //     }, 200)
+    // })
 
 })
 
@@ -103,7 +103,7 @@ function add_to_result(search_chosen, txt, id, list_ids, options) {
         add_delete_btn(sub_cont, options['model_name'], id_num, list_ids)
         sub_cont.appendChild(text)
         list_ids.value += `${id_num},`
-        if (options['quantity']) add_qty_field(sub_cont)
+        if (options['quantity']) add_qty_field(sub_cont, options)
         search_chosen.appendChild(sub_cont)
     } else {
         if (options['can_be_null']) add_delete_btn(sub_cont, options['model_name'], id_num, list_ids)
@@ -112,10 +112,10 @@ function add_to_result(search_chosen, txt, id, list_ids, options) {
         const child = search_chosen.childNodes[1]
         if (child) { search_chosen.replaceChild(sub_cont, child) }
         else { search_chosen.appendChild(sub_cont) }
-        if (options['location_form_event']) {
-            const location_id = sub_cont.id.split('-')[2]
-            set_available_activities(location_id, 'all')
-        }
+        // if (options['location_form_event']) {
+        //     const location_id = sub_cont.id.split('-')[2]
+        //     set_available_activities(location_id, 'all')
+        // }
     }
 }
 
@@ -130,14 +130,15 @@ function add_delete_btn(parent, model, id, list_ids) {
     })
 }
 
-function add_qty_field (parent) {
+function add_qty_field (parent, options) {
     const div_qty = document.createElement('div')
     div_qty.className = 'equipment-qty'
     const label_qty = document.createElement('div')
     label_qty.textContent = 'Quantité :'
     const input_qty = document.createElement('input')
     input_qty.type = 'number'; input_qty.className = 'bg-contrast'
-    input_qty.name = 'list_equipment_qty[]'
+    if (options['model_name'] === 'Equipment') input_qty.name = 'list_equipment_qty[]'
+    if (options['model_name'] === 'Activity') input_qty.name = 'list_activity_qty[]'
     div_qty.appendChild(label_qty); div_qty.appendChild(input_qty)
     parent.appendChild(div_qty)
 }
@@ -175,28 +176,28 @@ function setup_preexisting_choice(search_chosen, list_ids, options) {
  * exemple: get_available_activities(1, 'last') => will update only the last select field with the activities
  *          available for the location with id = 1
  */
-function set_available_activities (location_id, which_select) {
-    const all_selects = document.querySelectorAll('.change_with_location')
-    let select_to_change
-    switch (which_select) {
-        case 'all': select_to_change = all_selects; break
-        case 'last': select_to_change = []; select_to_change.push(all_selects[all_selects.length - 1]); break
-    }
-    fetch(`/admin/json/location_activities/${location_id}`)
-        .then(result => result.json())
-        .then(activities => {
-            change_select_option(select_to_change, activities)
-        })
-}
-
-function change_select_option (select_to_change, activities) {
-    for (let select of select_to_change) {
-        select.innerHTML = ''
-        for (let activity of activities) {
-            let option = document.createElement('option')
-            option.value = activity['id']
-            option.textContent = activity['name']
-            select.appendChild(option)
-        }
-    }
-}
+// function set_available_activities (location_id, which_select) {
+//     const all_selects = document.querySelectorAll('.change_with_location')
+//     let select_to_change
+//     switch (which_select) {
+//         case 'all': select_to_change = all_selects; break
+//         case 'last': select_to_change = []; select_to_change.push(all_selects[all_selects.length - 1]); break
+//     }
+//     fetch(`/admin/json/location_activities/${location_id}`)
+//         .then(result => result.json())
+//         .then(activities => {
+//             change_select_option(select_to_change, activities)
+//         })
+// }
+//
+// function change_select_option (select_to_change, activities) {
+//     for (let select of select_to_change) {
+//         select.innerHTML = ''
+//         for (let activity of activities) {
+//             let option = document.createElement('option')
+//             option.value = activity['id']
+//             option.textContent = activity['name']
+//             select.appendChild(option)
+//         }
+//     }
+// }

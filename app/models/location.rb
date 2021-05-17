@@ -17,7 +17,7 @@ class Location < ApplicationRecord
 
   default_scope -> { order(:name) }
 
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :dimension, dependent: :destroy
   has_many :location_activities, dependent: :destroy
   has_many :entity_locations, dependent: :destroy
@@ -29,20 +29,14 @@ class Location < ApplicationRecord
 
   min_char_name = 3
   min_capacity = 0
-  min_char_zip_code, max_char_zip_code = 4, 5
   ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères",
-              capacity_below_zero: "ne peut pas être inférieur à #{min_capacity}",
-              zip_code_NaN: 'doit être un nombre',
-              zip_code_range: "doit contenir au moins #{min_char_zip_code} et au plus #{max_char_zip_code} caractères" }.freeze
+              capacity_below_zero: "ne peut pas être inférieur à #{min_capacity}" }.freeze
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
   validate :name_is_valid
-  validates :type, :street, :city, :country, presence: true
   validate :city_is_valid
-  validates :zip_code, presence: true,
-                       numericality: { only_integer: true, message: ERR_MSG[:zip_code_NaN] },
-                       length: { minimum: min_char_zip_code, maximum: max_char_zip_code, message: ERR_MSG[:zip_code_range] }
+  validate :capacity_greater_than_zero
 
 
   def name_is_valid
@@ -58,6 +52,12 @@ class Location < ApplicationRecord
 
     errors.add(:city, forbidden_comma_msg) if contains_forbidden_comma?(city)
     errors.add(:city, forbidden_ampersand_msg) if contains_forbidden_ampersand?(city)
+  end
+
+  def capacity_greater_than_zero
+    return if capacity.nil?
+
+    errors.add(:capacity, ERR_MSG[:capacity_below_zero]) if capacity.negative?
   end
 
   def name_plus_city

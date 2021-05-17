@@ -34,7 +34,7 @@
           .row.details-show.details-item
             .col-sm-2.details-title Description :
             .col-sm-4
-              = @activity[:description]
+              = raw @activity[:description]
 
             .col-sm-2.details-title Catégorie :
             - if @activity.category.present?
@@ -65,6 +65,18 @@
             - else
               .col-sm-4.red
                 Aucun matériel défini
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-2.details-title Assoc. :
+            - if @activity.entity_activities.present?
+              .col-sm-4.details-multiple
+                - @activity.entity_activities.each do |e_ac|
+                  = e_ac.entity[:name]
+                  %br
+            - else
+              .col-sm-4.red
+                Aucune association définie
 
 
           .details-btns

@@ -25652,3 +25652,8 @@ html:not(.ie-11):not(.ios) .parallax-disabled:not(.parallax-no-fixed) {
 .ie-edge .canvas-overlay {
   display: none;
 }
+
+/* This is used for displaying errors from client-side-validations gem */
+.field_with_errors .message {
+  color: #FF0000;
+}

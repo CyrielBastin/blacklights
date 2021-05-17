@@ -40,38 +40,40 @@
 
             %fieldset.mt-30
               %legend Contacts
-              .search-container.col-sm-5{style: 'margin-left: -100px'}
+              .search-container.col-sm-5{style: 'margin-left: -50px'}
                 .row
                   .search-input
-                    %label.control-label.col-sm-5 Utilisateur
+                    %label.control-label.col-sm-5 Personnes de contact
                     = supplier_form.hidden_field :supplier_user_ids, class: 'list-User_ids'
                     %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom ou email'}
                   .search-results.search-results-User.col-sm-7.hidden
                     - User.active.each do |u|
                       %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
-                        = u.contact.full_name
-                        %br
+                        - if u.contact.present?
+                          = u.contact.full_name
+                          %br
                         = u[:email]
-                  .search-chosen#search-chosen-User.col-sm-7
+                  .search-chosen#search-chosen-User{style: 'max-width: 20vw;'}
                     - if @supplier.supplier_users.present?
                       -# - if @supplier.supplier_users[0].id.present?
                       - @supplier.supplier_users.each do |s_u|
                         .item-selected.item-selected-User{id: "for-User-#{s_u.user[:id]}"}
                           %i.fas.fa-ban.delete-selected.delete-selected-User{style: 'color: red'}
                           %div
-                            = s_u.user.contact.full_name
-                            %br
+                            - if s_u.user.contact.present?
+                              = s_u.user.contact.full_name
+                              %br
                             = s_u.user[:email]
 
-              .row{style: 'margin-top: 240px'}
-                .btn-add_user
-                  Ajouter un contact
-                .btn-delete-add_user.hidden
-                  Supprimer le formulaire
-              #user-model-form.hidden
-                .mt-30
-                = form_for [:admin, @user], validate: true, html: {class: 'form-horizontal'} do |user_form|
-                  = render partial: 'shared/user_registration_form', locals: { user_form: user_form }
+            .row.mt-40
+              .btn.btn-success.btn-add_user
+                Ajouter une personne de contact
+              .btn.btn-danger.btn-delete-add_user.hidden
+                Supprimer le formulaire
+            #user-model-form.hidden
+              .mt-30
+              = form_for [:admin, @user], validate: true, html: {class: 'form-horizontal'} do |user_form|
+                = render partial: 'shared/user_registration_form', locals: { user_form: user_form }
 
 
             .form-group.mt-50

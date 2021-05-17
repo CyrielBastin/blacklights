@@ -30,7 +30,7 @@
                   %th{width: '15%'} Type
                   %th{width: '15%'} Activités
                   %th{width: '20%'} Localisation
-                  %th{width: '25%'} Contact
+                  %th{width: '25%'} Personne de contact
                 %tbody
                   - @locations.each do |location|
                     %tr
@@ -49,18 +49,24 @@
                       %td
                         = location[:street]
                         %br
-                        = "#{location[:city]} (#{location[:zip_code]})"
+                        - if location[:zip_code].present?
+                          = "#{location[:city]} (#{location[:zip_code]})"
+                        - else
+                          = location[:city]
                         %br
                         = location[:country]
 
-                      %td
-                        = "Nom : #{location.user.contact[:lastname]}"
-                        %br
-                        = "Prénom : #{location.user.contact[:firstname]}"
-                        %br
-                        = "Tél. : #{location.user.contact[:phone_number]}"
-                        %br
-                        = "Email : #{location.user[:email]}"
+                      - if location.user.present? && location.user.contact.present?
+                        %td
+                          = "Nom : #{location.user.contact[:lastname]}"
+                          %br
+                          = "Prénom : #{location.user.contact[:firstname]}"
+                          %br
+                          = "Tél. : #{location.user.contact[:phone_number]}"
+                          %br
+                          = "Email : #{location.user[:email]}"
+                      - else
+                        %td
 
                       %td.project-actions
                         .btn-group

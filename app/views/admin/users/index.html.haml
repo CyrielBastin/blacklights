@@ -45,15 +45,18 @@
                               %input.select-one-user{type: 'checkbox', name: 'list_user_ids[]', value: user[:id]}
                             %td
                               %a.client-link{"href" => "#user-#{user.id}", "data-toggle" => "tab"}
-                                = "#{user.profile.full_name}"
+                                - if user.contact.present?
+                                  = "#{user.contact.full_name}"
+                                - else
+                                  = user.email
                             %td.font-bold
                               - if user.roles.present?
                                 - if user.has_role? :organizer
-                                  %span.purple - Organisateur
+                                  %span.purple Organisateur
                                 - if user.has_role? :supplier
-                                  %span.light-blue - Fournisseur
+                                  %span.light-blue Fournisseur
                                 - if user.has_role? :admin
-                                  %span.orange - Admin
+                                  %span.orange Admin
                               - else
                                 Utilisateur
                             %td.contact-type
@@ -97,7 +100,10 @@
                 .row.m-b-lg
                   .col-lg-12.text-center
                     %h2
-                      = "#{user.profile.contact[:firstname]} #{user.profile.contact[:lastname]}"
+                      - if user.contact.present?
+                        = "#{user.profile.contact[:firstname]} #{user.profile.contact[:lastname]}"
+                      - else
+                        = user[:email]
 
                 .full-height-scroll
                   %strong Informations
@@ -109,17 +115,20 @@
                     %tr
                       %td Sexe
                       %td
-                        = user.profile.gender.text
+                        - if user.profile.present?
+                          = user.profile.gender.text
                     %tr
                       %td Date de naissance
                       %td
-                        = date_to_french_format(user.profile[:birthdate])
+                        - if user.profile.present?
+                          = date_to_french_format(user.profile[:birthdate])
                     %tr
                       %td Téléphone
                       %td
-                        = user.contact[:phone_number]
+                        - if user.contact.present?
+                          = user.contact[:phone_number]
 
-                    - if user.contact.coordinate.present?
+                    - if user.contact.present? && user.contact.coordinate.present?
                       %tr
                         %td Rue
                         %td

@@ -21,9 +21,7 @@
                   %span.red *
                 .col-sm-2
                   = profile_form.select :gender, Profile.gender.options, {include_blank: true}, {class: 'form-control bg-contrast required'}
-                %label.col-sm-2.control-label
-                  Date de naissance
-                  %span.red *
+                %label.col-sm-2.control-label Date de naissance
                 .col-sm-4
                   = profile_form.date_select :birthdate, start_year: 1900, end_year: Date.today.year, class: 'form-control'
 
@@ -44,6 +42,28 @@
               %label.col-sm-2.control-label Fournisseur ?
               .col-sm-10
                 %input.form-control.bg-contrast{type: 'checkbox', style: 'max-width: 50px', name: 'user_supplier', checked: @user.has_role?(:supplier)}
+
+            %fieldset.mt-30
+              %legend Associations
+              .row.mt-30
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Association
+                      = f.hidden_field :entity_user_ids, class: 'list-Entity_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Entity', 'data-model': 'Entity', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Entity.col-sm-7.hidden
+                      - Entity.all.each do |e|
+                        %p.result-item.result-item-Entity.hidden{id: "Entity-#{e[:id]}"}
+                          = e[:name]
+                    .search-chosen#search-chosen-Entity.col-sm-7{style: 'max-width: 20vw;'}
+                      - if @user.entity_users.present?
+                        - @user.entity_users.each do |e_u|
+                          .item-selected.item-selected-Entity{id: "for-Entity-#{e_u.entity[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Entity{style: 'color: red'}
+                            %div
+                              = e_u.entity[:name]
+
 
             .hr-line-dashed
             .form-group

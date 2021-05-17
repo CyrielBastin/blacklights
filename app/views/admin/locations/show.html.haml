@@ -27,17 +27,23 @@
               = @location[:type].text
             .col-sm-1.details-title Capacité :
             .col-sm-1
-              = @location[:capacity]
+              - if @location[:capacity].present?
+                = @location[:capacity]
+              - else
+                .red Non défini
             .col-sm-1.details-title Contact :
             .col-sm-3
-              = "Nom : #{@location.user.contact[:lastname]}"
-              %br
-              = "Prénom : #{@location.user.contact[:firstname]}"
-              %br
-              = "Tél. : #{@location.user.contact[:phone_number]}"
-              %br
-              = "Email : #{@location.user.contact[:email]}"
-              %br
+              - if @location.user.present? && @location.user.contact.present?
+                = "Nom : #{@location.user.contact[:lastname]}"
+                %br
+                = "Prénom : #{@location.user.contact[:firstname]}"
+                %br
+                = "Tél. : #{@location.user.contact[:phone_number]}"
+                %br
+                = "Email : #{@location.user.contact[:email]}"
+                %br
+              - else
+                .red Aucun contact défini
 
           .hr-line-dashed
           .row.details-show.details-item
@@ -45,7 +51,10 @@
             .col-sm-3.details-multiple
               = @location[:street]
               %br
-              = "#{@location[:city]} (#{@location[:zip_code]})"
+              - if @location[:zip_code].present?
+                = "#{@location[:city]} (#{@location[:zip_code]})"
+              - else
+                = @location[:city]
               %br
               = @location[:country]
             .col-sm-1.details-title Dim. :
@@ -77,6 +86,17 @@
             - else
               .col-sm-3.red
                 Aucune activité définie
+
+          .hr-line-dashed
+          .row.details-show.details-item
+            .col-sm-1.details-title Assoc. :
+            .col-sm-3.details-multiple
+              - if @location.entity_locations.present?
+                - @location.entity_locations.each do |e_l|
+                  = e_l.entity[:name]
+                  %br
+              - else
+                .red Aucune association définie
 
 
           .details-btns

@@ -28,10 +28,10 @@
                 %thead
                   %th{width: '15%'} Nom
                   %th{style: "max-width: 20%"} Description
-                  %th{width: '10%'} Catégorie
-                  %th{width: '25%'} Détails
+                  %th{width: '15%'} Catégorie
+                  %th{width: '25%'} Fournisseur
                   %th{width: '10%'} prix/unité
-                  %th{width: '20%'} Actions
+                  %th{width: '15%'} Actions
                 %tbody
                   - @equipments.each do |equipment|
                     %tr
@@ -43,34 +43,10 @@
                         = equipment[:description].truncate(200)
 
                       %td
-                        = equipment.category.name
+                        = equipment.category[:name]
 
                       %td
-                        = "Fournisseur : #{equipment.supplier[:name]}"
-                        %br
-                        - if equipment.dimension[:width].present?
-                          = "Largeur : #{to_french_repr(equipment.dimension[:width])} cm"
-                        - else
-                          Largeur :
-                          %span.red Non défini
-                        %br
-                        - if equipment.dimension[:length].present?
-                          = "Longueur : #{to_french_repr(equipment.dimension[:length])} cm"
-                        - else
-                          Longueur :
-                          %span.red Non défini
-                        %br
-                        - if equipment.dimension[:height].present?
-                          = "Hauteur : #{to_french_repr(equipment.dimension[:height])} cm"
-                        - else
-                          Hauteur :
-                          %span.red Non défini
-                        %br
-                        - if equipment.dimension[:weight].present?
-                          = "Poids : #{to_french_repr(equipment.dimension[:weight])} g"
-                        - else
-                          Poids :
-                          %span.red Non défini
+                        = equipment.supplier[:name]
 
                       %td
                         = "#{to_french_repr(equipment[:unit_price])} €"

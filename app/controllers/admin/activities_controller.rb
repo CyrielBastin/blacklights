@@ -18,6 +18,7 @@ class Admin::ActivitiesController < AdminController
     @activity = Activity.new(activity_params)
     add_locations
     add_equipment
+    add_entities
     if name_already_exists?(@activity.class.name, @activity[:name])
       @activity.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
@@ -43,6 +44,7 @@ class Admin::ActivitiesController < AdminController
     @activity = Activity.find(params[:id])
     add_locations
     add_equipment
+    add_entities
     act = Activity.find_by(name: params[:activity][:name])
     if act.nil? || act[:id] == @activity[:id]
       if @activity.update(activity_params)
@@ -85,12 +87,14 @@ class Admin::ActivitiesController < AdminController
     params.require(:activity).permit(:id, :name, :description, :visible,
                                      :location_activity_ids,
                                      :category_id,
-                                     :activity_equipment_ids)
+                                     :activity_equipment_ids,
+                                     :entity_activity_ids)
   end
 
   def update_params
     params[:activity][:location_activity_ids] = params[:activity][:location_activity_ids].split(',')
     params[:activity][:activity_equipment_ids] = params[:activity][:activity_equipment_ids].split(',')
+    params[:activity][:entity_activity_ids] = params[:activity][:entity_activity_ids].split(',')
   end
 
   def add_locations
@@ -110,6 +114,15 @@ class Admin::ActivitiesController < AdminController
     list_equipment.each do |eq_q|
       unless eq_q[1].empty?
         @activity.activity_equipment << ActivityEquipment.new(activity_id: @activity, equipment_id: eq_q[0], quantity: eq_q[1])
+      end
+    end
+  end
+
+  def add_entities
+    @activity.entity_activities = []
+    params[:activity][:entity_activity_ids].each do |entity_id|
+      unless entity_id.empty?
+        @activity.entity_activities << EntityActivity.new(entity_id: entity_id, activity_id: @activity)
       end
     end
   end

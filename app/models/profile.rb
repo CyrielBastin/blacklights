@@ -12,7 +12,7 @@ class Profile < ActiveRecord::Base
   extend Enumerize
 
   belongs_to :user
-  belongs_to :contact, dependent: :destroy
+  belongs_to :contact, dependent: :destroy, optional: true
   accepts_nested_attributes_for :contact
 
   delegate :full_name, to: :contact

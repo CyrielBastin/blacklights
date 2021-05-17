@@ -10,9 +10,10 @@
           / RD Navbar Brand
           .rd-navbar-brand
             / Brand
-            %a.brand{:href => "index.html"}
+            %a.brand{:href => root_path}
               %img.brand-logo-dark{:alt => "", :height => "54", :src => asset_path("logo-default-250x108.png"), :width => "125"}/
               %img.brand-logo-light{:alt => "", :height => "54", :src => asset_path("logo-inverse-250x108.png"), :width => "125"}/
         = render "shared/menu"
         .rd-navbar-fixed-element-2
           %a.button.button-primary-gradient{:href => "#"} Book Now
+        = render "shared/menu_right"

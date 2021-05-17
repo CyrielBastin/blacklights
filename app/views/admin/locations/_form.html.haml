@@ -25,26 +25,18 @@
                   = location_form.number_field :capacity, class: 'form-control bg-contrast'
 
               .row.mt-30
-                %label.col-sm-1.control-label
-                  Rue et n°
-                  %span.red *
+                %label.col-sm-1.control-label Rue et n°
                 .col-sm-3
                   = location_form.text_field :street, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label
-                  Code post.
-                  %span.red *
+                %label.col-sm-1.control-label Code post.
                 .col-sm-3
                   = location_form.text_field :zip_code, class: 'form-control bg-contrast'
 
               .row.mt-30
-                %label.col-sm-1.control-label
-                  Ville
-                  %span.red *
+                %label.col-sm-1.control-label Ville
                 .col-sm-3
                   = location_form.text_field :city, class: 'form-control bg-contrast'
-                %label.col-sm-1.control-label
-                  Pays
-                  %span.red *
+                %label.col-sm-1.control-label Pays
                 .col-sm-3
                   = location_form.text_field :country, class: 'form-control bg-contrast'
                 %br
@@ -66,7 +58,7 @@
                     = dimension_form.hidden_field :weight, value: 0.01
 
             %fieldset.mt-30
-              %legend Activités disponibles et contact
+              %legend Activités disponibles et personne de contact
               .row.mt-30
                 .search-container.col-sm-4
                   .row
@@ -78,7 +70,7 @@
                       - Activity.all.each do |a|
                         %p.result-item.result-item-Activity.hidden{id: "Activity-#{a[:id]}"}
                           = a[:name]
-                    .search-chosen#search-chosen-Activity.col-sm-7
+                    .search-chosen#search-chosen-Activity.mw-20vw{style:'margin-left: -40px'}
                       - if @location.location_activities.present?
                         - @location.location_activities.each do |loc_ac|
                           .item-selected.item-selected-Activity{id: "for-Activity-#{loc_ac.activity[:id]}"}
@@ -89,38 +81,60 @@
                 .search-container.col-sm-5.col-sm-offset-1
                   .row
                     .search-input
-                      %label.control-label.col-sm-5
-                        Utilisateur
-                        %span.red *
+                      %label.control-label.col-sm-5 Personne de contact
                       .field_with_errors
                         = location_form.hidden_field :user_id, class: 'list-User_ids'
-                        %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
+                        %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', 'data-null': 'true', type: 'text', placeholder: 'Rechercher par nom ou email'}
                         - @location.errors.full_messages_for(:user_id).each do |message|
                           %label.message{'for': 'location_user_id'}
                             = epurate_err_msg(:User, message)
                     .search-results.search-results-User.col-sm-7.hidden
                       - User.active.each do |u|
                         %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
-                          = u.contact.full_name
-                          %br
+                          - if u.contact.present?
+                            = u.contact.full_name
+                            %br
                           = u[:email]
                     .search-chosen#search-chosen-User.col-sm-7
                       - if @location[:user_id].present?
                         .item-selected.item-selected-User{id: "for-User-#{@location.user[:id]}"}
+                          %i.fas.fa-ban.delete-selected.delete-selected-User{style: 'color: red'}
                           %div
-                            = @location.user.contact.full_name
-                            %br
+                            - if @location.user.contact.present?
+                              = @location.user.contact.full_name
+                              %br
                             = @location.user[:email]
 
-            .row.mt-180
-              .btn-add_user
-                Ajouter un contact
-              .btn-delete-add_user.hidden
+            .row.mt-40
+              .btn.btn-success.btn-add_user
+                Ajouter une personne de contact
+              .btn.btn-danger.btn-delete-add_user.hidden
                 Supprimer le formulaire
             #user-model-form.hidden
               .mt-30
               = location_form.fields_for :user, location_form.object.user.present? ? location_form.object.user : User.new do |user_form|
                 = render partial: 'shared/user_registration_form', locals: { user_form: user_form }
+
+            %fieldset.mt-30
+              %legend Associations
+              .row.mt-30
+                .search-container.col-sm-4
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-4 Association
+                      = location_form.hidden_field :entity_location_ids, class: 'list-Entity_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Entity', 'data-model': 'Entity', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Entity.col-sm-7.hidden
+                      - Entity.all.each do |e|
+                        %p.result-item.result-item-Entity.hidden{id: "Entity-#{e[:id]}"}
+                          = e[:name]
+                    .search-chosen#search-chosen-Entity.mw-20vw{style:'margin-left: -40px'}
+                      - if @location.entity_locations.present?
+                        - @location.entity_locations.each do |e_l|
+                          .item-selected.item-selected-Entity{id: "for-Entity-#{e_l.entity[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Entity{style: 'color: red'}
+                            %div
+                              = e_l.entity[:name]
 
 
             .form-group.mt-50

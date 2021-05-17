@@ -15,6 +15,7 @@ class Admin::UsersController < AdminController
   def create
     @user = User.new(user_params)
     @user.profile.contact[:email] = params[:user][:email]
+    add_entities
     if @user.save
       @user.add_role(:admin) if params[:user_admin].present?
       @user.add_role(:organizer) if params[:user_organizer].present?
@@ -35,6 +36,7 @@ class Admin::UsersController < AdminController
 
   def update
     @user = User.find(params[:id])
+    add_entities
     if @user.update(user_params)
       params[:user_admin].present? ? @user.add_role(:admin) : @user.remove_role(:admin)
       params[:user_organizer].present? ? @user.add_role(:organizer) : @user.remove_role(:organizer)
@@ -77,9 +79,22 @@ class Admin::UsersController < AdminController
   private
 
   def user_params
-    params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, profile_attributes:
+    params.require(:user).permit(:id, :skip_password_validation, :_destroy, :email, :entity_user_ids, profile_attributes:
       [:birthdate, :gender, contact_attributes: [:lastname, :firstname, :phone_number, :email, coordinate_attributes:
         [:street, :zip_code, :city, :country]]])
+  end
+
+  def update_params
+    params[:user][:entity_user_ids] = params[:user][:entity_user_ids].split(',')
+  end
+
+  def add_entities
+    @user.entity_users = []
+    params[:user][:entity_user_ids].each do |entity_id|
+      unless entity_id.empty?
+        @user.entity_users << EntityUser.new(entity_id: entity_id, user_id: @user)
+      end
+    end
   end
 
   def multiple_delete

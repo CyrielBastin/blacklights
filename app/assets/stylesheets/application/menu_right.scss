@@ -1,0 +1,85 @@
+/*
+ * Represents the right side of the menu at the top
+ * Contains 'Language selection', 'Sign In - Sign Out'
+ */
+
+// ====================================================================================================
+// Language selection
+// ====================================================================================================
+.language-menu {
+  margin-top: 25px;
+  .language-selected {
+    width: 80px;
+    height: 40px;
+    padding-top: 3px;
+    border: 2px solid #ff5a8c;
+    border-radius: 20px;
+  }
+  .language-list {
+    margin-top: -15px;
+    background: rgba(255, 255, 255, 0.2);
+    min-width: 100px !important;
+    max-width: 100px !important;
+    a {
+      &:hover {
+        background-color: #ff5a8c;
+      }
+    }
+  }
+}
+
+.language-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .language-text {
+    margin-left: 10px;
+    line-height: 32px;
+    color: white;
+  }
+}
+
+// ====================================================================================================
+// Sign In - Sign Out
+// ====================================================================================================
+.btn-signin {
+  border-radius: 25px;
+  font-size: 1.5rem;
+  width: 150px;
+}
+
+.user-info-title {
+  background-color: #ff5a8c;
+  //background-color: rgba(255,90,140, 0.6);
+  color: white;
+  border-radius: 20px;
+  font-size: 1.2rem;
+}
+
+.user-info-menu {
+  background-color: #373737;
+  width: 70%;
+  margin-left: 15%;
+  text-align: center;
+  font-size: 1.2rem;
+
+  .user-info-profil {
+    color: white;
+    border-bottom: 1px solid white;
+    &:hover {
+      background-color: white;
+      color: #373737;
+    }
+  }
+  .btn-signout {
+    cursor: pointer;
+    color: #ff5a8c;
+    background-color: #373737;
+    font-size: 1.5rem;
+    font-weight: bold;
+    &:hover {
+      background-color: white;
+      color: #ff5a8c;
+    }
+  }
+}
