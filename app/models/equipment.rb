@@ -24,18 +24,14 @@ class Equipment < ApplicationRecord
   accepts_nested_attributes_for :dimension
 
   min_char_name = 5
-  min_char_description = 10
   min_price = 0.00
   ERR_MSG = { name_is_too_short: "doit contenir au moins #{min_char_name} caractères",
-              description_is_too_short: "doit contenir au moins #{min_char_description} caractères",
               price_is_too_low: "doit être plus grand que #{min_price}€" }.freeze
 
   validates :name, presence: true,
                    length: { minimum: min_char_name, message: ERR_MSG[:name_is_too_short] }
   validates :category_id, :supplier_id, presence: true
   validate :name_is_valid
-  validates :description, presence: true,
-                          length: { minimum: min_char_description, message: ERR_MSG[:description_is_too_short] }
   validates :unit_price, presence: true, numericality: { greater_than: min_price, message: ERR_MSG[:price_is_too_low] }
 
 

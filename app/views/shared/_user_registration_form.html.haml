@@ -23,9 +23,7 @@
           = contact_form.hidden_field :email, value: 'hello@world.net'
 
       .row.mt-30
-        %label.col-sm-1.control-label
-          Tél.
-          %span.red *
+        %label.col-sm-1.control-label Tél.
         .col-sm-3
           = contact_form.text_field :phone_number, class: 'form-control bg-contrast required'
         %label.col-sm-1.control-label

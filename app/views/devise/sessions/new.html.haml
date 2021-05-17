@@ -1,0 +1,61 @@
+%section.section.section-lg.bg-default
+  .container
+    .row.row-30.justify-content-md-center
+      .col-md-5
+        %h2 Sign In
+        %p.title-2 Use your social account
+        %ul.list-inline.list-social-2
+          %li
+            %a.icon.mdi.mdi-facebook{:href => "#"}
+          %li
+            %a.icon.mdi.mdi-google{:href => "#"}
+          %li
+            %a.icon.mdi.mdi-twitter{:href => "#"}
+        / RD Mailform
+        = form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: 'rd-form rd-mailform rd-form-centered'}) do |f|
+          .form-wrap
+            = f.email_field :email, autofocus: true, autocomplete: 'email', 'data-constraints': '@Email @Required', class: 'form-input'
+            = f.label :email, class: 'form-label'
+          .form-wrap
+            = f.password_field :password, 'data-contraints': '@Required', autocomplete: 'current-password', class: 'form-input'
+            = f.label :password, class: 'form-label'
+          .form-wrap
+            = f.check_box :remember_me
+            = f.label :remember_me, class: 'checkbox-inline'
+          -#.form-wrap
+          -#  %input{type: 'checkbox', id: 'newsletter-sub', name: 'newsletter-sub', value: '1'}
+          -#  %label.checkbox-inline{for: 'newsletter-sub'} Subscribe to Newsletter
+          .form-button.group-md
+            = f.submit 'Sign In', class: 'button button-gray-5'
+            %a.button.button-default-outline-2{:href => new_user_registration_path} Create an account
+
+        -# we use the 'style' property because the class 'mt-30' get overwritten along the way
+        %div{style: 'margin-top: 30px'}
+          = link_to "Forgot your password?", new_password_path(resource_name)
+
+-#<h2>Log in</h2>
+-#
+-#<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+-#  <div class="field">
+-#    <%= f.label :email %><br />
+-#    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+-#  </div>
+-#
+-#  <div class="field">
+-#    <%= f.label :password %><br />
+-#    <%= f.password_field :password, autocomplete: "current-password" %>
+-#  </div>
+-#
+-#  <% if devise_mapping.rememberable? %>
+-#    <div class="field">
+-#      <%= f.check_box :remember_me %>
+-#      <%= f.label :remember_me %>
+-#    </div>
+-#  <% end %>
+-#
+-#  <div class="actions">
+-#    <%= f.submit "Log in" %>
+-#  </div>
+-#<% end %>
+-#
+-#<%= render "devise/shared/links" %>

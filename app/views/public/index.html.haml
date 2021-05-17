@@ -21,162 +21,6 @@
             %p Avalon Nightclub is the best place for everyone in New York to enjoy their evening and experience a new side of nightlife entertainment.
             %a.button.button-sm.button-secondary{:href => "contact-us.html"} Learn More
 
-%section.section.section-xxl.section-inset-8.bg-dark-gray.position-relative
-  .container
-    .row.row-40.align-items-center.justify-content-lg-between.justify-content-center
-      .col-md-7.col-lg-6
-        .inset-1.text-center.text-md-left.event-caption-wrap.text-line-left.text-line-big.wow.fadeInLeft
-          %h2 Bass Fridays: DJ MadZone
-          %p.big Next Friday the widely known DJ MadZone will visit Avalon Nightclub to present his latest release and play some of his popular hits and new tracks. Be sure to book your ticket now to not miss this event!
-        .event-countdown.countdown-minimal.inset-1
-          .countdown{"data-countdown" => "data-countdown", "data-to" => "2020-03-12"}
-            .countdown-block.countdown-block-days
-              .countdown-body
-                %svg.countdown-circle{"data-progress-days" => "", :height => "200", :viewbox => "0 0 200 200", :width => "200", :x => "0", :y => "0"}
-                  %circle.countdown-circle-bg{:cx => "100", :cy => "100", :r => "77"}
-                  %circle.countdown-circle-fg.clipped{:cx => "100", :cy => "100", :r => "90", :stroke => "url(#gradient-0)"}
-                  %defs
-                    %lineargradient#gradient-0{:x1 => "0%", :x2 => "0%", :y1 => "0%", :y2 => "100%"}
-                      %stop{:offset => "0%", "stop-color" => "#1e49c2"}
-                      %stop{:offset => "100%", "stop-color" => "#ff5a8c"}
-                .countdown-wrap
-                  .heading-3.countdown-counter{"data-counter-days" => ""} 00
-              .heading-6.countdown-title days
-            .countdown-block.countdown-block-hours
-              .countdown-body
-                %svg.countdown-circle{"data-progress-hours" => "", :height => "200", :viewbox => "0 0 200 200", :width => "200", :x => "0", :y => "0"}
-                  %circle.countdown-circle-bg{:cx => "100", :cy => "100", :r => "77"}
-                  %circle.countdown-circle-fg.clipped{:cx => "100", :cy => "100", :r => "90", :stroke => "url(#gradient-1)"}
-                  %defs
-                    %lineargradient#gradient-1{:x1 => "0%", :x2 => "0%", :y1 => "0%", :y2 => "100%"}
-                      %stop{:offset => "0%", "stop-color" => "#1e49c2"}
-                      %stop{:offset => "100%", "stop-color" => "#ff5a8c"}
-                .countdown-wrap
-                  .heading-3.countdown-counter{"data-counter-hours" => ""} 00
-              .heading-6.countdown-title hours
-            .countdown-block.countdown-block-minutes
-              .countdown-body
-                %svg.countdown-circle{"data-progress-minutes" => "", :height => "200", :viewbox => "0 0 200 200", :width => "200", :x => "0", :y => "0"}
-                  %circle.countdown-circle-bg{:cx => "100", :cy => "100", :r => "77"}
-                  %circle.countdown-circle-fg.clipped{:cx => "100", :cy => "100", :r => "90", :stroke => "url(#gradient-2)"}
-                  %defs
-                    %lineargradient#gradient-2{:x1 => "0%", :x2 => "0%", :y1 => "0%", :y2 => "100%"}
-                      %stop{:offset => "0%", "stop-color" => "#1e49c2"}
-                      %stop{:offset => "100%", "stop-color" => "#ff5a8c"}
-                .countdown-wrap
-                  .heading-3.countdown-counter{"data-counter-minutes" => ""} 00
-              .heading-6.countdown-title minutes
-            .countdown-block.countdown-block-seconds
-              .countdown-body
-                %svg.countdown-circle{"data-progress-seconds" => "", :height => "200", :viewbox => "0 0 200 200", :width => "200", :x => "0", :y => "0"}
-                  %circle.countdown-circle-bg{:cx => "100", :cy => "100", :r => "77"}
-                  %circle.countdown-circle-fg.clipped{:cx => "100", :cy => "100", :r => "90", :stroke => "url(#gradient-3)"}
-                  %defs
-                    %lineargradient#gradient-3{:x1 => "0%", :x2 => "0%", :y1 => "0%", :y2 => "100%"}
-                      %stop{:offset => "0%", "stop-color" => "#1e49c2"}
-                      %stop{:offset => "100%", "stop-color" => "#ff5a8c"}
-                .countdown-wrap
-                  .heading-3.countdown-counter{"data-counter-seconds" => ""} 00
-              .heading-6.countdown-title seconds
-      .col-sm-8.col-md-5.wow.fadeInUp
-        .video-pattern-wrap.pattern-bg-double
-          / Video creative
-          %article.video-creative
-            .video-creative-figure
-              %img{:alt => "", :height => "465", :src => asset_path("video-5-421x465.jpg", :width => "421")}/
-              .video-creative-caption
-                %a.video-creative-link{"data-lightgallery" => "item", :href => "https://www.youtube.com/watch?v=1UWpbtUupQQ"}
-                  %span.icon.mdi.mdi-play
-                .video-creative-title About event
-  / Classes
-%section.section.section-xxl.section-inset-9.bg-black
-  .container.container-style-3
-    .row.row-30.row-md-50.align-items-center.flex-sm-row-reverse.justify-content-xl-between.offset-negative-top-1
-      .col-sm-6.col-lg-5.wow.fadeInRight
-        .inset-xl-left-40
-          .block-md.block-left.box-style-3
-            %h2.title-15.text-line-right Our Team
-            %p.big These people make our nightclub one of the best places for a party in the USA.
-            .group-xl.group-middle
-              #owl-nav-7.owl-nav-2
-              %a.link-default.link-default-1{:href => "event-schedule.html"} See schedule
-      .col-sm-6.col-lg-7.wow.fadeInLeft
-        / Owl Carousel
-        .owl-carousel.owl-style-11{"data-autoplay" => "false", "data-items" => "1", "data-lg-items" => "2", "data-margin" => "30", "data-navigation-class" => "#owl-nav-7", "data-xxl-items" => "3"}
-          / Service
-          %article.service-minimal.service-minimal-1.service-minimal-2.block-md
-            %a.service-minimal-figure{:href => "#"}
-              %img{:alt => "", :height => "346", :src => asset_path("service-15-370x346.jpg"), :width => "370"}/
-            .service-minimal-caption
-              .heading-4.service-minimal-title
-                %a{:href => "#"} Eva Smith
-              .service-minimal-time
-                %span.big Founder, Director
-              / Service
-          %article.service-minimal.service-minimal-1.service-minimal-2.block-md
-            %a.service-minimal-figure{:href => "#"}
-              %img{:alt => "", :height => "346", :src => asset_path("service-16-370x346.jpg"), :width => "370"}/
-            .service-minimal-caption
-              .heading-4.service-minimal-title
-                %a{:href => "#"} Emma Anderson
-              .service-minimal-time
-                %span.big Event Manager
-              / Service
-          %article.service-minimal.service-minimal-1.service-minimal-2.block-md
-            %a.service-minimal-figure{:href => "#"}
-              %img{:alt => "", :height => "346", :src => asset_path("service-17-370x346.jpg"), :width => "370"}/
-            .service-minimal-caption
-              .heading-4.service-minimal-title
-                %a{:href => "#"} Sam „Krypt” Wilson
-              .service-minimal-time
-                %span.big MC
-              / Service
-          %article.service-minimal.service-minimal-1.service-minimal-2.block-md
-            %a.service-minimal-figure{:href => "#"}
-              %img{:alt => "", :height => "346", :src => asset_path("service-18-370x346.jpg"), :width => "370"}/
-            .service-minimal-caption
-              .heading-4.service-minimal-title
-                %a{:href => "#"} DJ Rez
-              .service-minimal-time
-                %span.big Disc Jockey, Turntablist
-  / My Approach
-%section.section.section-xxl.bg-dark-gray
-  .container
-    .row.row-30.row-md-50.justify-content-xl-between
-      .col-lg-6.col-xl-5.wow.fadeInUp
-        %h2 About Our Club
-        .heading-4.title-16.text-line-left Who We Are
-        .heading-5.title-6.font-weight-light.text-italic Avalon Club was founded in 1999 to revolutionize nightlife &amp; entertainment.
-        %ul.list-marked.list-marked-1.big
-          %li We invite DJs and musicians from all over the world.
-          %li Avalon guarantees the top-level security to every guest.
-          %li Comfortable furniture &amp; the best sound equipment.
-      .col-lg-6
-        .row.row-xl.no-gutters.justify-content-end.bordered-5.offset-negative-xl-left-15
-          .col-sm-6
-            / Box modern
-            %article.box-modern.box-modern-2.wow.fadeIn
-              .box-modern-icon.mdi.mdi-beer
-              .heading-5.box-modern-title Corporate Events
-              .box-modern-text We can make any corporate event unforgettable.
-          .col-sm-6
-            / Box modern
-            %article.box-modern.box-modern-2.wow.fadeIn{"data-wow-delay" => ".05s"}
-              .box-modern-icon.mdi.mdi-sunglasses
-              .heading-5.box-modern-title VIP Services
-              .box-modern-text Developing a personalized training strategy for my clients.
-          .col-sm-6.no-border.counter-nikki-wrap
-            / Counter nikki
-            .counter-nikki
-              .counter-nikki-main
-                .heading-1.counter-nikki-number.counter 568
-              .counter-nikki-title Happy clients
-          .col-sm-6
-            / Box modern
-            %article.box-modern.box-modern-2.wow.fadeIn
-              .box-modern-icon.mdi.mdi-cake-variant
-              .heading-5.box-modern-title Birthday Parties
-              .box-modern-text Avalon is the best place to have a memorable birthday.
 / Schedule
 %section.section.section-xxl.bg-black
   .container.text-center
@@ -429,24 +273,82 @@
                         %img{:alt => "", :height => "240", :src => asset_path("gallery-32-380x240.jpg", :width => "380")}/
                         .thumbnail-overlay
                           %span.icon.mdi.mdi-magnify
-/ Are You Ready
-%section.section.section-xxl.position-relative.bg-dark-gray.section-xl-custom
+
+%section.section.section-xxl.bg-black.text-center
   .container
-    .row.row-30.flex-md-row-reverse.justify-content-lg-between
-      .col-md-6.position-static
-        .image-position.image-position-right.pattern-bg-double-2.slideInCustom
-          %img{:alt => "", :height => "552", :src => asset_path("image-9-1002x552.jpg", :width => "1002")}/
-      .col-md-6.col-lg-5.wow.fadeInLeft
-        %h2.title-15 Best Nightclub
-        .heading-4.title-16.text-line-left Enjoy Your Evening
-        .heading-5.title-6 Avalon is the #1 place offering best night entertainment, parties, snacks drinks, and unique atmosphere.
-        .group-md.group-middle
-          %a.button.button-md.button-secondary{:href => "contact-us.html"} Contact us
-          .big.d-none.d-xl-block or
-          .contacts-fiona
-            .contacts-fiona-text Call us for any question
-            .heading-5.contacts-fiona-link
-              %a{:href => "tel:#"} +61 3 8376 6284
+    .group-sm.group-custom-5.wow.fadeInUp
+      %h3 Latest News
+      %div
+        %a.link-default{:href => "news.html"} Read More
+    .row.row-30.row-md-50.row-lg
+      .col-md-6.wow.fadeInLeft
+        / post bonnie
+        %article.post-bonnie.block-xl
+          %a.post-bonnie-figure{:href => "news-post.html"}
+            %img.img-duotone{:alt => "", "data-gradient-map" => "#181b6e, #ffffff", :height => "360", :src => asset_path("post-24-570x360.jpg", :width => "570")}/
+          .post-bonnie-content
+            .heading-5.post-bonnie-title
+              %a{:href => "news-post.html"}
+                Get a Chance to Meet
+                = succeed "Your" do
+                  %br/
+            .post-bonnie-time
+              %time{:datetime => "2020-05-25"} May 25, 2020
+            .post-bonnie-text.big Have you ever wanted to meet a musician but didn’t have enough money for their concert? Then our new...
+      .col-md-6.wow.fadeInRight
+        / post bonnie
+        %article.post-bonnie.block-xl
+          %a.post-bonnie-figure{:href => "news-post.html"}
+            %img.img-duotone{:alt => "", "data-gradient-map" => "#181b6e, #ffffff", :height => "360", :src => asset_path("post-25-570x360.jpg", :width => "570")}/
+          .post-bonnie-content
+            .heading-5.post-bonnie-title
+              %a{:href => "news-post.html"}
+                How Security Works at
+                = succeed "Avalon" do
+                  %br/
+            .post-bonnie-time
+              %time{:datetime => "2020-05-29"} May 29, 2020
+            .post-bonnie-text.big The main task of nightclub security is to protect the club’s founder, inventory, employees and guests, as...
+
+/ My Approach
+%section.section.section-xxl.bg-dark-gray
+  .container
+    .row.row-30.row-md-50.justify-content-xl-between
+      .col-lg-6.col-xl-5.wow.fadeInUp
+        %h2 About Our Club
+        .heading-4.title-16.text-line-left Who We Are
+        .heading-5.title-6.font-weight-light.text-italic Avalon Club was founded in 1999 to revolutionize nightlife &amp; entertainment.
+        %ul.list-marked.list-marked-1.big
+          %li We invite DJs and musicians from all over the world.
+          %li Avalon guarantees the top-level security to every guest.
+          %li Comfortable furniture &amp; the best sound equipment.
+      .col-lg-6
+        .row.row-xl.no-gutters.justify-content-end.bordered-5.offset-negative-xl-left-15
+          .col-sm-6
+            / Box modern
+            %article.box-modern.box-modern-2.wow.fadeIn
+              .box-modern-icon.mdi.mdi-beer
+              .heading-5.box-modern-title Corporate Events
+              .box-modern-text We can make any corporate event unforgettable.
+          .col-sm-6
+            / Box modern
+            %article.box-modern.box-modern-2.wow.fadeIn{"data-wow-delay" => ".05s"}
+              .box-modern-icon.mdi.mdi-sunglasses
+              .heading-5.box-modern-title VIP Services
+              .box-modern-text Developing a personalized training strategy for my clients.
+          .col-sm-6.no-border.counter-nikki-wrap
+            / Counter nikki
+            .counter-nikki
+              .counter-nikki-main
+                .heading-1.counter-nikki-number.counter 568
+              .counter-nikki-title Happy clients
+          .col-sm-6
+            / Box modern
+            %article.box-modern.box-modern-2.wow.fadeIn
+              .box-modern-icon.mdi.mdi-cake-variant
+              .heading-5.box-modern-title Birthday Parties
+              .box-modern-text Avalon is the best place to have a memorable birthday.
+
 / Testimonials
 %section.section.section-xl.bg-dark-gray.text-center
   .owl-style-12.section-sm.wow.fadeInUp
@@ -490,41 +392,7 @@
                 .big.quote-karen-text
                   %p.q ”This nightclub has the best DJs! I visit Avalon with my friends every Friday night to listen to new explosive sets by the world’s best DJs and musicians. Each time it’s a whole new experience. I highly recommend this club!”
   %a.link-default.wow.fadeInUp{:href => "#"} view More
-%section.section.section-xxl.bg-black.text-center
-  .container
-    .group-sm.group-custom-5.wow.fadeInUp
-      %h3 Latest News
-      %div
-        %a.link-default{:href => "news.html"} Read More
-    .row.row-30.row-md-50.row-lg
-      .col-md-6.wow.fadeInLeft
-        / post bonnie
-        %article.post-bonnie.block-xl
-          %a.post-bonnie-figure{:href => "news-post.html"}
-            %img.img-duotone{:alt => "", "data-gradient-map" => "#181b6e, #ffffff", :height => "360", :src => asset_path("post-24-570x360.jpg", :width => "570")}/
-          .post-bonnie-content
-            .heading-5.post-bonnie-title
-              %a{:href => "news-post.html"}
-                Get a Chance to Meet
-                = succeed "Your" do
-                  %br/
-            .post-bonnie-time
-              %time{:datetime => "2020-05-25"} May 25, 2020
-            .post-bonnie-text.big Have you ever wanted to meet a musician but didn’t have enough money for their concert? Then our new...
-      .col-md-6.wow.fadeInRight
-        / post bonnie
-        %article.post-bonnie.block-xl
-          %a.post-bonnie-figure{:href => "news-post.html"}
-            %img.img-duotone{:alt => "", "data-gradient-map" => "#181b6e, #ffffff", :height => "360", :src => asset_path("post-25-570x360.jpg", :width => "570")}/
-          .post-bonnie-content
-            .heading-5.post-bonnie-title
-              %a{:href => "news-post.html"}
-                How Security Works at
-                = succeed "Avalon" do
-                  %br/
-            .post-bonnie-time
-              %time{:datetime => "2020-05-29"} May 29, 2020
-            .post-bonnie-text.big The main task of nightclub security is to protect the club’s founder, inventory, employees and guests, as...
+
 / Have Any Questions?
 %section.parallax-container.bg-gray-13{"data-parallax-img" => asset_path("parallax-7.jpg")}
   .parallax-content.section-xxl
@@ -573,3 +441,5 @@
               %div
                 %button.button.button-secondary.button-md{:type => "submit"} submit
 
+/ Button back to top
+%a#ui-to-top.ui-to-top.fa.fa-angle-up.active{:hred => "#"}

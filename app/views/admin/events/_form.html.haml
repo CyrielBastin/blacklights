@@ -18,14 +18,10 @@
                   %span.red *
                 .col-sm-2
                   = event_form.text_field :name, class: 'form-control bg-contrast'
-                %label.col-sm-2.control-label
-                  Min. participants
-                  %span.red *
+                %label.col-sm-2.control-label Min. participants
                 .col-sm-2
                   = event_form.text_field :min_participant, class: 'form-control bg-contrast'
-                %label.col-sm-2.control-label
-                  Max. participants
-                  %span.red *
+                %label.col-sm-2.control-label Max. participants
                 .col-sm-2
                   = event_form.text_field :max_participant, class: 'form-control bg-contrast'
 
@@ -76,52 +72,98 @@
                       - Location.all.each do |l|
                         %p.result-item.result-item-Location.hidden{id: "Location-#{l[:id]}"}
                           = l[:name]
-                          %br
-                          = "#{l[:city]}, #{l[:zip_code]}"
+                          - if l[:city].present? && l[:zip_code].present?
+                            %br
+                            = "#{l[:city]}, #{l[:zip_code]}"
                     .search-chosen#search-chosen-Location.col-sm-7
                       - if @event[:location_id].present?
                         .item-selected.item-selected-Location{id: "for-Location-#{@event.location[:id]}"}
                           %div
                             = @event.location[:name]
-                            %br
-                            = "#{@event.location[:city]}, #{@event.location[:zip_code]}"
+                            - if @event.location.city.present? && @event.location.zip_code.present?
+                              %br
+                              = "#{@event.location[:city]}, #{@event.location[:zip_code]}"
 
                 .search-container.col-sm-5
                   .row
                     .search-input
                       %label.control-label.col-sm-5 Catégorie
                       = event_form.select :category_id, options_from_collection_for_select(Category.for_event, :id, :name, @event.category_id), { prompt: 'Sélectionnez une catégorie' }, class: 'form-control bg-contrast'
-                    -#   = event_form.hidden_field :event_category_ids, class: 'list-Category_ids'
-                    -#   %input.form-control.bg-contrast{id: 'search-input-Category', 'data-model': 'Category', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
-                    -# .search-results.search-results-Category.col-sm-7.hidden
-                    -#   - Category.for_event.each do |c|
-                    -#     %p.result-item.result-item-Category.hidden{id: "Category-#{c[:id]}"}
-                    -#       = c[:name]
-                    -# .search-chosen#search-chosen-Category.col-sm-7
-                    -#   - if @event.event_categories.present?
-                    -#     - @event.event_categories.each do |ev_c|
-                    -#       .item-selected.item-selected-Category{id: "for-Category-#{ev_c.category[:id]}"}
-                    -#         %i.fas.fa-ban.delete-selected.delete-selected-Category{style: 'color: red'}
-                    -#         %div
-                    -#           = ev_c.category[:name]
-
-            %fieldset.mt-180
-              %legend Activités
-              = event_form.fields_for :event_activities, @event.event_activities.present? ? @event.event_activities : @event.event_activities.build, dynamic: true do |ev_ac_form|
-                .form-group
-                  %label.col-sm-2.control-label Activité
-                  .col-sm-2
-                    = ev_ac_form.select :activity_id, options_for_select(@event.id.nil? ? Activity.all.map{|a|[a.name, a.id]} : Activity.get_activities_by_location_id(@event.location_id).rows, ev_ac_form.object.activity_id), {}, {:class => "form-control select bg-contrast change_with_location"}
-                  %label.col-sm-2.control-label Quantité
-                  .col-sm-2
-                    = ev_ac_form.number_field :quantity, {class: 'bg-contrast', style: 'max-width: 220px'}
-                  .col-sm-1
-                    = ev_ac_form.remove_fields_link 'Supprimer'
-              = event_form.add_fields_link :event_activities, 'Ajouter une activité', { class: 'link_add_activity' }
 
             %fieldset.mt-50
-              %legend Matériel supplémentaire et contact
+              %legend Activités et associations
+              .row.mt-30
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Activités
+                      = event_form.hidden_field :event_activity_ids, class: 'list-Activity_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Activity', 'data-model': 'Activity', 'data-multiple': 'true', 'data-quantity': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Activity.col-sm-7.hidden
+                      - Activity.all.each do |a|
+                        %p.result-item.result-item-Activity.hidden{id: "Activity-#{a[:id]}"}
+                          = a[:name]
+                    .search-chosen#search-chosen-Activity
+                      - if @event.event_activities.present?
+                        - @event.event_activities.each do |ev_ac|
+                          .item-selected.item-selected-Activity{id: "for-Activity-#{ev_ac.activity[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Activity{style: 'color: red'}
+                            .equipment-name
+                              = ev_ac.activity[:name]
+                            .equipment-qty
+                              %div Quantité :
+                              %input.bg-contrast{type: 'number', value: "#{ev_ac[:quantity].to_i}", name: 'list_activity_qty[]'}
+
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5 Association
+                      = event_form.hidden_field :entity_event_ids, class: 'list-Entity_ids'
+                      %input.form-control.bg-contrast{id: 'search-input-Entity', 'data-model': 'Entity', 'data-multiple': 'true', type: 'text', placeholder: 'Rechercher par nom'}
+                    .search-results.search-results-Entity.col-sm-7.hidden
+                      - Entity.all.each do |e|
+                        %p.result-item.result-item-Entity.hidden{id: "Entity-#{e[:id]}"}
+                          = e[:name]
+                    .search-chosen#search-chosen-Entity.mw-20vw
+                      - if @event.entity_events.present?
+                        - @event.entity_events.each do |e_e|
+                          .item-selected.item-selected-Entity{id: "for-Entity-#{e_e.entity[:id]}"}
+                            %i.fas.fa-ban.delete-selected.delete-selected-Entity{style: 'color: red'}
+                            %div
+                              = e_e.entity[:name]
+
+
+            %fieldset.mt-50
+              %legend Personne de contact et matériel supplémentaire
               .row
+                .search-container.col-sm-5
+                  .row
+                    .search-input
+                      %label.control-label.col-sm-5
+                        Personne de contact
+                        %span.red *
+                      .field_with_errors
+                        = event_form.hidden_field :user_id, class: 'list-User_ids'
+                        %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
+                        - @event.errors.full_messages_for(:user_id).each do |message|
+                          %label.message{'for': 'event_user_id'}
+                            = epurate_err_msg(:User, message)
+                    .search-results.search-results-User.col-sm-7.hidden
+                      - User.active.each do |u|
+                        %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
+                          - if u.contact.present?
+                            = u.contact.full_name
+                            %br
+                          = u[:email]
+                    .search-chosen#search-chosen-User.col-sm-7
+                      - if @event[:user_id].present?
+                        .item-selected.item-selected-User{id: "for-User-#{@event.user[:id]}"}
+                          %div
+                            - if @event.user.contact.present?
+                              = @event.user.contact.full_name
+                              %br
+                            = @event.user[:email]
+
                 .search-container.col-sm-5
                   .row
                     .search-input
@@ -143,36 +185,10 @@
                               %div Quantité :
                               %input.bg-contrast{type: 'number', value: "#{ev_eq[:quantity].to_i}", name: 'list_equipment_qty[]'}
 
-                .search-container.col-sm-5
-                  .row
-                    .search-input
-                      %label.control-label.col-sm-5
-                        Utilisateur
-                        %span.red *
-                      .field_with_errors
-                        = event_form.hidden_field :user_id, class: 'list-User_ids'
-                        %input.form-control.bg-contrast{id: 'search-input-User', 'data-model': 'User', type: 'text', placeholder: 'Rechercher par nom ou email'}
-                        - @event.errors.full_messages_for(:user_id).each do |message|
-                          %label.message{'for': 'event_user_id'}
-                            = epurate_err_msg(:User, message)
-                    .search-results.search-results-User.col-sm-7.hidden
-                      - User.active.each do |u|
-                        %p.result-item.result-item-User.hidden{id: "User-#{u[:id]}"}
-                          = u.contact.full_name
-                          %br
-                          = u[:email]
-                    .search-chosen#search-chosen-User.col-sm-7
-                      - if @event[:user_id].present?
-                        .item-selected.item-selected-User{id: "for-User-#{@event.user[:id]}"}
-                          %div
-                            = @event.user.contact.full_name
-                            %br
-                            = @event.user[:email]
-
-            .row.mt-180
-              .btn-add_user
-                Ajouter un contact
-              .btn-delete-add_user.hidden
+            .row.mt-40
+              .btn.btn-success.btn-add_user
+                Ajouter une personne de contact
+              .btn.btn-danger.btn-delete-add_user.hidden
                 Supprimer le formulaire
             #user-model-form.hidden
               .mt-30

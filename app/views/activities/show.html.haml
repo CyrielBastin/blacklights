@@ -1,0 +1,27 @@
+%section.breadcrumbs-custom.bg-image.context-dark.scroll-handler{:style => "background-image: url(images/bg-breadcrumbs.jpg);"}
+  .image-overlay{"data-canvas-src" => asset_path("bg-breadcrumbs.jpg"), :style => "background-image: #{asset_path('bg-breadcrumbs.jpg')};"}
+  .breadcrumbs-panel
+    .container
+      %ul.breadcrumbs-custom-path
+        %li
+          %a{:href => root_path} Accueil
+        %li
+          %a{:href => activities_path} Activités
+        %li.active
+          = @activity.name
+/ Classes
+%section.section.section-sm.bg-default
+  .container
+    .row.row-30
+      .col-lg-5.col-xl-6
+        .row.row-20.gutter-20
+          .col-sm-6.col-lg-12
+            %img{:alt => "", :height => "300", :src => asset_path("service-19-500x300.jpg"), :width => "500"}/
+          .col-sm-6.col-lg-12
+            %img{:alt => "", :height => "300", :src => asset_path("service-20-500x300.jpg"), :width => "500"}/
+      .col-md-11.col-lg-7.col-xl-6
+        %h3.font-family-base
+          = @activity.name
+        %p.big
+          = raw @activity.description
+        %a.button.button-lg.button-secondary{:href => "#"} Book Now

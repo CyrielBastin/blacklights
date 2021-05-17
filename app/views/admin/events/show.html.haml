@@ -70,11 +70,19 @@
               = @event[:type].text
             .col-sm-2.details-title Catégorie :
             - if @event.category.present?
-              .col-sm-4
+              .col-sm-2
                 = @event.category[:name]
             - else
-              .col-sm-4.red
+              .col-sm-2.red
                 Aucune catégorie définie
+            .col-sm-1.details-title Assoc. :
+            .col-sm-3.details-multiple
+              - if @event.entity_events.present?
+                - @event.entity_events.each do |e_e|
+                  = e_e.entity[:name]
+                  %br
+              - else
+                .red Aucune association définie
 
           .hr-line-dashed
           .row.details-show.details-item

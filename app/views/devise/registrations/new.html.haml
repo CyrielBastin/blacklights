@@ -1,0 +1,64 @@
+%section.section.section-lg.bg-default
+  .container
+    .row.row-30.justify-content-md-center
+      .col-md-5
+        %h2 Sign Up
+        %p.title-2 Use your social account
+        %ul.list-inline.list-social-2
+          %li
+            %a.icon.mdi.mdi-facebook{:href => "#"}
+          %li
+            %a.icon.mdi.mdi-google{:href => "#"}
+          %li
+            %a.icon.mdi.mdi-twitter{:href => "#"}
+        / RD Mailform
+        = form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: 'rd-form rd-mailform rd-form-centered'}) do |f|
+          .form-wrap
+            = f.email_field :email, autofocus: true, autocomplete: 'email', 'data-constraints': '@Email @Required', class: 'form-input'
+            = f.label :email, class: 'form-label'
+          .form-wrap
+            = f.password_field :password, 'data-contraints': '@Required', autocomplete: 'current-password', class: 'form-input'
+            = f.label :password, class: 'form-label'
+            - if @minimum_password_length
+              %em
+                = "(#{@minimum_password_length} characters minimum)"
+          .form-wrap
+            = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-input', 'data-contraints': '@Required'
+            = f.label :password_confirmation, class: 'form-label'
+          .form-wrap
+            %input{type: 'checkbox', id: 'newsletter-sub', name: 'newsletter-sub', value: '1'}
+            %label.checkbox-inline{for: 'newsletter-sub'} Subscribe to Newsletter
+          .form-button.group-md
+            = f.submit 'Sign Up', class: 'button button-gray-5'
+            %a.button.button-default-outline-2{:href => new_user_session_path} Go to Login form
+
+
+-#<h2>Sign up</h2>
+-#
+-#<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+-#  <%= render "devise/shared/error_messages", resource: resource %>
+-#
+-#  <div class="field">
+-#    <%= f.label :email %><br />
+-#    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+-#  </div>
+-#
+-#  <div class="field">
+-#    <%= f.label :password %>
+-#    <% if @minimum_password_length %>
+-#    <em>(<%= @minimum_password_length %> characters minimum)</em>
+-#    <% end %><br />
+-#    <%= f.password_field :password, autocomplete: "new-password" %>
+-#  </div>
+-#
+-#  <div class="field">
+-#    <%= f.label :password_confirmation %><br />
+-#    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+-#  </div>
+-#
+-#  <div class="actions">
+-#    <%= f.submit "Sign up" %>
+-#  </div>
+-#<% end %>
+-#
+-#<%= render "devise/shared/links" %>

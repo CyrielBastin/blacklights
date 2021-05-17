@@ -17,6 +17,7 @@ class Admin::LocationsController < AdminController
   def create
     @location = Location.new(location_params)
     add_activities
+    add_entities
     if name_already_exists?(@location.class.name, @location[:name])
       @location.errors.add(:name, message: 'Ce nom existe déjà dans la base de données !')
       render 'new'
@@ -41,6 +42,7 @@ class Admin::LocationsController < AdminController
   def update
     @location = Location.find(params[:id])
     add_activities
+    add_entities
     loc = Location.find_by(name: params[:location][:name])
     if loc.nil? || loc[:id] == @location[:id]
       if @location.update(location_params)
@@ -78,7 +80,7 @@ class Admin::LocationsController < AdminController
 
   def location_params
     params.require(:location).permit(:id, :location_activity_ids, :name, :type, :capacity, :street, :zip_code, :city, :country, :user_id,
-                                     dimension_attributes: [:width, :length, :height, :weight],
+                                     :entity_location_ids, dimension_attributes: [:width, :length, :height, :weight],
                                      user_attributes: [:email, :skip_password_validation,
                                                        profile_attributes: [:gender, contact_attributes: [:email, :lastname, :firstname, :phone_number]]])
   end
@@ -89,6 +91,7 @@ class Admin::LocationsController < AdminController
     if params[:creating_new_user] == '0'
       params[:location] = params[:location].except(:user_attributes)
     end
+    params[:location][:entity_location_ids] = params[:location][:entity_location_ids].split(',')
   end
 
   def add_activities
@@ -96,6 +99,15 @@ class Admin::LocationsController < AdminController
     params[:location][:location_activity_ids].each do |activity_id|
       unless activity_id.empty?
         @location.location_activities << LocationActivity.new(activity_id: activity_id, location_id: @location)
+      end
+    end
+  end
+
+  def add_entities
+    @location.entity_locations = []
+    params[:location][:entity_location_ids].each do |entity_id|
+      unless entity_id.empty?
+        @location.entity_locations << EntityLocation.new(entity_id: entity_id, location_id: @location)
       end
     end
   end

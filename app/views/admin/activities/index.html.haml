@@ -39,7 +39,7 @@
                           = activity[:name]
 
                       %td
-                        = activity[:description].truncate(100)
+                        = raw activity[:description]
 
                       %td
                         - if activity.category.present?

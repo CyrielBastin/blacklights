@@ -28,7 +28,6 @@ class Event < ApplicationRecord
   belongs_to :user
   accepts_nested_attributes_for :user
   has_many :event_activities, inverse_of: :event, dependent: :destroy
-  accepts_nested_attributes_for :event_activities, allow_destroy: true
   has_many :event_equipment, dependent: :destroy
   has_many :registrations, dependent: :destroy
   has_many :entity_events, dependent: :destroy
@@ -53,10 +52,6 @@ class Event < ApplicationRecord
   validates :start_date, :end_date, :registration_deadline, :location_id, :type, presence: true
   validate :start_date_is_in_the_future, :end_date_is_higher_than_start_date, :registration_deadline_is_before_start_date
   validates :price, presence: true
-  validates :min_participant, presence: true,
-                              numericality: { greater_than: min_participant, message: ERR_MSG[:min_participant_is_lesser_than_one] }
-  validates :max_participant, presence: true,
-                              numericality: { greater_than: min_participant, message: ERR_MSG[:max_participant_is_lesser_than_one] }
   validate :max_participant_is_higher_than_min_participant, :max_participants_lesser_than_location_capacity
 
 
